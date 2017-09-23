@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "gpio.h"
+
 #include <StellarisWare/driverlib/gpio.h>
 #include <StellarisWare/driverlib/sysctl.h>
 
