@@ -1,12 +1,15 @@
 //Oscillator.cpp
 //UT Austin RAS Demobots
 
+#include "Arduino.h"
+
 #ifndef OSCILLATOR
   #include "Oscillator.h"
 
 
 Oscillator::Oscillator() {
   isStopped = false;
+  t_lastRefresh = 0;
 }
 
 
@@ -33,9 +36,13 @@ void Oscillator::refreshPos() {
 }
 //check if refresh time increment has passed
 bool Oscillator::checkRefreshTime() {
-  //TODO
-  //check if samplePeriod (ms) has passed since last refreshPos() call
-
+  //check if samplePeriod (ms) has passed since last checkRefreshTime() call
+  t_current = millis();
+  if (t_current - t_lastRefresh > samplePeriod) {
+    t_lastRefresh = t_current;
+    return true;
+  }
+  return false;
 }
 
 

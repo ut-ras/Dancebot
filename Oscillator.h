@@ -38,6 +38,8 @@ public:
 private:
   //sinusoid functions
   bool checkRefreshTime();    //check if refresh time increment has passed
+  long t_current;             //current time (ms)
+  long t_lastRefresh;         //time of last refreshPos() (ms)
 
   //Arduino Servo object
   Servo servo;
