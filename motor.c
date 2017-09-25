@@ -1,16 +1,19 @@
+//not being used right now
+//motor driver for TI launchpad
+
 #include <stdio.h>
 
 #include <StellarisWare/driverlib/gpio.h>
 #include <StellarisWare/driverlib/sysctl.h>
 
 void init() {
-	  SysCtlClockSet(SYSCTL_SYSDIV_4|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
+	SysCtlClockSet(SYSCTL_SYSDIV_4|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
 	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_2);
 	//GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
 }
 
 void spinMotor() {
-	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 1);	
+	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 1);
 }
 
 void stopMotor() {
@@ -18,7 +21,7 @@ void stopMotor() {
 }
 
 int main() {
-    	init();
+  init();
 	spinMotor();
 	SysCtlDelay(5000);
 	stopMotor();
