@@ -1,6 +1,6 @@
 /* Oscillator.h
  * UT Austin RAS Demobots
- * Oscillate servos in sinusoidal motion
+ * Oscillate non-continuous servos in sinusoidal motion
  * Basically just a wrapper class for the Arduino library servo class
  */
 
@@ -17,6 +17,7 @@
  * 1) create Oscillator object
  * 2) attach it to a pin
  * 3) set desired sinusoid parameters, calibrate and set trim if needed
+ *         amplitude is basiaclly the degree of rotation for the oscillating movement
  * 4) run refreshPos() on the main loop
  * 5) enable oscillation with start()
  */
