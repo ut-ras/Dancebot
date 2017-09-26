@@ -39,12 +39,12 @@ public:
   void setAmp(unsigned int a);    //set Amplitude (degrees)
   void setOff(unsigned int o);    //set Offset (degrees)
   void setPh0(double p0);         //set Initial Phase (radians)
-  void setPeriod(unsigned int t); //set Period (ms)
+  void setPer(unsigned int t); //set Period (ms)
   void setRev(bool r);            //Set Reverse on/off (default off)
 
   //control
-  void stop();
-  void start();
+  void stopO();
+  void startO();
   void setPos(int p);             //set Position (degrees)
   void resetPh();                 //set Current Phase to 0
 

@@ -23,7 +23,7 @@ Oscillator::Oscillator(unsigned int a, unsigned int o, double p0, unsigned int t
   setAmp(a);
   setOff(o);
   setPh0(p0);
-  setPeriod(t);
+  setPer(t);
   setRev(r);
   setTrim(0);       //can use setTrim() to calibrate if needed
 }
@@ -77,7 +77,7 @@ void Oscillator::setOff(unsigned int o) { off = o;}
 //set Initial Phase (radians)
 void Oscillator::setPh0(double p0) {ph0 = p0;}
 //set Period (ms)
-void Oscillator::setPeriod(unsigned int t) {
+void Oscillator::setPer(unsigned int t) {
   period = t;
   int n = period / samplePeriod;  //n = number of samples
   phInc = 2 * PI / n;
@@ -90,8 +90,8 @@ void Oscillator::setRev(bool r) {
 
 
 //CONTROL
-void Oscillator::stop() {isStopped = true;}
-void Oscillator::start() {isStopped = false;}
+void Oscillator::stopO() {isStopped = true;}
+void Oscillator::startO() {isStopped = false;}
 //set Position (degrees)
 void Oscillator::setPos(int p) {
   pos = p;
