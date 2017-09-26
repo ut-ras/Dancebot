@@ -7,6 +7,10 @@
   #include "Oscillator.h"
 
 Oscillator::Oscillator() {
+  Oscillator(40, 0, 0, 2500, false);
+}
+
+Oscillator::Oscillator(unsigned int a, unsigned int o, double p0, unsigned int t, bool r) {
   //init helper variables
   isStopped = true;
   servoAttached = false;
@@ -15,13 +19,14 @@ Oscillator::Oscillator() {
 
   //default sinusoid values
   samplePeriod = 30;
-  setAmp(40);
-  setOff(0);
-  setPh0(0);
-  setPeriod(2500);
-  setRev(false);
+  setAmp(a);
+  setOff(o);
+  setPh0(p0);
+  setPeriod(t);
+  setRev(r);
   setTrim(0);       //can use setTrim() to calibrate if needed
 }
+
 
 
 //SINUSOID FUNCTIONS

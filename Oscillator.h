@@ -26,6 +26,7 @@
 class Oscillator {
 public:
   Oscillator();
+  Oscillator(unsigned int a, unsigned int o, double p0, unsigned int t, bool r);
 
   //setup functions from Servo class
   void attach(int pin);
