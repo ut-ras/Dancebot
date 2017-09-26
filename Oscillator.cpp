@@ -1,10 +1,11 @@
 //Oscillator.cpp
 //UT Austin RAS Demobots
 
-#include "Arduino.h"
-
 #ifndef OSCILLATOR
   #include "Oscillator.h"
+  #include <math.h>
+  #include <Arduino.h>
+#endif
 
 Oscillator::Oscillator() {
   Oscillator(40, 0, 0, 2500, false);
@@ -61,7 +62,7 @@ void Oscillator::attach(int pin) {
   servoAttached = true;
 }
 void Oscillator::detach() {
-  if (servo.attatched()) {
+  if (servo.attached()) {
     servo.detach();
     servoAttached = false;
   }
@@ -83,8 +84,8 @@ void Oscillator::setPeriod(unsigned int t) {
 }
 //Set Sinusoid Reverse on/off (default off) (sin reverse not servo reverse)
 void Oscillator::setRev(bool r) {
-  if (r) {rev = -1}
-  else {rev = 1}
+  if (r) {rev = -1;}
+  else {rev = 1;}
 }
 
 
@@ -97,7 +98,7 @@ void Oscillator::setPos(int p) {
   servo.write(pos + trim);
 }
 //set Current Phase to 0
-void resetPh() {
+void Oscillator::resetPh() {
   ph = 0;
 }
 

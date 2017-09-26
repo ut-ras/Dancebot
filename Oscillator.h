@@ -8,8 +8,9 @@
 #ifndef OSCILLATOR
   #define OSCILLATOR
   #define PI 3.14159265358979323846
+  #include <Servo.h>
+#endif
 
-#include <Servo.h>
 
 //TODO create OscillatorTest, update these steps if needed
 
@@ -73,8 +74,8 @@ private:
   int pos;        //Current Position (degrees)
   double ph;      //Current Phase (radians)
   double phInc;    //Phase increment (radians)
-  unsigned int samplePeriod;    //how often to sample servos for pos (ms)
+  int samplePeriod;    //how often to sample servos for pos (ms)
 
   //calibration (if we need it)
   int trim;     //add to position (degrees)
-}
+};
