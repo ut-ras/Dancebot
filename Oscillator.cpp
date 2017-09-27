@@ -1,16 +1,19 @@
 //Oscillator.cpp
 //UT Austin RAS Demobots
 
+#include <math.h>
+#include <Arduino.h>
+  
 #ifndef OSCILLATOR
   #include "Oscillator.h"
-  #include <math.h>
-  #include <Arduino.h>
+  #define PI 3.14159265358979323846
 #endif
 
 Oscillator::Oscillator() {
   Oscillator(40, 0, 0, 2500, false);
 }
 
+//not currently being directly used
 Oscillator::Oscillator(unsigned int a, unsigned int o, double p0, unsigned int t, bool r) {
   //init helper variables
   isStopped = true;

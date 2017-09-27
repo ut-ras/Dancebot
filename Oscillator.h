@@ -7,7 +7,6 @@
 //this prevents errors if Oscillator.h is included in multiple files
 #ifndef OSCILLATOR
   #define OSCILLATOR
-  #define PI 3.14159265358979323846
   #include <Servo.h>
 #endif
 
