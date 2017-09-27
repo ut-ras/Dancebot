@@ -1,5 +1,9 @@
 /* DancingServos.cpp
  * UT Austin RAS Demobots
+ * TO PROGRAM NEW DANCE MOVE FUNCTION
+ *    pick the parameters for the oscillating movement
+ *    call startOscillation()
+ *    (look at walk() for an example)
  */
 
 #include <Arduino.h>
@@ -61,7 +65,7 @@ void DancingServos::position0() {
   startOscillation(zeroi, zeroi, zerod, 500, 1.0f);
 }
 
-//Walk forward
+//Walk forward, adjust speed with T
 void DancingServos::walk(float cycles, int period, bool reverse) {
   int rev = 1;
   if (reverse) {rev = -1;}
