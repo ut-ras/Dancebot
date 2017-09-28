@@ -26,7 +26,7 @@
 class Oscillator {
 public:
   Oscillator();
-  Oscillator(unsigned int a, unsigned int o, double p0, unsigned int t, bool r);
+  Oscillator(int a, int o, double p0, int t, bool r);
 
   //setup functions from Servo class
   void attach(int pin);
@@ -35,10 +35,10 @@ public:
   //sinusoid functions
   void refreshPos();              //set servo pos based on sinusoid
   //sinusoid parameters
-  void setAmp(unsigned int a);    //set Amplitude (degrees)
-  void setOff(unsigned int o);    //set Offset (degrees)
+  void setAmp(int a);    //set Amplitude (degrees)
+  void setOff(int o);    //set Offset (degrees)
   void setPh0(double p0);         //set Initial Phase (radians)
-  void setPer(unsigned int t); //set Period (ms)
+  void setPer(int t); //set Period (ms)
   void setRev(bool r);            //Set Reverse on/off (default off)
 
   //control
@@ -62,10 +62,10 @@ private:
   bool servoAttached;         //true when a servo is attached
 
   //sinusoid parameters
-  unsigned int amp;     //Amplitude (degrees)
-  unsigned int off;     //Offset (degrees)
+  int amp;     //Amplitude (degrees)
+  int off;     //Offset (degrees)
   double ph0;           //Initial Phase (radians)
-  unsigned int period;  //Period (ms)
+  int period;           //Period (ms)
   int rev;              //Reverse Sinusoid multiplier (1 = no rev, -1 = rev)
 
   //servo status variables
