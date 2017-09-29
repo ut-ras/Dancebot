@@ -19,13 +19,15 @@ public:
   //movements to choose from, calling one of these functions will start a dance
   void position0();
   void walk(float cycles, int period, bool reverse);
+  void themAnkles(int cycles);
+
 
 private:
   void startOscillation(int amp[4], int off[4], double ph0[4], int period, float cycles);
+  //void calibrateTrims();
   double degToRad(double deg);
   
   //[hipL, hipR, ankleL, ankleR]
   Oscillator osc[4];
-  int trim[4];
   int pins[4];
 };

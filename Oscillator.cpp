@@ -18,12 +18,11 @@ Oscillator::Oscillator() {
 
   //default sinusoid values
   samplePeriod = 30;
-  this->setAmp(40);
-  this->setOff(50);
+  this->setAmp(30);
+  this->setOff(0);
   this->setPh0(0);
   this->setPer(2500);
   this->setRev(false);
-  this->setTrim(0);       //can use setTrim() to calibrate if needed
 }
 
 //not currently being directly used
@@ -41,7 +40,6 @@ Oscillator::Oscillator( int a,  int o, double p0,  int t, bool r) {
   this->setPh0(p0);
   this->setPer(t);
   this->setRev(r);
-  this->setTrim(0);       //can use setTrim() to calibrate if needed
 }
 
 
@@ -115,7 +113,12 @@ void Oscillator::startO() {this->isStopped = false;}
 void Oscillator::setPos(int p) {
   this->pos = p;
   servo.write(p + this->trim);
-  Serial.print("pos: " + String(p) + " ph: " + String(this->ph) + " phInc: " + String(this->phInc) + "amp: " + String(this->amp) + "\n");
+  //Serial.print("pos: " + String(p) + " ph: " + String(this->ph) + " phInc: " + String(this->phInc) + "amp: " + String(this->amp) + "\n");
+}
+int Oscillator::getPos() {
+  //this only reads the most recent data sent to it -- wont work until data has been written
+  int angle = servo.read();
+  return angle;
 }
 //set Current Phase to 0
 void Oscillator::resetPh() {

@@ -45,6 +45,7 @@ public:
   void stopO();
   void startO();
   void setPos(int p);             //set Position (degrees)
+  int getPos();                 
   void resetPh();                 //set Current Phase to 0
 
   //calibration (if we need it, built into refreshPos, just call setTrim)

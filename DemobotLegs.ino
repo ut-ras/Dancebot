@@ -1,51 +1,74 @@
 #include <Arduino.h>
 #include "DancingServos.h"
 
+//TODO decide on some sort of control mechanism or auto running of the dance moves
+
+/* Current Pins
+ * hip R: 15
+ * hip  L: 14
+ * ankle R: 12
+ * ankle L: 11
+ */
+
+ 
 void oscillatorTest();
 void dancingServosTest();
 void servoTest();
+void calibrateTrims(DancingServos* bot);
 
+DancingServos* bot;
 Oscillator osc;
 
 void setup() {
-    osc.attach(12);
-    osc.setAmp(40);
-    osc.setOff(50);
-    osc.setPer(2500);
-    delay(1000);
-    Serial.begin(9600);
-    delay(1000);
+  bot = new DancingServos(14, 15, 11, 12);
+  calibrateTrims(bot);
+  
+  //delay(1000);
+  //Serial.begin(9600);
+  //delay(2000);
 }
 
 void loop() {
-  //TODO decide on some sort of control mechanism or auto running of the dance moves
-
-  osc.startO();
-  oscillatorTest();
+  //oscillatorTest();
   //servoTest();
+  //dancingServosTest();
+  
+  bot->position0();
+  delay(1000);
+
+  //dance moves here
+  bot->themAnkles(5);
+  //add more moves
+
 }
 
-/* TODO create a function that takes in the oscillator parameters for 4 motors
- * then sets all the oscillator parameters
- */
+//manual calibration- based on how the servos are attatched to the parts
+void calibrateTrims(DancingServos* bot) {
+  //[hipL, hipR, ankleL, ankleR]
+  bot->setTrims(75, 130, 45, 45);
+}
 
-/* TODO create functions for dance moves
- * decide on the parameters for the 4 oscillators for the particular dance move
- * then use the function described above
- */
 
 
 
 //TEST FUNCTIONS
-void servoTest() {
-  for(int i = 0; i < 20000; i++) {
-    osc.setPos(20);
-    delay(2000);
-    osc.setPos(50);
-    delay(2000);
-  }
+void servoTest(int angle) {
+  osc.attach(12);
+  osc.startO();
+  osc.setAmp(40);
+  osc.setOff(50);
+  osc.setPer(2500);
+  delay(2000);
+  int x = osc.getPos();
+  Serial.print(String(x));
+  osc.setPos(angle);
+  osc.stopO();
+  while(true);
 }
+
 void oscillatorTest() {
+  osc.attach(12);
+  osc.startO();
   long period = 2500;
   long cycles = 5;
   long t0 = millis();
@@ -53,8 +76,18 @@ void oscillatorTest() {
     delay(30);
     osc.refreshPos();
   }
-  
+  osc.stopO();
+  while(true);
 }
+
 void dancingServosTest() {
-  //TODO implement test function
+  bot->position0();
+  delay(500);
+  bot->themAnkles(5);
+  delay(500);
+  bot->position0();
+  while(true);
 }
+
+
+

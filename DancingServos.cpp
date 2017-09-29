@@ -21,16 +21,14 @@ DancingServos::DancingServos(int hL, int hR, int aL, int aR) {
   for (int i = 0; i < 4; i++) {
     osc[i].attach(pins[i]);
   }
-  //TODO if we save trims to EEPROM, load from memory
 }
 
 //set the trims of each motor for calibration
 void DancingServos::setTrims(int tHL, int tHR, int tAL, int tAR) {
-  trim[0] = tHL;
-  trim[1] = tHR;
-  trim[2] = tAL;
-  trim[3] = tAR;
-  //TODO call set trim function, maybe save on EEPROM in between sessions
+  osc[0].setTrim(tHL);
+  osc[1].setTrim(tHR);
+  osc[2].setTrim(tAL);
+  osc[3].setTrim(tAR);
 }
 
 
@@ -47,6 +45,7 @@ void DancingServos::startOscillation(int amp[4], int off[4], double ph0[4], int 
     osc[i].setOff(off[i]);
     osc[i].setPh0(ph0[i]);
     osc[i].setPer(period);
+    osc[i].startO();
   }
   //run the refreshPos() function on each oscillator for the correct time
   //total oscillation time = (period * cycles)
@@ -56,13 +55,36 @@ void DancingServos::startOscillation(int amp[4], int off[4], double ph0[4], int 
       osc[i].refreshPos();
     }
   }
+  /*
+  for (int i = 0; i < 4; i++) {
+    osc[i].stopO();
+    osc[i].resetPh();
+  }
+  */
 }
+
+/* //doesnt work without encoders, servo can't read until data has been written
+void DancingServos::calibrateTrims() {
+  for (int i = 0; i < 4; i++) {
+    int angle = positionFromEncoder;
+    osc[i].setTrim(angle); 
+    //Serial.println("trim " + String(i) + ": " + String(angle));
+  }
+}*/
 
 //Move to resting poition
 void DancingServos::position0() {
   int zeroi[4] = {0, 0, 0, 0};
   double zerod[4] = {0.0, 0.0, 0.0, 0.0};
-  startOscillation(zeroi, zeroi, zerod, 500, 1.0f);
+  startOscillation(zeroi, zeroi, zerod, 2000, 1.0f);
+}
+
+//Move to resting poition
+void DancingServos::themAnkles(int cycles) {
+  int amp[4] = {0, 0, 20, 20};
+  int off[4] = {0, 0, 0, 0};
+  double ph0[4] = {0, 0, 0, 0};
+  startOscillation(amp, off, ph0, 3000, cycles);
 }
 
 //Walk forward, adjust speed with T
@@ -70,8 +92,8 @@ void DancingServos::walk(float cycles, int period, bool reverse) {
   int rev = 1;
   if (reverse) {rev = -1;}
   int amp[4] = {30, 30, 20, 20};
-  int off[4] = {0, 0, -4, -4};
-  double ph0[4] = {0, 0, degToRad(rev * -90), degToRad(rev * -90)};
+  int off[4] = {30, 30, 20, 20};
+  double ph0[4] = {0, 0, degToRad(rev * 90), degToRad(rev * 90)};
   startOscillation(amp, off, ph0, period, cycles);
 }
 
