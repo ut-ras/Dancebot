@@ -62,7 +62,7 @@ void DancingServos::startOscillation(int amp[4], int off[4], double ph0[4], int 
 }
 
 //[hipL, hipR, ankleL, ankleR]
-  
+
 //Move to resting poition
 void DancingServos::position0() {
   int zeroi[4] = {0, 0, 0, 0};
@@ -88,8 +88,25 @@ void DancingServos::walk(float cycles, int period, bool reverse) {
   startOscillation(amp, off, ph0, period, cycles);
 }
 
+//simultaneous ankles
+void DancingServos::hop(int height, int cycles) {
+  int amp[4] = {0, 0, height, height};
+  int off[4] = {0, 0, height, -height};
+  double ph0[4] = {0, 0, degToRad(-90), degToRad(90)};
+  for (int i = 0; i < 4; i++) {osc[i].setRev(true);}
+  startOscillation(amp, off, ph0, 2000, cycles);
+  for (int i = 0; i < 4; i++) {osc[i].setRev(false);}
+}
 
+//simultaneous hips
+void DancingServos::wiggle(int angle, int cycles) {
+  int amp[4] = {angle, angle, 0, 0};
+  int off[4] = {0, 0, 0, 0};
+  double ph0[4] = {0, 0, 0, 0};
+  startOscillation(amp, off, ph0, 2000, cycles);
+}
 
+//CALIBRATION
 /* //doesnt work without encoders, servo can't read until data has been written
 void DancingServos::calibrateTrims() {
   for (int i = 0; i < 4; i++) {

@@ -20,13 +20,15 @@ public:
   void position0();
   void walk(float cycles, int period, bool reverse);
   void themAnkles(int cycles);
+  void hop(int height, int times);
+  void wiggle(int angle, int times);
 
 
 private:
   void startOscillation(int amp[4], int off[4], double ph0[4], int period, float cycles);
   //void calibrateTrims();
   double degToRad(double deg);
-  
+
   //[hipL, hipR, ankleL, ankleR]
   Oscillator osc[4];
   int pins[4];

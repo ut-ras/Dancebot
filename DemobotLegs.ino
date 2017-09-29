@@ -10,7 +10,7 @@
  * ankle L: 11
  */
 
- 
+
 void oscillatorTest();
 void dancingServosTest();
 void servoTest();
@@ -22,7 +22,7 @@ Oscillator osc;
 void setup() {
   bot = new DancingServos(14, 15, 11, 12);
   calibrateTrims(bot);
-  
+
   //delay(1000);
   //Serial.begin(9600);
   //delay(2000);
@@ -32,13 +32,16 @@ void loop() {
   //oscillatorTest();
   //servoTest();
   //dancingServosTest();
-  
+
   bot->position0();
   delay(1000);
 
   //dance moves here
   bot->themAnkles(1);
-  bot->walk(3, 2000, false);
+  bot->hop(25, 1);
+  bot->walk(2, 1500, false);
+  bot->wiggle(30, 1);
+  bot->walk(1, 1500, true);
   //add more moves
 
 }
@@ -89,6 +92,3 @@ void dancingServosTest() {
   bot->position0();
   while(true);
 }
-
-
-
