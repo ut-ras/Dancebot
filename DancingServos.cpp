@@ -55,23 +55,14 @@ void DancingServos::startOscillation(int amp[4], int off[4], double ph0[4], int 
       osc[i].refreshPos();
     }
   }
-  /*
   for (int i = 0; i < 4; i++) {
     osc[i].stopO();
     osc[i].resetPh();
   }
-  */
 }
 
-/* //doesnt work without encoders, servo can't read until data has been written
-void DancingServos::calibrateTrims() {
-  for (int i = 0; i < 4; i++) {
-    int angle = positionFromEncoder;
-    osc[i].setTrim(angle); 
-    //Serial.println("trim " + String(i) + ": " + String(angle));
-  }
-}*/
-
+//[hipL, hipR, ankleL, ankleR]
+  
 //Move to resting poition
 void DancingServos::position0() {
   int zeroi[4] = {0, 0, 0, 0};
@@ -91,12 +82,22 @@ void DancingServos::themAnkles(int cycles) {
 void DancingServos::walk(float cycles, int period, bool reverse) {
   int rev = 1;
   if (reverse) {rev = -1;}
-  int amp[4] = {30, 30, 20, 20};
-  int off[4] = {30, 30, 20, 20};
+  int amp[4] = {18, 18, 15, 15};
+  int off[4] = {0, 0, -4, -4};
   double ph0[4] = {0, 0, degToRad(rev * 90), degToRad(rev * 90)};
   startOscillation(amp, off, ph0, period, cycles);
 }
 
+
+
+/* //doesnt work without encoders, servo can't read until data has been written
+void DancingServos::calibrateTrims() {
+  for (int i = 0; i < 4; i++) {
+    int angle = positionFromEncoder;
+    osc[i].setTrim(angle);
+    //Serial.println("trim " + String(i) + ": " + String(angle));
+  }
+}*/
 
 //MATH
 double DancingServos::degToRad(double deg) {
