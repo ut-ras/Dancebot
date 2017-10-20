@@ -1,3 +1,5 @@
+//Launch Pad
+#include "Energia.h"
 #include "DancingServos.h"
 
 /* Current Pins
@@ -6,7 +8,10 @@
  * ankle R: C6
  * ankle L: C7
  */
-
+#define B6 14
+#define B7 15
+#define C6 35
+#define C7 34
 
 
 void calibrateTrims(DancingServos* bot);
