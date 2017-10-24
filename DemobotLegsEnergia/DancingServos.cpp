@@ -19,16 +19,17 @@ DancingServos::DancingServos(int hL, int hR, int aL, int aR) {
   pins[2] = aL;
   pins[3] = aR;
   for (int i = 0; i < 4; i++) {
-    osc[i].attach(pins[i]);
+    osc[i] = new Oscillator();
+    osc[i]->attach(pins[i]);
   }
 }
 
 //set the trims of each motor for calibration
 void DancingServos::setTrims(int tHL, int tHR, int tAL, int tAR) {
-  osc[0].setTrim(tHL);
-  osc[1].setTrim(tHR);
-  osc[2].setTrim(tAL);
-  osc[3].setTrim(tAR);
+  osc[0]->setTrim(tHL);
+  osc[1]->setTrim(tHR);
+  osc[2]->setTrim(tAL);
+  osc[3]->setTrim(tAR);
 }
 
 
@@ -41,23 +42,23 @@ void DancingServos::setTrims(int tHL, int tHR, int tAL, int tAR) {
 void DancingServos::startOscillation(int amp[4], int off[4], double ph0[4], int period, float cycles) {
   //set the sinusoid parameters for each of the oscillators
   for (int i = 0; i < 4; i++) {
-    osc[i].setAmp(amp[i]);
-    osc[i].setOff(off[i]);
-    osc[i].setPh0(ph0[i]);
-    osc[i].setPer(period);
-    osc[i].startO();
+    osc[i]->setAmp(amp[i]);
+    osc[i]->setOff(off[i]);
+    osc[i]->setPh0(ph0[i]);
+    osc[i]->setPer(period);
+    osc[i]->startO();
   }
   //run the refreshPos() function on each oscillator for the correct time
   //total oscillation time = (period * cycles)
   long t0 = millis();
   for (long t = t0; t < (period * cycles + t0); t = millis()) {
     for (int i = 0; i < 4; i++) {
-      osc[i].refreshPos();
+      osc[i]->refreshPos();
     }
   }
   for (int i = 0; i < 4; i++) {
-    osc[i].stopO();
-    osc[i].resetPh();
+    osc[i]->stopO();
+    osc[i]->resetPh();
   }
 }
 
@@ -93,9 +94,9 @@ void DancingServos::hop(int height, int cycles) {
   int amp[4] = {0, 0, height, height};
   int off[4] = {0, 0, height, -height};
   double ph0[4] = {0, 0, degToRad(-90), degToRad(90)};
-  for (int i = 0; i < 4; i++) {osc[i].setRev(true);}
+  for (int i = 0; i < 4; i++) {osc[i]->setRev(true);}
   startOscillation(amp, off, ph0, 2000, cycles);
-  for (int i = 0; i < 4; i++) {osc[i].setRev(false);}
+  for (int i = 0; i < 4; i++) {osc[i]->setRev(false);}
 }
 
 //simultaneous hips
@@ -111,7 +112,7 @@ void DancingServos::wiggle(int angle, int cycles) {
 void DancingServos::calibrateTrims() {
   for (int i = 0; i < 4; i++) {
     int angle = positionFromEncoder;
-    osc[i].setTrim(angle);
+    osc[i]->setTrim(angle);
     //Serial.println("trim " + String(i) + ": " + String(angle));
   }
 }*/

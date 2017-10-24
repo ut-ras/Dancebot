@@ -30,6 +30,6 @@ private:
   double degToRad(double deg);
 
   //[hipL, hipR, ankleL, ankleR]
-  Oscillator osc[4];
+  Oscillator* osc[4];
   int pins[4];
 };

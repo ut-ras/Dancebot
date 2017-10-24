@@ -59,7 +59,7 @@ private:
   long t_lastRefresh;         //time of last refreshPos() (ms)
 
   //Arduino Servo object
-  Servo servo;
+  Servo* servo;
   bool servoAttached;         //true when a servo is attached
 
   //sinusoid parameters

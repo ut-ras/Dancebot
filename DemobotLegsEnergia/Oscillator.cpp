@@ -17,12 +17,14 @@ Oscillator::Oscillator() {
   this->ph = 0;
 
   //default sinusoid values
-  samplePeriod = 30;
+  samplePeriod = 50;
   this->setAmp(30);
   this->setOff(0);
   this->setPh0(0);
   this->setPer(2500);
   this->setRev(false);
+
+  servo = new Servo();
 }
 
 //not currently being directly used
@@ -40,6 +42,8 @@ Oscillator::Oscillator( int a,  int o, double p0,  int t, bool r) {
   this->setPh0(p0);
   this->setPer(t);
   this->setRev(r);
+
+  servo = new Servo();
 }
 
 
@@ -73,13 +77,13 @@ bool Oscillator::checkRefreshTime() {
 
 //SERVO SETUP
 void Oscillator::attach(int pin) {
-  servo.detach();
-  servo.attach(pin);
+  servo->detach();
+  servo->attach(pin);
   this->servoAttached = true;
 }
 void Oscillator::detach() {
-  if (servo.attached()) {
-    servo.detach();
+  if (servo->attached()) {
+    servo->detach();
     this->servoAttached = false;
   }
 }
@@ -112,12 +116,12 @@ void Oscillator::startO() {this->isStopped = false;}
 //set Position (degrees)
 void Oscillator::setPos(int p) {
   this->pos = p;
-  servo.write(p + this->trim);
+  servo->write(p + this->trim);
   //Serial.print("pos: " + String(p) + " ph: " + String(this->ph) + " phInc: " + String(this->phInc) + "amp: " + String(this->amp) + "\n");
 }
 int Oscillator::getPos() {
   //this only reads the most recent data sent to it -- wont work until data has been written
-  int angle = servo.read();
+  int angle = servo->read();
   return angle;
 }
 //set Current Phase to 0

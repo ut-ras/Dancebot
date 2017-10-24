@@ -1,17 +1,21 @@
 //Launch Pad
 #include "Energia.h"
 #include "DancingServos.h"
+#include "Servo.h"
 
 /* Current Pins
- * hip R: B6
- * hip  L: B7
- * ankle R: C6
- * ankle L: C7
- */
-#define B6 14
-#define B7 15
+   hip R: C4
+   hip  L: B3
+   ankle R: C6
+   ankle L: C7
+*/
+#define B0 3
+#define B5 2
+#define C5 36
+#define C4 37
 #define C6 35
 #define C7 34
+#define D1 24
 
 
 void calibrateTrims(DancingServos* bot);
@@ -19,9 +23,15 @@ void calibrateTrims(DancingServos* bot);
 DancingServos* bot;
 Oscillator osc;
 
+Servo* s;
+
 void setup() {
-  bot = new DancingServos(B6, B7, C6, C7);
+  //[hipL, hipR, ankleL, ankleR]
+  bot = new DancingServos(C4, C5, C7, C6);
   calibrateTrims(bot);
+
+  //s = new Servo();
+  //s->attach(34);
 
   //delay(1000);
   //Serial.begin(9600);
@@ -29,6 +39,7 @@ void setup() {
 }
 
 void loop() {
+  
   bot->position0();
   delay(1000);
 
@@ -39,8 +50,15 @@ void loop() {
   bot->walk(4, 1500, false);
   bot->hop(18, 1);
   bot->walk(2, 1500, true);
+  
   //add more moves
 
+  /*
+  s->write(70);
+  delay(500);
+  s->write(30);
+  delay(500);
+  */
 }
 
 //manual calibration- based on how the servos are attatched to the parts
