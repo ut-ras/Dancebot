@@ -9,11 +9,11 @@
 #ifndef DANCINGSERVOS
   #define DANCINGSERVOS
   #include "Oscillator.h"
+  #include <RASLib/inc/common.h>
+  #include <RASLib/inc/time.h>
 #endif
 
-class DancingServos {
-public:
-  DancingServos(int hL, int hR, int aL, int aR);
+  void InitializeDancingServos(int hL, int hR, int aL, int aR);
   void setTrims(int tHL, int tHR, int tAL, int tAR);
 
   //movements to choose from, calling one of these functions will start a dance
@@ -24,12 +24,10 @@ public:
   void wiggle(int angle, int times);
 
 
-private:
   void startOscillation(int amp[4], int off[4], double ph0[4], int period, float cycles);
   //void calibrateTrims();
   double degToRad(double deg);
 
   //[hipL, hipR, ankleL, ankleR]
   Oscillator* osc[4];
-  int pins[4];
-};
+  tPin pins[4];

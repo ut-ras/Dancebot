@@ -6,30 +6,28 @@
  *    (look at walk() for an example)
  */
 
-#include <Arduino.h>
-
 #ifndef DANCINGSERVOS
   #include "DancingServos.h"
 #endif
 
 //SETUP FUNCTIONS
-DancingServos::DancingServos(int hL, int hR, int aL, int aR) {
+void InitializeDancingServos(tPin hL, tPin hR, tPin aL, tPin aR) {
+  InitializeSystemTime();
   pins[0] = hL;
   pins[1] = hR;
   pins[2] = aL;
   pins[3] = aR;
   for (int i = 0; i < 4; i++) {
-    osc[i] = new Oscillator();
-    osc[i]->attach(pins[i]);
+    osc[i] = new Oscillator(tPin pin);
   }
 }
 
 //set the trims of each motor for calibration
 void DancingServos::setTrims(int tHL, int tHR, int tAL, int tAR) {
-  osc[0]->setTrim(tHL);
-  osc[1]->setTrim(tHR);
-  osc[2]->setTrim(tAL);
-  osc[3]->setTrim(tAR);
+  setTrim(osc[0], tHL);
+  setTrim(osc[1], tHR);
+  setTrim(osc[2], tAL);
+  setTrim(osc[3], tAR);
 }
 
 
@@ -39,40 +37,40 @@ void DancingServos::setTrims(int tHL, int tHR, int tAL, int tAR) {
  * set up an oscillation for each of the 4 servos
  * input format:   [hipL, hipR, ankleL, ankleR]
  */
-void DancingServos::startOscillation(int amp[4], int off[4], double ph0[4], int period, float cycles) {
+void startOscillation(int amp[4], int off[4], double ph0[4], int period, float cycles) {
   //set the sinusoid parameters for each of the oscillators
   for (int i = 0; i < 4; i++) {
-    osc[i]->setAmp(amp[i]);
-    osc[i]->setOff(off[i]);
-    osc[i]->setPh0(ph0[i]);
-    osc[i]->setPer(period);
-    osc[i]->startO();
+    setAmp(osc[i], amp[i]);
+    setOff(osc[i], off[i]);
+    setPh0(osc[i], ph0[i]);
+    setPer(osc[i], period);
+    startO(osc[i]);
   }
   //run the refreshPos() function on each oscillator for the correct time
   //total oscillation time = (period * cycles)
-  long t0 = millis();
-  for (long t = t0; t < (period * cycles + t0); t = millis()) {
+  long t0 = GetTimeUS()*1000;
+  for (long t = t0; t < (period * cycles + t0); t = GetTimeUS()) {
     for (int i = 0; i < 4; i++) {
-      osc[i]->refreshPos();
+      refreshPos(osc[i]);
     }
   }
   for (int i = 0; i < 4; i++) {
-    osc[i]->stopO();
-    osc[i]->resetPh();
+    stopO(osc[i]);
+    resetPh(osc[i]);
   }
 }
 
 //[hipL, hipR, ankleL, ankleR]
 
 //Move to resting poition
-void DancingServos::position0() {
+void position0() {
   int zeroi[4] = {0, 0, 0, 0};
   double zerod[4] = {0.0, 0.0, 0.0, 0.0};
   startOscillation(zeroi, zeroi, zerod, 2000, 1.0f);
 }
 
 //Move to resting poition
-void DancingServos::themAnkles(int cycles) {
+void themAnkles(int cycles) {
   int amp[4] = {0, 0, 20, 20};
   int off[4] = {0, 0, 0, 0};
   double ph0[4] = {0, 0, 0, 0};
@@ -80,7 +78,7 @@ void DancingServos::themAnkles(int cycles) {
 }
 
 //Walk forward, adjust speed with T
-void DancingServos::walk(float cycles, int period, bool reverse) {
+void walk(float cycles, int period, int reverse) {
   int rev = 1;
   if (reverse) {rev = -1;}
   int amp[4] = {18, 18, 15, 15};
@@ -90,7 +88,7 @@ void DancingServos::walk(float cycles, int period, bool reverse) {
 }
 
 //simultaneous ankles
-void DancingServos::hop(int height, int cycles) {
+void hop(int height, int cycles) {
   int amp[4] = {0, 0, height, height};
   int off[4] = {0, 0, height, -height};
   double ph0[4] = {0, 0, degToRad(-90), degToRad(90)};
@@ -100,7 +98,7 @@ void DancingServos::hop(int height, int cycles) {
 }
 
 //simultaneous hips
-void DancingServos::wiggle(int angle, int cycles) {
+void wiggle(int angle, int cycles) {
   int amp[4] = {angle, angle, 0, 0};
   int off[4] = {0, 0, 0, 0};
   double ph0[4] = {0, 0, 0, 0};
@@ -118,6 +116,6 @@ void DancingServos::calibrateTrims() {
 }*/
 
 //MATH
-double DancingServos::degToRad(double deg) {
+double degToRad(double deg) {
   return (deg * PI) / 180.0;
 }
