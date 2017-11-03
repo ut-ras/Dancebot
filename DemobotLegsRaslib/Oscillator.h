@@ -7,7 +7,7 @@
 //this prevents errors if Oscillator.h is included in multiple files
 #ifndef OSCILLATOR
   #define OSCILLATOR
-  #include <Servo.h>
+  #include <Raslib/inc/Servo.h>
 #endif
 
 
