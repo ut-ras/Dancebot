@@ -23,59 +23,53 @@
  */
 
 
-class Oscillator {
-public:
-  Oscillator();
-  Oscillator(int a, int o, double p0, int t, bool r);
+  oscillator* InitializeOscillator(tPin pin);
 
-  //setup functions from Servo class
-  void attach(int pin);
-  void detach();
 
   //sinusoid functions
   void refreshPos();              //set servo pos based on sinusoid
   //sinusoid parameters
-  void setAmp(int a);    //set Amplitude (degrees)
-  void setOff(int o);    //set Offset (degrees)
-  void setPh0(double p0);         //set Initial Phase (radians)
-  void setPer(int t); //set Period (ms)
-  void setRev(bool r);            //Set Reverse on/off (default off)
+  void setAmp(oscillator* osc, int a);              //set Amplitude (degrees)
+  void setOff(oscillator* osc, int o);              //set Offset (degrees)
+  void setPh0(oscillator* osc, double p0);          //set Initial Phase (radians)
+  void setPer(oscillator* osc, int t);              //set Period (ms)
+  void setRev(oscillator* osc, bool r);             //Set Reverse on/off (default off)
 
   //control
-  void stopO();
-  void startO();
-  void setPos(int p);             //set Position (degrees)
-  int getPos();                 
-  void resetPh();                 //set Current Phase to 0
+  void stopO(oscillator* osc);
+  void startO(oscillator* osc);
+  void setPos(oscillator* osc, int p);            //set Position (degrees)
+  void resetPh(oscillator* osc);                  //set Current Phase to 0
 
   //calibration (if we need it, built into refreshPos, just call setTrim)
-  void setTrim(int t);       //set Trim (degrees)
-  int getTrim();             //get Trim (degrees)
+  void setTrim(oscillator* osc, int t);       //set Trim (degrees)
+  int getTrim(oscillator* osc);             //get Trim (degrees)
 
-private:
+
   //sinusoid functions
-  bool checkRefreshTime();    //check if refresh time increment has passed
-  long t_current;             //current time (ms)
-  long t_lastRefresh;         //time of last refreshPos() (ms)
+  int checkRefreshTime();    //check if refresh time increment has passed
 
-  //Arduino Servo object
-  Servo* servo;
-  bool servoAttached;         //true when a servo is attached
+  typedef struct oscillator {
+    long t_current;             //current time (ms)
+    long t_lastRefresh;         //time of last refreshPos() (ms)
 
-  //sinusoid parameters
-  int amp;     //Amplitude (degrees)
-  int off;     //Offset (degrees)
-  double ph0;           //Initial Phase (radians)
-  int period;           //Period (ms)
-  int rev;              //Reverse Sinusoid multiplier (1 = no rev, -1 = rev)
+    //Servo object
+    tServo* servo;
 
-  //servo status variables
-  bool isStopped;
-  int pos;        //Current Position (degrees)
-  double ph;      //Current Phase (radians)
-  double phInc;    //Phase increment (radians)
-  int samplePeriod;    //how often to sample servos for pos (ms)
+    //sinusoid parameters
+    int amp;     //Amplitude (degrees)
+    int off;     //Offset (degrees)
+    double ph0;           //Initial Phase (radians)
+    int period;           //Period (ms)
+    int rev;              //Reverse Sinusoid multiplier (1 = no rev, -1 = rev)
 
-  //calibration (if we need it)
-  int trim;     //add to position (degrees)
-};
+    //servo status variables
+    char isStopped;
+    int pos;        //Current Position (degrees)
+    double ph;      //Current Phase (radians)
+    double phInc;    //Phase increment (radians)
+    int samplePeriod;    //how often to sample servos for pos (ms)
+
+    //calibration (if we need it)
+    int trim;     //add to position (degrees)
+  } oscillator;

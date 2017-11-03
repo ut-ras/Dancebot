@@ -6,10 +6,10 @@
 //TODO decide on some sort of control mechanism or auto running of the dance moves
 
 /* Current Pins
- * hip R: 15
- * hip  L: 14
- * ankle R: 12
- * ankle L: 11
+ * hip R: 15 C5
+ * hip  L: 14 C4
+ * ankle R: 12 C2
+ * ankle L: 11 C1
  */
 
 

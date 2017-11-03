@@ -3,7 +3,7 @@
 
 #include <math.h>
 #include <Arduino.h>
-  
+
 #ifndef OSCILLATOR
   #include "Oscillator.h"
   //#define PI 3.14159265358979323846
