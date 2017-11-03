@@ -54,7 +54,7 @@ void refreshPos(oscillator* osc) {
 //check if refresh time increment has passed
 bool checkRefreshTime(oscillator* osc) {
   //check if samplePeriod (ms) has passed since last checkRefreshTime() call
-  osc->t_current = millis();
+  osc->t_current = GetTimeUS() * 1000;
   if (osc->t_current - osc->t_lastRefresh > osc->samplePeriod) {
     osc->t_lastRefresh = osc->t_current;
     return true;
