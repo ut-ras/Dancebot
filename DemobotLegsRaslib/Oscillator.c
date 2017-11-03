@@ -1,134 +1,105 @@
-//Oscillator.cpp
+//Oscillator.c
 //UT Austin RAS Demobots
 
-#include <math.h>
-#include <Arduino.h>
+
 
 #ifndef OSCILLATOR
   #include "Oscillator.h"
   //#define PI 3.14159265358979323846
 #endif
 
-Oscillator::Oscillator() {
+
+int samplePeriod;
+
+oscillator* InitializeOscillator(tPin pin) {
+
+  oscillator* osc;
   //init helper variables
-  this->isStopped = true;
-  this->servoAttached = false;
-  this->t_lastRefresh = 0;
-  this->ph = 0;
+  osc->isStopped = 1;
+  osc->servoAttached = false;
+  osc->t_lastRefresh = 0;
+  osc->ph = 0;
 
   //default sinusoid values
   samplePeriod = 50;
-  this->setAmp(30);
-  this->setOff(0);
-  this->setPh0(0);
-  this->setPer(2500);
-  this->setRev(false);
+  osc->setAmp = 30;
+  osc->setOff = 0;
+  osc->setPh0 = 0;
+  osc->setPer = 2500;
+  osc->setRev = 0;
+  osc->trim = 0
 
-  servo = new Servo();
-}
+  osc->servo = InitializeServo();
 
-//not currently being directly used
-Oscillator::Oscillator( int a,  int o, double p0,  int t, bool r) {
-  //init helper variables
-  this->isStopped = true;
-  this->servoAttached = false;
-  this->t_lastRefresh = 0;
-  this->ph = 0;
-
-  //default sinusoid values
-  samplePeriod = 30;
-  this->setAmp(a);
-  this->setOff(o);
-  this->setPh0(p0);
-  this->setPer(t);
-  this->setRev(r);
-
-  servo = new Servo();
+  return osc;
 }
 
 
 
 //SINUSOID FUNCTIONS
 //set servo pos based on sinusoid
-void Oscillator::refreshPos() {
-  if (this->servoAttached && this->checkRefreshTime()) {
+void refreshPos(oscillator* osc) {
+  if (osc->servoAttached && checkRefreshTime()) {
     //Serial.print("phInc: " + String(this->phInc));
-    if (!this->isStopped) {
+    if (!osc->isStopped) {
         //if the refresh time is complete and the motor is not stopped
         //calculate the current pos in the sinusoid
-        int newPos = this->rev * round(double(this->amp) * double(sin(this->ph + this->ph0)) + double(this->off));
-        this->setPos(newPos);
+        int newPos = osc->rev * round(double(osc->amp) * double(sin(osc->ph + osc->ph0)) + double(osc->off));
+        osc->setPos(newPos);
     }
-    this->ph += this->phInc;    //increment the phase
-    if (this->ph > 2 * PI) {this->resetPh();}
+    osc->ph += osc->phInc;    //increment the phase
+    if (osc->ph > 2 * PI) {osc->resetPh();}
   }
 }
 //check if refresh time increment has passed
-bool Oscillator::checkRefreshTime() {
+bool checkRefreshTime(oscillator* osc) {
   //check if samplePeriod (ms) has passed since last checkRefreshTime() call
-  this->t_current = millis();
-  if (this->t_current - this->t_lastRefresh > this->samplePeriod) {
-    this->t_lastRefresh = this->t_current;
+  osc->t_current = millis();
+  if (osc->t_current - osc->t_lastRefresh > osc->samplePeriod) {
+    osc->t_lastRefresh = osc->t_current;
     return true;
   }
   return false;
 }
 
 
-//SERVO SETUP
-void Oscillator::attach(int pin) {
-  servo->detach();
-  servo->attach(pin);
-  this->servoAttached = true;
-}
-void Oscillator::detach() {
-  if (servo->attached()) {
-    servo->detach();
-    this->servoAttached = false;
-  }
-}
-
 
 //SINUSOID PARAMETERS
 //set Amplitude (degrees)
-void Oscillator::setAmp( int a) {this->amp = a;}
+void setAmp(oscillator* osc, int a) {osc->amp = a;}
 //set Offset (degrees)
-void Oscillator::setOff( int o) { this->off = o;}
+void setOff(oscillator* osc, int o) { osc->off = o;}
 //set Initial Phase (radians)
-void Oscillator::setPh0(double p0) {this->ph0 = p0;}
+void setPh0(oscillator* osc, double p0) {osc->ph0 = p0;}
 //set Period (ms)
-void Oscillator::setPer( int t) {
-  this->period = t;
-  double n = double(this->period) / double(this->samplePeriod);  //n = number of samples
-  this->phInc = (2.0 * PI) / n;
+void setPer(oscillator* osc, int t) {
+  osc->period = t;
+  double n = double(osc->period) / double(osc->samplePeriod);  //n = number of samples
+  osc->phInc = (2.0 * PI) / n;
   //Serial.print("n: " + String(n) + " phInc: " + String(this->phInc));
 }
 //Set Sinusoid Reverse on/off (default off) (sin reverse not servo reverse)
-void Oscillator::setRev(bool r) {
-  if (r) {this->rev = -1;}
-  else {this->rev = 1;}
+void setRev(oscillator* osc, bool r) {
+  if (r) {osc->rev = -1;}
+  else {osc->rev = 1;}
 }
 
 
 //CONTROL
-void Oscillator::stopO() {this->isStopped = true;}
-void Oscillator::startO() {this->isStopped = false;}
+void stopO(oscillator* osc) {osc->isStopped = true;}
+void startO(oscillator* osc) {osc->isStopped = false;}
 //set Position (degrees)
-void Oscillator::setPos(int p) {
-  this->pos = p;
-  servo->write(p + this->trim);
+void setPos(oscillator* osc, int p) {
+  osc->pos = p;
+  SetServo(osc->servo, float(p + osc->trim) / float(255.0));
   //Serial.print("pos: " + String(p) + " ph: " + String(this->ph) + " phInc: " + String(this->phInc) + "amp: " + String(this->amp) + "\n");
 }
-int Oscillator::getPos() {
-  //this only reads the most recent data sent to it -- wont work until data has been written
-  int angle = servo->read();
-  return angle;
-}
+
 //set Current Phase to 0
-void Oscillator::resetPh() {
-  this->ph = 0;
+void resetPh(oscillator* osc) {
+  osc->ph = 0;
 }
 
 //CALIBRATION (if we need it)
-void Oscillator::setTrim(int t) {this->trim = t;}
-int Oscillator::getTrim() {return this->trim;}
+void setTrim(oscillator* osc, int t) {osc->trim = t;}
+int getTrim(oscillator* osc) {return osc->trim;}

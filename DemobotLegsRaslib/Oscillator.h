@@ -1,7 +1,7 @@
 /* Oscillator.h
  * UT Austin RAS Demobots
  * Oscillate non-continuous servos in sinusoidal motion
- * Basically just a wrapper class for the Arduino library servo class
+ * Basically just a wrapper  for servo.h
  */
 
 //this prevents errors if Oscillator.h is included in multiple files
@@ -27,7 +27,7 @@
 
 
   //sinusoid functions
-  void refreshPos();              //set servo pos based on sinusoid
+  void refreshPos(oscillator* osc);              //set servo pos based on sinusoid
   //sinusoid parameters
   void setAmp(oscillator* osc, int a);              //set Amplitude (degrees)
   void setOff(oscillator* osc, int o);              //set Offset (degrees)
@@ -47,7 +47,7 @@
 
 
   //sinusoid functions
-  int checkRefreshTime();    //check if refresh time increment has passed
+  int checkRefreshTime(oscillator* osc);    //check if refresh time increment has passed
 
   typedef struct oscillator {
     long t_current;             //current time (ms)
