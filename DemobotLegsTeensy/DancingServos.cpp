@@ -107,6 +107,29 @@ void DancingServos::wiggle(int angle, int cycles) {
   startOscillation(amp, off, ph0, 2000, cycles);
 }
 
+
+//DANCE ROUTINES
+void DancingServos::demo1() {
+  themAnkles(1);
+  wiggle(30, 2);
+  hop(25, 1);
+  walk(4, 1500, false);
+  hop(18, 1);
+  walk(2, 1500, true);
+}
+
+void DancingServos::demo2() {
+  walk(2, 1500, false);
+  walk(2, 1500, true);
+  themAnkles(1);
+  wiggle(30, 1);
+  hop(25, 2);
+}
+
+void DancingServos::demo3() {
+  
+}
+
 //CALIBRATION
 /* //doesnt work without encoders, servo can't read until data has been written
 void DancingServos::calibrateTrims() {

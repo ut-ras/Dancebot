@@ -39,12 +39,8 @@ void loop() {
   delay(1000);
 
   //dance moves here
-  bot->themAnkles(1);
-  bot->wiggle(30, 2);
-  bot->hop(25, 1);
-  bot->walk(4, 1500, false);
-  bot->hop(18, 1);
-  bot->walk(2, 1500, true);
+  bot->demo1();
+  bot->demo2();
   //add more moves
 
 }

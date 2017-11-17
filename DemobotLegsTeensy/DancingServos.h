@@ -22,7 +22,9 @@ public:
   void themAnkles(int cycles);
   void hop(int height, int times);
   void wiggle(int angle, int times);
-
+  void demo1();
+  void demo2();
+  void demo3();
 
 private:
   void startOscillation(int amp[4], int off[4], double ph0[4], int period, float cycles);
