@@ -8,6 +8,8 @@
 #ifndef OSCILLATOR
   #define OSCILLATOR
   #include <RASLib/inc/servo.h>
+  #include <RASLib/inc/time.h>
+  #include <math.h>
   #include <stdbool.h>
   #define PI 3.1415
 #endif
@@ -74,3 +76,6 @@
 
   //sinusoid functions
   bool checkRefreshTime(oscillator* osc);    //check if refresh time increment has passed
+
+  //Math
+  //int round (double x);

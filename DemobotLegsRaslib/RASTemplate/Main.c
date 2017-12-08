@@ -31,6 +31,7 @@ int main(void) {
 
 
 void setup() {
+  //InitializeDancingServos(tPin hL, tPin hR, tPin aL, tPin aR);
   InitializeDancingServos(PIN_D0, PIN_D1, PIN_D2, PIN_D3);
   setTrims(75, 130, 45, 45);
 }

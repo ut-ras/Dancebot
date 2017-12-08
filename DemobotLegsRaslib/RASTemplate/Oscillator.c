@@ -43,8 +43,9 @@ void refreshPos(oscillator* osc) {
     if (!osc->isStopped) {
         //if the refresh time is complete and the motor is not stopped
         //calculate the current pos in the sinusoid
-        int newPos = osc->rev * round(double(osc->amp) * double(sin(osc->ph + osc->ph0)) + double(osc->off));
+        int newPos = osc->rev * (int)((double)osc->amp * (double)sin(osc->ph + osc->ph0) + (double)osc->off);
         osc->pos = newPos;
+        setPos(osc, newPos);
     }
     osc->ph += osc->phInc;    //increment the phase
     if (osc->ph > 2 * PI) {resetPh(osc);}
@@ -73,7 +74,7 @@ void setPh0(oscillator* osc, double p0) {osc->ph0 = p0;}
 //set Period (ms)
 void setPer(oscillator* osc, int t) {
   osc->period = t;
-  double n = double(osc->period) / double(osc->samplePeriod);  //n = number of samples
+  double n = (double)osc->period / (double)osc->samplePeriod;  //n = number of samples
   osc->phInc = (2.0 * PI) / n;
   //Serial.print("n: " + String(n) + " phInc: " + String(this->phInc));
 }
@@ -90,7 +91,8 @@ void startO(oscillator* osc) {osc->isStopped = false;}
 //set Position (degrees)
 void setPos(oscillator* osc, int p) {
   osc->pos = p;
-  SetServo(osc->servo, float(p + osc->trim) / float(255.0));
+  float newVal =  (float)(p + osc->trim) / (float)(255.0);
+  SetServo(osc->servo, newVal);
   //Serial.print("pos: " + String(p) + " ph: " + String(this->ph) + " phInc: " + String(this->phInc) + "amp: " + String(this->amp) + "\n");
 }
 
@@ -102,3 +104,15 @@ void resetPh(oscillator* osc) {
 //CALIBRATION (if we need it)
 void setTrim(oscillator* osc, int t) {osc->trim = t;}
 int getTrim(oscillator* osc) {return osc->trim;}
+
+
+//Math
+/*
+int round(double x) {
+  int xInt = (int)x;
+  double frac = x - xInt;
+  if (frac >= 0.5) {
+    xInt += 1;
+  }
+  return xInt;
+}*/
