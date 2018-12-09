@@ -7,10 +7,8 @@
  */
 
 #include <Arduino.h>
+#include "DancingServos.h"
 
-#ifndef DANCINGSERVOS
-  #include "DancingServos.h"
-#endif
 
 //SETUP FUNCTIONS
 DancingServos::DancingServos(int hL, int hR, int aL, int aR) {
