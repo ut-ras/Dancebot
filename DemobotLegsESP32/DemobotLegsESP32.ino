@@ -1,14 +1,30 @@
 //ESP32 PICO Kit dev board
-
-#include <Arduino.h>
-#include "DancingServos.h"
-
 /* Current Pins
  * hip  L: 14
  * hip R: 13
- * ankle L: 12
+ * ankle L: 12 
  * ankle R: 15
  */
+
+ 
+#include <Arduino.h>
+#include "DancingServos.h"
+#include "WebController.h"
+
+
+//WiFi Settings
+//STA = connect to a WiFi network with name ssid
+//AP = create a WiFi access point with  name ssid
+#define WIFI_MODE "STA"
+const char * ssid = "esp_hotspot";
+const char * pass = "esp";
+
+
+DancingServos* bot;
+Oscillator osc;
+
+long serverDelayEnd = 0;
+long serverCheckInterval = 1000;
 
 
 void oscillatorTest();
@@ -16,32 +32,34 @@ void dancingServosTest();
 void servoTest();
 void calibrateTrims(DancingServos* bot);
 
-DancingServos* bot;
-Oscillator osc;
+
 
 void setup() {
   //[hipL, hipR, ankleL, ankleR]
   bot = new DancingServos(14, 13, 12, 15);
   calibrateTrims(bot);
 
-  //delay(1000);
-  //Serial.begin(9600);
-  //delay(2000);
+  delay(500);
+  Serial.begin(115200);
+  delay(500);
+
+  setupWiFi(WIFI_MODE, ssid, pass);       //Access Point or Station
+  setupWebServer(bot);                    //Set up the Web Server
 }
 
 void loop() {
-  //oscillatorTest();
-  //servoTest();
-  //dancingServosTest();
+  //bot->position0();
+  //delay(1000);
+  //bot->demo1();
+  //bot->demo2();
+  
+  //loop the motors and check for web server traffic
+  bot->loopOscillation();
 
-  bot->position0();
-  delay(1000);
-
-  //dance moves here
-  bot->demo1();
-  bot->demo2();
-  //add more moves
-
+  if (!bot->isOscillating() || millis() > serverDelayEnd) {
+    serverDelayEnd = millis() + serverCheckInterval;
+    loopWebServer();
+  }
 }
 
 //manual calibration- based on how the servos are attatched to the parts
