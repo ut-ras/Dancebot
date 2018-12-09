@@ -4,11 +4,11 @@
  * Basically just a wrapper class for the Arduino library servo class
  */
 
-//this prevents errors if Oscillator.h is included in multiple files
 #ifndef OSCILLATOR
-  #define OSCILLATOR
-  #include <Servo.h>
-#endif
+#define OSCILLATOR
+
+#include <ESP32Servo.h>
+
 
 
 //TODO create OscillatorTest, update these steps if needed
@@ -34,9 +34,10 @@ public:
 
   //sinusoid functions
   void refreshPos();              //set servo pos based on sinusoid
+  
   //sinusoid parameters
-  void setAmp(int a);    //set Amplitude (degrees)
-  void setOff(int o);    //set Offset (degrees)
+  void setAmp(int a);             //set Amplitude (degrees)
+  void setOff(int o);             //set Offset (degrees)
   void setPh0(double p0);         //set Initial Phase (radians)
   void setPer(int t); //set Period (ms)
   void setRev(bool r);            //Set Reverse on/off (default off)
@@ -79,3 +80,6 @@ private:
   //calibration (if we need it)
   int trim;     //add to position (degrees)
 };
+
+#endif
+

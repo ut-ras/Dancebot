@@ -7,9 +7,10 @@
  */
 
 #ifndef DANCINGSERVOS
-  #define DANCINGSERVOS
-  #include "Oscillator.h"
-#endif
+#define DANCINGSERVOS
+
+#include "Oscillator.h"
+
 
 class DancingServos {
 public:
@@ -35,3 +36,5 @@ private:
   Oscillator* osc[4];
   int pins[4];
 };
+
+#endif

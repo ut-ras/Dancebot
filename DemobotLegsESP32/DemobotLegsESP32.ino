@@ -1,22 +1,13 @@
-//ESP8266
-/* TODO
- * List of dance moves in an array
- * Set up a WebServer (File>Examples>ESP8266WebServer)
- * set up a header file for HTML home page
- *    function that generates HTML form with buttons for all the dance moves
- * Receive form in web server and change current dance move   
- */
-
+//ESP32 PICO Kit dev board
 
 #include <Arduino.h>
 #include "DancingServos.h"
 
-
 /* Current Pins
- * hip L: 12 d6
- * hip  R: 13 d7
- * ankle L: 14 d5
- * ankle R: 16 d0
+ * hip  L: 14
+ * hip R: 13
+ * ankle L: 12
+ * ankle R: 15
  */
 
 
@@ -29,7 +20,8 @@ DancingServos* bot;
 Oscillator osc;
 
 void setup() {
-  bot = new DancingServos(12, 13, 14, 16);
+  //[hipL, hipR, ankleL, ankleR]
+  bot = new DancingServos(14, 13, 12, 15);
   calibrateTrims(bot);
 
   //delay(1000);

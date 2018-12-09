@@ -6,9 +6,10 @@
 
 //this prevents errors if Oscillator.h is included in multiple files
 #ifndef OSCILLATOR
-  #define OSCILLATOR
-  #include <Servo.h>
-#endif
+#define OSCILLATOR
+
+#include <Servo.h>
+
 
 
 //TODO create OscillatorTest, update these steps if needed
@@ -79,3 +80,5 @@ private:
   //calibration (if we need it)
   int trim;     //add to position (degrees)
 };
+
+#endif

@@ -4,10 +4,10 @@
 #include <math.h>
 #include <Arduino.h>
   
-#ifndef OSCILLATOR
-  #include "Oscillator.h"
-  //#define PI 3.14159265358979323846
-#endif
+#include "Oscillator.h"
+
+//#define PI 3.14159265358979323846
+
 
 Oscillator::Oscillator() {
   //init helper variables
@@ -25,6 +25,7 @@ Oscillator::Oscillator() {
   this->setRev(false);
 
   servo = new Servo();
+  servo->setPeriodHertz(50);
 }
 
 //not currently being directly used
@@ -44,6 +45,7 @@ Oscillator::Oscillator( int a,  int o, double p0,  int t, bool r) {
   this->setRev(r);
 
   servo = new Servo();
+  servo->setPeriodHertz(50);
 }
 
 
@@ -129,6 +131,6 @@ void Oscillator::resetPh() {
   this->ph = 0;
 }
 
-//CALIBRATION (if we need it)
+//CALIBRATION
 void Oscillator::setTrim(int t) {this->trim = t;}
 int Oscillator::getTrim() {return this->trim;}

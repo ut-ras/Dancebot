@@ -7,10 +7,7 @@
  */
 
 #include <Arduino.h>
-
-#ifndef DANCINGSERVOS
-  #include "DancingServos.h"
-#endif
+#include "DancingServos.h"
 
 //SETUP FUNCTIONS
 DancingServos::DancingServos(int hL, int hR, int aL, int aR) {
@@ -130,15 +127,8 @@ void DancingServos::demo3() {
   
 }
 
-//CALIBRATION
-/* //doesnt work without encoders, servo can't read until data has been written
-void DancingServos::calibrateTrims() {
-  for (int i = 0; i < 4; i++) {
-    int angle = positionFromEncoder;
-    osc[i]->setTrim(angle);
-    //Serial.println("trim " + String(i) + ": " + String(angle));
-  }
-}*/
+
+
 
 //MATH
 double DancingServos::degToRad(double deg) {
