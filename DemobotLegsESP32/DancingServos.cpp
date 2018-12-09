@@ -11,6 +11,8 @@
 
 //SETUP FUNCTIONS
 DancingServos::DancingServos(int hL, int hR, int aL, int aR) {
+  isOsc = false;
+  endMoveTime = -1;
   pins[0] = hL;
   pins[1] = hR;
   pins[2] = aL;
@@ -45,18 +47,54 @@ void DancingServos::startOscillation(int amp[4], int off[4], double ph0[4], int 
     osc[i]->setPer(period);
     osc[i]->startO();
   }
-  //run the refreshPos() function on each oscillator for the correct time
+  
   //total oscillation time = (period * cycles)
-  long t0 = millis();
-  for (long t = t0; t < (period * cycles + t0); t = millis()) {
-    for (int i = 0; i < 4; i++) {
-      osc[i]->refreshPos();
-    }
+  if (cycles == -1) {
+    endMoveTime = -1;
   }
+  else {
+    endMoveTime = (period * cycles + millis());
+  }
+  
+  isOsc = true;
+}
+
+void DancingServos::loopOscillation() {
+  if (isOscillating()) {
+    if ((endMoveTime == -1) || (millis() < endMoveTime)) {
+      for (int i = 0; i < 4; i++) {
+        osc[i]->refreshPos();
+      }
+    }
+    else {
+      stopOscillation();  
+    }    
+  }
+}
+
+void DancingServos::stopOscillation() {
+  isOsc = false;
+  endMoveTime = 0;
   for (int i = 0; i < 4; i++) {
     osc[i]->stopO();
     osc[i]->resetPh();
   }
+}
+
+void DancingServos::waitOscillation() {
+  while(isOscillating()) {loopOscillation(); yield();}
+}
+
+bool DancingServos::isOscillating() {
+  return isOsc;
+}
+
+String * DancingServos::getDanceMoves() {
+  return danceMoves;
+}
+
+int DancingServos::getNumDanceMoves() {
+  return numDanceMoves;
 }
 
 //[hipL, hipR, ankleL, ankleR]
@@ -108,25 +146,31 @@ void DancingServos::wiggle(int angle, int cycles) {
 //DANCE ROUTINES
 void DancingServos::demo1() {
   themAnkles(1);
+  waitOscillation();
   wiggle(30, 2);
+  waitOscillation();
   hop(25, 1);
+  waitOscillation();
   walk(4, 1500, false);
+  waitOscillation();
   hop(18, 1);
+  waitOscillation();
   walk(2, 1500, true);
+  waitOscillation();
 }
 
 void DancingServos::demo2() {
   walk(2, 1500, false);
+  waitOscillation();
   walk(2, 1500, true);
+  waitOscillation();
   themAnkles(1);
+  waitOscillation();
   wiggle(30, 1);
+  waitOscillation();
   hop(25, 2);
+  waitOscillation();
 }
-
-void DancingServos::demo3() {
-  
-}
-
 
 
 
