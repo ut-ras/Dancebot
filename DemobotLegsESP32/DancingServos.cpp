@@ -32,7 +32,7 @@ void DancingServos::setTrims(int tHL, int tHR, int tAL, int tAR) {
 }
 
 
-//DANCING FUNCTIONS
+//DANCE MOVE FUNCTIONS
 
 /* this functions is the basis of all the other dancing functions
  * set up an oscillation for each of the 4 servos
@@ -82,21 +82,48 @@ void DancingServos::stopOscillation() {
 }
 
 void DancingServos::waitOscillation() {
-  while(isOscillating()) {loopOscillation(); yield();}
+  while(isOscillating()) {
+    loopOscillation(); 
+    delay(50);
+    yield();
+  }
 }
 
 bool DancingServos::isOscillating() {
   return isOsc;
 }
 
-String * DancingServos::getDanceMoves() {
-  return danceMoves;
+
+
+//DANCE ROUTINE FUNCTIONS
+
+void DancingServos::loopDanceRoutines() {
+  if (doDanceRoutine) {
+    //(((DancingServos*)this)->DancingServos::danceRoutineFunctions[currentDanceRoutine])();    //TODO
+    switch(currentDanceRoutine) {
+      case 0:
+        demo1(); break;
+      case 1:
+        demo2(); break;
+    }
+  }
 }
 
-int DancingServos::getNumDanceMoves() {
-  return numDanceMoves;
+void DancingServos::enableDanceRoutine(bool dance) {
+  doDanceRoutine = dance;
 }
 
+void DancingServos::setDanceRoutine(int dance) {
+  currentDanceRoutine = dance;
+}
+
+
+
+
+
+//DANCE MOVES
+
+//wrappers for startOscillation()
 //[hipL, hipR, ankleL, ankleR]
 
 //Move to resting poition
@@ -127,7 +154,7 @@ void DancingServos::walk(float cycles, int period, bool reverse) {
 //simultaneous ankles
 void DancingServos::hop(int height, int cycles) {
   int amp[4] = {0, 0, height, height};
-  int off[4] = {0, 0, height, -height};
+  int off[4] = {0, 0, -height, height};
   double ph0[4] = {0, 0, degToRad(-90), degToRad(90)};
   for (int i = 0; i < 4; i++) {osc[i]->setRev(true);}
   startOscillation(amp, off, ph0, 2000, cycles);
@@ -143,33 +170,56 @@ void DancingServos::wiggle(int angle, int cycles) {
 }
 
 
+
 //DANCE ROUTINES
+
 void DancingServos::demo1() {
-  themAnkles(1);
-  waitOscillation();
-  wiggle(30, 2);
-  waitOscillation();
-  hop(25, 1);
-  waitOscillation();
-  walk(4, 1500, false);
-  waitOscillation();
-  hop(18, 1);
-  waitOscillation();
-  walk(2, 1500, true);
-  waitOscillation();
+  static int i = 0;
+  static int numMoves = 6;
+  if (!isOscillating()) {
+    if (i == 0)      {  themAnkles(1);  }
+    else if (i == 1) {  wiggle(30, 2);  }
+    else if (i == 2) {  hop(25, 1);     }
+    else if (i == 3) {  walk(4, 1500, false); }
+    else if (i == 4) {  hop(18, 1);     }
+    else if (i == 5) {  walk(2, 1500, true);  }
+    i = (i + 1) % numMoves;
+  }
 }
 
 void DancingServos::demo2() {
-  walk(2, 1500, false);
-  waitOscillation();
-  walk(2, 1500, true);
-  waitOscillation();
-  themAnkles(1);
-  waitOscillation();
-  wiggle(30, 1);
-  waitOscillation();
-  hop(25, 2);
-  waitOscillation();
+  static int i = 0;
+  static int numMoves = 5;
+  if (!isOscillating()) {
+    if (i == 0)      {  walk(2, 1500, false);   }
+    else if (i == 1) {  walk(2, 1500, true);    }
+    else if (i == 2) {  themAnkles(1);    }
+    else if (i == 3) {  wiggle(30, 1);    }
+    else if (i == 4) {  hop(25, 2);       }
+    i = (i + 1) % numMoves;
+  }
+}
+
+
+
+
+
+//INFO
+
+String * DancingServos::getDanceMoves() {
+  return danceMoves;
+}
+
+int DancingServos::getNumDanceMoves() {
+  return numDanceMoves;
+}
+
+String * DancingServos::getDanceRoutines() {
+  return danceRoutines;
+}
+
+int DancingServos::getNumDanceRoutines() {
+  return numDanceRoutines;
 }
 
 
@@ -177,4 +227,16 @@ void DancingServos::demo2() {
 //MATH
 double DancingServos::degToRad(double deg) {
   return (deg * PI) / 180.0;
+}
+
+
+
+//TEST FUNCTIONS
+void dancingServosTest(DancingServos* bot) {
+  bot->position0();
+  delay(500);
+  bot->themAnkles(5);
+  delay(500);
+  bot->position0();
+  while(true);
 }

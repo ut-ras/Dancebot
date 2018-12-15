@@ -80,7 +80,7 @@ bool Oscillator::checkRefreshTime() {
 //SERVO SETUP
 void Oscillator::attach(int pin) {
   servo->detach();
-  servo->attach(pin);
+  servo->attach(pin, MIN_US, MAX_US);
   this->servoAttached = true;
 }
 void Oscillator::detach() {
@@ -134,3 +134,37 @@ void Oscillator::resetPh() {
 //CALIBRATION
 void Oscillator::setTrim(int t) {this->trim = t;}
 int Oscillator::getTrim() {return this->trim;}
+
+
+
+//TEST FUNCTIONS
+void servoTest(int angle) {
+  Oscillator osc;
+  osc.attach(12);
+  osc.startO();
+  osc.setAmp(40);
+  osc.setOff(50);
+  osc.setPer(2500);
+  delay(2000);
+  int x = osc.getPos();
+  Serial.print(String(x));
+  osc.setPos(angle);
+  osc.stopO();
+  while(true);
+}
+
+void oscillatorTest() {
+  Oscillator osc;
+  osc.attach(12);
+  osc.startO();
+  long period = 2500;
+  long cycles = 5;
+  long t0 = millis();
+  for (long t = t0; t < (period * cycles + t0); t = millis()) {
+    delay(30);
+    osc.refreshPos();
+    yield();
+  }
+  osc.stopO();
+  while(true);
+}

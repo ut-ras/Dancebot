@@ -36,6 +36,7 @@
 
 
 void handleRoot();
+void handleDanceMove();
 void handleDance();
 void handleNotFound();
 void handleUnknownMove();
@@ -101,6 +102,8 @@ void setupWebServer(DancingServos* _dance_bot) {
   //Map paths to hander functions, can also specify HTTP methods
 
   server.on("/", handleRoot);
+  server.on("/danceM", HTTP_POST, handleDanceMove);
+  server.on("/danceM", HTTP_GET, handleRoot);
   server.on("/dance", HTTP_POST, handleDance);
   server.on("/dance", HTTP_GET, handleRoot);
   server.onNotFound(handleNotFound);    //404 Not Found
@@ -126,12 +129,13 @@ void loopWebServer() {
 
 //main page   "/"
 void handleRoot() {
+  Serial.println("Server received new client");
   server.send(200, "text/html", indexHTML());
 }
 
 
-//dance moves    "/dance"
-void handleDance() {
+//dance moves    "/danceM"
+void handleDanceMove() {
   //hasArg() checks if the last HTTP request in the server has an argument
   //arg() gets the value of the arg by name
 
@@ -139,14 +143,14 @@ void handleDance() {
   String dance_move = "";
   if(server.hasArg("dance_move")) {
     dance_move = server.arg("dance_move");
-    Serial.println(dance_move);
+    Serial.println("Server received dance_move: " + dance_move);
 
     if (dance_move == "Stop") {
       dance_bot->stopOscillation();
+      dance_bot->enableDanceRoutine(false);
     }
     else if (dance_move == "Reset") {
       dance_bot->position0();
-      dance_bot->stopOscillation();
     }
     else if (dance_move == "Walk") {
       dance_bot->walk(-1, 1500, false);
@@ -174,6 +178,34 @@ void handleDance() {
   server.send(200, "text/plain", dance_move);
 }
 
+//dance routines    "/dance"
+void handleDance() {
+  String dance_routine = "";
+  if(server.hasArg("dance_routine")) {
+    dance_routine = server.arg("dance_routine");
+    Serial.println("Server received dance_routine: " + dance_routine);
+
+    if (dance_routine.equals("Demo 1")) {
+      dance_bot->setDanceRoutine(0);
+      dance_bot->enableDanceRoutine(true);
+    }
+    else if (dance_routine.equals("Demo 2")) {
+      dance_bot->setDanceRoutine(1);
+      dance_bot->enableDanceRoutine(true);
+    }
+    else {
+      Serial.println("Dance routine not recognized, ERROR too lit for this robot");
+      handleUnknownMove();
+      return;
+    }
+  }
+  else {
+    dance_routine = "ERROR Server did not find dance routine argument in HTTP request";
+  }
+  
+  server.send(200, "text/plain", dance_routine);
+}
+
 void handleNotFound() {
   String message = "File Not Found\n\n";
   message += "URI: " + server.uri() + "\n";
@@ -196,16 +228,19 @@ void handleUnknownMove() {
 String indexHTML() {
   String button_css = "width:100%; margin-bottom:1em; padding: 1em; font-family:'Arial';font-size:medium;color:#1d1f21; background-color:#8abeb7;border-color:#5e8d87;";
   String * danceMoves = dance_bot->getDanceMoves();
+  String * danceRoutines = dance_bot->getDanceRoutines();
   
   String htmlPage = String("<head>") +
               "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />" + 
             "</head>" +
             
             "<body style=\"width:auto; font-family:'Arial'; background-color:#1d1f21; color:#c5c8c6;\">" +
+              //Header
               "<div id=\"page_header\" style=\"margin: 0 5% 2em 5%; color:#cc6666;\">" +
                 "<h1>Demobots Dancing Robot</h1>" +
               "</div>" +
 
+              //Dance Moves
               "<div id=\"page_dances\" style=\"margin: 0 5% 2em 5%;\">" +
                 "<h3 style=\"color:#81a2be;\">Dance Moves</h3>" +
                 
@@ -220,6 +255,22 @@ String indexHTML() {
                     }
   htmlPage += String("</div>") +
                 "</div>" +
+              "</div>" +
+
+              //Dance Routines
+              "<div id=\"page_routines\" style=\"margin: 0 5% 2em 5%;\">" +
+                "<h3 style=\"color:#81a2be;\">Dances</h3>" +
+
+                "<div id=\"dance_routines\" style=\"\">" +             
+                  "<div style=\"padding-left: 1.5em; font-size:medium;\">" +
+                    "<p id=\"current_routine\">Current Dance: None</p>" +
+                  "</div>" +
+                  "<div id=\"dance_routine_buttons\" style=\"padding-left: 1.5em; \">";
+                  for (int i = 0; i < dance_bot->getNumDanceRoutines(); i++) {
+                      htmlPage += "<button onclick=\"postDanceRoutine('" + danceRoutines[i] + "')\" style=\"" + button_css + "\">" + danceRoutines[i] + "</button>";
+                    }
+  htmlPage += String("</div>") +
+                "</div>" + 
                 
               "</div>" +
               
@@ -237,17 +288,33 @@ String getJavascript() {
       "function updateCurrentMove(move) {" +
         "document.getElementById('current_move').innerText = 'Current Move: ' + move; " +
       "}" +
+
+      "function updateCurrentRoutiune(routine) {" +
+        "document.getElementById('current_routine').innerText = 'Current Dance: ' + routine; " +
+      "}" +
       
       //function to HTTP Post
       "function postDancemove(move) {" +
         "var xhttp = new XMLHttpRequest(); " +
-        "xhttp.open('POST', '/dance', true);" +
+        "xhttp.open('POST', '/danceM', true);" +
         "xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');" +
         "xhttp.send('dance_move=' + move);" +
 
         "xhttp.onload = function() { " +
           "console.log('Move Received: ' + xhttp.responseText); " +
           "updateCurrentMove(xhttp.responseText)" +
+        "}" +
+      "}" +
+      
+      "function postDanceRoutine(routine) {" +
+        "var xhttp = new XMLHttpRequest(); " +
+        "xhttp.open('POST', '/dance', true);" +
+        "xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');" +
+        "xhttp.send('dance_routine=' + routine);" +
+
+        "xhttp.onload = function() { " +
+          "console.log('Dance Received: ' + xhttp.responseText); " +
+          "updateCurrentRoutiune(xhttp.responseText)" +
         "}" +
       "}" +
 

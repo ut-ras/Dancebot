@@ -6,6 +6,34 @@
  * ankle R: 15
  */
 
+/*
+ * Hardware
+ * 
+ * Servos
+ *    "Ankles": 2 HiTec HS-625MG "Super Torque" Servos https://www.horizonhobby.com/pdf/HRC32625S-Spec_Sheet.pdf
+ *      Operating Voltage: 4.8-6.0 V
+ *      Current Draw: 8.8 mA idle, 400 mA running
+ *    "Hips": 2 HiTec HS-322HD "Deluxe" Servos https://www.robotshop.com/media/files/pdf/hitec-hs-322hd-servo-specsheet.pdf
+ *      Operating Voltage: 4.8-6.0 V
+ *      Current Draw: 7.4 mA idle, 160 mA running no load, 700 mA running stalled
+ *    Total Current Draw 4 Servos: ~1600mA when running
+ *    Both have 900-2100 us pulse width (see Oscillator.cpp attach function)
+ * Microcontroller
+ *    ESP32 Pico Kit https://www.espressif.com/sites/default/files/documentation/esp32-pico-d4_datasheet_en.pdf
+ *    Operating Voltage: There is a 5v pin
+ *    Current Draw: 80mA average
+ * Batteries
+ *    Power Source: 6V 8000 mAH
+ *    4 rechargeable AA (1.5V), 2000 mAH each
+ *    8000 mAH battery using 1700mA lasts about 4.7 hours
+ * Decoupling Capacitor
+ *    100uF capacitor across the power source. I'm not sure if this is the best size, I haven't measured the noise yet.
+ *    Decoupling capacitors help remove AC noise from a DC power source.
+ *    The motors turning on/off and running can create noise in the power source; look at the differnce in current draw for idle vs running.
+ *    The ESP32 will reset if the power supply is not stable. The Teensy didn't crash without the cap, but it doesn't hurt. 
+ *    It would probably be better to use a 5v regulator.
+ */
+
  
 #include <Arduino.h>
 #include "DancingServos.h"
@@ -16,95 +44,54 @@
 //STA = connect to a WiFi network with name ssid
 //AP = create a WiFi access point with  name ssid
 #define WIFI_MODE "STA"
-const char * ssid = "esp_hotspot";
-const char * pass = "esp";
+//const char * ssid = "esp_hotspot";
+//const char * pass = "esp";
+const char * ssid = "Cole";
+const char * pass = "cole1234";
 
 
 DancingServos* bot;
-Oscillator osc;
 
 long serverDelayEnd = 0;
 long serverCheckInterval = 1000;
 
 
-void oscillatorTest();
-void dancingServosTest();
-void servoTest();
-void calibrateTrims(DancingServos* bot);
-
-
-
 void setup() {
+  Serial.begin(115200);
+  delay(500);
+  
   //[hipL, hipR, ankleL, ankleR]
   bot = new DancingServos(14, 13, 12, 15);
   calibrateTrims(bot);
 
-  delay(500);
-  Serial.begin(115200);
-  delay(500);
-
   setupWiFi(WIFI_MODE, ssid, pass);       //Access Point or Station
   setupWebServer(bot);                    //Set up the Web Server
+
+  delay(500);
+  bot->position0();
 }
 
-void loop() {
-  //bot->position0();
-  //delay(1000);
-  //bot->demo1();
-  //bot->demo2();
-  
+
+
+void loop() {  
   //loop the motors and check for web server traffic
   bot->loopOscillation();
 
+  //check if ready to start next move in dance
+  bot->loopDanceRoutines();
+  
   if (!bot->isOscillating() || millis() > serverDelayEnd) {
     serverDelayEnd = millis() + serverCheckInterval;
     loopWebServer();
   }
 }
 
-//manual calibration- based on how the servos are attatched to the parts
+
+
+//manual calibration- based on how the servos are attatched to the 3d printed parts
 void calibrateTrims(DancingServos* bot) {
   //[hipL, hipR, ankleL, ankleR]
-  bot->setTrims(75, 130, 45, 45);
+  bot->setTrims(70, 150, 25, 18);
 }
 
 
-
-
-//TEST FUNCTIONS
-void servoTest(int angle) {
-  osc.attach(12);
-  osc.startO();
-  osc.setAmp(40);
-  osc.setOff(50);
-  osc.setPer(2500);
-  delay(2000);
-  int x = osc.getPos();
-  Serial.print(String(x));
-  osc.setPos(angle);
-  osc.stopO();
-  while(true);
-}
-
-void oscillatorTest() {
-  osc.attach(12);
-  osc.startO();
-  long period = 2500;
-  long cycles = 5;
-  long t0 = millis();
-  for (long t = t0; t < (period * cycles + t0); t = millis()) {
-    delay(30);
-    osc.refreshPos();
-  }
-  osc.stopO();
-  while(true);
-}
-
-void dancingServosTest() {
-  bot->position0();
-  delay(500);
-  bot->themAnkles(5);
-  delay(500);
-  bot->position0();
-  while(true);
-}
