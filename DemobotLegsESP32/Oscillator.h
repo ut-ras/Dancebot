@@ -1,17 +1,12 @@
 /* Oscillator.h
  * UT Austin RAS Demobots
  * Oscillate non-continuous servos in sinusoidal motion
- * Basically just a wrapper class for the Arduino library servo class
+ * Basically just a wrapper class for the Arduino library servo class.
+ * Each loop, it sets the servo motor to the current value in the sine wave. 
  */
 
 #ifndef OSCILLATOR
 #define OSCILLATOR
-
-#include <ESP32Servo.h>
-
-
-
-//TODO create OscillatorTest, update these steps if needed
 
 /* HOW TO USE OSCILLATOR CLASS
  * 1) create Oscillator object
@@ -21,6 +16,13 @@
  * 4) run refreshPos() on the main loop
  * 5) enable oscillation with start()
  */
+
+ 
+#include <ESP32Servo.h>
+
+//These values depend on the servo motors, check the data sheet for minUs and maxUs. Used for Oscillator::attach().
+#define MIN_US 900
+#define MAX_US 2100
 
 
 class Oscillator {
@@ -80,6 +82,9 @@ private:
   //calibration (if we need it)
   int trim;     //add to position (degrees)
 };
+
+void oscillatorTest();
+void servoTest();
 
 #endif
 
