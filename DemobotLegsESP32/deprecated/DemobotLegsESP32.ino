@@ -1,3 +1,5 @@
+#include <HTTPClient.h>
+
 //ESP32 PICO Kit dev board
 /* Current Pins
  * hip  L: 14

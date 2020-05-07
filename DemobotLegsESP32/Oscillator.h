@@ -16,8 +16,6 @@
  * 4) run refreshPos() on the main loop
  * 5) enable oscillation with start()
  */
-
- 
 #include <ESP32Servo.h>
 
 //These values depend on the servo motors, check the data sheet for minUs and maxUs. Used for Oscillator::attach().

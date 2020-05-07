@@ -1,324 +1,323 @@
-/* ESP32 Web Controller for DanceBot
- *
- * Sets up the ESP32 as a WiFi Access Point or connects to an existing WiFi network
- * Launches a Web Server with buttons to input dance moves to the DancingServos object
- *
- * WIFI_MODE variable
- * AP Mode: Launches the web server at http://192.168.4.1:80/       AP untested
- * STA Mode: Connects to an existing WiFi network
- *
- * Set WiFi credentials with "ssid" and "pass" strings
-
- *
- * Resources
- *
- * Arduino ESP32 and ESP32Servo Docs
- * https://github.com/espressif/arduino-esp32
- * https://www.arduinolibraries.info/libraries/esp32-servo
- *
- * Web Server
- * https://github.com/espressif/arduino-esp32/tree/master/libraries/WebServer
- * Arduino IDE: Examples > Examples for ESP32 > WebServer > AdvancedWebServer
- * 
- * Javascript AJAX and DOM
- * https://www.w3schools.com/js/js_htmldom.asp
- * https://www.w3schools.com/js/js_ajax_intro.asp
- * https://www.w3schools.com/js/js_ajax_http_send.asp
- * https://www.w3schools.com/jsref/event_onclick.asp
+/**
+ * Author: Matthew Yu
+ * Last Modified: 05/06/20
+ * Project: Dancebot Swarm
+ * File: WebController.cpp
+ * Description: A generic secure web controller for controlling various Demobots Projects. Robots should be able to: connect to a remote server and receive/send commands, as well as spin up their own server and serve a webpage to the user to directly interact with it.
+ * Organization: UT IEEE RAS
  */
- 
-#include <WiFi.h>
-#include <WiFiClient.h>
-#include <WebServer.h>
-#include <ESPmDNS.h>
+#include "WebController.h"
 
-#include "DancingServos.h"
-
-
-void handleRoot();
-void handleDanceMove();
-void handleDance();
-void handleNotFound();
-void handleUnknownMove();
-
-String indexHTML();
-String getJavascript();
-
-
-
-//Web Server
-const char * server_ssid;
-const char * server_pass;
-int port = 80;
-IPAddress ip;
-String webServerPath = "http://";
-
-
-//Web server at port 80
-WebServer server(port);
-
-
-//DancingServos object
-DancingServos* dance_bot;
-
-
-
-/* Setup Functions */
-
-/* setupWiFi
- * STA = connect to a WiFi network with name ssid
- * AP = create a WiFi access point with  name ssid
+/**
+ * setupWifi determines what network connection should be used, if any, and sets it up if id doesn't exist already.
  */
-void setupWiFi(String mode, const char * ssid, const char * pass) {
-  server_ssid = ssid;
-  server_pass = pass;
-  
-  if (mode.equals("AP")) {
-    //Turn on Access Point
-    WiFi.softAP(ssid, pass);
-    ip = WiFi.softAPIP();
-  }
-  else {
-    //Connect to a WiFi network
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(ssid, pass);
-    while (WiFi.status() != WL_CONNECTED) {
-      delay(500);
-      yield();
-      //Serial.print(".");
-    }
-    ip = WiFi.localIP();
+void setupWifi() {
+    int mode;
+    // Initialize serial for debugging purposes
+    Serial.begin(115200);
+    delay(100);
 
-    if (MDNS.begin("esp32")) {
-      Serial.println("MDNS responder started");
-    }
-  }
+    // 1. Scan networks
+    int networks = WiFi.scanNetworks();
 
-  Serial.println("WiFi mode=" + mode + ", ssid = " + String(ssid) + ", pass = " + String(pass));
+    // 2. If a network is found, attempt to connect to it
+    if(networks > 0) {
+        // 3. Check networks against credentials log, looking for the highest priority match (in this case, index ascending order)
+        int foundNetwork = 0;
+        for (int i = CredentialsLogLength-1; i < 0; i--) {
+            for (int j = 0; j < networks; j++) {
+                if(WiFi.SSID(i).equals(String(CredentialsLog[i].SSID))) {
+                    foundNetwork = i;
+                }
+            }
+        }
+        // set relevant SSID and password
+        // connect to network
+        WiFi.begin(CredentialsLog[foundNetwork].SSID, CredentialsLog[foundNetwork].PASSWORD);
+        while (WiFi.status() != WL_CONNECTED) {
+            // I'm either in WL_IDLE_STATUS or WL_CONNECT_FAILED.
+            if(WiFi.status() == WL_CONNECT_FAILED) {
+                Serial.println("Connection failed error. Halting.");
+                while(1) {
+                    int i = 0;
+                }
+            }
+            Serial.print(".");
+            delay(RETRY_WAIT);
+        }
+        Serial.print("Connected to ");
+        Serial.println(CredentialsLog[foundNetwork].SSID);
+
+        // Is there a response at the relevant IP? If so, establish a connection to it.
+        // send GET request at IP address/hook
+        // TODO: check to see if i need to specify timeout https://github.com/espressif/arduino-esp32/blob/master/libraries/HTTPClient/src/HTTPClient.cpp
+        HTTPClient http;
+        Serial.print("[HTTP] begin...\n");
+        String queryPath = Robots[ROBOT_IDX].defaultIP + "/robotJoin"; // NOTE: default path to add Demobot to network
+        http.begin(queryPath.c_str());
+
+        // check for response
+        int httpResponseCode = http.GET();
+        if(httpResponseCode == OK) {
+            // 3a. Response found. Establish a connection to it.
+            mode = CON;
+        } else if(httpResponseCode == NO_SERVER) {
+            // 3b. No response, host the page yourself using STA.
+            mode = STA;
+        } else { // Catch wrong reponse code error
+            Serial.println("Unexpected response code error. Halting.");
+            Serial.println(httpResponseCode);
+            while(1) {
+                int i = 0;
+            }
+        }
+    } else {
+        // 4. If no networks are found, setup a network and host the page using AP
+        mode = AP;
+    }
+
+    if(mode == AP) { // set up network and my desired webpage IP address
+        WiFi.softAP(CredentialsLog[DEFAULT_NETWORK_ID].SSID, CredentialsLog[DEFAULT_NETWORK_ID].PASSWORD);
+        WiFi.softAPConfig(Robots[ROBOT_IDX].defaultIP, gateway, subnet); 
+        delay(100);
+    }else if(mode == STA) { // set up my desired webpage IP address
+        WiFi.softAPConfig(Robots[ROBOT_IDX].defaultIP, gateway, subnet); 
+        delay(100);
+    }
+
+    if(mode != CON) {
+        startServer();
+    }
+    // Ready to start communicating
 }
 
-void setupWebServer(DancingServos* _dance_bot) {
-  //Turn on a web server at port 80
-  //Map paths to hander functions, can also specify HTTP methods
+/**
+ * startServer sets up the URL hooks.
+ */
+void startServer() {
+    /* TODO: MODIFY BELOW WITH YOUR RELEVANT ROBOT API */
+    // generate URL hooks to edit the robot state
+    server.on("/",          HTTP_GET,  handle_OnConnect);
+    server.on("/reset",     HTTP_POST,  handle_Reset);
+    server.on("/walk",      HTTP_POST,  handle_Walk);
+    server.on("/hop",       HTTP_POST,  handle_Hop);
+    server.on("/wiggle",    HTTP_POST,  handle_Wiggle);
+    server.on("/ankles",    HTTP_POST,  handle_Ankles);
+    server.on("/demo1",     HTTP_POST,  handle_Demo1);
+    server.on("/demo2",     HTTP_POST,  handle_Demo2);
+    server.on("/getState",  HTTP_POST,  handle_GetState);
+    server.on("/robotJoin", HTTP_POST,  handle_RobotJoin);
+    server.onNotFound(handle_NotFound);
+    /* END */
 
-  server.on("/", handleRoot);
-  server.on("/danceM", HTTP_POST, handleDanceMove);
-  server.on("/danceM", HTTP_GET, handleRoot);
-  server.on("/dance", HTTP_POST, handleDance);
-  server.on("/dance", HTTP_GET, handleRoot);
-  server.onNotFound(handleNotFound);    //404 Not Found
-
-  server.begin();
-
-  webServerPath += ip.toString() + ":" + String(port) + "/";
-
-  Serial.println("Web server at " + webServerPath);
-
-  dance_bot = _dance_bot;
+    server.begin();
+    Serial.println("HTTP server started");
 }
 
-/* Main Loop */
-void loopWebServer() {
-  //handle web server
-  server.handleClient();
+/* MODIFY BELOW WITH YOUR RELEVANT ROBOT */
+
+/**
+ * handle_OnConnect - GET request to get the webpage from server.
+ */
+void handle_OnConnect() {
+    Serial.println("Server received new client.");
+    // serve HTML page
+    server.send(200, "text/html", sendHTML());
 }
 
+/**
+ * handle_Reset - POST request to set Robot id to state Reset
+ * handle_Walk  - POST request to set Robot id to state Walk
+ * handle_Hop   - POST request to set Robot id to state Hop
+ * handle_Wiggle- POST request to set Robot id to state Wiggle
+ * handle_Ankles- POST request to set Robot id to state Ankles
+ * handle_Demo1 - POST request to set Robot id to state Demo1
+ * handle_Demo2 - POST request to set Robot id to state Demo2
+ * @return: HTTP CODE 200 on success
+ *          HTTP CODE 400 on invalid request
+ *          HTTP CODE 404 on robotNotFound
+ */
+void handle_Reset() { handle_State(Reset);  }
+void handle_Walk()  { handle_State(Walk);   }
+void handle_Hop()   { handle_State(Hop);    }
+void handle_Wiggle(){ handle_State(Wiggle); }
+void handle_Ankles(){ handle_State(Ankles); }
+void handle_Demo1() { handle_State(Demo1);  }
+void handle_Demo2() { handle_State(Demo2);  }
 
-
-/* Request Handlers */
-
-//main page   "/"
-void handleRoot() {
-  Serial.println("Server received new client");
-  server.send(200, "text/html", indexHTML());
+/**
+ * handle_GetState is a POST request with a robot id to grab a wanted robot's state
+ * @return: HTTP CODE 200 on success
+ *          HTTP CODE 400 on invalid request
+ *          HTTP CODE 404 on robotNotFound
+ */
+void handle_GetState() {
+    // check if request is correct
+    if(!server.hasArg("robot_id")) {
+        server.send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
+        return;
+    }
+    // for list of robots connected, check if robot id matches any connected robots
+    for(int i = 0; i < numConnectedRobots; i++) {
+        if(server.arg("robot_id").equals(String(connectedRobots[i].robotID))) {
+            server.send(200, "text/html", String(connectedRobots[i].robotState));
+        }
+    }
+    server.send(404, "text/plain", "404: Robot Not Found");
 }
 
-
-//dance moves    "/danceM"
-void handleDanceMove() {
-  //hasArg() checks if the last HTTP request in the server has an argument
-  //arg() gets the value of the arg by name
-
-  //check for serial input form
-  String dance_move = "";
-  if(server.hasArg("dance_move")) {
-    dance_move = server.arg("dance_move");
-    Serial.println("Server received dance_move: " + dance_move);
-
-    if (dance_move == "Stop") {
-      dance_bot->stopOscillation();
-      dance_bot->enableDanceRoutine(false);
-    }
-    else if (dance_move == "Reset") {
-      dance_bot->position0();
-    }
-    else if (dance_move == "Walk") {
-      dance_bot->walk(-1, 1500, false);
-    }
-    else if (dance_move == "Hop") {
-      dance_bot->hop(25, -1);
-    }
-    else if (dance_move == "Wiggle") {
-      dance_bot->wiggle(30, -1);
-    }
-    else if (dance_move == "Ankles") {
-      dance_bot->themAnkles(-1);
-    }
-    else {
-      Serial.println("Dance move not recognized, ERROR too lit for this robot");
-      handleUnknownMove();
-      return;
-    }
-  }
-  else {
-    dance_move = "ERROR Server did not find dance move argument in HTTP request";
-  }
-
-  //handleRoot();     //now the form is handled with JS so there is no need to respond with index html
-  server.send(200, "text/plain", dance_move);
+/**
+ * handle_NotFound is For 404 redirect requests.
+ */
+void handle_NotFound() {
+    server.send(404, "text/plain", "404: Not found");
 }
 
-//dance routines    "/dance"
-void handleDance() {
-  String dance_routine = "";
-  if(server.hasArg("dance_routine")) {
-    dance_routine = server.arg("dance_routine");
-    Serial.println("Server received dance_routine: " + dance_routine);
-
-    if (dance_routine.equals("Demo 1")) {
-      dance_bot->setDanceRoutine(0);
-      dance_bot->enableDanceRoutine(true);
+/**
+ * handle_RobotJoin is a POST request that does the following:
+ *  * check if there is a live server, for purposes of serverSetup
+ *  * updates the server list of active Robots that have joined
+ * @return: HTTP CODE 200 on success
+ *          HTTP CODE 400 on invalid request
+ * @note: ignores if the robot has already joined. Returns success.
+ */
+void handle_RobotJoin() {
+    // send empty payload and an OK
+    if( !server.hasArg("robot_id") ) {
+        server.send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
+        return;
     }
-    else if (dance_routine.equals("Demo 2")) {
-      dance_bot->setDanceRoutine(1);
-      dance_bot->enableDanceRoutine(true);
+    // for list of robots connected, check if robot id matches any connected robots
+    bool found = false;
+    for(int i = 0; i < numConnectedRobots; i++) {
+        if( server.arg("robot_id").equals(String(connectedRobots[i].robotID)) ) { found = true; break; }
     }
-    else {
-      Serial.println("Dance routine not recognized, ERROR too lit for this robot");
-      handleUnknownMove();
-      return;
+    if(!found) {
+        // TODO: consider hashing to an integer and checking that
+        server.arg("robot_id").toCharArray(connectedRobots[0].robotID, MAX_ROBOT_ID_LENGTH);
+        numConnectedRobots++;
     }
-  }
-  else {
-    dance_routine = "ERROR Server did not find dance routine argument in HTTP request";
-  }
-  
-  server.send(200, "text/plain", dance_routine);
+    server.send(200, "text/html", "Robot Successfully Joined.");
 }
 
-void handleNotFound() {
-  String message = "File Not Found\n\n";
-  message += "URI: " + server.uri() + "\n";
-  message += "Method: " + String((server.method() == HTTP_GET)?"GET":"POST") + "\n";
-  message += "Arguments: " + String(server.args()) + "\n";
-  for (uint8_t i=0; i<server.args(); i++){
-    message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
-  }
-  server.send(404, "text/plain", message);
+/**
+ * handle_State is a helper function to facilitate execution of other handle methods that modify a robot's state.
+ * @return: HTTP CODE 200 on success
+ *          HTTP CODE 400 on invalid request
+ *          HTTP CODE 404 on robotNotFound
+ */
+void handle_State(DancebotStates state) {
+    // check if request arg is correct
+    if( !server.hasArg("robot_id") ) {
+        server.send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
+        return;
+    }
+    // for list of robots connected, check if robot id matches any connected robots
+    for(int i = 0; i < numConnectedRobots; i++) {
+        if( server.arg("robot_id").equals(String(connectedRobots[i].robotID)) ) {
+            connectedRobots[i].robotState = state;
+            server.send(200, "text/html", String(connectedRobots[i].robotState));
+        }
+    }
+    server.send(404, "text/plain", "404: Robot ID Not Found");
 }
 
-void handleUnknownMove() {
-  String message = "Dance move not recognized \nERROR too lit for this robot\n\n";
-  server.send(404, "text/plain", message);
-}
-
-
-
+/* MODIFY BELOW WITH YOUR RELEVANT ROBOT */
+// TODO: update these with same UI but new API
 /* HTML */
-String indexHTML() {
-  String button_css = "width:100%; margin-bottom:1em; padding: 1em; font-family:'Arial';font-size:medium;color:#1d1f21; background-color:#8abeb7;border-color:#5e8d87;";
-  String * danceMoves = dance_bot->getDanceMoves();
-  String * danceRoutines = dance_bot->getDanceRoutines();
+/**
+ * sendHTML sends a set of HTML to the user in response to a POST request based on the new WebController state.
+ */
+// String sendHTML() {
+//   String button_css = "width:100%; margin-bottom:1em; padding: 1em; font-family:'Arial';font-size:medium;color:#1d1f21; background-color:#8abeb7;border-color:#5e8d87;";
+//   String * danceMoves = dance_bot->getDanceMoves();
+//   String * danceRoutines = dance_bot->getDanceRoutines();
   
-  String htmlPage = String("<head>") +
-              "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />" + 
-            "</head>" +
+//   String htmlPage = String("<head>") +
+//               "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />" + 
+//             "</head>" +
             
-            "<body style=\"width:auto; font-family:'Arial'; background-color:#1d1f21; color:#c5c8c6;\">" +
-              //Header
-              "<div id=\"page_header\" style=\"margin: 0 5% 2em 5%; color:#cc6666;\">" +
-                "<h1>Demobots Dancing Robot</h1>" +
-              "</div>" +
+//             "<body style=\"width:auto; font-family:'Arial'; background-color:#1d1f21; color:#c5c8c6;\">" +
+//               //Header
+//               "<div id=\"page_header\" style=\"margin: 0 5% 2em 5%; color:#cc6666;\">" +
+//                 "<h1>Demobots Dancing Robot</h1>" +
+//               "</div>" +
 
-              //Dance Moves
-              "<div id=\"page_dances\" style=\"margin: 0 5% 2em 5%;\">" +
-                "<h3 style=\"color:#81a2be;\">Dance Moves</h3>" +
+//               //Dance Moves
+//               "<div id=\"page_dances\" style=\"margin: 0 5% 2em 5%;\">" +
+//                 "<h3 style=\"color:#81a2be;\">Dance Moves</h3>" +
                 
-                "<div id=\"dance_moves\" style=\"\">" +             
-                  "<div style=\"padding-left: 1.5em; font-size:medium;\">" +
-                    "<p id=\"current_move\">Current Move: " + danceMoves[0] + "</p>" +
-                  "</div>" +
+//                 "<div id=\"dance_moves\" style=\"\">" +             
+//                   "<div style=\"padding-left: 1.5em; font-size:medium;\">" +
+//                     "<p id=\"current_move\">Current Move: " + danceMoves[0] + "</p>" +
+//                   "</div>" +
   
-                  "<div id=\"dance_move_buttons\" style=\"padding-left: 1.5em; \">";
-                    for (int i = 0; i < dance_bot->getNumDanceMoves(); i++) {
-                      htmlPage += "<button onclick=\"postDancemove('" + danceMoves[i] + "')\" style=\"" + button_css + "\">" + danceMoves[i] + "</button>";
-                    }
-  htmlPage += String("</div>") +
-                "</div>" +
-              "</div>" +
+//                   "<div id=\"dance_move_buttons\" style=\"padding-left: 1.5em; \">";
+//                     for (int i = 0; i < dance_bot->getNumDanceMoves(); i++) {
+//                       htmlPage += "<button onclick=\"postDancemove('" + danceMoves[i] + "')\" style=\"" + button_css + "\">" + danceMoves[i] + "</button>";
+//                     }
+//   htmlPage += String("</div>") +
+//                 "</div>" +
+//               "</div>" +
 
-              //Dance Routines
-              "<div id=\"page_routines\" style=\"margin: 0 5% 2em 5%;\">" +
-                "<h3 style=\"color:#81a2be;\">Dances</h3>" +
+//               //Dance Routines
+//               "<div id=\"page_routines\" style=\"margin: 0 5% 2em 5%;\">" +
+//                 "<h3 style=\"color:#81a2be;\">Dances</h3>" +
 
-                "<div id=\"dance_routines\" style=\"\">" +             
-                  "<div style=\"padding-left: 1.5em; font-size:medium;\">" +
-                    "<p id=\"current_routine\">Current Dance: None</p>" +
-                  "</div>" +
-                  "<div id=\"dance_routine_buttons\" style=\"padding-left: 1.5em; \">";
-                  for (int i = 0; i < dance_bot->getNumDanceRoutines(); i++) {
-                      htmlPage += "<button onclick=\"postDanceRoutine('" + danceRoutines[i] + "')\" style=\"" + button_css + "\">" + danceRoutines[i] + "</button>";
-                    }
-  htmlPage += String("</div>") +
-                "</div>" + 
+//                 "<div id=\"dance_routines\" style=\"\">" +             
+//                   "<div style=\"padding-left: 1.5em; font-size:medium;\">" +
+//                     "<p id=\"current_routine\">Current Dance: None</p>" +
+//                   "</div>" +
+//                   "<div id=\"dance_routine_buttons\" style=\"padding-left: 1.5em; \">";
+//                   for (int i = 0; i < dance_bot->getNumDanceRoutines(); i++) {
+//                       htmlPage += "<button onclick=\"postDanceRoutine('" + danceRoutines[i] + "')\" style=\"" + button_css + "\">" + danceRoutines[i] + "</button>";
+//                     }
+//   htmlPage += String("</div>") +
+//                 "</div>" + 
                 
-              "</div>" +
+//               "</div>" +
               
-              getJavascript() +
-            "</body>";
-  return htmlPage;
-}
+//               getJavascript() +
+//             "</body>";
+//   return htmlPage;
+// }
+// /* JAVASCRIPT */
+// String getJavascript() {
+//   String s = String("<script>") +
+//       "function updateCurrentMove(move) {" +
+//         "document.getElementById('current_move').innerText = 'Current Move: ' + move; " +
+//       "}" +
 
-
-
-/* JAVASCRIPT */
-
-String getJavascript() {
-  String s = String("<script>") +
-      "function updateCurrentMove(move) {" +
-        "document.getElementById('current_move').innerText = 'Current Move: ' + move; " +
-      "}" +
-
-      "function updateCurrentRoutiune(routine) {" +
-        "document.getElementById('current_routine').innerText = 'Current Dance: ' + routine; " +
-      "}" +
+//       "function updateCurrentRoutiune(routine) {" +
+//         "document.getElementById('current_routine').innerText = 'Current Dance: ' + routine; " +
+//       "}" +
       
-      //function to HTTP Post
-      "function postDancemove(move) {" +
-        "var xhttp = new XMLHttpRequest(); " +
-        "xhttp.open('POST', '/danceM', true);" +
-        "xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');" +
-        "xhttp.send('dance_move=' + move);" +
+//       //function to HTTP Post
+//       "function postDancemove(move) {" +
+//         "var xhttp = new XMLHttpRequest(); " +
+//         "xhttp.open('POST', '/danceM', true);" +
+//         "xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');" +
+//         "xhttp.send('dance_move=' + move);" +
 
-        "xhttp.onload = function() { " +
-          "console.log('Move Received: ' + xhttp.responseText); " +
-          "updateCurrentMove(xhttp.responseText)" +
-        "}" +
-      "}" +
+//         "xhttp.onload = function() { " +
+//           "console.log('Move Received: ' + xhttp.responseText); " +
+//           "updateCurrentMove(xhttp.responseText)" +
+//         "}" +
+//       "}" +
       
-      "function postDanceRoutine(routine) {" +
-        "var xhttp = new XMLHttpRequest(); " +
-        "xhttp.open('POST', '/dance', true);" +
-        "xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');" +
-        "xhttp.send('dance_routine=' + routine);" +
+//       "function postDanceRoutine(routine) {" +
+//         "var xhttp = new XMLHttpRequest(); " +
+//         "xhttp.open('POST', '/dance', true);" +
+//         "xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');" +
+//         "xhttp.send('dance_routine=' + routine);" +
 
-        "xhttp.onload = function() { " +
-          "console.log('Dance Received: ' + xhttp.responseText); " +
-          "updateCurrentRoutiune(xhttp.responseText)" +
-        "}" +
-      "}" +
+//         "xhttp.onload = function() { " +
+//           "console.log('Dance Received: ' + xhttp.responseText); " +
+//           "updateCurrentRoutiune(xhttp.responseText)" +
+//         "}" +
+//       "}" +
 
-  "</script>";
-  return s;
-}
+//   "</script>";
+//   return s;
+// }
 
