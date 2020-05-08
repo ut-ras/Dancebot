@@ -13,7 +13,7 @@
 const int DEFAULT_NETWORK_ID = 0;   // default network will be Demobot
 const int ROBOT_IDX = 0;            // UPDATE THIS BASED ON YOUR NETWORK
 const int CredentialsLogLength = 2;
-const int RETRY_WAIT = 1000;
+const int RETRY_WAIT = 200;         // 200ms
 
 IPAddress gateway(192,168,1,1);     // redirect any traffic with an unknown address to here
 IPAddress subnet(255,255,255,251);  // 255-251-1 = 3 allowed IP addresses on the subnet

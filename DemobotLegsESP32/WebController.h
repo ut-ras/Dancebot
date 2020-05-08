@@ -43,8 +43,21 @@ enum DancebotStates {
     Wiggle,
     Ankles,
     Demo1,
-    Demo2
+    Demo2,
+    NumStates
 };
+
+// String fillers for sendHTML()
+char* dancebotStates[] {
+    "Reset",
+    "Walk",
+    "Hop",
+    "Wiggle",
+    "Ankles",
+    "Demo1",
+    "Demo2"
+};
+
 struct Robot {
     // TODO: consider hashing to an integer and checking that
     char robotID[MAX_ROBOT_ID_LENGTH];
@@ -72,7 +85,7 @@ void handle_State(DancebotStates state);
 
 /* MODIFY BELOW WITH YOUR RELEVANT ROBOT */
 String sendHTML();
-String sentJavascript();
+String sendJavascript();
 
 #endif
 
@@ -96,7 +109,8 @@ String sentJavascript();
  * Simple ESP32 web server
  * https://lastminuteengineers.com/creating-esp32-web-server-arduino-ide/
  * https://tttapa.github.io/ESP8266/Chap10%20-%20Simple%20Web%20Server.html
- * 
+ * XMLHTTPRequest used in sendJavascript()
+ * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest
  */
 
 

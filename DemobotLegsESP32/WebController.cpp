@@ -228,96 +228,73 @@ void handle_State(DancebotStates state) {
 /**
  * sendHTML sends a set of HTML to the user in response to a POST request based on the new WebController state.
  */
-// String sendHTML() {
-//   String button_css = "width:100%; margin-bottom:1em; padding: 1em; font-family:'Arial';font-size:medium;color:#1d1f21; background-color:#8abeb7;border-color:#5e8d87;";
-//   String * danceMoves = dance_bot->getDanceMoves();
-//   String * danceRoutines = dance_bot->getDanceRoutines();
-  
-//   String htmlPage = String("<head>") +
-//               "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />" + 
-//             "</head>" +
-            
-//             "<body style=\"width:auto; font-family:'Arial'; background-color:#1d1f21; color:#c5c8c6;\">" +
-//               //Header
-//               "<div id=\"page_header\" style=\"margin: 0 5% 2em 5%; color:#cc6666;\">" +
-//                 "<h1>Demobots Dancing Robot</h1>" +
-//               "</div>" +
+int stateEnum = Reset;
+String sendHTML() {
+    String  button_css ="width:100%; margin-bottom:1em; padding: 1em; font-family:'Arial';font-size:medium;color:#1d1f21; background-color:#8abeb7;border-color:#5e8d87;";
+    String  body_css =  "width:auto; font-family:'Arial'; background-color:#1d1f21; color:#c5c8c6;";
+    String  head =  "<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /></head>";
+    String  body =  "<body style=\"" + body_css + "\">" +
+        /*HEADER*/      "<div id=\"page_header\" style=\"margin: 0 5% 2em 5%; color:#cc6666;\">" +
+                            "<h1>Demobots Dancing Robot</h1>" +
+                        "</div>" +
+        /*MOVES */      "<div id=\"page_dances\" style=\"margin: 0 5% 2em 5%;\">" +
+                            "<h3 style=\"color:#81a2be;\">Dance Moves</h3>" +
+                            "<div id=\"dance_moves\" style=\"\">" +             
+                                "<div style=\"padding-left: 1.5em; font-size:medium;\">" +
+                                    "<p id=\"current_move\">Current Move: " + dancebotStates[stateEnum] + "</p>" +
+                                "</div>" +
+                                "<div id=\"dance_move_buttons\" style=\"padding-left: 1.5em; \">";
+                                    for (int i = Reset; i < Demo1; i++) {
+                                        body += "<button onclick=\"postMove('" + String(dancebotStates[i]) + "')\" style=\"" + button_css + "\">" + dancebotStates[i] + "</button>";
+                                    }
+            body +=             "</div>" +
+                            String("</div>") +
+                        "</div>" +
 
-//               //Dance Moves
-//               "<div id=\"page_dances\" style=\"margin: 0 5% 2em 5%;\">" +
-//                 "<h3 style=\"color:#81a2be;\">Dance Moves</h3>" +
-                
-//                 "<div id=\"dance_moves\" style=\"\">" +             
-//                   "<div style=\"padding-left: 1.5em; font-size:medium;\">" +
-//                     "<p id=\"current_move\">Current Move: " + danceMoves[0] + "</p>" +
-//                   "</div>" +
-  
-//                   "<div id=\"dance_move_buttons\" style=\"padding-left: 1.5em; \">";
-//                     for (int i = 0; i < dance_bot->getNumDanceMoves(); i++) {
-//                       htmlPage += "<button onclick=\"postDancemove('" + danceMoves[i] + "')\" style=\"" + button_css + "\">" + danceMoves[i] + "</button>";
-//                     }
-//   htmlPage += String("</div>") +
-//                 "</div>" +
-//               "</div>" +
+        /*ROUTINES*/    "<div id=\"page_routines\" style=\"margin: 0 5% 2em 5%;\">" +
+                            "<h3 style=\"color:#81a2be;\">Dances</h3>" +
+                            "<div id=\"dance_routines\" style=\"\">" +             
+                                "<div style=\"padding-left: 1.5em; font-size:medium;\">" +
+                                    "<p id=\"current_routine\">Current Dance: None</p>" +
+                                "</div>" +
+                                "<div id=\"dance_routine_buttons\" style=\"padding-left: 1.5em; \">";
+                                    for (int i = Demo1; i < NumStates; i++) {
+                                        body += "<button onclick=\"postMove('" + String(dancebotStates[i]) + "')\" style=\"" + button_css + "\">" + String(dancebotStates[i]) + "</button>";
+                                    }
+            body +=             "</div>" +
+                            String("</div>") + 
+                        "</div>" +
+                        sendJavascript() +
+                    "</body>";
+    head += body;
+    return head;
+}
+/* JAVASCRIPT */
+String sendJavascript() {
+  String s = String("<script>") +
+    // update the current state in the HTML
+    "function updateState(move) {" +
+        "for(int i = 0; i < NumStates; i++) {" +
+            "if(dancebotState[i].equals(move)) {" +
+                "stateEnum = i;" +          // TODO: may need to stick variable in the html
+                "break;" +
+            "}" +
+        "}" +
+    "}" +
 
-//               //Dance Routines
-//               "<div id=\"page_routines\" style=\"margin: 0 5% 2em 5%;\">" +
-//                 "<h3 style=\"color:#81a2be;\">Dances</h3>" +
+    //function to HTTP Post
+    "function postMove(move) {" +
+        "var xhttp = new XMLHttpRequest(); " +
+        "xhttp.open('POST', '/' + move, true);" +
+        "xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');" +
+        "xhttp.send('robot_id=0');" +       // HARD CODED robot idx
 
-//                 "<div id=\"dance_routines\" style=\"\">" +             
-//                   "<div style=\"padding-left: 1.5em; font-size:medium;\">" +
-//                     "<p id=\"current_routine\">Current Dance: None</p>" +
-//                   "</div>" +
-//                   "<div id=\"dance_routine_buttons\" style=\"padding-left: 1.5em; \">";
-//                   for (int i = 0; i < dance_bot->getNumDanceRoutines(); i++) {
-//                       htmlPage += "<button onclick=\"postDanceRoutine('" + danceRoutines[i] + "')\" style=\"" + button_css + "\">" + danceRoutines[i] + "</button>";
-//                     }
-//   htmlPage += String("</div>") +
-//                 "</div>" + 
-                
-//               "</div>" +
-              
-//               getJavascript() +
-//             "</body>";
-//   return htmlPage;
-// }
-// /* JAVASCRIPT */
-// String getJavascript() {
-//   String s = String("<script>") +
-//       "function updateCurrentMove(move) {" +
-//         "document.getElementById('current_move').innerText = 'Current Move: ' + move; " +
-//       "}" +
-
-//       "function updateCurrentRoutiune(routine) {" +
-//         "document.getElementById('current_routine').innerText = 'Current Dance: ' + routine; " +
-//       "}" +
-      
-//       //function to HTTP Post
-//       "function postDancemove(move) {" +
-//         "var xhttp = new XMLHttpRequest(); " +
-//         "xhttp.open('POST', '/danceM', true);" +
-//         "xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');" +
-//         "xhttp.send('dance_move=' + move);" +
-
-//         "xhttp.onload = function() { " +
-//           "console.log('Move Received: ' + xhttp.responseText); " +
-//           "updateCurrentMove(xhttp.responseText)" +
-//         "}" +
-//       "}" +
-      
-//       "function postDanceRoutine(routine) {" +
-//         "var xhttp = new XMLHttpRequest(); " +
-//         "xhttp.open('POST', '/dance', true);" +
-//         "xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');" +
-//         "xhttp.send('dance_routine=' + routine);" +
-
-//         "xhttp.onload = function() { " +
-//           "console.log('Dance Received: ' + xhttp.responseText); " +
-//           "updateCurrentRoutiune(xhttp.responseText)" +
-//         "}" +
-//       "}" +
-
-//   "</script>";
-//   return s;
-// }
-
+        "xhttp.onload = function() { " +
+            "console.log('Move Received: ' + xhttp.responseText); " +
+            "console.log('Set move to: ' + move + ' in the HTML.'); "
+            "updateCurrentMove(move)" +
+        "}" +
+    "}" +
+  "</script>";
+  return s;
+}
