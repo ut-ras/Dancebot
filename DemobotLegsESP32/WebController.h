@@ -15,13 +15,11 @@
 #include <HTTPUpdate.h>
 #include <WebServer.h>
 
-// #include "DemobotAPI.h"
-#include "WiFiConfig.h"
+#include "RobotConfig.h"
 
 #define NO_SERVER 501
 #define OK 200
-#define MAX_ROBOTS 20 // I seriously doubt that we'll ever have more than 5 robots on a single webserver (i.e. Dancebots)
-#define MAX_ROBOT_ID_LENGTH 20
+
 WebServer server(80);
 
 /**
@@ -34,40 +32,6 @@ enum mode {STA, AP, CON};
 
 void setupWifi();
 void startServer();
-
-/* MODIFY BELOW WITH YOUR RELEVANT ROBOT */
-enum DancebotStates {
-    Reset,
-    Walk,
-    Hop,
-    Wiggle,
-    Ankles,
-    Demo1,
-    Demo2,
-    NumStates
-};
-
-// String fillers for sendHTML()
-char* dancebotStates[] {
-    "Reset",
-    "Walk",
-    "Hop",
-    "Wiggle",
-    "Ankles",
-    "Demo1",
-    "Demo2"
-};
-
-struct Robot {
-    // TODO: consider hashing to an integer and checking that
-    char robotID[MAX_ROBOT_ID_LENGTH];
-    int robotState;
-    int robotEyeColor;
-    int robotExpression;
-};
-
-int numConnectedRobots = 0;
-Robot connectedRobots[MAX_ROBOTS] = { {NULL, 0, 0, 0} };
 
 void handle_OnConnect();
 void handle_Reset();

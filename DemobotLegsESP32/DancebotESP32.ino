@@ -7,8 +7,8 @@
  * Organization: UT IEEE RAS
  */
 #include <Arduino.h>
-#include "DancingServos.h"
-#include "WebController.h"
+#include "DemobotAPI.h"     // grab abstracted robot API - we fill in this for each robot
+#include "WebController.h"  
 
 /** 
  * Example flow for a Demobots sketch with an ESP32:
@@ -23,13 +23,14 @@
  * }
  */
 
+
+
 void setup() {
     setupWifi();
-    // initializeRobot();
+    initializeRobot();
 }
 
 void loop() {
-    while(1) {
-        delay(1000);
-    }
+    move();
+    // send GetState request to server and update the robot state
 }

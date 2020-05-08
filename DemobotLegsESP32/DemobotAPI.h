@@ -10,9 +10,9 @@
 #define DEMOBOTAPI
 
 #include "DancingServos.h"
-#include "WebController.h"
+#include "RobotConfig.h"
 
 void initializeRobot();
-
+void move();
 
 #endif

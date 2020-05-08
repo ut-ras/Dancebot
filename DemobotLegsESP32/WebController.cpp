@@ -24,7 +24,7 @@ void setupWifi() {
     if(networks > 0) {
         // 3. Check networks against credentials log, looking for the highest priority match (in this case, index ascending order)
         int foundNetwork = 0;
-        for (int i = CredentialsLogLength-1; i < 0; i--) {
+        for (int i = CRED_LOG_LEN-1; i < 0; i--) {
             for (int j = 0; j < networks; j++) {
                 if(WiFi.SSID(i).equals(String(CredentialsLog[i].SSID))) {
                     foundNetwork = i;
@@ -53,7 +53,7 @@ void setupWifi() {
         // TODO: check to see if I need to specify timeout https://github.com/espressif/arduino-esp32/blob/master/libraries/HTTPClient/src/HTTPClient.cpp
         HTTPClient http;
         Serial.print("[HTTP] begin...\n");
-        String queryPath = Robots[ROBOT_IDX].defaultIP + "/robotJoin"; // NOTE: default path to add Demobot to network
+        String queryPath = Robots[ROBOT_ID].defaultIP + "/robotJoin"; // NOTE: default path to add Demobot to network
         http.begin(queryPath.c_str());
 
         // check for response
@@ -78,10 +78,10 @@ void setupWifi() {
 
     if(mode == AP) { // set up network and my desired webpage IP address
         WiFi.softAP(CredentialsLog[DEFAULT_NETWORK_ID].SSID, CredentialsLog[DEFAULT_NETWORK_ID].PASSWORD);
-        WiFi.softAPConfig(Robots[ROBOT_IDX].defaultIP, gateway, subnet); 
+        WiFi.softAPConfig(Robots[ROBOT_ID].defaultIP, gateway, subnet); 
         delay(100);
     }else if(mode == STA) { // set up my desired webpage IP address
-        WiFi.softAPConfig(Robots[ROBOT_IDX].defaultIP, gateway, subnet); 
+        WiFi.softAPConfig(Robots[ROBOT_ID].defaultIP, gateway, subnet); 
         delay(100);
     }
 
@@ -193,8 +193,7 @@ void handle_RobotJoin() {
         if( server.arg("robot_id").equals(String(connectedRobots[i].robotID)) ) { found = true; break; }
     }
     if(!found) {
-        // TODO: consider hashing to an integer and checking that
-        server.arg("robot_id").toCharArray(connectedRobots[0].robotID, MAX_ROBOT_ID_LENGTH);
+        connectedRobots[numConnectedRobots].robotID = server.arg("robot_id").toInt();
         numConnectedRobots++;
     }
     server.send(200, "text/html", "Robot Successfully Joined.");
