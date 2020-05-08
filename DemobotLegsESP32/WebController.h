@@ -112,18 +112,3 @@ String sendJavascript();
  * XMLHTTPRequest used in sendJavascript()
  * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest
  */
-
-
-/** 
- * TODO: move to arduino sketch
- * Example flow for a Demobots sketch with an ESP32:
- * setup() {
- *   initializeRobot()
- *   setupWifi()
- * }
- * 
- * loop() {
- *   // update robot state
- *   // look for update from server
- * }
- */

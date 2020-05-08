@@ -50,7 +50,7 @@ void setupWifi() {
 
         // Is there a response at the relevant IP? If so, establish a connection to it.
         // send GET request at IP address/hook
-        // TODO: check to see if i need to specify timeout https://github.com/espressif/arduino-esp32/blob/master/libraries/HTTPClient/src/HTTPClient.cpp
+        // TODO: check to see if I need to specify timeout https://github.com/espressif/arduino-esp32/blob/master/libraries/HTTPClient/src/HTTPClient.cpp
         HTTPClient http;
         Serial.print("[HTTP] begin...\n");
         String queryPath = Robots[ROBOT_IDX].defaultIP + "/robotJoin"; // NOTE: default path to add Demobot to network
@@ -223,11 +223,11 @@ void handle_State(DancebotStates state) {
 }
 
 /* MODIFY BELOW WITH YOUR RELEVANT ROBOT */
-// TODO: update these with same UI but new API
 /* HTML */
 /**
  * sendHTML sends a set of HTML to the user in response to a POST request based on the new WebController state.
  */
+// TODO: currently no support for multiple robots.
 int stateEnum = Reset;
 String sendHTML() {
     String  button_css ="width:100%; margin-bottom:1em; padding: 1em; font-family:'Arial';font-size:medium;color:#1d1f21; background-color:#8abeb7;border-color:#5e8d87;";
