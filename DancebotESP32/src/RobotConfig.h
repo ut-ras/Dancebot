@@ -24,8 +24,8 @@ extern IPAddress subnet;
  * Has a SSID and WPA2/PSK password associated with it.
  */
 typedef struct Credential {
-    char *SSID;
-    char *PASSWORD;
+    char* SSID;
+    char* PASSWORD;
 } Credential;
 extern Credential CredentialsLog[];
 extern const int DEFAULT_NETWORK_ID;
@@ -34,7 +34,7 @@ extern const int DEFAULT_NETWORK_ID;
  */
 typedef struct DemobotNetwork {
     int ID;
-    char* name;
+    String name;
     IPAddress defaultIP;
 } DemobotNetwork;
 extern DemobotNetwork Robots[];

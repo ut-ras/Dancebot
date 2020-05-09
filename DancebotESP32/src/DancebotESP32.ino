@@ -24,17 +24,15 @@
  * }
  */
 
-
-
 void setup() {
     delay(5000); //give time for me to open up serial monitor
     setupWifi();
-    // initializeRobot();
+    initializeRobot();
 }
 
 void loop() {
-    // move();
+    move();
     // send GetState request to server and update the robot state
     // if hosting a server, manage the server requests
-    manageRequests();
+    // manageRequests();
 }

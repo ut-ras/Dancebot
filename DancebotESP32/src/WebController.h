@@ -15,7 +15,7 @@
 #include <ESPAsyncWebServer.h>
 #include <HTTPClient.h>
 #include <HTTPUpdate.h>
-#include <WebServer.h>
+// #include <WebServer.h>
 
 #include "RobotConfig.h"
 
@@ -32,28 +32,20 @@ enum mode {STA, AP, CON};
 
 void setupWifi();
 void startServer();
-void manageRequests();
+// void manageRequests();
 
-void handle_OnConnect();
-void handle_Reset();
-void handle_Walk();
-void handle_Hop();
-void handle_Wiggle();
-void handle_Ankles();
-void handle_Demo1();
-void handle_Demo2();
-void handle_GetState();
-void handle_RobotJoin();
-void handle_NotFound();
-// helper function
-void handle_State(int state);
+void handle_NotFound(AsyncWebServerRequest *request);
+void handle_GetState(AsyncWebServerRequest *request);
+void handle_RobotJoin(AsyncWebServerRequest *request);
+void handle_State(AsyncWebServerRequest *request, int state);
+
+// helper functions
+String IpAddress2String(const IPAddress& ipAddress);
+int joinServer();
 
 /* MODIFY BELOW WITH YOUR RELEVANT ROBOT */
 String sendHTML();
 String sendJavascript();
-
-String IpAddress2String(const IPAddress& ipAddress);
-int joinServer();
 
 #endif
 

@@ -8,7 +8,7 @@
  */
 #include "WebController.h"
 
-WebServer server(80);
+AsyncWebServer server(80);
 int mode = CON;
 
 /**
@@ -152,16 +152,40 @@ void startServer() {
     Serial.println("Setting up server URL hooks");
     /* TODO: MODIFY BELOW WITH YOUR RELEVANT ROBOT API */
     // generate URL hooks to edit the robot state
-    server.on("/",          HTTP_GET,  handle_OnConnect);
-    server.on("/reset",     HTTP_POST,  handle_Reset);
-    server.on("/walk",      HTTP_POST,  handle_Walk);
-    server.on("/hop",       HTTP_POST,  handle_Hop);
-    server.on("/wiggle",    HTTP_POST,  handle_Wiggle);
-    server.on("/ankles",    HTTP_POST,  handle_Ankles);
-    server.on("/demo1",     HTTP_POST,  handle_Demo1);
-    server.on("/demo2",     HTTP_POST,  handle_Demo2);
-    server.on("/getState",  HTTP_POST,  handle_GetState);
-    server.on("/robotJoin", HTTP_POST,  handle_RobotJoin);
+    server.on("/",          HTTP_GET,   [](AsyncWebServerRequest *request) {
+        Serial.println("A user requests for the html page.");
+        request->send(200, "text/html", sendHTML());
+    });
+    // robot states
+    server.on("/reset",     HTTP_POST,  [](AsyncWebServerRequest *request) {
+        handle_State(request, Reset);
+    });
+    server.on("/walk",      HTTP_POST,  [](AsyncWebServerRequest *request) {
+        handle_State(request, Walk);
+    });
+    server.on("/hop",       HTTP_POST,  [](AsyncWebServerRequest *request) {
+        handle_State(request, Hop);
+    });
+    server.on("/wiggle",    HTTP_POST,  [](AsyncWebServerRequest *request) {
+        handle_State(request, Wiggle);
+    });
+    server.on("/ankles",    HTTP_POST,  [](AsyncWebServerRequest *request) {
+        handle_State(request, Ankles);
+    });
+    server.on("/demo1",     HTTP_POST,  [](AsyncWebServerRequest *request) {
+        handle_State(request, Demo1);
+    });
+    server.on("/demo2",     HTTP_POST,  [](AsyncWebServerRequest *request) {
+        handle_State(request, Demo2);
+    });
+
+    server.on("/getState",  HTTP_POST,  [](AsyncWebServerRequest *request) {
+        handle_GetState(request);
+    });
+    
+    server.on("/robotJoin", HTTP_POST,  [](AsyncWebServerRequest *request) {
+        handle_RobotJoin(request);
+    });
     server.onNotFound(handle_NotFound);
     /* END */
 
@@ -170,45 +194,23 @@ void startServer() {
     Serial.println("HTTP server started");
 }
 
-/**
- * manageRequests manages client and user requests.
- */
-void manageRequests() {
-    // https://www.reddit.com/r/esp8266/comments/942579/what_does_serverhandleclient_do/
-    if(mode != CON) {
-        server.handleClient();
-    }
-}
-/* MODIFY BELOW WITH YOUR RELEVANT ROBOT */
+// /**
+//  * manageRequests manages client and user requests.
+//  */
+// void manageRequests() {
+//     // https://www.reddit.com/r/esp8266/comments/942579/what_does_serverhandleclient_do/
+//     if(mode != CON) {
+//         server.handleClient();
+//     }
+// }
 
 /**
- * handle_OnConnect - GET request to get the webpage from server.
+ * handle_NotFound is For 404 redirect requests.
  */
-void handle_OnConnect() {
-    Serial.println("A user requests for the html page.");
-    // serve HTML page
-    server.send(200, "text/html", sendHTML());
+void handle_NotFound(AsyncWebServerRequest *request) {
+    request->send(404, "text/plain", "404: Not found");
 }
 
-/**
- * handle_Reset - POST request to set Robot id to state Reset
- * handle_Walk  - POST request to set Robot id to state Walk
- * handle_Hop   - POST request to set Robot id to state Hop
- * handle_Wiggle- POST request to set Robot id to state Wiggle
- * handle_Ankles- POST request to set Robot id to state Ankles
- * handle_Demo1 - POST request to set Robot id to state Demo1
- * handle_Demo2 - POST request to set Robot id to state Demo2
- * @return: HTTP CODE 200 on success
- *          HTTP CODE 400 on invalid request
- *          HTTP CODE 404 on robotNotFound
- */
-void handle_Reset() { handle_State(Reset);  }
-void handle_Walk()  { handle_State(Walk);   }
-void handle_Hop()   { handle_State(Hop);    }
-void handle_Wiggle(){ handle_State(Wiggle); }
-void handle_Ankles(){ handle_State(Ankles); }
-void handle_Demo1() { handle_State(Demo1);  }
-void handle_Demo2() { handle_State(Demo2);  }
 
 /**
  * handle_GetState is a POST request with a robot id to grab a wanted robot's state
@@ -216,26 +218,21 @@ void handle_Demo2() { handle_State(Demo2);  }
  *          HTTP CODE 400 on invalid request
  *          HTTP CODE 404 on robotNotFound
  */
-void handle_GetState() {
+void handle_GetState(AsyncWebServerRequest *request) {
     // check if request is correct
-    if(!server.hasArg("robot_id")) {
-        server.send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
+    if(!request->hasArg("robot_id")) {
+        request->send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
         return;
     }
     // for list of robots connected, check if robot id matches any connected robots
     for(int i = 0; i < numConnectedRobots; i++) {
-        if(server.arg("robot_id").equals(String(connectedRobots[i].robotID))) {
-            server.send(200, "text/html", String(connectedRobots[i].robotState));
+        if( request->arg("robot_id").equals(String(connectedRobots[i].robotID)) ) {
+            request->send(200, "text/html", String(connectedRobots[i].robotState));
+            return;
         }
     }
-    server.send(404, "text/plain", "404: Robot Not Found");
-}
-
-/**
- * handle_NotFound is For 404 redirect requests.
- */
-void handle_NotFound() {
-    server.send(404, "text/plain", "404: Not found");
+    // 404 if robot isn't connected or doesn't exist
+    request->send(404, "text/plain", "404: Robot Not Found");
 }
 
 /**
@@ -246,25 +243,28 @@ void handle_NotFound() {
  *          HTTP CODE 400 on invalid request
  * @note: ignores if the robot has already joined. Returns success.
  */
-void handle_RobotJoin() {
+void handle_RobotJoin(AsyncWebServerRequest *request) {
     Serial.println("Received a robot join request.");
     // send empty payload and an OK
-    if( !server.hasArg("robot_id") ) {
-        Serial.println("Payload is malformed. Num Args: " + String(server.args()));
-        server.send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
+    if( !request->hasArg("robot_id") ) {
+        Serial.println("Payload is malformed. Num Args: " + String(request->args()));
+        request->send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
         return;
     }
     // for list of robots connected, check if robot id matches any connected robots
     bool found = false;
     for(int i = 0; i < numConnectedRobots; i++) {
-        if( server.arg("robot_id").equals(String(connectedRobots[i].robotID)) ) { found = true; break; }
+        if( request->arg("robot_id").equals(String(connectedRobots[i].robotID)) ) { 
+            found = true; 
+            break; 
+        }
     }
     if(!found) {
-        connectedRobots[numConnectedRobots].robotID = server.arg("robot_id").toInt();
+        connectedRobots[numConnectedRobots].robotID = request->arg("robot_id").toInt();
         numConnectedRobots++;
     }
-    Serial.println("Robot successfully joined. ID: " + server.arg("robot_id"));
-    server.send(200, "text/html", "Robot Successfully Joined.");
+    Serial.println("Robot successfully joined. ID: " + request->arg("robot_id"));
+    request->send(200, "text/html", "Robot Successfully Joined.");
 }
 
 /**
@@ -273,21 +273,23 @@ void handle_RobotJoin() {
  *          HTTP CODE 400 on invalid request
  *          HTTP CODE 404 on robotNotFound
  */
-void handle_State(int state) {
+void handle_State(AsyncWebServerRequest *request, int state) {
     // check if request arg is correct
-    if( !server.hasArg("robot_id") ) {
-        server.send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
+    if( !request->hasArg("robot_id") ) {
+        request->send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
         return;
     }
     // for list of robots connected, check if robot id matches any connected robots
     for(int i = 0; i < numConnectedRobots; i++) {
-        if( server.arg("robot_id").equals(String(connectedRobots[i].robotID)) ) {
+        if( request->arg("robot_id").equals(String(connectedRobots[i].robotID)) ) {
             connectedRobots[i].robotState = state;
-            server.send(200, "text/html", String(connectedRobots[i].robotState));
+            request->send(200, "text/html", String(connectedRobots[i].robotState));
         }
     }
-    server.send(404, "text/plain", "404: Robot ID Not Found");
+    request->send(404, "text/plain", "404: Robot ID Not Found");
 }
+
+
 
 /**
  * IpAddress2String converts an IPAddress object into a String object.
@@ -306,7 +308,7 @@ String IpAddress2String(const IPAddress& ipAddress) {
  */
 int joinServer() {
     HTTPClient http;
-    String queryPath = IpAddress2String(Robots[ROBOT_ID].defaultIP) + "/robotJoin"; // NOTE: default path to add Demobot to network
+    String queryPath = "http://" + IpAddress2String(Robots[ROBOT_ID].defaultIP) + "/robotJoin"; // NOTE: default path to add Demobot to network
     http.begin(queryPath.c_str());
     Serial.println("Send POST request to domain " + queryPath);
 
@@ -318,6 +320,15 @@ int joinServer() {
     Serial.println("Sending POST request.");
     return http.POST(httpRequestData);
 }
+
+
+
+
+
+
+
+
+
 
 /* MODIFY BELOW WITH YOUR RELEVANT ROBOT */
 /* HTML */
@@ -361,7 +372,7 @@ String sendHTML() {
             body +=             "</div>" +
                             String("</div>") + 
                         "</div>" +
-                        // sendJavascript() +
+                        sendJavascript() +
                     "</body>";
     head += body;
     return head;
