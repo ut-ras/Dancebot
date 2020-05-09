@@ -6,11 +6,10 @@
  * Description: Dancebot API to drive hardware with using a state structure
  * Organization: UT IEEE RAS
  */
-#ifndef DEMOBOTAPI
-#define DEMOBOTAPI
+#ifndef DEMOBOTAPI_H
+#define DEMOBOTAPI_H
 
 #include "DancingServos.h"
-#include "RobotConfig.h"
 
 void initializeRobot();
 void move();

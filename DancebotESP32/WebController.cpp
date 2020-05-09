@@ -8,93 +8,148 @@
  */
 #include "WebController.h"
 
+WebServer server(80);
+int mode = CON;
+
 /**
  * setupWifi determines what network connection should be used, if any, and sets it up if id doesn't exist already.
  */
 void setupWifi() {
-    int mode;
+    Serial.println("Setting up WIFI.");
+    Serial.println("Robot identified as: " + String(Robots[ROBOT_ID].name));
+
     // Initialize serial for debugging purposes
     Serial.begin(115200);
     delay(100);
 
     // 1. Scan networks
+    Serial.println("Starting Network Scan.");
     int networks = WiFi.scanNetworks();
+
+    if (networks == 0) {
+        Serial.println("No networks found.");
+    } else {
+        Serial.print(networks);
+        Serial.println(" networks found: ");
+        for (int i = 0; i < networks; ++i) {
+            // Print SSID and RSSI for each network found
+            Serial.print(i + 1);
+            Serial.print(": ");
+            Serial.print(WiFi.SSID(i));
+            Serial.print(" (");
+            Serial.print(WiFi.RSSI(i));
+            Serial.print(")");
+            Serial.println((WiFi.encryptionType(i) == WIFI_AUTH_OPEN)?" ":"*");
+            delay(10);
+        }
+    }
 
     // 2. If a network is found, attempt to connect to it
     if(networks > 0) {
         // 3. Check networks against credentials log, looking for the highest priority match (in this case, index ascending order)
-        int foundNetwork = 0;
-        for (int i = CRED_LOG_LEN-1; i < 0; i--) {
+        Serial.println("Checking against credentials log.");
+
+        int foundNetwork = -1;
+        for (int i = 0; (i < CRED_LOG_LEN) && (foundNetwork == -1); i++) {
             for (int j = 0; j < networks; j++) {
-                if(WiFi.SSID(i).equals(String(CredentialsLog[i].SSID))) {
+                if(WiFi.SSID(j).equals(String(CredentialsLog[i].SSID))) {
                     foundNetwork = i;
+                    break;
                 }
             }
         }
-        // set relevant SSID and password
-        // connect to network
-        WiFi.begin(CredentialsLog[foundNetwork].SSID, CredentialsLog[foundNetwork].PASSWORD);
-        while (WiFi.status() != WL_CONNECTED) {
-            // I'm either in WL_IDLE_STATUS or WL_CONNECT_FAILED.
-            if(WiFi.status() == WL_CONNECT_FAILED) {
-                Serial.println("Connection failed error. Halting.");
+
+        if(foundNetwork == -1) {
+            Serial.println("Didn't find any matching networks.");
+            mode = AP;
+        }else {
+            Serial.println("Attempting to connect to network: " + String(CredentialsLog[foundNetwork].SSID));
+            // set relevant SSID and password
+            // connect to network TODO: Guru core panic here
+            WiFi.begin(CredentialsLog[foundNetwork].SSID, CredentialsLog[foundNetwork].PASSWORD);
+            Serial.println("Checking wifi status");
+            while (WiFi.status() != WL_CONNECTED) {
+                // I'm either in WL_IDLE_STATUS or WL_CONNECT_FAILED.
+                if(WiFi.status() == WL_CONNECT_FAILED) {
+                    Serial.println("Connection failed error. Halting.");
+                    while(1) {
+                        int i = 0;
+                    }
+                }
+                Serial.print(".");
+                delay(RETRY_WAIT);
+            }
+
+            Serial.println("\nConnected to network: " + String(CredentialsLog[foundNetwork].SSID));
+            Serial.println("Attempting to connect to server at: " + IpAddress2String(Robots[ROBOT_ID].defaultIP));
+            // Is there a response at the relevant IP? If so, establish a connection to it.
+            // send POST request at IP address/hook /robotJoin with robot id payload.
+            int httpResponseCode = joinServer();
+            if(httpResponseCode == OK) {
+                Serial.println("OK response. Connected.");
+                // 3a. Response found. Establish a connection to it.
+                mode = CON;
+            } else if(httpResponseCode == NO_SERVER) {
+                Serial.println("NO_SERVER response. Starting up my own server.");
+                // 3b. No response, host the page yourself using STA.
+                mode = STA;
+            } else { // Catch wrong reponse code error
+                Serial.println("Unexpected response code error. Halting.");
+                Serial.println(httpResponseCode);
                 while(1) {
                     int i = 0;
                 }
             }
-            Serial.print(".");
-            delay(RETRY_WAIT);
-        }
-        Serial.print("Connected to ");
-        Serial.println(CredentialsLog[foundNetwork].SSID);
-
-        // Is there a response at the relevant IP? If so, establish a connection to it.
-        // send GET request at IP address/hook
-        // TODO: check to see if I need to specify timeout https://github.com/espressif/arduino-esp32/blob/master/libraries/HTTPClient/src/HTTPClient.cpp
-        HTTPClient http;
-        Serial.print("[HTTP] begin...\n");
-        String queryPath = Robots[ROBOT_ID].defaultIP + "/robotJoin"; // NOTE: default path to add Demobot to network
-        http.begin(queryPath.c_str());
-
-        // check for response
-        int httpResponseCode = http.GET();
-        if(httpResponseCode == OK) {
-            // 3a. Response found. Establish a connection to it.
-            mode = CON;
-        } else if(httpResponseCode == NO_SERVER) {
-            // 3b. No response, host the page yourself using STA.
-            mode = STA;
-        } else { // Catch wrong reponse code error
-            Serial.println("Unexpected response code error. Halting.");
-            Serial.println(httpResponseCode);
-            while(1) {
-                int i = 0;
-            }
         }
     } else {
         // 4. If no networks are found, setup a network and host the page using AP
+        Serial.println("No networks found.");
         mode = AP;
     }
 
     if(mode == AP) { // set up network and my desired webpage IP address
+        // TODO: guru core panic here
+        Serial.println("Setting up default network at: " + String(CredentialsLog[DEFAULT_NETWORK_ID].SSID));
         WiFi.softAP(CredentialsLog[DEFAULT_NETWORK_ID].SSID, CredentialsLog[DEFAULT_NETWORK_ID].PASSWORD);
+        delay(500);
+        Serial.println("Setting up server at: " + IpAddress2String(Robots[ROBOT_ID].defaultIP));
         WiFi.softAPConfig(Robots[ROBOT_ID].defaultIP, gateway, subnet); 
-        delay(100);
+        delay(500);
     }else if(mode == STA) { // set up my desired webpage IP address
+        Serial.println("Setting up server at: " + IpAddress2String(Robots[ROBOT_ID].defaultIP));
         WiFi.softAPConfig(Robots[ROBOT_ID].defaultIP, gateway, subnet); 
-        delay(100);
+        delay(500);
     }
-
     if(mode != CON) {
         startServer();
+
+        // send self request to join.
+        int httpResponseCode = joinServer();
+        // handle response code.
+        if(httpResponseCode == OK) {
+            Serial.println("OK response. Connected.");
+        } else {
+            if(httpResponseCode == NO_SERVER) {
+                Serial.println("NO_SERVER response.");
+            } else {
+                Serial.println("Unexpected response code error: " + String(httpResponseCode));
+            }
+            Serial.println("Halting.");
+            // while(1) {
+            //     int i = 0;
+            // }
+        }
     }
+
     // Ready to start communicating
+    Serial.println("Server is up and running.");
 }
 
 /**
  * startServer sets up the URL hooks.
  */
 void startServer() {
+    Serial.println("Setting up server URL hooks");
     /* TODO: MODIFY BELOW WITH YOUR RELEVANT ROBOT API */
     // generate URL hooks to edit the robot state
     server.on("/",          HTTP_GET,  handle_OnConnect);
@@ -111,16 +166,23 @@ void startServer() {
     /* END */
 
     server.begin();
+    delay(1000);
     Serial.println("HTTP server started");
 }
 
+/**
+ * manageRequests manages client and user requests.
+ */
+void manageRequests() {
+    server.handleClient();
+}
 /* MODIFY BELOW WITH YOUR RELEVANT ROBOT */
 
 /**
  * handle_OnConnect - GET request to get the webpage from server.
  */
 void handle_OnConnect() {
-    Serial.println("Server received new client.");
+    Serial.println("A user requests for the html page.");
     // serve HTML page
     server.send(200, "text/html", sendHTML());
 }
@@ -182,8 +244,10 @@ void handle_NotFound() {
  * @note: ignores if the robot has already joined. Returns success.
  */
 void handle_RobotJoin() {
+    Serial.println("Received a robot join request.");
     // send empty payload and an OK
     if( !server.hasArg("robot_id") ) {
+        Serial.println("Payload is malformed. Num Args: " + String(server.args()));
         server.send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
         return;
     }
@@ -196,6 +260,7 @@ void handle_RobotJoin() {
         connectedRobots[numConnectedRobots].robotID = server.arg("robot_id").toInt();
         numConnectedRobots++;
     }
+    Serial.println("Robot successfully joined. ID: " + server.arg("robot_id"));
     server.send(200, "text/html", "Robot Successfully Joined.");
 }
 
@@ -205,7 +270,7 @@ void handle_RobotJoin() {
  *          HTTP CODE 400 on invalid request
  *          HTTP CODE 404 on robotNotFound
  */
-void handle_State(DancebotStates state) {
+void handle_State(int state) {
     // check if request arg is correct
     if( !server.hasArg("robot_id") ) {
         server.send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
@@ -219,6 +284,36 @@ void handle_State(DancebotStates state) {
         }
     }
     server.send(404, "text/plain", "404: Robot ID Not Found");
+}
+
+/**
+ * IpAddress2String converts an IPAddress object into a String object.
+ * Returns a String.
+ * @author: apicquot from https://forum.arduino.cc/index.php?topic=228884.0
+ */
+String IpAddress2String(const IPAddress& ipAddress) {
+  return String(ipAddress[0]) + String(".") +\
+  String(ipAddress[1]) + String(".") +\
+  String(ipAddress[2]) + String(".") +\
+  String(ipAddress[3])  ; 
+}
+
+/**
+ * joinServer sends a POST request to IP/robotJoin. Returns http response code.
+ */
+int joinServer() {
+    HTTPClient http;
+    String queryPath = IpAddress2String(Robots[ROBOT_ID].defaultIP) + "/robotJoin"; // NOTE: default path to add Demobot to network
+    http.begin(queryPath.c_str());
+    Serial.println("Send POST request to domain " + queryPath);
+
+    // check for response
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+    String httpRequestData = "robot_id=" + String(ROBOT_ID);
+    Serial.println("With request payload " + httpRequestData);
+
+    Serial.println("Sending POST request.");
+    return http.POST(httpRequestData);
 }
 
 /* MODIFY BELOW WITH YOUR RELEVANT ROBOT */
@@ -263,7 +358,7 @@ String sendHTML() {
             body +=             "</div>" +
                             String("</div>") + 
                         "</div>" +
-                        sendJavascript() +
+                        // sendJavascript() +
                     "</body>";
     head += body;
     return head;

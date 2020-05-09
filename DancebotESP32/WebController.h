@@ -7,20 +7,18 @@
  * Organization: UT IEEE RAS
  */
 
-#ifndef WEBCONTROLLER
-#define WEBCONTROLLER
+#ifndef WEBCONTROLLER_H
+#define WEBCONTROLLER_H
 
-#include <WiFiClientSecure.h>
+#include <WiFi.h>
 #include <HTTPClient.h>
 #include <HTTPUpdate.h>
 #include <WebServer.h>
 
 #include "RobotConfig.h"
 
-#define NO_SERVER 501
+#define NO_SERVER -1
 #define OK 200
-
-WebServer server(80);
 
 /**
  * Robot modes:
@@ -32,6 +30,7 @@ enum mode {STA, AP, CON};
 
 void setupWifi();
 void startServer();
+void manageRequests();
 
 void handle_OnConnect();
 void handle_Reset();
@@ -45,11 +44,14 @@ void handle_GetState();
 void handle_RobotJoin();
 void handle_NotFound();
 // helper function
-void handle_State(DancebotStates state);
+void handle_State(int state);
 
 /* MODIFY BELOW WITH YOUR RELEVANT ROBOT */
 String sendHTML();
 String sendJavascript();
+
+String IpAddress2String(const IPAddress& ipAddress);
+int joinServer();
 
 #endif
 

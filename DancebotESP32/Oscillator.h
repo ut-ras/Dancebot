@@ -5,8 +5,8 @@
  * Each loop, it sets the servo motor to the current value in the sine wave. 
  */
 
-#ifndef OSCILLATOR
-#define OSCILLATOR
+#ifndef OSCILLATOR_H
+#define OSCILLATOR_H
 
 /* HOW TO USE OSCILLATOR CLASS
  * 1) create Oscillator object

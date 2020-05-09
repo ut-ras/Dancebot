@@ -10,8 +10,8 @@
  * Use a demo function in the loop to call a new dance move every time one stops.
  */
 
-#ifndef DANCINGSERVOS
-#define DANCINGSERVOS
+#ifndef DANCINGSERVOS_H
+#define DANCINGSERVOS_H
 
 #include "Oscillator.h"
 
