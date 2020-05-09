@@ -174,7 +174,10 @@ void startServer() {
  * manageRequests manages client and user requests.
  */
 void manageRequests() {
-    server.handleClient();
+    // https://www.reddit.com/r/esp8266/comments/942579/what_does_serverhandleclient_do/
+    if(mode != CON) {
+        server.handleClient();
+    }
 }
 /* MODIFY BELOW WITH YOUR RELEVANT ROBOT */
 

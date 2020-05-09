@@ -11,6 +11,8 @@
 #define WEBCONTROLLER_H
 
 #include <WiFi.h>
+#include <AsyncTCP.h>
+#include <ESPAsyncWebServer.h>
 #include <HTTPClient.h>
 #include <HTTPUpdate.h>
 #include <WebServer.h>

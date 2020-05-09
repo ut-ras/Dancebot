@@ -84,10 +84,6 @@ Credential CredentialsLog[5] = {
         "DemobotsNetwork",
         "Dem0b0tsRu1e!"
     },{
-        "",// "***REMOVED***",
-        ""// "***REMOVED***"
-    },
-    {
         "",
         ""
     },{
