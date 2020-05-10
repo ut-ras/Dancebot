@@ -33,6 +33,5 @@ void setup() {
 void loop() {
     move();
     // send GetState request to server and update the robot state
-    // if hosting a server, manage the server requests
-    // manageRequests();
+
 }

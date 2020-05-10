@@ -89,16 +89,10 @@ void setupWifi() {
                 Serial.println("OK response. Connected.");
                 // 3a. Response found. Establish a connection to it.
                 mode = CON;
-            } else if(httpResponseCode == NO_SERVER) {
-                Serial.println("NO_SERVER response. Starting up my own server.");
+            } else if((httpResponseCode == NO_SERVER) || (httpResponseCode == NO_RESPONSE)) {
+                Serial.println("No server appears to be up. Starting up my own server.");
                 // 3b. No response, host the page yourself using STA.
                 mode = STA;
-            } else { // Catch wrong reponse code error
-                Serial.println("Unexpected response code error. Halting.");
-                Serial.println(httpResponseCode);
-                while(1) {
-                    int i = 0;
-                }
             }
         }
     } else {
@@ -143,6 +137,12 @@ void setupWifi() {
 
     // Ready to start communicating
     Serial.println("Server is up and running.");
+
+
+    Serial.println("IP address: ");
+    Serial.println(WiFi.localIP());
+    Serial.println("MAC address: ");
+    Serial.println(WiFi.macAddress());
 }
 
 /**
@@ -193,16 +193,6 @@ void startServer() {
     delay(1000);
     Serial.println("HTTP server started");
 }
-
-// /**
-//  * manageRequests manages client and user requests.
-//  */
-// void manageRequests() {
-//     // https://www.reddit.com/r/esp8266/comments/942579/what_does_serverhandleclient_do/
-//     if(mode != CON) {
-//         server.handleClient();
-//     }
-// }
 
 /**
  * handle_NotFound is For 404 redirect requests.
@@ -274,6 +264,7 @@ void handle_RobotJoin(AsyncWebServerRequest *request) {
  *          HTTP CODE 404 on robotNotFound
  */
 void handle_State(AsyncWebServerRequest *request, int state) {
+    Serial.println("Request received to update a robot's state.");
     // check if request arg is correct
     if( !request->hasArg("robot_id") ) {
         request->send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
@@ -282,6 +273,7 @@ void handle_State(AsyncWebServerRequest *request, int state) {
     // for list of robots connected, check if robot id matches any connected robots
     for(int i = 0; i < numConnectedRobots; i++) {
         if( request->arg("robot_id").equals(String(connectedRobots[i].robotID)) ) {
+            Serial.println("Robot " + request->arg("robot_id") + " state changed to " + dancebotStates[state] + ".");
             connectedRobots[i].robotState = state;
             request->send(200, "text/html", String(connectedRobots[i].robotState));
         }
@@ -336,7 +328,6 @@ int joinServer() {
  * sendHTML sends a set of HTML to the user in response to a POST request based on the new WebController state.
  */
 // TODO: currently no support for multiple robots.
-int stateEnum = Reset;
 String sendHTML() {
     String  button_css ="width:100%; margin-bottom:1em; padding: 1em; font-family:'Arial';font-size:medium;color:#1d1f21; background-color:#8abeb7;border-color:#5e8d87;";
     String  body_css =  "width:auto; font-family:'Arial'; background-color:#1d1f21; color:#c5c8c6;";
@@ -349,7 +340,7 @@ String sendHTML() {
                             "<h3 style=\"color:#81a2be;\">Dance Moves</h3>" +
                             "<div id=\"dance_moves\" style=\"\">" +             
                                 "<div style=\"padding-left: 1.5em; font-size:medium;\">" +
-                                    "<p id=\"current_move\">Current Move: " + dancebotStates[stateEnum] + "</p>" +
+                                    "<p id=\"current_move\">Current Move: Reset</p>" +
                                 "</div>" +
                                 "<div id=\"dance_move_buttons\" style=\"padding-left: 1.5em; \">";
                                     for (int i = Reset; i < Demo1; i++) {
@@ -381,27 +372,26 @@ String sendHTML() {
 String sendJavascript() {
   String s = String("<script>") +
     // update the current state in the HTML
-    "function updateState(move) {" +
-        "for(int i = 0; i < NumStates; i++) {" +
-            "if(dancebotState[i].equals(move)) {" +
-                "stateEnum = i;" +          // TODO: may need to stick variable in the html
-                "break;" +
-            "}" +
-        "}" +
+    "function updateCurrentMove(move) {" +
+        "document.getElementById('current_move').innerText = 'Current Move: ' + move;" +
+        "document.getElementById('current_routine').innerText = 'Current Dance: ' + move;" +
     "}" +
 
     //function to HTTP Post
-    "function postMove(move) {" +
-        "var xhttp = new XMLHttpRequest(); " +
-        "xhttp.open('POST', '/' + move, true);" +
-        "xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');" +
-        "xhttp.send('robot_id=0');" +       // HARD CODED robot idx
-
-        "xhttp.onload = function() { " +
-            "console.log('Move Received: ' + xhttp.responseText); " +
-            "console.log('Set move to: ' + move + ' in the HTML.'); "
-            "updateCurrentMove(move)" +
-        "}" +
+    "async function postMove(move) {" +
+        "let response = await fetch('/' + move, {" +
+            "method: 'POST'," +
+            "headers: {" +
+                "'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'" +
+            "}," +
+            "body: \"robot_id=0\"" +
+        "}).then(function(response) {" +
+            "console.log(response.status);" +
+            "if(response.status == 200) {" + 
+                "updateCurrentMove(move);" +    
+            "}" +
+            "console.log(response.text());" +
+        "});" +
     "}" +
   "</script>";
   return s;

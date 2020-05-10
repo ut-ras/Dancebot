@@ -96,13 +96,13 @@ const int DEFAULT_NETWORK_ID = 0;
 /* MODIFY BELOW WITH YOUR RELEVANT ROBOT */
 // String fillers for sendHTML(). Position corresponds to DancebotStates enum.
 char* dancebotStates[] {
-    "Reset",
-    "Walk",
-    "Hop",
-    "Wiggle",
-    "Ankles",
-    "Demo1",
-    "Demo2"
+    "reset",
+    "walk",
+    "hop",
+    "wiggle",
+    "ankles",
+    "demo1",
+    "demo2"
 };
 int numConnectedRobots = 0;
 Dancebot connectedRobots[MAX_ROBOTS] = { {0, 0, 0, 0} };

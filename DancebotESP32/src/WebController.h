@@ -19,7 +19,8 @@
 
 #include "RobotConfig.h"
 
-#define NO_SERVER -1
+#define NO_SERVER 404
+#define NO_RESPONSE -1
 #define OK 200
 
 /**
@@ -32,7 +33,6 @@ enum mode {STA, AP, CON};
 
 void setupWifi();
 void startServer();
-// void manageRequests();
 
 void handle_NotFound(AsyncWebServerRequest *request);
 void handle_GetState(AsyncWebServerRequest *request);
