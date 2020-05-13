@@ -1,6 +1,6 @@
 /**
  * Author: Matthew Yu
- * Last Modified: 05/06/20
+ * Last Modified: 05/11/20
  * Project: Dancebot Swarm
  * File: DancebotAPI.h
  * Description: Dancebot API to drive hardware with using a state structure
@@ -10,8 +10,10 @@
 #define DEMOBOTAPI_H
 
 #include "DancingServos.h"
+#include "RobotConfig.h"
 
 void initializeRobot();
 void move();
+void updateState(String state);
 
 #endif
