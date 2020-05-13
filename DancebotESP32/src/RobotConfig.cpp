@@ -76,16 +76,17 @@ const int ROBOT_ID = Dancebot1;
  * CredentialsLog is a set of all credentials that the robot can check.
  */
 // ADD ANY NETWORKS HERE, LIKE HOTSPOTS. DO NOT COMMIT TO GITHUB.
+// IF YOU DO, USE BFG to sanitize sensitive info. https://help.github.com/en/github/authenticating-to-github/removing-sensitive-data-from-a-repository
 Credential CredentialsLog[5] = {
     {
+        "***REMOVED***",
+        "***REMOVED***"
+    },{
         "Demobot",
         "Demobots1234"
     },{
         "DemobotsNetwork",
         "Dem0b0tsRu1e!"
-    },{
-        "",
-        ""
     },{
         "",
         ""

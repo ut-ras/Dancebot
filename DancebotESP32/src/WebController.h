@@ -1,6 +1,6 @@
 /**
  * Author: Matthew Yu
- * Last Modified: 05/06/20
+ * Last Modified: 05/12/20
  * Project: Dancebot Swarm
  * File: WebController.h
  * Description: A generic secure web controller for controlling various Demobots Projects. Robots should be able to: connect to a remote server and receive/send commands, as well as spin up their own server and serve a webpage to the user to directly interact with it.
@@ -15,7 +15,6 @@
 #include <ESPAsyncWebServer.h>
 #include <HTTPClient.h>
 #include <HTTPUpdate.h>
-// #include <WebServer.h>
 
 #include "RobotConfig.h"
 
@@ -31,21 +30,24 @@
  */
 enum mode {STA, AP, CON};
 
+/* ---------------------SETUP--------------------------------------- */
 void setupWifi();
 void startServer();
-
-void handle_NotFound(AsyncWebServerRequest *request);
-void handle_GetState(AsyncWebServerRequest *request);
-void handle_RobotJoin(AsyncWebServerRequest *request);
-void handle_State(AsyncWebServerRequest *request, int state);
-
-// helper functions
-String IpAddress2String(const IPAddress& ipAddress);
+/* ---------------------CLIENT REQUESTS----------------------------- */
 int joinServer();
-
-/* MODIFY BELOW WITH YOUR RELEVANT ROBOT */
+String getState();
+/* ---------------------SERVER HANDLER REQUESTS--------------------- */
+void handle_getState(AsyncWebServerRequest *request);
+void handle_joinServer(AsyncWebServerRequest *request);
+void handle_state(AsyncWebServerRequest *request, int state);
+void handle_notFound(AsyncWebServerRequest *request);
+/* ---------------------WEB PAGE------------------------------------ */
 String sendHTML();
 String sendJavascript();
+
+/* ---------------------HELPER FUNCTIONS---------------------------- */
+String IpAddress2String(const IPAddress& ipAddress);
+
 
 #endif
 
@@ -69,6 +71,6 @@ String sendJavascript();
  * Simple ESP32 web server
  * https://lastminuteengineers.com/creating-esp32-web-server-arduino-ide/
  * https://tttapa.github.io/ESP8266/Chap10%20-%20Simple%20Web%20Server.html
- * XMLHTTPRequest used in sendJavascript()
- * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest
+ * fetch promises
+ * https://javascript.info/fetch
  */

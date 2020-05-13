@@ -1,6 +1,6 @@
 /**
  * Author: Matthew Yu
- * Last Modified: 05/06/20
+ * Last Modified: 05/12/20
  * Project: Dancebot Swarm
  * File: WebController.cpp
  * Description: A generic secure web controller for controlling various Demobots Projects. Robots should be able to: connect to a remote server and receive/send commands, as well as spin up their own server and serve a webpage to the user to directly interact with it.
@@ -65,7 +65,7 @@ void setupWifi() {
         }else {
             Serial.println("Attempting to connect to network: " + String(CredentialsLog[foundNetwork].SSID));
             // set relevant SSID and password
-            // connect to network TODO: Guru core panic here
+            // connect to network
             WiFi.begin(CredentialsLog[foundNetwork].SSID, CredentialsLog[foundNetwork].PASSWORD);
             Serial.println("Checking wifi status");
             while (WiFi.status() != WL_CONNECTED) {
@@ -102,7 +102,6 @@ void setupWifi() {
     }
 
     if(mode == AP) { // set up network and my desired webpage IP address
-        // TODO: guru core panic here
         Serial.println("Setting up default network at: " + String(CredentialsLog[DEFAULT_NETWORK_ID].SSID));
         WiFi.softAP(CredentialsLog[DEFAULT_NETWORK_ID].SSID, CredentialsLog[DEFAULT_NETWORK_ID].PASSWORD);
         delay(500);
@@ -144,13 +143,11 @@ void setupWifi() {
     Serial.println("MAC address: ");
     Serial.println(WiFi.macAddress());
 }
-
 /**
  * startServer sets up the URL hooks.
  */
 void startServer() {
     Serial.println("Setting up server URL hooks");
-    /* TODO: MODIFY BELOW WITH YOUR RELEVANT ROBOT API */
     // generate URL hooks to edit the robot state
     server.on("/",          HTTP_GET,   [](AsyncWebServerRequest *request) {
         Serial.println("A user requests for the html page.");
@@ -158,35 +155,33 @@ void startServer() {
     });
     // robot states
     server.on("/reset",     HTTP_POST,  [](AsyncWebServerRequest *request) {
-        handle_State(request, Reset);
+        handle_state(request, Reset);
     });
     server.on("/walk",      HTTP_POST,  [](AsyncWebServerRequest *request) {
-        handle_State(request, Walk);
+        handle_state(request, Walk);
     });
     server.on("/hop",       HTTP_POST,  [](AsyncWebServerRequest *request) {
-        handle_State(request, Hop);
+        handle_state(request, Hop);
     });
     server.on("/wiggle",    HTTP_POST,  [](AsyncWebServerRequest *request) {
-        handle_State(request, Wiggle);
+        handle_state(request, Wiggle);
     });
     server.on("/ankles",    HTTP_POST,  [](AsyncWebServerRequest *request) {
-        handle_State(request, Ankles);
+        handle_state(request, Ankles);
     });
     server.on("/demo1",     HTTP_POST,  [](AsyncWebServerRequest *request) {
-        handle_State(request, Demo1);
+        handle_state(request, Demo1);
     });
     server.on("/demo2",     HTTP_POST,  [](AsyncWebServerRequest *request) {
-        handle_State(request, Demo2);
+        handle_state(request, Demo2);
     });
-
-    server.on("/getState",  HTTP_POST,  [](AsyncWebServerRequest *request) {
-        handle_GetState(request);
-    });
-    
     server.on("/robotJoin", HTTP_POST,  [](AsyncWebServerRequest *request) {
-        handle_RobotJoin(request);
+        handle_joinServer(request);
     });
-    server.onNotFound(handle_NotFound);
+    server.on("/getState",  HTTP_POST,  [](AsyncWebServerRequest *request) {
+        handle_getState(request);
+    });
+    server.onNotFound(handle_notFound);
     /* END */
 
     server.begin();
@@ -194,21 +189,70 @@ void startServer() {
     Serial.println("HTTP server started");
 }
 
+
+/* ---------------------CLIENT REQUESTS--------------------- */
 /**
- * handle_NotFound is For 404 redirect requests.
+ * joinServer sends a POST request with the robot id to IP/robotJoin. Returns http response code.
  */
-void handle_NotFound(AsyncWebServerRequest *request) {
-    request->send(404, "text/plain", "404: Not found");
+int joinServer() {
+    HTTPClient http;
+    String queryPath = "http://" + IpAddress2String(Robots[ROBOT_ID].defaultIP) + "/robotJoin"; // NOTE: default path to add Demobot to network
+    http.begin(queryPath.c_str());
+    Serial.println("Send POST request to domain " + queryPath);
+
+    // check for response
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+    String httpRequestData = "robot_id=" + String(ROBOT_ID);
+    Serial.println("With request payload " + httpRequestData);
+
+    Serial.println("Sending POST request.");
+    return http.POST(httpRequestData);
+}
+/**
+ * getState sends a POST request with the robot id to the IP/getState. Returns http response code and robot state struct.
+ */
+String getState() {
+    HTTPClient http;
+    String queryPath = "http://" + IpAddress2String(Robots[ROBOT_ID].defaultIP) + "/getState"; // NOTE: default path to add Demobot to network
+    http.begin(queryPath.c_str());
+    Serial.println("Send POST request to domain " + queryPath);
+
+    // check for response
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+    String httpRequestData = "robot_id=" + String(ROBOT_ID);
+    Serial.println("With request payload " + httpRequestData);
+
+    Serial.println("Sending POST request.");
+    int httpCode =  http.POST(httpRequestData);
+
+    // TODO: modified this as of 5/12/20, not tested
+    // httpCode will be negative on error
+    if(httpCode > 0) {
+        // HTTP header has been send and Server response header has been handled
+        Serial.println("POST http response: " + String(httpCode));
+
+        // file found at server
+        if(httpCode == OK) {
+            String payload = http.getString();
+            Serial.println(payload);
+            // TODO: then pass it back up
+            return payload;
+        }
+    } else {
+        Serial.println("getState error: " + String(httpCode));
+    }
+    return "";
 }
 
 
+/* ---------------------SERVER HANDLER REQUESTS--------------------- */
 /**
- * handle_GetState is a POST request with a robot id to grab a wanted robot's state
+ * handle_getState is a POST request with a robot id to grab a wanted robot's state
  * @return: HTTP CODE 200 on success
  *          HTTP CODE 400 on invalid request
  *          HTTP CODE 404 on robotNotFound
  */
-void handle_GetState(AsyncWebServerRequest *request) {
+void handle_getState(AsyncWebServerRequest *request) {
     // check if request is correct
     if(!request->hasArg("robot_id")) {
         request->send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
@@ -224,16 +268,15 @@ void handle_GetState(AsyncWebServerRequest *request) {
     // 404 if robot isn't connected or doesn't exist
     request->send(404, "text/plain", "404: Robot Not Found");
 }
-
 /**
- * handle_RobotJoin is a POST request that does the following:
+ * handle_joinServer is a POST request that does the following:
  *  * check if there is a live server, for purposes of serverSetup
  *  * updates the server list of active Robots that have joined
  * @return: HTTP CODE 200 on success
  *          HTTP CODE 400 on invalid request
  * @note: ignores if the robot has already joined. Returns success.
  */
-void handle_RobotJoin(AsyncWebServerRequest *request) {
+void handle_joinServer(AsyncWebServerRequest *request) {
     Serial.println("Received a robot join request.");
     // send empty payload and an OK
     if( !request->hasArg("robot_id") ) {
@@ -256,14 +299,13 @@ void handle_RobotJoin(AsyncWebServerRequest *request) {
     Serial.println("Robot successfully joined. ID: " + request->arg("robot_id"));
     request->send(200, "text/html", "Robot Successfully Joined.");
 }
-
 /**
- * handle_State is a helper function to facilitate execution of other handle methods that modify a robot's state.
+ * handle_state is a helper function to facilitate execution of other handle methods that modify a robot's state.
  * @return: HTTP CODE 200 on success
  *          HTTP CODE 400 on invalid request
  *          HTTP CODE 404 on robotNotFound
  */
-void handle_State(AsyncWebServerRequest *request, int state) {
+void handle_state(AsyncWebServerRequest *request, int state) {
     Serial.println("Request received to update a robot's state.");
     // check if request arg is correct
     if( !request->hasArg("robot_id") ) {
@@ -280,54 +322,18 @@ void handle_State(AsyncWebServerRequest *request, int state) {
     }
     request->send(404, "text/plain", "404: Robot ID Not Found");
 }
-
-
-
 /**
- * IpAddress2String converts an IPAddress object into a String object.
- * Returns a String.
- * @author: apicquot from https://forum.arduino.cc/index.php?topic=228884.0
+ * handle_NotFound is For 404 redirect requests.
  */
-String IpAddress2String(const IPAddress& ipAddress) {
-  return String(ipAddress[0]) + String(".") +\
-  String(ipAddress[1]) + String(".") +\
-  String(ipAddress[2]) + String(".") +\
-  String(ipAddress[3])  ; 
+void handle_notFound(AsyncWebServerRequest *request) {
+    request->send(404, "text/plain", "404: Not found");
 }
 
-/**
- * joinServer sends a POST request to IP/robotJoin. Returns http response code.
- */
-int joinServer() {
-    HTTPClient http;
-    String queryPath = "http://" + IpAddress2String(Robots[ROBOT_ID].defaultIP) + "/robotJoin"; // NOTE: default path to add Demobot to network
-    http.begin(queryPath.c_str());
-    Serial.println("Send POST request to domain " + queryPath);
-
-    // check for response
-    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    String httpRequestData = "robot_id=" + String(ROBOT_ID);
-    Serial.println("With request payload " + httpRequestData);
-
-    Serial.println("Sending POST request.");
-    return http.POST(httpRequestData);
-}
-
-
-
-
-
-
-
-
-
-
-/* MODIFY BELOW WITH YOUR RELEVANT ROBOT */
-/* HTML */
+/* ---------------------WEB PAGE------------------------------------ */
 /**
  * sendHTML sends a set of HTML to the user in response to a POST request based on the new WebController state.
+ * TODO: currently no support for multiple robots.
  */
-// TODO: currently no support for multiple robots.
 String sendHTML() {
     String  button_css ="width:100%; margin-bottom:1em; padding: 1em; font-family:'Arial';font-size:medium;color:#1d1f21; background-color:#8abeb7;border-color:#5e8d87;";
     String  body_css =  "width:auto; font-family:'Arial'; background-color:#1d1f21; color:#c5c8c6;";
@@ -368,7 +374,10 @@ String sendHTML() {
     head += body;
     return head;
 }
-/* JAVASCRIPT */
+/**
+ * sendJavascript sends a set of JS to the user in response to a POST request based on the new WebController state.
+ * TODO: currently no support for multiple robots.
+ */
 String sendJavascript() {
   String s = String("<script>") +
     // update the current state in the HTML
@@ -395,4 +404,18 @@ String sendJavascript() {
     "}" +
   "</script>";
   return s;
+}
+
+
+/* ---------------------HELPER FUNCTIONS---------------------------- */
+/**
+ * IpAddress2String converts an IPAddress object into a String object.
+ * Returns a String.
+ * @author: apicquot from https://forum.arduino.cc/index.php?topic=228884.0
+ */
+String IpAddress2String(const IPAddress& ipAddress) {
+  return String(ipAddress[0]) + String(".") +\
+  String(ipAddress[1]) + String(".") +\
+  String(ipAddress[2]) + String(".") +\
+  String(ipAddress[3])  ; 
 }
