@@ -80,7 +80,7 @@ void setupWifi() {
                 delay(RETRY_WAIT);
             }
 
-            Serial.println("\nConnected to network: " + String(CredentialsLog[foundNetwork].SSID));
+            Serial.println("Connected to network: " + String(CredentialsLog[foundNetwork].SSID));
             Serial.println("Attempting to connect to server at: " + IpAddress2String(Robots[ROBOT_ID].defaultIP));
             // Is there a response at the relevant IP? If so, establish a connection to it.
             // send POST request at IP address/hook /robotJoin with robot id payload.
@@ -127,21 +127,15 @@ void setupWifi() {
             } else {
                 Serial.println("Unexpected response code error: " + String(httpResponseCode));
             }
-            Serial.println("Halting.");
-            // while(1) {
-            //     int i = 0;
-            // }
         }
     }
 
     // Ready to start communicating
-    Serial.println("Server is up and running.");
-
-
-    Serial.println("IP address: ");
+    Serial.println("\nIP address: ");
     Serial.println(WiFi.localIP());
     Serial.println("MAC address: ");
     Serial.println(WiFi.macAddress());
+    Serial.println("\nServer is up and running.\n\n");
 }
 /**
  * startServer sets up the URL hooks.
@@ -150,7 +144,7 @@ void startServer() {
     Serial.println("Setting up server URL hooks");
     // generate URL hooks to edit the robot state
     server.on("/",          HTTP_GET,   [](AsyncWebServerRequest *request) {
-        Serial.println("A user requests for the html page.");
+        Serial.println("[SERVER] A user requests for the html page.");
         request->send(200, "text/html", sendHTML());
     });
     // robot states
@@ -223,25 +217,43 @@ String getState() {
     Serial.println("With request payload " + httpRequestData);
 
     Serial.println("Sending POST request.");
-    int httpCode =  http.POST(httpRequestData);
+    int httpResponseCode =  http.POST(httpRequestData);
 
-    // TODO: modified this as of 5/12/20, not tested
-    // httpCode will be negative on error
-    if(httpCode > 0) {
-        // HTTP header has been send and Server response header has been handled
-        Serial.println("POST http response: " + String(httpCode));
-
-        // file found at server
-        if(httpCode == OK) {
-            String payload = http.getString();
-            Serial.println(payload);
-            // TODO: then pass it back up
-            return payload;
+    String payload = "";
+    // // handle response code.
+    if(httpResponseCode == OK) {
+        Serial.println("OK response. Server says that request has been receieved.");
+        // code reused from https://github.com/espressif/arduino-esp32/blob/master/libraries/HTTPClient/examples/StreamHttpClient/StreamHttpClient.ino
+        // get length of document (is -1 when Server sends no Content-Length header)
+        int len = http.getSize();
+        // create buffer for read
+        uint8_t buff[128] = {0};
+        // get tcp stream
+        WiFiClient * stream = http.getStreamPtr();
+        // read all data from server
+        while(http.connected() && (len > 0 || len == -1)) {
+            // get available data size
+            size_t size = stream->available();
+            if(size) {
+                // read up to 128 byte
+                int c = stream->readBytes(buff, ((size > sizeof(buff)) ? sizeof(buff) : size));
+                if(len > 0) {
+                    len -= c;
+                }
+            }
+            delay(1);
         }
+        payload = String((char*) buff);
     } else {
-        Serial.println("getState error: " + String(httpCode));
+        // Serial.println("Got a POST http response I don't want to be seeing.");
+        if(httpResponseCode == NO_SERVER) {
+            Serial.println("NO_SERVER response.");
+        } else {
+            Serial.println("Unexpected response code error: " + String(httpResponseCode));
+        }
     }
-    return "";
+
+    return payload;
 }
 
 
@@ -253,15 +265,19 @@ String getState() {
  *          HTTP CODE 404 on robotNotFound
  */
 void handle_getState(AsyncWebServerRequest *request) {
+    Serial.println("[SERVER] Received a request by a ROBOT to GRAB its updated state.");
+
     // check if request is correct
     if(!request->hasArg("robot_id")) {
         request->send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
         return;
     }
+
     // for list of robots connected, check if robot id matches any connected robots
     for(int i = 0; i < numConnectedRobots; i++) {
         if( request->arg("robot_id").equals(String(connectedRobots[i].robotID)) ) {
-            request->send(200, "text/html", String(connectedRobots[i].robotState));
+            // TODO: currently only sends robot dance state. Increase functionality by sending a JSON/struct of eye color and expression. maybe ID to crosscheck requests.
+            request->send(200, "text/html", "STATE:" + String(connectedRobots[i].robotState) + ";"); // 
             return;
         }
     }
@@ -277,7 +293,7 @@ void handle_getState(AsyncWebServerRequest *request) {
  * @note: ignores if the robot has already joined. Returns success.
  */
 void handle_joinServer(AsyncWebServerRequest *request) {
-    Serial.println("Received a robot join request.");
+    Serial.println("[SERVER] Received request by a ROBOT to join the server.");
     // send empty payload and an OK
     if( !request->hasArg("robot_id") ) {
         Serial.println("Payload is malformed. Num Args: " + String(request->args()));
@@ -306,18 +322,20 @@ void handle_joinServer(AsyncWebServerRequest *request) {
  *          HTTP CODE 404 on robotNotFound
  */
 void handle_state(AsyncWebServerRequest *request, int state) {
-    Serial.println("Request received to update a robot's state.");
+    Serial.println("[SERVER] Received a request by a USER to UPDATE a robot's state.");
     // check if request arg is correct
     if( !request->hasArg("robot_id") ) {
         request->send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
         return;
     }
+
     // for list of robots connected, check if robot id matches any connected robots
     for(int i = 0; i < numConnectedRobots; i++) {
         if( request->arg("robot_id").equals(String(connectedRobots[i].robotID)) ) {
             Serial.println("Robot " + request->arg("robot_id") + " state changed to " + dancebotStates[state] + ".");
             connectedRobots[i].robotState = state;
             request->send(200, "text/html", String(connectedRobots[i].robotState));
+            return;
         }
     }
     request->send(404, "text/plain", "404: Robot ID Not Found");
