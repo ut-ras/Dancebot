@@ -79,14 +79,17 @@ const int ROBOT_ID = Dancebot1;
 // IF YOU DO, USE BFG to sanitize sensitive info. https://help.github.com/en/github/authenticating-to-github/removing-sensitive-data-from-a-repository
 Credential CredentialsLog[5] = {
     {
-        "***REMOVED***",
-        "***REMOVED***"
-    },{
         "Demobot",
         "Demobots1234"
     },{
         "DemobotsNetwork",
         "Dem0b0tsRu1e!"
+    },{
+        "",
+        ""
+    },{
+        "",
+        ""
     },{
         "",
         ""
