@@ -15,5 +15,6 @@
 void initializeRobot();
 void move();
 void updateState(String state);
+bool isOscillating();
 
 #endif

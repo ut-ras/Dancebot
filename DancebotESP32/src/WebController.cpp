@@ -192,14 +192,13 @@ int joinServer() {
     HTTPClient http;
     String queryPath = "http://" + IpAddress2String(Robots[ROBOT_ID].defaultIP) + "/robotJoin"; // NOTE: default path to add Demobot to network
     http.begin(queryPath.c_str());
-    // Serial.println("Send POST request to domain " + queryPath);
+    Serial.println("Send POST request to domain " + queryPath);
 
     // check for response
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
     String httpRequestData = "robot_id=" + String(ROBOT_ID);
-    // Serial.println("With request payload " + httpRequestData);
+    Serial.println("With request payload " + httpRequestData);
 
-    // Serial.println("Sending POST request.");
     return http.POST(httpRequestData);
 }
 /**
@@ -216,11 +215,10 @@ String getState() {
     String httpRequestData = "robot_id=" + String(ROBOT_ID);
     // Serial.println("With request payload " + httpRequestData);
 
-    // Serial.println("Sending POST request.");
     int httpResponseCode =  http.POST(httpRequestData);
 
     String payload = "";
-    // // handle response code.
+    // handle response code.
     if(httpResponseCode == OK) {
         // Serial.println("OK response. Server says that request has been receieved.");
         // code reused from https://github.com/espressif/arduino-esp32/blob/master/libraries/HTTPClient/examples/StreamHttpClient/StreamHttpClient.ino
@@ -245,7 +243,6 @@ String getState() {
         }
         payload = String((char*) buff);
     } else {
-        // Serial.println("Got a POST http response I don't want to be seeing.");
         if(httpResponseCode == NO_SERVER) {
             Serial.println("NO_SERVER response.");
         } else {
@@ -265,7 +262,7 @@ String getState() {
  *          HTTP CODE 404 on robotNotFound
  */
 void handle_getState(AsyncWebServerRequest *request) {
-    // Serial.println("[SERVER] Received a request by a ROBOT to GRAB its updated state.");
+    Serial.println("[SERVER] Received a request by a ROBOT to GRAB its updated state.");
 
     // check if request is correct
     if(!request->hasArg("robot_id")) {
@@ -293,10 +290,10 @@ void handle_getState(AsyncWebServerRequest *request) {
  * @note: ignores if the robot has already joined. Returns success.
  */
 void handle_joinServer(AsyncWebServerRequest *request) {
-    // Serial.println("[SERVER] Received request by a ROBOT to join the server.");
+    Serial.println("[SERVER] Received request by a ROBOT to join the server.");
     // send empty payload and an OK
     if( !request->hasArg("robot_id") ) {
-        // Serial.println("Payload is malformed. Num Args: " + String(request->args()));
+        Serial.println("Payload is malformed. Num Args: " + String(request->args()));
         request->send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
         return;
     }
@@ -312,7 +309,7 @@ void handle_joinServer(AsyncWebServerRequest *request) {
         connectedRobots[numConnectedRobots].robotID = request->arg("robot_id").toInt();
         numConnectedRobots++;
     }
-    // Serial.println("Robot successfully joined. ID: " + request->arg("robot_id"));
+    Serial.println("Robot successfully joined. ID: " + request->arg("robot_id"));
     request->send(200, "text/html", "Robot Successfully Joined.");
 }
 /**
@@ -322,7 +319,7 @@ void handle_joinServer(AsyncWebServerRequest *request) {
  *          HTTP CODE 404 on robotNotFound
  */
 void handle_state(AsyncWebServerRequest *request, int state) {
-    Serial.println("[SERVER] Received a request by a USER to UPDATE a robot's state.");
+    // Serial.println("[SERVER] Received a request by a USER to UPDATE a robot's state.");
     // check if request arg is correct
     if( !request->hasArg("robot_id") ) {
         request->send(400, "text/plain", "400: Invalid Request, arg must be robot_id");
