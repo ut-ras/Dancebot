@@ -31,41 +31,49 @@ void move() {
     bot->loopOscillation();
     // check if ready to start the next move in the dance
     bot->loopDanceRoutines();
+
+    delay(100);
 }
 
 /**
  * updateState updates the internal function of the DancingServos* bot.
  * @param String state - encoded version of the server expectation of the Dancebot state.
- * TODO: need to test
  */
 void updateState(String state) {
-    Serial.println("Server received state: " + state);
-    if(state.indexOf(String(Reset))) {
-        bot->position0();
-        bot->enableDanceRoutine(false);
+    Serial.println("Robot received new state: " + state);
+    
+    int moveIdx = state.indexOf(':');
+    int moveIdxEnd = state.indexOf(';', moveIdx+1);
+    String move = state.substring(moveIdx+1, moveIdxEnd);
+    Serial.println(move);
 
-    }else if(state.indexOf(String(Walk))) {
-        bot->walk(-1, 1500, false);
-
-    }else if(state.indexOf(String(Hop))) {
-        bot->hop(25, -1);
-
-    }else if(state.indexOf(String(Wiggle))) {
-        bot->wiggle(30, -1);
-
-    }else if(state.indexOf(String(Ankles))) {
-        bot->themAnkles(-1);
-        
-    }else if(state.indexOf(String(Demo1))) {
-        bot->setDanceRoutine(0);
-        bot->enableDanceRoutine(true);
-
-    }else if(state.indexOf(String(Demo2))) {
-        bot->setDanceRoutine(1);
-        bot->enableDanceRoutine(true);
-
-    }else {
-        Serial.println("Invalid state.");
+    switch(move.toInt()) {
+        case Reset:
+            bot->position0();
+            bot->enableDanceRoutine(false);
+            break;
+        case Walk:
+            bot->walk(-1, 1500, false);
+            break;
+        case Hop:
+            bot->hop(25, -1);
+            break;
+        case Wiggle:
+            bot->wiggle(30, -1);
+            break;
+        case Ankles:
+            bot->themAnkles(-1);
+            break;
+        case Demo1:
+            bot->setDanceRoutine(0);
+            bot->enableDanceRoutine(true);
+            break;
+        case Demo2:
+            bot->setDanceRoutine(1);
+            bot->enableDanceRoutine(true);
+            break;
+        default:
+            Serial.println("Invalid state.");
     }
 }
 
