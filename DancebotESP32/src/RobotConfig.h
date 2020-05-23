@@ -13,6 +13,7 @@
 #define MAX_ROBOTS 20       // I seriously doubt that we'll ever have more than 5 robots on a single webserver (i.e. Dancebots)
 #define CRED_LOG_LEN 5      // arbitrarily decided max credentials defined at any time
 #define RETRY_WAIT 200      // 200 ms
+#define UPDATE_WAIT 150     // 150 ms (testing with 1.5s)
 #include <IPAddress.h>
 
 extern const int ROBOT_ID;
