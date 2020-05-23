@@ -40,12 +40,12 @@ void move() {
  * @param String state - encoded version of the server expectation of the Dancebot state.
  */
 void updateState(String state) {
-    Serial.println("Robot received new state: " + state);
+    // Serial.println("Robot received new state: " + state);
     
     int moveIdx = state.indexOf(':');
     int moveIdxEnd = state.indexOf(';', moveIdx+1);
     String move = state.substring(moveIdx+1, moveIdxEnd);
-    Serial.println(move);
+    // Serial.println(move);
 
     switch(move.toInt()) {
         case Reset:
@@ -73,7 +73,8 @@ void updateState(String state) {
             bot->enableDanceRoutine(true);
             break;
         default:
-            Serial.println("Invalid state.");
+            int i = 0;
+            // Serial.println("Invalid state.");
     }
 }
 
