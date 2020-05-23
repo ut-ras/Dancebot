@@ -32,10 +32,12 @@ void setup() {
 
 void loop() {
     static int lastMsgTime = 12000; // start 12 seconds into bootup
+
     move();
+
     // send GetState request to server and update the robot state
     int time = millis();
-    if((time - lastMsgTime) > UPDATE_WAIT) {
+    if(!isOscillating() || ((time - lastMsgTime) > UPDATE_WAIT)) {
         updateState(getState());
         lastMsgTime = time;
     }

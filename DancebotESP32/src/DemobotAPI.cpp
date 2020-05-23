@@ -31,8 +31,6 @@ void move() {
     bot->loopOscillation();
     // check if ready to start the next move in the dance
     bot->loopDanceRoutines();
-
-    delay(100);
 }
 
 /**
@@ -73,8 +71,14 @@ void updateState(String state) {
             bot->enableDanceRoutine(true);
             break;
         default:
-            int i = 0;
             // Serial.println("Invalid state.");
     }
 }
 
+/**
+ * isOscillating checks whether the robot is currently moving.
+ * @return true if it is oscillating.
+ */
+bool isOscillating() {
+    return bot->isOscillating();
+}
