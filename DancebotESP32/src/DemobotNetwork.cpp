@@ -13,21 +13,21 @@ DemobotNetwork::DemobotNetwork(char* demobotName) {
     _demobotName = demobotName;
     // set server ip based on robot type
     switch(hash(_demobotName)) {
-        case hash("Dancebot1"):
-        case hash("Dancebot2"):
-        case hash("Dancebot3"):
-        case hash("Dancebot4"):
-        case hash("Dancebot5"):
-        case hash("Mothership"):
+        case static_hash("Dancebot1"):
+        case static_hash("Dancebot2"):
+        case static_hash("Dancebot3"):
+        case static_hash("Dancebot4"):
+        case static_hash("Dancebot5"):
+        case static_hash("Mothership"):
             _ipaddress = IPAddress(192,168,1,1);
             break;
-        case hash("Polargraph"):
+        case static_hash("Polargraph"):
             _ipaddress = IPAddress(192,168,1,2);
             break;
-        case hash("Marquee"):
+        case static_hash("Marquee"):
             _ipaddress = IPAddress(192,168,1,3);
             break;
-        case hash("TowerOfPower"):
+        case static_hash("TowerOfPower"):
             _ipaddress = IPAddress(192,168,1,4);
             break;
         default:
@@ -53,8 +53,8 @@ bool DemobotNetwork::connectNetwork() {
     // if we never found a network with credentials, don't attempt to connect
     if (_SSID == nullptr || _PASSWORD == nullptr) { return false; }
     
-    int retry = 0;
-    loop {
+    int retry;
+    while (true) {
         WiFi.begin(_SSID, _PASSWORD);
         // poll until we get connected or get a connection failure
         while (WiFi.status() != WL_CONNECTED) {
@@ -85,11 +85,11 @@ bool DemobotNetwork::pingServer() {
 
     // send a root level GET request to see if the page exists
     String queryPath = "http://" + IpAddress2String(_ipaddress) + "/";
-    http.begin(queryPath.c_str())
-    return = http.GET();
+    http.begin(queryPath.c_str());
+    return http.GET();
 }
 
-int DemobotNetwork::sendGETRequest(String endpoint, String[] *keys, String[] *vals, int argSize, char* response) {
+int DemobotNetwork::sendGETRequest(String endpoint, String keys[], String vals[], int argSize, char* response) {
     // if not connected to a network or doesn't have an ip address TODO: don't
     // know if !_ipaddress will work
     if (!_connected || !_ipaddress) return -1;
@@ -106,7 +106,7 @@ int DemobotNetwork::sendGETRequest(String endpoint, String[] *keys, String[] *va
         }
     }
 
-    http.begin(queryPath.c_str())
+    http.begin(queryPath.c_str());
     int responseCode = http.GET();
     if (responseCode > 0) {
         response = http.getString();
@@ -114,7 +114,7 @@ int DemobotNetwork::sendGETRequest(String endpoint, String[] *keys, String[] *va
     return responseCode;
 }
 
-int DemobotNetwork::sendPOSTRequest(String endpoint, String[] *keys, String[] *vals, int argSize) {
+int DemobotNetwork::sendPOSTRequest(String endpoint, String keys[], String vals[], int argSize) {
     // if not connected to a network or doesn't have an ip address TODO: don't
     // know if !_ipaddress will work
     if (!_connected || !_ipaddress) return -1;
@@ -151,18 +151,18 @@ IPAddress DemobotNetwork::getIPAddress() {
 
 // Private methods
 
-int DemobotNetwork::hash(char* val) {
+int DemobotNetwork::hash(char* valptr) {
     int tot = 0;
     int count = 0;
-    while(*valPtr != '\0') {
+    while(*valptr != '\0') {
         // calculate the multiplying power for the digit
         int power = 1; // 10E0
         for (int i = 0; i < count; i++) {
             power *= 10; // 10Ecount
         }
-        tot += *valPtr * power);
+        tot += *valptr * power);
         count++;
-        valPtr++;
+        valptr++;
     }
     return tot;
 }
@@ -183,4 +183,16 @@ bool DemobotNetwork::getNetwork(char* ssid, char* password) {
     }
     // 2b. if we didn't find a network, set it to default
     return false;
+}
+
+/**
+ * IpAddress2String converts an IPAddress object into a String object.
+ * Returns a String.
+ * @author: apicquot from https://forum.arduino.cc/index.php?topic=228884.0
+ */
+String IpAddress2String(const IPAddress& ipAddress) {
+    return String(ipAddress[0]) + String(".") +\
+        String(ipAddress[1]) + String(".") +\
+        String(ipAddress[2]) + String(".") +\
+        String(ipAddress[3]) ;
 }

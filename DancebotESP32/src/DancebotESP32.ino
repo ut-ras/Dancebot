@@ -26,7 +26,7 @@
 
 void setup() {
     delay(5000); //give time for me to open up serial monitor
-    setupWifi();
+    setupNetworking();
     initializeRobot();
 }
 
@@ -37,8 +37,8 @@ void loop() {
 
     // send GetState request to server and update the robot state
     int time = millis();
-    if(!isOscillating() || ((time - lastMsgTime) > UPDATE_WAIT)) {
-        updateState(getState());
+    if(!isOscillating() || ((time - lastMsgTime) > 250)) { // 250 is UPDATE_WAIT
+        // updateState(getState());
         lastMsgTime = time;
     }
 }

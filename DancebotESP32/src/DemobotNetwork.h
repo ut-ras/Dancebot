@@ -16,16 +16,14 @@
 #define RETRY_WAIT 200      // 200 ms
 #define RETRY_AMOUNT 3
 
+// TODO: set this function to the same as the other hash
+#define static_hash(const char*) 0
+
 
 // redirect any traffic with an unknown address to here
-extern IPAddress gateway(192,168,1,1);
+IPAddress gateway(192,168,1,1);
 // 255-245-1 = 9 allowed IP addresses on the subnet
-extern IPAddress subnet(255,255,0,0);
-
-extern enum RequestType {
-    GET,
-    POST
-};
+IPAddress subnet(255,255,0,0);
 
 /**
  * Definition of an implementation for the DemobotNetwork class.
@@ -40,7 +38,7 @@ class DemobotNetwork {
         String _demobotName;
 
         // IP address of server to connect to or host
-        IPAdress _ipaddress;
+        IPAddress _ipaddress;
 
         // Network info
         char* _SSID;
@@ -50,6 +48,8 @@ class DemobotNetwork {
         // boolean for whether the network is connected to or not.
         bool _connected;
 
+        // http client for sending and receiving requests.
+        HTTPClient http;
         /**
          * Represents a single possible network that can be connected to or established.
          * Has a SSID and WPA2/PSK password associated with it.
@@ -60,7 +60,7 @@ class DemobotNetwork {
         };
 
         // static credentials log
-        static const numCredentials = 4;
+        static const int numCredentials = 4;
         static const Credential credentialsLog[numCredentials] = {
             {
                 "Demobot",
@@ -86,7 +86,7 @@ class DemobotNetwork {
          * @return int
          *      hash value.
          */
-        int hash(char* val);
+        int hash(char* valptr);
 
         /**
          * goes through the available networks and attempts to find one that
@@ -103,13 +103,20 @@ class DemobotNetwork {
          */
         bool getNetwork(char* ssid, char* password);
 
+        /**
+         * helper function to convert an IPAddress to a string.
+         * TODO: fill this in
+         */
+        String IpAddress2String(const IPAddress& ipAddress);
+
+
     public:
         // default constructor. Should set up a network with no ip address and a
         // network config from the top of the credentials log.
         DemobotNetwork() { 
             DemobotNetwork(
                 "Default"
-            )
+            );
         }
 
         /**
@@ -170,7 +177,7 @@ class DemobotNetwork {
          * @return int
          *      http return code. <0 are errors.
          */
-        int sendGETRequest(String endpoint, String[] *keys, String[] *vals, int argSize, char* response);
+        int sendGETRequest(String endpoint, String keys[], String vals[], int argSize, char* response);
 
         /**
          * submits a POST request and looks for a response. Synchronous.
@@ -186,7 +193,7 @@ class DemobotNetwork {
          * @return int
          *      http return code. <0 are errors.
          */
-        int sendPOSTRequest(String endpoint, String[] *keys, String[] *vals, int argSize, char* response);
+        int sendPOSTRequest(String endpoint, String keys[], String vals[], int argSize);
 
         /**
          * returns the network SSID.
@@ -212,5 +219,3 @@ class DemobotNetwork {
          */
         IPAddress getIPAddress();
 };
-
-#endif

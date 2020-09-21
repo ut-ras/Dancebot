@@ -6,37 +6,59 @@
  * Description: A generic secure web controller for controlling various Demobots Projects. Robots should be able to: connect to a remote server and receive/send commands, as well as spin up their own server and serve a webpage to the user to directly interact with it.
  * Organization: UT IEEE RAS
  */
+#pragma once
 
-#ifndef WEBCONTROLLER_H
-#define WEBCONTROLLER_H
-
-#include <WiFi.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <HTTPClient.h>
 #include <HTTPUpdate.h>
 
 #include "RobotConfig.h"
+#include "DemobotNetwork.h"
 
 #define NO_SERVER 404
 #define NO_RESPONSE -1
 #define OK 200
 
-/**
- * Robot modes:
- * STA  - host service on a found network
- * AP   - host service on my own network
- * CON  - connect to existing service on a found network 
- */
-enum mode {STA, AP, CON};
-
 /* ---------------------SETUP--------------------------------------- */
-void setupWifi();
-void startServer();
+/**
+ * sets up a network and a server (if either are necessary) on the robot.
+ * The end result should be either a connected robot or a failure in which the
+ * robot can try again at another point.
+ */
+bool setupNetworking();
+/**
+ * sets up a network for the robot and other robots to connect to.
+ * Fails in the event of an error.
+ * 
+ * @return bool
+ *      true on success, false on some failure.
+ */
+bool setupAPNetwork();
+/**
+ * sets up a server for the robot and other robots to connect to.
+ * Fails in the event of an error.
+ * 
+ * @return bool
+ *      true on success, false on some failure.
+ */
+bool setupServer();
 /* ---------------------CLIENT REQUESTS----------------------------- */
-int joinServer();
+/**
+ * joinServer sends a GET request with the robot id to IP/robotJoin to add
+ * itself to the server. Looks for a 200 HTTP code response to signal acceptance.
+ * 
+ * @return string
+ *      server response.
+ */
+String joinServer();
+/**
+ * getState sends a GET request with the robot id to IP/getState to retrieve the
+ * new operating state. Looks for a 200 HTTP code response to signal success.
+ */
 String getState();
 /* ---------------------SERVER HANDLER REQUESTS--------------------- */
+void startServer();
 void handle_getState(AsyncWebServerRequest *request);
 void handle_joinServer(AsyncWebServerRequest *request);
 void handle_state(AsyncWebServerRequest *request, int state);
@@ -46,10 +68,6 @@ String sendHTML();
 String sendJavascript();
 
 /* ---------------------HELPER FUNCTIONS---------------------------- */
-String IpAddress2String(const IPAddress& ipAddress);
-
-
-#endif
 
 /**
  * General WIFI access
