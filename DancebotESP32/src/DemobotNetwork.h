@@ -14,9 +14,6 @@
 #include <HTTPClient.h>
 
 #define RETRY_WAIT 200      // 200 ms
-#define NO_SERVER 404
-#define NO_RESPONSE -1
-#define OK 200
 #define RETRY_AMOUNT 3
 
 
@@ -190,6 +187,30 @@ class DemobotNetwork {
          *      http return code. <0 are errors.
          */
         int sendPOSTRequest(String endpoint, String[] *keys, String[] *vals, int argSize, char* response);
+
+        /**
+         * returns the network SSID.
+         * 
+         * @return char*
+         *      network SSID. May be nullptr if configured incorrectly.
+         */
+        char* getNetworkSSID();
+
+        /**
+         * returns the network password.
+         * 
+         * @return char*
+         *      network password. May be nullptr if configured incorrectly.
+         */
+        char* getNetworkPassword();
+
+        /**
+         * returns the relevant server IP address.
+         * 
+         * @return IPAddress
+         *      server IPAddress that corresponds to Demobot name.
+         */
+        IPAddress getIPAddress();
 };
 
 #endif

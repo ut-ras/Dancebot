@@ -61,7 +61,7 @@ bool DemobotNetwork::connectNetwork() {
             // in WL_IDLE_STATUS of WL_CONNECT_FAILED
             if (WiFi.status() == WL_CONNECT_FAILED) {
                 retry++;
-                if (retry < 5) break;
+                if (retry < RETRY_AMOUNT) break;
                 else return false;
             }
             delay(RETRY_WAIT);
@@ -134,6 +134,18 @@ int DemobotNetwork::sendPOSTRequest(String endpoint, String[] *keys, String[] *v
     }
 
     return http.POST(data);
+}
+
+char* DemobotNetwork::getNetworkSSID() {
+    return _SSID;
+}
+
+char* DemobotNetwork::getNetworkPassword() {
+    return _PASSWORD;
+}
+
+IPAddress DemobotNetwork::getIPAddress() {
+    return _ipaddress;
 }
 
 
