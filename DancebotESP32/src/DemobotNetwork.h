@@ -16,14 +16,9 @@
 #define RETRY_WAIT 200      // 200 ms
 #define RETRY_AMOUNT 3
 
-// TODO: set this function to the same as the other hash
-#define static_hash(const char*) 0
+extern IPAddress gateway;
+extern IPAddress subnet;
 
-
-// redirect any traffic with an unknown address to here
-IPAddress gateway(192,168,1,1);
-// 255-245-1 = 9 allowed IP addresses on the subnet
-IPAddress subnet(255,255,0,0);
 
 /**
  * Definition of an implementation for the DemobotNetwork class.
@@ -34,99 +29,15 @@ IPAddress subnet(255,255,0,0);
  * connected to.
  */
 class DemobotNetwork {
-    protected:
-        String _demobotName;
-
-        // IP address of server to connect to or host
-        IPAddress _ipaddress;
-
-        // Network info
-        char* _SSID;
-        char* _PASSWORD;
-        bool _startup;
-
-        // boolean for whether the network is connected to or not.
-        bool _connected;
-
-        // http client for sending and receiving requests.
-        HTTPClient http;
-        /**
-         * Represents a single possible network that can be connected to or established.
-         * Has a SSID and WPA2/PSK password associated with it.
-         */
-        struct Credential {
-            char* SSID;
-            char* PASSWORD;
-        };
-
-        // static credentials log
-        static const int numCredentials = 4;
-        static const Credential credentialsLog[numCredentials] = {
-            {
-                "Demobot",
-                "Demobots1234"
-            },{
-                "DemobotsNetwork",
-                "Dem0b0tsRu1e!"
-            },{
-                "",
-                ""
-            },{
-                "",
-                ""
-            }
-        };
-
-        /**
-         * quick and dirty way to hash a string for a switch case.
-         * Reasonable assumption that the output is different for most strings.
-         * 
-         * @param demobotName (char*)
-         *      pointer to a string to hash.
-         * @return int
-         *      hash value.
-         */
-        int hash(char* valptr);
-
-        /**
-         * goes through the available networks and attempts to find one that
-         * matches the internal credentials log. If we do find one, set the ssid
-         * and password and return true.
-         * 
-         * @param ssid  (char*)
-         *      char array pointer to the SSID.
-         * @param password (char*)
-         *      char array pointer to the password.
-         * @return bool
-         *      true if we found a matching network and set SSID and password,
-         *      false elsewise.
-         */
-        bool getNetwork(char* ssid, char* password);
-
-        /**
-         * helper function to convert an IPAddress to a string.
-         * TODO: fill this in
-         */
-        String IpAddress2String(const IPAddress& ipAddress);
-
-
     public:
-        // default constructor. Should set up a network with no ip address and a
-        // network config from the top of the credentials log.
-        DemobotNetwork() { 
-            DemobotNetwork(
-                "Default"
-            );
-        }
-
         /**
          * creates a new DemobotNetwork object and fills in the relevant network
          * and IP address information, if any.
          * 
-         * @param demobotName (char*)
-         *      pointer to a char array containing the demobot name.
+         * @param demobotName (string)
+         *      pointer to a string containing the demobot name.
          */
-        DemobotNetwork(char* demobotName);
+        explicit DemobotNetwork(String demobotName);
 
         /**
          * attempts to reset the network configuration. Useful for if we know a
@@ -172,12 +83,12 @@ class DemobotNetwork {
          *      array of strings that each contain a value.
          * @param argSize (int)
          *      number of key-value entries to go through.
-         * @param response (char*)
+         * @param response (string*)
          *      address of a char* to fill up with the HTTP response.
          * @return int
          *      http return code. <0 are errors.
          */
-        int sendGETRequest(String endpoint, String keys[], String vals[], int argSize, char* response);
+        int sendGETRequest(String endpoint, String keys[], String vals[], int argSize, String *response);
 
         /**
          * submits a POST request and looks for a response. Synchronous.
@@ -211,6 +122,8 @@ class DemobotNetwork {
          */
         char* getNetworkPassword();
 
+        void shutdownNetwork();
+
         /**
          * returns the relevant server IP address.
          * 
@@ -218,4 +131,71 @@ class DemobotNetwork {
          *      server IPAddress that corresponds to Demobot name.
          */
         IPAddress getIPAddress();
+
+        /**
+         * helper function to convert an IPAddress to a string.
+         * @author: apicquot from https://forum.arduino.cc/index.php?topic=228884.0
+         * 
+         * @param const IPAddress&
+         *      reference to an IPAddress object.
+         * @return String
+         *      string output.
+         */
+        String IpAddress2String(const IPAddress ipAddress);
+
+    private:
+        /**
+         * quick and dirty way to hash a string for a switch case.
+         * Reasonable assumption that the output is different for most strings.
+         * 
+         * @param demobotName (char*)
+         *      pointer to a string to hash.
+         * @return int
+         *      hash value.
+         */
+        int hash(char* valptr);
+
+        /**
+         * goes through the available networks and attempts to find one that
+         * matches the internal credentials log. If we do find one, set the ssid
+         * and password and return true.
+         * 
+         * @param ssid  (char*)
+         *      char array pointer to the SSID.
+         * @param password (char*)
+         *      char array pointer to the password.
+         * @return bool
+         *      true if we found a matching network and set SSID and password,
+         *      false elsewise.
+         */
+        bool getNetwork(char ssid[], char password[]);
+
+    private:
+        String _demobotName;
+
+        // IP address of server to connect to or host
+        IPAddress _ipaddress;
+
+        // Network info
+        char* _SSID;
+        char* _PASSWORD;
+        bool _startup;
+
+        // boolean for whether the network is connected to or not.
+        bool _connected;
+
+        // http client for sending and receiving requests.
+        HTTPClient *http;
+        /**
+         * Represents a single possible network that can be connected to or established.
+         * Has a SSID and WPA2/PSK password associated with it.
+         */
+        struct Credential {
+            const char* SSID;
+            const char* PASSWORD;
+        };
+
+        // credentials log
+        const int numCredentials = 4;
+        const Credential *credentialsLog = nullptr;
 };

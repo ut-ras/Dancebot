@@ -8,8 +8,21 @@
  */
 #include "WebController.h"
 
-AsyncWebServer server(80);
-DemobotNetwork network = DemobotNetwork(dancebot1.robotType + dancebot1.robotID);
+// AsyncWebServer server(80);
+
+// Our dancebot
+char dancebotName[9] = "Dancebot";
+Dancebot dancebot {
+    dancebotName,
+    0,
+    100.0,
+    Reset,
+    None,
+    Off
+};
+
+// the network 
+DemobotNetwork network(String(dancebot.robotType) + String(dancebot.robotID));
 
 bool setupNetworking() {
     if (network.connectNetwork()) {
@@ -68,7 +81,7 @@ bool setupServer() {
         return false;
     }
 
-    Serial.println("[setupServer] Setting up server at: " + IpAddress2String(network.getIPAddress()));
+    Serial.println("[setupServer] Setting up server at: " + network.IpAddress2String(network.getIPAddress()));
     if (!WiFi.softAPConfig(ip, gateway, subnet)) {
         Serial.println("[ERROR] [setupServer] Unable to setup server IP.");
         return false;
@@ -140,20 +153,20 @@ String joinServer() {
     };
 
     String vals[5] = {
-        String(dancebot1.robotID),
-        String(dancebot1.soc),
-        state2string(dancebot1.robotState),
-        expression2String(dancebot1.robotExpression),
-        eyeColor2String(dancebot1.robotEyeColor)
+        String(dancebot.robotID),
+        String(dancebot.soc),
+        state2string(dancebot.robotState),
+        expression2String(dancebot.robotExpression),
+        eyeColor2String(dancebot.robotEyeColor)
     };
 
-    char * response[];
-    int responseCode = network.sendGETRequest("/robotJoin", &keys, &vals, 5, response);
+    String *response = nullptr;
+    int responseCode = network.sendGETRequest("/robotJoin", keys, vals, 5, response);
     if (responseCode != OK) {
         // throw error message
         return String("[ERROR] [joinServer] Unable to join the server. Bad HTTP code response: " + String(responseCode) + ".");
     }
-    return String(response);
+    return *response;
 }
 
 String getState() {
@@ -162,16 +175,16 @@ String getState() {
     };
 
     String vals[1] = {
-        String(dancebot1.robotID)
+        String(dancebot.robotID)
     };
 
-    char* response;
+    String *response = nullptr;
     int responseCode = network.sendGETRequest("/robotJoin", keys, vals, 5, response);
     if (responseCode != OK) {
         // throw error message
         return String("[ERROR] [getState] Unable to update the robot state. Bad HTTP code response: " + String(responseCode) + ".");
     }
-    return String(response);
+    return *response;
 }
 
 
@@ -270,7 +283,7 @@ String getState() {
  * sendHTML sends a set of HTML to the user in response to a POST request based on the new WebController state.
  * TODO: currently no support for multiple robots.
  */
-String sendHTML() {
+// String sendHTML() {
     // String  button_css ="width:100%; margin-bottom:1em; padding: 1em; font-family:'Arial';font-size:medium;color:#1d1f21; background-color:#8abeb7;border-color:#5e8d87;";
     // String  body_css =  "width:auto; font-family:'Arial'; background-color:#1d1f21; color:#c5c8c6;";
     // String  head =  "<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /></head>";
@@ -309,38 +322,35 @@ String sendHTML() {
     //                 "</body>";
     // head += body;
     // return head;
-}
+// }
 /**
  * sendJavascript sends a set of JS to the user in response to a POST request based on the new WebController state.
  * TODO: currently no support for multiple robots.
  */
-String sendJavascript() {
-  String s = String("<script>") +
-    // update the current state in the HTML
-    "function updateCurrentMove(move) {" +
-        "document.getElementById('current_move').innerText = 'Current Move: ' + move;" +
-        "document.getElementById('current_routine').innerText = 'Current Dance: ' + move;" +
-    "}" +
+// String sendJavascript() {
+//   String s = String("<script>") +
+//     // update the current state in the HTML
+//     "function updateCurrentMove(move) {" +
+//         "document.getElementById('current_move').innerText = 'Current Move: ' + move;" +
+//         "document.getElementById('current_routine').innerText = 'Current Dance: ' + move;" +
+//     "}" +
 
-    //function to HTTP Post
-    "async function postMove(move) {" +
-        "let response = await fetch('/' + move, {" +
-            "method: 'POST'," +
-            "headers: {" +
-                "'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'" +
-            "}," +
-            "body: \"robot_id=0\"" +
-        "}).then(function(response) {" +
-            "console.log(response.status);" +
-            "if(response.status == 200) {" + 
-                "updateCurrentMove(move);" +    
-            "}" +
-            "console.log(response.text());" +
-        "});" +
-    "}" +
-  "</script>";
-  return s;
-}
-
-
-/* ---------------------HELPER FUNCTIONS---------------------------- */
+//     //function to HTTP Post
+//     "async function postMove(move) {" +
+//         "let response = await fetch('/' + move, {" +
+//             "method: 'POST'," +
+//             "headers: {" +
+//                 "'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'" +
+//             "}," +
+//             "body: \"robot_id=0\"" +
+//         "}).then(function(response) {" +
+//             "console.log(response.status);" +
+//             "if(response.status == 200) {" + 
+//                 "updateCurrentMove(move);" +    
+//             "}" +
+//             "console.log(response.text());" +
+//         "});" +
+//     "}" +
+//   "</script>";
+//   return s;
+// }
