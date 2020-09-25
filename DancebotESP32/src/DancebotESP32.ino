@@ -26,8 +26,9 @@
 
 void setup() {
     delay(5000); //give time for me to open up serial monitor
-    // setupNetworking();
+    setupNetworking();
     initializeRobot();
+    while(!joinServer().equals("[JOIN]"));
 }
 
 void loop() {
@@ -38,7 +39,9 @@ void loop() {
     // send GetState request to server and update the robot state
     int time = millis();
     if(!isOscillating() || ((time - lastMsgTime) > 250)) { // 250 is UPDATE_WAIT
-        // updateState(getState());
+        // in updateState we'll update state and send a leaveServer() request
+        // and shut down if necessary.
+        updateState(getState());
         lastMsgTime = time;
     }
 }
