@@ -140,19 +140,17 @@ void startServer() {
     // Serial.println("HTTP server started");
 }
 
-
 /* ---------------------CLIENT REQUESTS--------------------- */
-
 String joinServer() {
-    String keys[5] = {
+    static const int numArgs = 5;
+    String keys[numArgs] = {
         "ID",
         "CHARGE",
         "MOVE",
         "EC",
         "EE"
     };
-
-    String vals[5] = {
+    String vals[numArgs] = {
         String(dancebot.robotID),
         String(dancebot.soc),
         state2string(dancebot.robotState),
@@ -161,32 +159,42 @@ String joinServer() {
     };
 
     String *response = nullptr;
-    int responseCode = network.sendGETRequest("/robotJoin", keys, vals, 5, response);
-    if (responseCode != OK) {
-        // throw error message
-        return String("[ERROR] [joinServer] Unable to join the server. Bad HTTP code response: " + String(responseCode) + ".");
-    }
-    return *response;
+    int responseCode = network.sendGETRequest("/robotJoin", keys, vals, numArgs, response);
+    if (responseCode != OK || response == nullptr) return String("");
+    else return String("[JOIN]");
 }
 
 String getState() {
-    String keys[1] = {
+    static const int numArgs = 1;
+    String keys[numArgs] = {
         "ID"
     };
-
-    String vals[1] = {
+    String vals[numArgs] = {
         String(dancebot.robotID)
     };
 
     String *response = nullptr;
-    int responseCode = network.sendGETRequest("/robotJoin", keys, vals, 5, response);
-    if (responseCode != OK) {
-        // throw error message
-        return String("[ERROR] [getState] Unable to update the robot state. Bad HTTP code response: " + String(responseCode) + ".");
-    }
-    return *response;
+    int responseCode = network.sendGETRequest("/robotUpdate", keys, vals, numArgs, response);
+    if (responseCode != OK || response == nullptr) return String("");
+    else return String("[UPDT] " + *response);
 }
 
+String leaveServer() {
+    static const int numArgs = 2;
+    String keys[numArgs] = {
+        "ID",
+        "CHARGE"
+    };
+    String vals[numArgs] = {
+        String(dancebot.robotID),
+        String(dancebot.soc)
+    };
+
+    String *response = nullptr;
+    int responseCode = network.sendGETRequest("/robotLeave", keys, vals, numArgs, response);
+    if (responseCode != OK || response == nullptr) return String("");
+    else return String("[LEFT]");
+}
 
 /* ---------------------SERVER HANDLER REQUESTS--------------------- */
 /**
