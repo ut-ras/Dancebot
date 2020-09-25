@@ -8,11 +8,8 @@
  */
 #pragma once
 
-#include <AsyncTCP.h>
-#include <ESPAsyncWebServer.h>
-#include <HTTPClient.h>
-#include <HTTPUpdate.h>
-
+// #include <AsyncTCP.h>
+// #include <ESPAsyncWebServer.h>
 #include "RobotConfig.h"
 #include "DemobotNetwork.h"
 
@@ -21,6 +18,7 @@
 #define OK 200
 
 /* ---------------------SETUP--------------------------------------- */
+
 /**
  * sets up a network and a server (if either are necessary) on the robot.
  * The end result should be either a connected robot or a failure in which the
@@ -59,13 +57,13 @@ String joinServer();
 String getState();
 /* ---------------------SERVER HANDLER REQUESTS--------------------- */
 void startServer();
-void handle_getState(AsyncWebServerRequest *request);
-void handle_joinServer(AsyncWebServerRequest *request);
-void handle_state(AsyncWebServerRequest *request, int state);
-void handle_notFound(AsyncWebServerRequest *request);
+// void handle_getState(AsyncWebServerRequest *request);
+// void handle_joinServer(AsyncWebServerRequest *request);
+// void handle_state(AsyncWebServerRequest *request, int state);
+// void handle_notFound(AsyncWebServerRequest *request);
 /* ---------------------WEB PAGE------------------------------------ */
-String sendHTML();
-String sendJavascript();
+// String sendHTML();
+// String sendJavascript();
 
 /* ---------------------HELPER FUNCTIONS---------------------------- */
 

@@ -71,7 +71,7 @@ void updateState(String state) {
             bot->enableDanceRoutine(true);
             break;
         default:
-            // Serial.println("Invalid state.");
+            Serial.println("Invalid state.");
     }
 }
 

@@ -9,7 +9,7 @@
 #include <Arduino.h>
 #include "DemobotAPI.h"     // grab abstracted robot API - we fill in this for each robot
 #include "WebController.h"  
-
+#include "DemobotNetwork.h"
 
 /** 
  * Example flow for a Demobots sketch with an ESP32:
@@ -19,14 +19,14 @@
  * }
  * 
  * loop() {
- *   // update robot state
- *   // look for update from server
+ *   update robot state
+ *   look for update from server
  * }
  */
 
 void setup() {
     delay(5000); //give time for me to open up serial monitor
-    setupNetworking();
+    // setupNetworking();
     initializeRobot();
 }
 
