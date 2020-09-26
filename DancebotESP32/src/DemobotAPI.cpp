@@ -1,6 +1,6 @@
 /**
  * Author: Matthew Yu
- * Last Modified: 05/22/20
+ * Last Modified: 09/26/20
  * Project: Dancebot Swarm
  * File: DancebotAPI.cpp
  * Description: Demobot API to drive hardware
@@ -9,51 +9,29 @@
  */
 #include "DemobotAPI.h"
 
+/** Dancebot instance. */
 DancingServos* bot;
-/**
- * initializeRobot sets up a new DancingServos instance and calibrates the servos.
- */
+
 void initializeRobot() {
     bot = new DancingServos(14, 13, 12, 15); 
 
-    // manual calibration - based on how the servos are attached to the 3d printed parts
-    // [hipL, hipR, ankleL, ankleR]
+    /**
+     * Manual calibration - based on how the servos are attached to the 3d printed parts
+     * [hipL, hipR, ankleL, ankleR]
+     */
     bot->setTrims(70, 150, 25, 18);
-
     bot->position0();
 }
 
-/**
- * move performs one iteration of the robot movement.
- */
 void move() {
-    // loop the motors
+    /* Loop the motors. */
     bot->loopOscillation();
-    // check if ready to start the next move in the dance
+    /* Check if ready to start the next move in the dance. */
     bot->loopDanceRoutines();
 }
 
-/**
- * updateState updates the internal function of the DancingServos* bot.
- * @param state: String
- *      encoded version of the server expectation of the Dancebot state.
- *      We expect the following types of messages:
- *          - "" (no or bad response)
- *          - "[JOIN]"  (robot has joined the network)
- *      - "[LEFT]"  (robot has left the network willingly and the server
- *      acquiesced. Shutdown the robot.)
- *      - "[UPDT] ROBOT_ID,MOVE,EYE_COLOR,EYE_EXPRESSION,SHUTDOWN"
- *          - a [UPDT], update identifier, and the following CSV with no spaces:
- *              - Robot ID: check to see if we got the right data for the robot
- *              - Robot Movement: next state to change to
- *              - Eye Color: robot eye color to set to
- *              - Eye Expression: robot eye expression to set to
- *              - Shutdown: supercedes Robot Movement. Calls the shutdown routine 
- *                  if applicable. 
- */
 void updateState(String state) {
-    // parse identifier
-
+    /* Parse identifier. */
     if (state.equals("")) {
         /* We received a bad response. Do nothing this iteration. */
         return;
@@ -110,15 +88,12 @@ void updateState(String state) {
         }
 
     } else {
-        /** Some invalid format. Do nothing this iteration. */
+        /* Some invalid format. Do nothing this iteration. */
         return;
     }
 }
 
-/**
- * isOscillating checks whether the robot is currently moving.
- * @return true if it is oscillating.
- */
+
 bool isOscillating() {
     return bot->isOscillating();
 }

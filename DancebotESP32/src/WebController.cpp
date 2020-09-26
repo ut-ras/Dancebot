@@ -1,61 +1,39 @@
 /**
  * Author: Matthew Yu
- * Last Modified: 05/22/20
+ * Last Modified: 09/26/20
  * Project: Dancebot Swarm
  * File: WebController.cpp
- * Description: A generic secure web controller for controlling various Demobots Projects. Robots should be able to: connect to a remote server and receive/send commands, as well as spin up their own server and serve a webpage to the user to directly interact with it.
+ * Description: A generic web controller for controlling various Demobots Projects. 
+ *      Robots should be able to: connect to a remote server and receive/send commands, 
+ *      as well as spin up their own server and serve a webpage to the user to directly 
+ *      interact with it.
  * Organization: UT IEEE RAS
  */
 #include "WebController.h"
 
-// AsyncWebServer server(80);
+/* -----------------------------SETUP------------------------------- */
 
-// Our dancebot
-char dancebotName[9] = "Dancebot";
-Dancebot dancebot {
-    dancebotName,
-    0,
-    100.0,
-    Reset,
-    None,
-    Off
-};
-
-// the network 
-DemobotNetwork network(String(dancebot.robotType) + String(dancebot.robotID));
-
-bool setupNetworking() {
-    if (network.connectNetwork()) {
-        // we're in the network
-        if (network.pingServer()) {
-            // and the remote server is up
-            return true;
-        } else {
-            // remote server isn't up. Start our own?
-            if (!setupServer()) return false;
-            // attempt to ping again
-            if (network.pingServer()) return true;
-            else return false;
-        }
-    } else {
+bool setupNetworking(DemobotNetwork &network) {
+    /* Attempt to connect to network */
+    if (!network.connectNetwork()) {
         Serial.println("[WARN] [setupNetworking] Unable to identify an available network.");
-        if (!setupAPNetwork()) return false;
-        // attempt to ping server
-        if (network.pingServer()) {
-            // and the remote server is up
-            return true;
-        } else {
-            // remote server isn't up. Start our own?
-            if (!setupServer()) return false;
-            // attempt to ping again
-            if (network.pingServer()) return true;
-            else return false;
-        }
+        if (!setupAPNetwork(network)) return false;
+    }
+    /* Attempt to ping server. */
+    if (network.pingServer()) {
+        /* And the remote server is up. */
+        return true;
+    } else {
+        /* Remote server isn't up. Start our own? */
+        if (!setupServer(network)) return false;
+        /* Attempt to ping again */
+        if (network.pingServer()) return true;
+        else return false;
     }
 }
 
-bool setupAPNetwork() {
-    // set up our own network
+bool setupAPNetwork(DemobotNetwork &network) {
+    /* set up our own network. */
     char* ssid = network.getNetworkSSID();
     char* pass = network.getNetworkPassword();
     if ((ssid == nullptr) || (pass == nullptr)) {
@@ -69,12 +47,12 @@ bool setupAPNetwork() {
         return false;
     }
 
-    // give the network some time to run up
+    /* Give the network some time to run up. */
     delay(500);
     return true;
 }
 
-bool setupServer() {
+bool setupServer(DemobotNetwork &network) {
     IPAddress ip = network.getIPAddress();
     if (!ip) {
         Serial.println("[ERROR] [setupServer] Server IP was improperly configured and could not setup a server on AP mode.");
@@ -87,12 +65,70 @@ bool setupServer() {
         return false;
     }
 
-    // give the server some time to run up
+    /* Give the server some time to run up. */
     startServer();
     delay(500);
     return true;
 }
 
+/* ------------------------CLIENT REQUESTS-------------------------- */
+
+String joinServer(DemobotNetwork &network, const Dancebot &dancebot) {
+    static const int numArgs = 5;
+    String keys[numArgs] = {
+        "ID",
+        "CHARGE",
+        "MOVE",
+        "EC",
+        "EE"
+    };
+    String vals[numArgs] = {
+        String(dancebot.robotID),
+        String(dancebot.soc),
+        state2string(dancebot.robotState),
+        expression2String(dancebot.robotExpression),
+        eyeColor2String(dancebot.robotEyeColor)
+    };
+
+    String *response = nullptr;
+    int responseCode = network.sendGETRequest("/robotJoin", keys, vals, numArgs, response);
+    if (responseCode != OK || response == nullptr) return String("");
+    else return String("[JOIN]");
+}
+
+String getState(DemobotNetwork &network, const Dancebot &dancebot) {
+    static const int numArgs = 1;
+    String keys[numArgs] = {
+        "ID"
+    };
+    String vals[numArgs] = {
+        String(dancebot.robotID)
+    };
+
+    String *response = nullptr;
+    int responseCode = network.sendGETRequest("/robotUpdate", keys, vals, numArgs, response);
+    if (responseCode != OK || response == nullptr) return String("");
+    else return String("[UPDT] " + *response);
+}
+
+String leaveServer(DemobotNetwork &network, const Dancebot &dancebot) {
+    static const int numArgs = 2;
+    String keys[numArgs] = {
+        "ID",
+        "CHARGE"
+    };
+    String vals[numArgs] = {
+        String(dancebot.robotID),
+        String(dancebot.soc)
+    };
+
+    String *response = nullptr;
+    int responseCode = network.sendGETRequest("/robotLeave", keys, vals, numArgs, response);
+    if (responseCode != OK || response == nullptr) return String("");
+    else return String("[LEFT]");
+}
+
+/* ---------------------SERVER HANDLER REQUESTS--------------------- */
 
 /**
  * startServer sets up the URL hooks.
@@ -139,64 +175,6 @@ void startServer() {
     // delay(1000);
     // Serial.println("HTTP server started");
 }
-
-/* ---------------------CLIENT REQUESTS--------------------- */
-String joinServer() {
-    static const int numArgs = 5;
-    String keys[numArgs] = {
-        "ID",
-        "CHARGE",
-        "MOVE",
-        "EC",
-        "EE"
-    };
-    String vals[numArgs] = {
-        String(dancebot.robotID),
-        String(dancebot.soc),
-        state2string(dancebot.robotState),
-        expression2String(dancebot.robotExpression),
-        eyeColor2String(dancebot.robotEyeColor)
-    };
-
-    String *response = nullptr;
-    int responseCode = network.sendGETRequest("/robotJoin", keys, vals, numArgs, response);
-    if (responseCode != OK || response == nullptr) return String("");
-    else return String("[JOIN]");
-}
-
-String getState() {
-    static const int numArgs = 1;
-    String keys[numArgs] = {
-        "ID"
-    };
-    String vals[numArgs] = {
-        String(dancebot.robotID)
-    };
-
-    String *response = nullptr;
-    int responseCode = network.sendGETRequest("/robotUpdate", keys, vals, numArgs, response);
-    if (responseCode != OK || response == nullptr) return String("");
-    else return String("[UPDT] " + *response);
-}
-
-String leaveServer() {
-    static const int numArgs = 2;
-    String keys[numArgs] = {
-        "ID",
-        "CHARGE"
-    };
-    String vals[numArgs] = {
-        String(dancebot.robotID),
-        String(dancebot.soc)
-    };
-
-    String *response = nullptr;
-    int responseCode = network.sendGETRequest("/robotLeave", keys, vals, numArgs, response);
-    if (responseCode != OK || response == nullptr) return String("");
-    else return String("[LEFT]");
-}
-
-/* ---------------------SERVER HANDLER REQUESTS--------------------- */
 /**
  * handle_getState is a POST request with a robot id to grab a wanted robot's state
  * @return: HTTP CODE 200 on success
@@ -286,7 +264,6 @@ String leaveServer() {
 //     request->send(404, "text/plain", "404: Not found");
 // }
 
-/* ---------------------WEB PAGE------------------------------------ */
 /**
  * sendHTML sends a set of HTML to the user in response to a POST request based on the new WebController state.
  * TODO: currently no support for multiple robots.
