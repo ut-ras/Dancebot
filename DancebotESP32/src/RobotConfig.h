@@ -1,7 +1,7 @@
 /**
  * File: RobotConfig.h
  * Author: Matthew Yu
- * Last Modified: 09/21/20
+ * Last Modified: 09/26/20
  * Project: Demobots General
  * Organization: UT IEEE RAS
  * Description: A configuration file to be used by WebController.h and
@@ -9,7 +9,7 @@
  */
 #pragma once
 
-// Dancebot Definition
+/** Dancebot Definitions. */
 enum DancebotStates {
     Reset,
     Walk,
@@ -47,8 +47,7 @@ typedef struct Dancebot {
 /**
  * Converts the DancebotStates enum instance into a string value.
  * 
- * @param[in] state: DancebotStates
- *      DancebotStates enum indicating input state.
+ * @param[in] state DancebotStates enum indicating input state.
  * @return a pointer to a string that indicates the state.
  */
 const char* state2string(DancebotStates state);
@@ -56,8 +55,7 @@ const char* state2string(DancebotStates state);
 /**
  * Converts the DancebotExpression enum instance into a string value.
  * 
- * @param[in] state: DancebotExpression
- *      DancebotExpression enum indicating input state.
+ * @param[in] expression DancebotExpression enum indicating input state.
  * @return a pointer to a string that indicates the state.
  */
 const char* expression2String(DancebotExpression expression);
@@ -65,8 +63,7 @@ const char* expression2String(DancebotExpression expression);
 /**
  * Converts the DancebotEyeColor enum instance into a string value.
  * 
- * @param[in] state: DancebotEyeColor
- *      DancebotEyeColor enum indicating input state.
- * @return a pointer to a string that indicates the state.
+ * @param[in] eyeColor DancebotEyeColor enum indicating input state.
+ * @return A pointer to a string that indicates the state.
  */
 const char* eyeColor2String(DancebotEyeColor eyeColor);

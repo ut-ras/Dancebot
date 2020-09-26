@@ -1,3 +1,12 @@
+/**
+ * File: RobotConfig.cpp
+ * Author: Matthew Yu
+ * Last Modified: 09/26/20
+ * Project: Demobots General
+ * Organization: UT IEEE RAS
+ * Description: A configuration file to be used by WebController.h and
+ * DemobotAPI.h to define the Demobot internal representation.
+ */
 #include "RobotConfig.h"
 
 const char* state2string(DancebotStates state) {

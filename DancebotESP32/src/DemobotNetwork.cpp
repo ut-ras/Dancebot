@@ -1,7 +1,7 @@
 /**
  * File: DemobotNetwork.cpp
  * Author: Matthew Yu
- * Last Modified: 09/24/20
+ * Last Modified: 09/26/20
  * Project: Demobots General
  * Organization: UT IEEE RAS
  * Description: Implements definitions for the DemobotNetwork class, which allows
@@ -9,12 +9,15 @@
  */
 #include "DemobotNetwork.h"
 
-// redirect any traffic with an unknown address to here
+/** Redirect any traffic with an unknown address to here. */
 IPAddress gateway(192,168,1,1);
-// 255-245-1 = 9 allowed IP addresses on the subnet
+
+/** 255-245-1 = 9 allowed IP addresses on the subnet. */
 IPAddress subnet(255,255,0,0);
 
-DemobotNetwork::DemobotNetwork(String demobotName) {
+/** Public methods. */
+
+DemobotNetwork::DemobotNetwork(const String demobotName) {
     credentialsLog = new Credential[numCredentials] { 
         Credential{"Demobot", "Demobots1234"},
         Credential{"DemobotsNetwork", "Dem0b0tsRu1e!"},
@@ -24,7 +27,7 @@ DemobotNetwork::DemobotNetwork(String demobotName) {
 
     http = new HTTPClient();
     _demobotName = demobotName;
-    // set server ip based on robot type
+    /* Set server ip based on robot type. */
     char* charArray = new char[_demobotName.length() + 1];
     _demobotName.toCharArray(charArray, _demobotName.length());
     switch(hash(charArray)) {
@@ -49,15 +52,14 @@ DemobotNetwork::DemobotNetwork(String demobotName) {
             _ipaddress = IPAddress(192,168,1,0);
             break;
     }
-    // set credentials
+    /* Set credentials. */
     reconfigureNetworks();
 }
 
 void DemobotNetwork::reconfigureNetworks() {
     _startup = getNetwork(_SSID, _PASSWORD);
     if (!_startup) {
-        // take the first entry (assuming that it's filled) of the
-        // credentials log
+        /* Take the first entry (assuming that it's filled) of the credentials log. */
         _SSID = const_cast<char*>(credentialsLog[0].SSID);
         _PASSWORD = const_cast<char*>(credentialsLog[0].PASSWORD);
     }
@@ -66,15 +68,15 @@ void DemobotNetwork::reconfigureNetworks() {
 }
 
 bool DemobotNetwork::connectNetwork() {
-    // if we never found a network with credentials, don't attempt to connect
+    /* If we never found a network with credentials, don't attempt to connect. */
     if (_SSID == nullptr || _PASSWORD == nullptr) { return false; }
     
     int retry = 0;
     while (true) {
         WiFi.begin(_SSID, _PASSWORD);
-        // poll until we get connected or get a connection failure
+        /* Poll until we get connected or get a connection failure. */
         while (WiFi.status() != WL_CONNECTED) {
-            // in WL_IDLE_STATUS of WL_CONNECT_FAILED
+            /* In WL_IDLE_STATUS of WL_CONNECT_FAILED. */
             if (WiFi.status() == WL_CONNECT_FAILED) {
                 retry++;
                 if (retry < RETRY_AMOUNT) break;
@@ -82,7 +84,7 @@ bool DemobotNetwork::connectNetwork() {
             }
             delay(RETRY_WAIT);
         }
-        // if we're connected jump out
+        /* If we're connected, jump out. */
         if (WiFi.status() == WL_CONNECTED) {
             _connected = true;
             return true;
@@ -90,29 +92,30 @@ bool DemobotNetwork::connectNetwork() {
     }
 }
 
-bool DemobotNetwork::isNetworkConnected() {
+bool DemobotNetwork::isNetworkConnected() const {
     return _connected;
 }
 
-bool DemobotNetwork::pingServer() {
-    // if not connected to a network or doesn't have an ip address TODO: don't
-    // know if !_ipaddress will work
+int DemobotNetwork::pingServer() const {
+    /* If not connected to a network or doesn't have an ip address. */
+    // TODO: don't know if !_ipaddress will work
     if (!_connected || !_ipaddress) return false;
 
-    // send a root level GET request to see if the page exists
+    /* Send a root level GET request to see if the page exists. */
     String queryPath = "http://" + IpAddress2String(_ipaddress) + "/";
     http->begin(queryPath.c_str());
     return http->GET();
 }
 
-int DemobotNetwork::sendGETRequest(String endpoint, String keys[], String vals[], int argSize, String *response) {
-    // if not connected to a network or doesn't have an ip address TODO: don't
-    // know if !_ipaddress will work
+int DemobotNetwork::sendGETRequest(const String endpoint, const String keys[], const String vals[], const int argSize, String *response) const {
+    /* If not connected to a network or doesn't have an ip address. */
+    // TODO: don't know if !_ipaddress will work
     if (!_connected || !_ipaddress) return -1;
 
     String queryPath = "http://" + IpAddress2String(_ipaddress) + endpoint;
     queryPath += '?';
-    // append keys and values to the path
+    
+    /* Append keys and values to the path. */
     for (int i = 0; i < argSize; i++) {
         queryPath += keys[i];
         queryPath += '=';
@@ -122,6 +125,7 @@ int DemobotNetwork::sendGETRequest(String endpoint, String keys[], String vals[]
         }
     }
 
+    /* Send the request. */
     http->begin(queryPath.c_str());
     int responseCode = http->GET();
     if (responseCode > 0) {
@@ -131,16 +135,17 @@ int DemobotNetwork::sendGETRequest(String endpoint, String keys[], String vals[]
     return responseCode;
 }
 
-int DemobotNetwork::sendPOSTRequest(String endpoint, String keys[], String vals[], int argSize) {
-    // if not connected to a network or doesn't have an ip address TODO: don't
-    // know if !_ipaddress will work
+int DemobotNetwork::sendPOSTRequest(const String endpoint, const String keys[], const String vals[], int argSize, String *response) const {
+    /* If not connected to a network or doesn't have an ip address. */
+    // TODO: don't know if !_ipaddress will work
     if (!_connected || !_ipaddress) return -1;
 
     String queryPath = "http://" + IpAddress2String(_ipaddress) + endpoint;
     http->begin(queryPath);
     http->addHeader("Content-Type", "application/x-www-form-urlencoded");
     String data = "";
-    // append keys and values to the path
+
+    /* Append keys and values to the path. */
     for (int i = 0; i < argSize; i++) {
         data += keys[i];
         data += '=';
@@ -150,14 +155,20 @@ int DemobotNetwork::sendPOSTRequest(String endpoint, String keys[], String vals[
         }
     }
 
-    return http->POST(data);
+    /* Send the request. */
+    int responseCode = http->POST(data);
+    if (responseCode > 0) {
+        String str = String(http->getString());
+        response = &(str);
+    }
+    return responseCode;
 }
 
-char* DemobotNetwork::getNetworkSSID() {
+char* DemobotNetwork::getNetworkSSID() const {
     return _SSID;
 }
 
-char* DemobotNetwork::getNetworkPassword() {
+char* DemobotNetwork::getNetworkPassword() const {
     return _PASSWORD;
 }
 
@@ -166,27 +177,39 @@ void DemobotNetwork::shutdownNetwork() {
     delete http;
 }
 
-IPAddress DemobotNetwork::getIPAddress() {
+IPAddress DemobotNetwork::getIPAddress() const {
     return _ipaddress;
 }
 
-String DemobotNetwork::IpAddress2String(const IPAddress ipAddress) {
+String DemobotNetwork::IpAddress2String(const IPAddress ipAddress) const {
     return String(ipAddress[0]) + String(".") +\
         String(ipAddress[1]) + String(".") +\
         String(ipAddress[2]) + String(".") +\
         String(ipAddress[3]) ;
 }
 
+/** Private methods. */
 
-
-
-// Private methods
-
-int DemobotNetwork::hash(char* valptr) {
+int DemobotNetwork::hash(char* valptr) const {
+    /**
+     * This is dumb hash and really shouldn't be used for anything but small
+     * subsets of problems where we're pretty confident that collisions are small.
+     * 
+     * We're just taking the char and multiplying it by 2 by its place:
+     * (i.e. hello -> h*2^0 + e*2^1 + l*2^2 + l*2^3 + o*2^4).
+     * Preferably, for no collisions, you'd want to have everything be a power
+     * of 62 (52 characters - lower and upper - and 10 digits), i.e. 36^place. But this is
+     * prohibitively expensive. Even 10^place is expensive for words with 9+
+     * characters like Dancebot1.
+     * 
+     * By expensive, I'm referring to the integer output which for this
+     * application corresponds to the switch case. Which means we might overflow
+     * our int type if the string input is too long.
+     */
     int tot = 0;
     int count = 0;
     while(*valptr != '\0') {
-        // calculate the multiplying power for the digit
+        /* Calculate the multiplying power for the digit. */
         int power = 1; // 2^0
         for (int i = 0; i < count; i++) {
             power *= 2; // 2^count
@@ -198,11 +221,12 @@ int DemobotNetwork::hash(char* valptr) {
     return tot;
 }
 
-bool DemobotNetwork::getNetwork(char ssid[], char password[]) {
-    // 1. scan networks
+bool DemobotNetwork::getNetwork(char ssid[], char password[]) const {
+    /* 1. scan networks. */
     int networks = WiFi.scanNetworks();
     if (networks == 0) { return false; }
-    // 2. assign the relevant network to the robot
+
+    /* 2. assign the relevant network to the robot. */
     for (int i = 0; (i < numCredentials); i++) {
         for (int j = 0; j < networks; j++) {
             if(WiFi.SSID(j).equals(String(credentialsLog[i].SSID))) {
@@ -212,6 +236,7 @@ bool DemobotNetwork::getNetwork(char ssid[], char password[]) {
             }
         }
     }
-    // 2b. if we didn't find a network, set it to default
+
+    /* 2b. if we didn't find a network, set it to default. */
     return false;
 }
