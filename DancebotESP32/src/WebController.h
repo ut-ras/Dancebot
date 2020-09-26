@@ -85,35 +85,7 @@ String leaveServer(DemobotNetwork &network, const Dancebot &dancebot);
 
 /* ---------------------SERVER HANDLER REQUESTS--------------------- */
 
-void startServer();
-
-// void handle_getState(AsyncWebServerRequest *request);
-// void handle_joinServer(AsyncWebServerRequest *request);
-// void handle_state(AsyncWebServerRequest *request, int state);
-// void handle_notFound(AsyncWebServerRequest *request);
-// String sendHTML();
-// String sendJavascript();
-
 /**
- * General WIFI access
- * https://www.arduino.cc/en/Tutorial/ConnectWithWPA
- * https://www.megunolink.com/articles/wireless/how-do-i-connect-to-a-wireless-network-with-the-esp32/
- * Secure WIFI over SSL with ESP32
- * https://www.youtube.com/watch?v=Wm1xKj4bKsY
- * https://github.com/espressif/arduino-esp32/blob/master/libraries/WiFiClientSecure/examples/WiFiClientSecure/WiFiClientSecure.ino
- * Get SSID of current network
- * https://www.arduino.cc/en/Reference/WiFiSSID
- * Scanning networks
- * https://github.com/espressif/arduino-esp32/blob/master/libraries/WiFi/examples/WiFiScan/WiFiScan.ino
- * Static/Fixed IP
- * https://randomnerdtutorials.com/esp32-static-fixed-ip-address-arduino-ide/
- * HTTP GET/POST with esp32
- * https://randomnerdtutorials.com/esp32-http-get-post-arduino/#http-get-1
- * ESP32 GET requests
- * https://techtutorialsx.com/2017/05/19/esp32-http-get-requests/
- * Simple ESP32 web server
- * https://lastminuteengineers.com/creating-esp32-web-server-arduino-ide/
- * https://tttapa.github.io/ESP8266/Chap10%20-%20Simple%20Web%20Server.html
- * fetch promises
- * https://javascript.info/fetch
+ * Starts a server hosted by the Dancebot. Experimental.
  */
+void startServer();
