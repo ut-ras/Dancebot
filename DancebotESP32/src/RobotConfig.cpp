@@ -56,13 +56,3 @@ const char* eyeColor2String(DancebotEyeColor eyeColor) {
             return "Off";
     }
 }
-
-char myDancebot[9] = "Dancebot";
-Dancebot dancebot1 {
-    myDancebot,
-    0,
-    100.0,
-    Reset,
-    None,
-    Off,
-};

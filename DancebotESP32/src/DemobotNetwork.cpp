@@ -198,7 +198,7 @@ int DemobotNetwork::hash(char* valptr) const {
      * We're just taking the char and multiplying it by 2 by its place:
      * (i.e. hello -> h*2^0 + e*2^1 + l*2^2 + l*2^3 + o*2^4).
      * Preferably, for no collisions, you'd want to have everything be a power
-     * of 62 (52 characters - lower and upper - and 10 digits), i.e. 36^place. But this is
+     * of 62 (52 characters - lower and upper - and 10 digits), i.e. 62^place. But this is
      * prohibitively expensive. Even 10^place is expensive for words with 9+
      * characters like Dancebot1.
      * 
