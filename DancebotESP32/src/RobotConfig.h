@@ -1,47 +1,15 @@
 /**
- * Author: Matthew Yu
- * Last Modified: 05/22/20
- * Project: Demobots General
  * File: RobotConfig.h
- * Description: A config file to be used by WebController.h and DemobotAPI.h.
+ * Author: Matthew Yu
+ * Last Modified: 09/26/20
+ * Project: Demobots General
  * Organization: UT IEEE RAS
- * NOTE: Modify the MODIFIABLE INFO section for your robot.
+ * Description: A configuration file to be used by WebController.h and
+ * DemobotAPI.h to define the Demobot internal representation.
  */
-#ifndef ROBOTCONFIG_H
-#define ROBOTCONFIG_H
+#pragma once
 
-#define MAX_ROBOTS 20       // I seriously doubt that we'll ever have more than 5 robots on a single webserver (i.e. Dancebots)
-#define CRED_LOG_LEN 5      // arbitrarily decided max credentials defined at any time
-#define RETRY_WAIT 200      // 200 ms
-#define UPDATE_WAIT 150     // 150 ms
-#include <IPAddress.h>
-
-extern const int ROBOT_ID;
-
-extern IPAddress gateway;
-extern IPAddress subnet;
-/**
- * Represents a single possible network that can be connected to or established.
- * Has a SSID and WPA2/PSK password associated with it.
- */
-typedef struct Credential {
-    char* SSID;
-    char* PASSWORD;
-} Credential;
-extern Credential CredentialsLog[];
-extern const int DEFAULT_NETWORK_ID;
-/**
- * Represents a single Demobot type and has an ID and IPAddress it belongs to.
- */
-typedef struct DemobotNetwork {
-    int ID;
-    String name;
-    IPAddress defaultIP;
-} DemobotNetwork;
-extern DemobotNetwork Robots[];
-
-// --------------------------- MODIFIABLE INFO ---------------
-// FOR DANCEBOT
+/** Dancebot Definitions. */
 enum DancebotStates {
     Reset,
     Walk,
@@ -50,18 +18,52 @@ enum DancebotStates {
     Ankles,
     Demo1,
     Demo2,
-    NumStates
+    NumStates,
 };
 
-extern char* dancebotStates[];
-extern int numConnectedRobots;
+enum DancebotExpression {
+    None,
+    Happy,
+    Sad,
+    Neutral,
+};
+
+enum DancebotEyeColor {
+    Off,
+    Red,
+    Green,
+    Blue,
+};
 
 typedef struct Dancebot {
+    char* robotType;
     int robotID;
-    int robotState;
-    int robotEyeColor;
-    int robotExpression;
+    double soc; // state of charge
+    DancebotStates robotState;
+    DancebotExpression robotExpression;
+    DancebotEyeColor robotEyeColor;
 } Dancebot;
-extern Dancebot connectedRobots[MAX_ROBOTS];
 
-#endif
+/**
+ * Converts the DancebotStates enum instance into a string value.
+ * 
+ * @param[in] state DancebotStates enum indicating input state.
+ * @return a pointer to a string that indicates the state.
+ */
+const char* state2string(DancebotStates state);
+
+/**
+ * Converts the DancebotExpression enum instance into a string value.
+ * 
+ * @param[in] expression DancebotExpression enum indicating input state.
+ * @return a pointer to a string that indicates the state.
+ */
+const char* expression2String(DancebotExpression expression);
+
+/**
+ * Converts the DancebotEyeColor enum instance into a string value.
+ * 
+ * @param[in] eyeColor DancebotEyeColor enum indicating input state.
+ * @return A pointer to a string that indicates the state.
+ */
+const char* eyeColor2String(DancebotEyeColor eyeColor);
