@@ -63,7 +63,7 @@ Document](https://docs.google.com/document/d/1Z92CRIyPK-TP-6UNRTE09SIyBHDp0PNfzQ
 
 ---
 
-# Development
+## Development
 
 Do you want to contribute to Dancebot or make your own? Send in a PR or fork the
 repo! Send us a message at [RAS](https://ras.ece.utexas.edu/index.html) if
