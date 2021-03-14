@@ -1,6 +1,0 @@
-.pio
-.travis.yml
-include/
-lib/
-test/
-platformio.ini

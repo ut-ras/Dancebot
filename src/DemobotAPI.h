@@ -4,6 +4,7 @@
  * Project: Dancebot Swarm
  * File: DancebotAPI.h
  * Description: Dancebot API to drive hardware with using a state structure
+ * TODO: this could probably be converted into a class or interface.
  * Organization: UT IEEE RAS
  */
 #ifndef DEMOBOTAPI_H

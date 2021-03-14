@@ -1,7 +1,7 @@
 /**
  * File: DemobotNetwork.h
  * Author: Matthew Yu
- * Last Modified: 09/26/20
+ * Last Modified: 03/08/21
  * Project: Demobots General
  * Organization: UT IEEE RAS
  * Description: Contains definitions for the DemobotNetwork class, which allows
@@ -29,13 +29,26 @@ extern IPAddress subnet;
  */
 class DemobotNetwork {
     public:
+        /** List of all possible Demobots the DemobotNetwork supports. */
+        enum DemobotID {
+            DANCEBOT_1,
+            DANCEBOT_2,
+            DANCEBOT_3,
+            DANCEBOT_4,
+            DANCEBOT_5,
+            MOTHERSHIP,
+            POLARGRAPH,
+            MARQUEE,
+            TOWER_OF_POWER
+        };
+
         /**
          * Creates a new DemobotNetwork object and fills in the relevant network
          * and IP address information, if any.
          * 
-         * @param[in] demobotName String containing the demobot name.
+         * @param[in] ID Enum referencing the specific Demobot.
          */
-        explicit DemobotNetwork(const String demobotName);
+        explicit DemobotNetwork(const DemobotID ID);
 
         /**
          * Attempts to reset the network configuration. Useful for if we know a
@@ -129,16 +142,6 @@ class DemobotNetwork {
 
     private:
         /**
-         * Quick and dirty way to hash a string for a switch case.
-         * Reasonable assumption that the output is different for most strings.
-         * Implementation details are inside.
-         * 
-         * @param[in] valptr Pointer to a string to hash.
-         * @return Hash value.
-         */
-        int hash(char* valptr) const;
-
-        /**
          * Goes through the available networks and attempts to find one that
          * matches the internal credentials log. If we do find one, set the ssid
          * and password and return true.
@@ -151,8 +154,8 @@ class DemobotNetwork {
         bool getNetwork(char ssid[], char password[]) const;
 
     private:
-        /** Robot name. */
-        String _demobotName;
+        /** Robot ID. */
+        DemobotID _demobot;
 
         /** IP address of server to connect to or host */
         IPAddress _ipaddress;

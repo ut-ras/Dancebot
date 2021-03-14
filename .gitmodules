@@ -1,0 +1,6 @@
+[submodule "inc/Dancebot"]
+	path = inc/Dancebot
+	url = https://github.com/ut-ras/Dancebot.git
+[submodule "inc/ESP32Servo"]
+	path = inc/ESP32Servo
+	url = https://github.com/madhephaestus/ESP32Servo

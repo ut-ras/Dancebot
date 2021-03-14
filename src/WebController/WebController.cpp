@@ -1,8 +1,8 @@
 /**
- * Author: Matthew Yu
- * Last Modified: 09/26/20
- * Project: Dancebot Swarm
  * File: WebController.cpp
+ * Author: Matthew Yu
+ * Last Modified: 03/08/21
+ * Project: Dancebot Swarm
  * Description: A generic web controller for controlling various Demobots Projects. 
  *      Robots should be able to: connect to a remote server and receive/send commands, 
  *      as well as spin up their own server and serve a webpage to the user to directly 
@@ -26,7 +26,7 @@ bool setupNetworking(DemobotNetwork &network) {
     } else {
         /* Remote server isn't up. Start our own? */
         if (!setupServer(network)) return false;
-        /* Attempt to ping again */
+        /* Attempt to ping again. */
         if (network.pingServer()) return true;
         else return false;
     }

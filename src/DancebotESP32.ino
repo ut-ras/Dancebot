@@ -38,7 +38,7 @@ Dancebot dancebot {
 };
 
 /** Network instantiation */
-DemobotNetwork network(String(dancebot.robotType) + String(dancebot.robotID));
+DemobotNetwork network(DemobotNetwork::DANCEBOT_1);
 
 
 void setup() {
