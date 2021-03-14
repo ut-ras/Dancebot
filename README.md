@@ -58,6 +58,9 @@ This project was led by the following RAS members:
 - Ahmad Ahbab (Web design and network communication)
 - Matthew Yu (Electrical and firmware development)
 
+You can find more about the Dancebot V2.0.0 project in this [Design
+Document](https://docs.google.com/document/d/1Z92CRIyPK-TP-6UNRTE09SIyBHDp0PNfzQYGx3INMaM/edit?usp=sharing).
+
 ---
 
 # Development
@@ -68,7 +71,3 @@ you're interested in getting involved.
 
 Installation and setup instructions can be found in
 [DEVELOPMENT.md](DEVELOPMENT.md).
-### ESP32 Dev Board
-ESP32 WiFi Microcontroller, with web page controller for selecting dance moves, programmed with Arduino IDE. Updated DancingServos class to allow the web server to run at the same time. Added dance routine buttons, which activate a loop of multiple dance moves.
-
-
