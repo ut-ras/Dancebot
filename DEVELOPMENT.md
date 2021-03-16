@@ -9,7 +9,7 @@ project](https://github.com/plerup/makeEspArduino).
 
 ---
 
-## Installing and Builfing
+## Installing and Building
 
 Below are instructions for each OS (if provided) for building the project and
 flashing it to your device.
