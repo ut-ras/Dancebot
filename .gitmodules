@@ -1,0 +1,15 @@
+[submodule "inc/asyncHTTPrequest"]
+	path = inc/asyncHTTPrequest
+	url = https://github.com/boblemaire/asyncHTTPrequest.git
+[submodule "inc/ESPAsyncWebServer"]
+	path = inc/ESPAsyncWebServer
+	url = https://github.com/me-no-dev/ESPAsyncWebServer.git
+[submodule "inc/ESP32Servo"]
+	path = inc/ESP32Servo
+	url = https://github.com/madhephaestus/ESP32Servo.git
+[submodule "inc/AsyncTCP"]
+	path = inc/AsyncTCP
+	url = https://github.com/me-no-dev/AsyncTCP.git
+[submodule "inc/DemobotESPNetcode"]
+	path = inc/DemobotESPNetcode
+	url = https://github.com/ut-ras/DemobotESPNetcode.git
