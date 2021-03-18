@@ -94,7 +94,10 @@ String Dancebot::getEyeExpression() {
 
 String Dancebot::getEyeColor() {
     switch (dancebotConfig.eyeColor) {
+        case White:     return String("White");
         case Red:       return String("Red");
+        case Pink:      return String("Pink");
+        case Yellow:    return String("Yellow");
         case Green:     return String("Green");
         case Blue:      return String("Blue");
         case Off:

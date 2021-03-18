@@ -51,9 +51,9 @@ class Dancebot {
         /** Enum describing possible Dancebot eye colors. */
         enum DancebotEyeColors {
             Off,
+            White,
             Red,
             Pink,
-            White,
             Yellow,
             Green,
             Blue,

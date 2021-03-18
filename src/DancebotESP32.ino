@@ -87,9 +87,9 @@ void setup() {
     String keys[numArgs] = {
         String("ID"),
         String("CHARGE"),
-        String("MOVEMENT"),
-        String("EYE EXPRESSION"),
-        String("EYE COLOR")
+        String("MOVE"),
+        String("EE"),
+        String("EC")
     };
     String vals[numArgs] = {
         dancebot->getID(),
