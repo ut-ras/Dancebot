@@ -7,85 +7,82 @@
  * Organization: UT IEEE RAS
  */
 #include <Arduino.h>
-// #include "DemobotAPI.h"
-// #include <WebController.h>
 #include <DemobotNetwork.h>
+#include <DemobotServer.h>
+#include <DemobotClient.h>
 
-#define SETUP_TIMEOUT 60000
-#define UPDATE_TIMEOUT 250
-/** 
- * Example flow for a Demobots sketch with an ESP32:
- * setup() {
- *   setupNetworking()
- *   initializeRobot()
- * }
- * 
- * loop() {
- *   do some movement
- *   look for update from server and update state
- * }
- */
 
-/** Dancebot instantiation */
-// char dancebotName[9] = "Dancebot";
-// Dancebot dancebot {
-//     dancebotName,
-//     0,
-//     100.0,
-//     Reset,
-//     None,
-//     Off
-// };
-
-/** Network instantiation */
+/** Network instantiation. */
 DemobotNetwork *network;
+DemobotServer *server;
+DemobotClient *client;
 
+void onRoot(AsyncWebServerRequest *request) {
+    request->send(200, "text/plain", "Hello, world");
+}
 
 void setup() {
     Serial.begin(115200);
     Serial.println("DancebotESP32.ino.");
     /* Give some time to open up the serial monitor. */
-    delay(5000); // 5 seconds
-    Serial.println("Starting network configuration.");
+    delay(3000);
+
+    /* Start up the network. */
+    Serial.println("\nStarting network configuration.");
     network = new DemobotNetwork(DemobotNetwork::DANCEBOT_1);
     network->connectNetwork();
-    // setupNetworking(network);
-    // initializeRobot();
+    delay(100);
 
-    // /* Attempt to connect for at least half a minute. */
-    // bool connected = false;
-    // do {
-    //     if (joinServer(network, dancebot).substring(0, 6).equals("[JOIN")) {
-    //         connected = true;
-    //     }
-    // } while (millis() < SETUP_TIMEOUT && !connected);
+    /* Check that the robot is connected to the network. */
+    Serial.print("Is network connected [1=T|0=F]: ");
+    Serial.println(network->isNetworkConnected());
 
-    // /* If not connected, initiate shutdown routine. */
-    // if (connected) { shutdown(); }
+    /* Set up the server. */
+    Serial.println("\nStarting server setup.");
+    server = new DemobotServer();
+
+    /* Ping to see if another server is up. */
+    IPAddress ip = network->getIPAddress();
+    int response = server->pingServer(network->IpAddress2String(ip));
+    if (response == 200) {
+        /* Server is already set up. */
+        Serial.println("Server is already set up on another bot.");
+        server->~DemobotServer();
+    } else {
+        /* Set up our own server. */
+        Serial.println("Server is not yet up; hosting the server...");
+
+        /* TODO: Set up the following endpoints:
+         * /
+         * /robotJoin
+         * /robotLeave
+         * /robotUpdate
+         *
+         * /userMove
+         * /userExpress
+         * /userShutdown */
+        server->addGETEndpoint(String("/"), onRoot);
+        server->startServer();
+    }
+
+    /* Set up the robot client. */
+    Serial.println("\nStarting client setup.");
+    String url = String("http://" + network->IpAddress2String(ip) + ":80/");
+    client = new DemobotClient(); /* Default port 80. */
+
+    response = client->pingServer(url);
+    if (response == 200) {
+        Serial.println("Server is responsive. Robot is ready to start up!");
+    } else {
+        Serial.println("Server is not responsive....");
+    }
 }
 
+
+
 void loop() {
-    delay(1000);
-    Serial.println(network->pingServer());
-//     /* Internal counter for determining when to send a new message. */
-//     static int lastMsgTime = 0;
+    /* TODO: Loop robot state, loop robot movement. */
 
-//     /* Move the robot. */
-//     move();
+    /* TODO: If 200 ms has passed, send /robotUpdate request to the server. */
 
-//     /* Send GetState request to server and update the robot state. */
-//     int time = millis();
-//     /**
-//      * Note that we don't care about time overflowing here since the arduino
-//      * docs for millis() says that it'll overflow 50 days, which at that point
-//      * the robot, if never turned off, will definitely have died by then.
-//      */
-//     if(!isOscillating() || ((time - lastMsgTime) > UPDATE_TIMEOUT)) {
-//         /**
-//          * In updateState we'll update state and send a leaveServer() request
-//          * and shut down if necessary.
-//          */
-//         updateState(getState(network, dancebot));
-//         lastMsgTime = time;
-//     }
 }

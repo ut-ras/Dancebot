@@ -6,15 +6,18 @@
 # to the device. Use with care, and in the Dancebot repository, since this uses
 # relative links.
 
+# Replace your .ino file path with whatever project you want to build and flash!
+SKETCH_PATH="./src/DancebotESP32.ino"
+
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -c|--compile)
             echo "Compiling DancebotESP32.ino";
-            espmake32 SKETCH="./src/DemobotNetcode/examples/DemobotClientExample.ino" LIBS="./inc/" BUILD_DIR="./build/";
+            espmake32 SKETCH=$SKETCH_PATH LIBS="./inc/" BUILD_DIR="./build/";
             ;;
         -f|--flash)
             echo "Compiling DancebotESP32.ino and flashing to the ESP32 device, if any.";
-            espmake32 SKETCH="./src/DemobotNetcode/examples/DemobotClientExample.ino" LIBS="./inc/" BUILD_DIR="./build/" flash;
+            espmake32 SKETCH=$SKETCH_PATH LIBS="./inc/" BUILD_DIR="./build/" flash;
             ;;
         -m|--monitor)
             echo "Opening serial monitor for ESP32 device, if any.";
