@@ -29,6 +29,11 @@ while [[ "$#" -gt 0 ]]; do
             echo "add flag -m or --monitor to open the serial monitor in the CLI.";
             echo "both flash and monitor commands require the ESP32 to be connected.";
             ;;
+        -cl|--clean)
+            echo "Cleaning build/ directory, if any."
+            echo "Use this command prior to -c or -f if you want to use your latest build."
+            rm ./build/*
+            ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
