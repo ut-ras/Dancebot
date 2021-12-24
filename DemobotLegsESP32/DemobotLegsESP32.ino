@@ -43,11 +43,9 @@
 //WiFi Settings
 //STA = connect to a WiFi network with name ssid
 //AP = create a WiFi access point with  name ssid
-#define WIFI_MODE "STA"
-//const char * ssid = "esp_hotspot";
-//const char * pass = "esp";
-const char * ssid = "Cole";
-const char * pass = "cole1234";
+#define WIFI_MODE "AP"
+const char * ssid = "esp_hotspot";
+const char * pass = "esp";
 
 
 DancingServos* bot;
@@ -93,5 +91,3 @@ void calibrateTrims(DancingServos* bot) {
   //[hipL, hipR, ankleL, ankleR]
   bot->setTrims(70, 150, 25, 18);
 }
-
-

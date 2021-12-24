@@ -79,13 +79,36 @@ void setupWiFi(String mode, const char * ssid, const char * pass) {
     ip = WiFi.softAPIP();
   }
   else {
+
+    Serial.println("Starting Network Scan.");
+    int networks = WiFi.scanNetworks();
+
+    if (networks == 0) {
+        Serial.println("No networks found.");
+    } else {
+        Serial.print(networks);
+        Serial.println(" networks found: ");
+        for (int i = 0; i < networks; ++i) {
+            // Print SSID and RSSI for each network found
+            Serial.print(i + 1);
+            Serial.print(": ");
+            Serial.print(WiFi.SSID(i));
+            Serial.print(" (");
+            Serial.print(WiFi.RSSI(i));
+            Serial.print(")");
+            Serial.println((WiFi.encryptionType(i) == WIFI_AUTH_OPEN)?" ":"*");
+            delay(10);
+        }
+    }
+
     //Connect to a WiFi network
+    Serial.println("STA mode.");
     WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, pass);
     while (WiFi.status() != WL_CONNECTED) {
       delay(500);
       yield();
-      //Serial.print(".");
+      Serial.print(".");
     }
     ip = WiFi.localIP();
 
