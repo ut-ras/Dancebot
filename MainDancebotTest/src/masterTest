@@ -1,0 +1,147 @@
+//Libraries
+#include <WiFi.h>
+//Constants
+#define NUM_SLAVES 1
+#define LED 2
+//Parameters
+String nom = "Master";
+const char* ssid = "*******";
+const char* password = "**********";
+//Variables
+bool sendCmd = false;
+String slaveCmd = "0";
+String slaveState = "0";
+//Objects
+WiFiServer server(80);
+WiFiClient browser;
+IPAddress ip(192, 168, 1, 44);
+IPAddress gateway(192, 168, 1, 254);
+IPAddress subnet(255, 255, 255, 0);
+void setup() {
+ 	//Init Serial USB
+ 	Serial.begin(115200);
+ 	Serial.println(F("Initialize System"));
+ 	//Init ESP32 Wifi
+ 	WiFi.config(ip, gateway, subnet); 						// forces to use the fix IP
+ 	WiFi.begin(ssid, password);
+ 	while (WiFi.status() != WL_CONNECTED) {
+ 			delay(500);
+ 			Serial.print(F("."));
+ 	}
+ 	server.begin();
+ 	Serial.print(nom);
+ 	Serial.print(F(" connected to Wifi! IP address : http://")); Serial.println(WiFi.localIP()); // Print the IP address
+ 	pinMode(LED, OUTPUT);
+}
+void loop() {
+ 	clientRequest();
+}
+void clientRequest( ) { /* function clientRequest */
+ 	////Check if client connected
+ 	WiFiClient client = server.available();
+ 	client.setTimeout(50);
+ 	if (client) {
+ 			if (client.connected()) {
+ 					//Print client IP address
+ 					Serial.print(" ->");Serial.println(client.remoteIP());
+ 					String request = client.readStringUntil('\r'); //receives the message from the client
+ 				
+ 					if (request.indexOf("Slave0") == 0) {
+ 							//Handle slave request
+ 							Serial.print("From "); Serial.println(request);
+ 							int index = request.indexOf(":");
+ 							String slaveid = request.substring(0, index);
+ 							slaveState = request.substring(request.indexOf("x") + 1, request.length());
+ 							Serial.print("state received: "); Serial.println(slaveState);
+ 							client.print(nom);
+ 							if (sendCmd) {
+ 									sendCmd = false;
+ 									client.println(": Ok " + slaveid + "! Set state to x" + String(slaveCmd) + "\r");
+ 							} else {
+ 									client.println(": Hi " + slaveid + "!\r"); // sends the answer to the client
+ 							}
+ 							client.stop(); 															// terminates the connection with the client
+ 					} else {
+ 							Serial.print("From Browser : "); Serial.println(request);
+ 						
+ 							handleRequest(request);
+ 							webpage(client);
+ 					}
+ 			}
+ 	}
+}
+void handleRequest(String request) { /* function handleRequest */
+ 	////Check if client connected
+ 	if (request.indexOf("/light1on") > 0) 	{
+ 			digitalWrite(LED, LOW);
+ 	}
+ 	if (request.indexOf("/light1off") > 0) 	{
+ 			digitalWrite(LED, HIGH);
+ 	}
+ 	if (request.indexOf("/light2on") > 0) 	{
+ 			sendCmd = true;
+ 			slaveCmd = "1";
+ 	}
+ 	if (request.indexOf("/light2off") > 0) 	{
+ 			sendCmd = true;
+ 			slaveCmd = "0";
+ 	}
+}
+void webpage(WiFiClient browser) { /* function webpage */
+ 	////Send webpage to browser
+ 	browser.println("HTTP/1.1 200 OK");
+ 	browser.println("Content-Type: text/html");
+ 	browser.println(""); // 	do not forget this one
+ 	browser.println("<!DOCTYPE HTML>");
+ 	browser.println("<html>");
+ 	browser.println("<head>");
+ 	browser.println("<meta name='apple-mobile-web-app-capable' content='yes' />");
+ 	browser.println("<meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />");
+ 	browser.println("</head>");
+ 	browser.println("<body style = ' background-color:#000000; color:white;'>");
+ 	browser.println("<hr/><hr>");
+ 	browser.println("<h1><center> Esp32 Electrical Device Control </center></h1>");
+ 	browser.println("<hr/><hr>");
+ 	browser.println("<br><br>");
+ 	browser.println("<br><br>");
+ 	browser.println("<h2> Commands </h2>");
+ 	browser.println("<center>");
+ 	browser.println("Built-in LED");
+ 	browser.println("<a href='/light1on'><button>Turn On </button></a>");
+ 	browser.println("<a href='/light1off'><button>Turn Off </button></a><br />");
+ 	browser.println("</center>");
+ 	browser.println("<br><br>");
+ 	browser.println("<center>");
+ 	browser.println("Device 2");
+ 	browser.println("<a href='/light2on'><button>Turn On </button></a>");
+ 	browser.println("<a href='/light2off'><button>Turn Off </button></a><br />");
+ 	browser.println("</center>");
+ 	browser.println("<br><br>");
+ 	browser.println("<br><br>");
+ 	browser.println("<h2> Data </h2>");
+ 	browser.println("<center>");
+ 	browser.println("<table border='5'>");
+ 	browser.println("<tr>");
+ 	if (digitalRead(LED))
+ 	{
+ 			browser.print("<td>LED is OFF</td>");
+ 	}
+ 	else
+ 	{
+ 			browser.print("<td>LED is ON</td>");
+ 	}
+ 	browser.println("<br />");
+ 	if (slaveState == "1") //(digitalRead(4))
+ 	{
+ 			browser.print("<td>Light 2 is OFF</td>");
+ 	}
+ 	else
+ 	{
+ 			browser.print("<td>Light 2 is ON</td>");
+ 	}
+ 	browser.println("</tr>");
+ 	browser.println("</table>");
+ 	browser.println("</center>");
+ 	browser.println("</body></html>");
+ 	delay(1);
+}

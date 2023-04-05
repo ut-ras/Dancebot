@@ -33,7 +33,9 @@
 #include <ESPmDNS.h>
 
 #include "DancingServos.h"
-
+#include "WebController.h"
+#include "DemobotNetwork.h"
+#include "RobotConfig.h"
 
 void handleRoot();
 void handleDanceMove();
@@ -124,7 +126,20 @@ void loopWebServer() {
   server.handleClient();
 }
 
+String getState(DemobotNetwork &network, const Dancebot &dancebot) {
+    static const int numArgs = 1;
+    String keys[numArgs] = {
+        "ID"
+    };
+    String vals[numArgs] = {
+        String(dancebot.robotID)
+    };
 
+    String *response = nullptr;
+    int responseCode = network.sendGETRequest("/robotUpdate", keys, vals, numArgs, response);
+    if (responseCode != OK || response == nullptr) return String("");
+    else return String("[UPDT] " + *response);
+}
 
 /* Request Handlers */
 

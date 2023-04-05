@@ -61,7 +61,8 @@ WebServer server(port);
 //DancingServos object
 DancingServos* dance_bot;
 
-
+WiFiClient master;
+unsigned long previousRequest = 0;
 
 /* Setup Functions */
 
@@ -321,5 +322,40 @@ String getJavascript() {
 
   "</script>";
   return s;
+}
+
+//requests info from master (main dancebot), used to determine what dance move to do on smaller dancebot
+
+void connect_to_server(void) {
+  if (client.connect(ip, port)) {
+    Serial.println("Connected.");
+    client.println("GET /");
+    client.println();
+  }
+}
+
+void requestMainDancebot(void){
+  //client connect to server every 1000ms
+  if((millis() - previousRequest) > 1000){
+    Serial.println("Trying to connect to server...");
+  
+
+
+    if(master.connect(ip, 80)){
+      Serial.println("Succesfully connected to server!");
+        previousRequest = millis();
+        String answer = master.readStringUntil('\r');
+        Serial.println("Message received: " + answer);
+        master.flush();
+        int id = answer.toInt();
+        if(id == 1){
+          Serial.println("Received a 1!");
+        }
+        else{
+          Serial.println("Received a 0!");
+      }
+    }
+
+  } 
 }
 
