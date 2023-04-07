@@ -44,7 +44,7 @@
 //WiFi Settings
 //STA = connect to a WiFi network with name ssid
 //AP = create a WiFi access point with  name ssid
-#define WIFI_MODE "STA"
+#define WIFI_MODE "AP"
 //const char * ssid = "esp_hotspot";
 //const char * pass = "esp";
 const char * ssid = "Cole";
@@ -71,11 +71,11 @@ void setup() {
 
   Serial.println("Setting up WiFi...");
   setupWiFi(WIFI_MODE, ssid, pass);       //Access Point or Station
-  setupWebServer(bot);                    //Set up the Web Server
+  // setupWebServer(bot);                    //Set up the Web Server
   Serial.println("Finished setting up WiFi!");
   // delay(500);
   // bot->position0();
-  connect_to_server();
+  // connect_to_server();
 }
 
 
@@ -99,7 +99,8 @@ void loop() {
 //manual calibration- based on how the servos are attatched to the 3d printed parts
 void calibrateTrims(DancingServos* bot) {
   //[hipL, hipR, ankleL, ankleR]
-  bot->setTrims(70, 150, 25, 18);
+  // bot->setTrims(70, 150, 25, 18);
+  bot->setTrims(70, 100, 25, 18);
 }
 
 

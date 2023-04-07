@@ -39,7 +39,7 @@
 #include "DancingServos.h"
 #include "WebController.h"
 #include "WiFi.h"
-
+#include <esp_now.h>
 
 //WiFi Settings
 //STA = connect to a WiFi network with name ssid
@@ -55,12 +55,21 @@ DancingServos* bot;
 long serverDelayEnd = 0;
 long serverCheckInterval = 1000;
 
+//pins for LED and button
 const int LED = 2;
 const int BUTTON = 21;
 int lastState = HIGH; // the previous state from the input pin
 int currentState;     // the current reading from the input pin
 
 WiFiServer wifiServer(80);
+
+//message struct that contains info that will be sent to clients
+typedef struct struct_message {
+  int integer;
+  char character[100];
+} struct_message;
+
+struct_message message; //message sent to clients
 
 void setup() {
   Serial.begin(115200);
@@ -81,9 +90,8 @@ void setup() {
   pinMode(LED, OUTPUT);
   digitalWrite(LED, LOW);
 
-  pinMode(BUTTON, INPUT_PULLDOWN);
-  // delay(500);
-  // bot->position0();
+  delay(500);
+  bot->position0();
 }
 
 
@@ -95,59 +103,46 @@ void loop() {
   // //check if ready to start next move in dance
   // bot->loopDanceRoutines();
   
-  if (!bot->isOscillating() || millis() > serverDelayEnd) {
-    serverDelayEnd = millis() + serverCheckInterval;
-    loopWebServer();
-  }
-  transmitSmallDancebot();
-
-  // int buttonState = digitalRead(BUTTON);
-  // if(buttonState == HIGH){
-  //   Serial.println("button pressed!");
-  //   digitalWrite(LED, HIGH);
-  //   delay(500);
-  //   digitalWrite(LED, LOW);
-  //   delay(500);
+  // if (!bot->isOscillating() || millis() > serverDelayEnd) {
+  //   serverDelayEnd = millis() + serverCheckInterval;
+  //   loopWebServer();
   // }
+  transmitClientDancebot();
 }
 
 
 //manual calibration- based on how the servos are attatched to the 3d printed parts
 void calibrateTrims(DancingServos* bot) {
   //[hipL, hipR, ankleL, ankleR]
-  bot->setTrims(70, 150, 25, 18);
+  bot->setTrims(95, 90, 180, 60);
 }
 
-void transmitSmallDancebot(void){
-  Serial.println("Trying to connect to a client...");
-  WiFiClient client = wifiServer.available();
-  //check if client is connected to server
-  if (client) {
-     if (client.connected()) {
-        Serial.println("Connected to client: " + client.remoteIP());
-        String command;
-        int buttonState = digitalRead(BUTTON);
-        client.print("Cum");
-        client.println("1");
-        client.stop();
-        // //when button pressed, send a 1 to client
-        // if(buttonState == HIGH){
-        //   Serial.println("Sent a 1 to client!");
-        //   digitalWrite(LED, HIGH);
-        //   //send a one to servant
-        //   client.println(1);
-        //   client.flush();
-        // }
-        // //if not pressed, send a 0 to client
-        // else{
-        //   Serial.println("Sent a 1 to client!");
-        //   digitalWrite(LED, LOW);
-        //   //send a 0 to servant 
-        //   client.println(0);
-        //   client.flush();
-        // }
-     }
+void transmitClientDancebot(void){
+  message.integer = 1;
+  
+  //sends message to ALL clients, 1st param = null => send all clients
+  esp_err_t outcome = esp_now_send(0, (uint8_t *) &message, sizeof(struct_message));
+  
+  if (outcome == ESP_OK) {
+    Serial.println("Sent with success");
   }
+  else {
+    Serial.println("Error sending the data");
+  } 
+
+  // Serial.println("Trying to connect to a client...");
+  // WiFiClient client = wifiServer.available();
+  // //check if client is connected to server
+  // if (client) {
+  //    if (client.connected()) {
+  //       Serial.println("Connected to client: " + client.remoteIP());
+  //       String command;
+  //       int buttonState = digitalRead(BUTTON);
+  //       client.print("Cum");
+  //       client.println("1");
+  //       client.stop();
+  //    }
+  // }
 }
 
 
