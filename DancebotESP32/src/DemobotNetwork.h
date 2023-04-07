@@ -14,14 +14,14 @@
 #include <HTTPClient.h>
 
 #define RETRY_WAIT 200      // 200 ms
-#define RETRY_AMOUNT 3
+#define RETRY_AMOUNT 10
 
 extern IPAddress gateway;
 extern IPAddress subnet;
 
 /**
  * Definition of an implementation for the DemobotNetwork class.
- * 
+ *
  * The DemobotNetwork class manages Demobot networking code. It allows robots to
  * find and connect to networks and servers given just a demobot name. It also
  * exposes a simple API to send and get requests to the network and server it is
@@ -32,7 +32,7 @@ class DemobotNetwork {
         /**
          * Creates a new DemobotNetwork object and fills in the relevant network
          * and IP address information, if any.
-         * 
+         *
          * @param[in] demobotName String containing the demobot name.
          */
         explicit DemobotNetwork(const String demobotName);
@@ -47,14 +47,14 @@ class DemobotNetwork {
          * Attempts to connect to the network selected during object
          * instantiation. Fails if we could not find a network during object
          * instantiation or we can't connect to the network.
-         * 
+         *
          * @return True if can connect to the network, false otherwise.
          */
         bool connectNetwork();
 
         /**
          * Checks to see if we're currently connected to a network.
-         * 
+         *
          * @return True if we're currently connected to a network, false otherwise.
          */
         bool isNetworkConnected() const;
@@ -62,7 +62,7 @@ class DemobotNetwork {
         /**
          * Pings the configured ip address to see if we can get a response.
          * Useful for checking if we need to setup a server or not.
-         * 
+         *
          * @return Response code after sending a GET request to the server root
          *      endpoint ('/').
          */
@@ -70,7 +70,7 @@ class DemobotNetwork {
 
         /**
          * Submits a GET request and looks for a response. Synchronous.
-         * 
+         *
          * @param[in] endpoint URL endpoint to send request to.
          * @param[in] keys Pointer to an array of strings that each contain a key.
          * @param[in] vals Pointer to an array of strings that each contain a value.
@@ -82,7 +82,7 @@ class DemobotNetwork {
 
         /**
          * Submits a POST request and looks for a response. Synchronous.
-         * 
+         *
          * @param[in] endpoint URL endpoint to send request to.
          * @param[in] keys Pointer to an array of strings that each contain a key.
          * @param[in] vals Pointer to an array of strings that each contain a value.
@@ -94,14 +94,14 @@ class DemobotNetwork {
 
         /**
          * Returns the network SSID.
-         * 
+         *
          * @return Network SSID. May be nullptr if configured incorrectly.
          */
         char* getNetworkSSID() const;
 
         /**
          * Returns the network password.
-         * 
+         *
          * @return Network password. May be nullptr if configured incorrectly.
          */
         char* getNetworkPassword() const;
@@ -113,7 +113,7 @@ class DemobotNetwork {
 
         /**
          * Returns the relevant server IP address.
-         * 
+         *
          * @return Server IPAddress that corresponds to Demobot name.
          */
         IPAddress getIPAddress() const;
@@ -121,7 +121,7 @@ class DemobotNetwork {
         /**
          * Converts an IPAddress to a string.
          * @author: apicquot from https://forum.arduino.cc/index.php?topic=228884.0
-         * 
+         *
          * @param[in] ipAddress IPAddress object.
          * @return String concatenation of the IP address.
          */
@@ -132,7 +132,7 @@ class DemobotNetwork {
          * Quick and dirty way to hash a string for a switch case.
          * Reasonable assumption that the output is different for most strings.
          * Implementation details are inside.
-         * 
+         *
          * @param[in] valptr Pointer to a string to hash.
          * @return Hash value.
          */
@@ -142,7 +142,7 @@ class DemobotNetwork {
          * Goes through the available networks and attempts to find one that
          * matches the internal credentials log. If we do find one, set the ssid
          * and password and return true.
-         * 
+         *
          * @param[out] ssid Char array pointer to the SSID.
          * @param[out] password Char array pointer to the password.
          * @return True if we found a matching network and set SSID and password,

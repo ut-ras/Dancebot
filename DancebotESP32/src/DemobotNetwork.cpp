@@ -10,10 +10,10 @@
 #include "DemobotNetwork.h"
 
 /** Redirect any traffic with an unknown address to here. */
-IPAddress gateway(192,168,1,1);
+IPAddress gateway(192, 168, 1, 1);
 
 /** 255-245-1 = 9 allowed IP addresses on the subnet. */
-IPAddress subnet(255,255,0,0);
+IPAddress subnet(255, 255, 0, 0);
 
 /** Public methods. */
 
@@ -37,19 +37,19 @@ DemobotNetwork::DemobotNetwork(const String demobotName) {
         case 41510: // Dancebot4
         case 41766: // Dancebot5
         case 111755: // Mothership
-            _ipaddress = IPAddress(192,168,1,1);
+            _ipaddress = IPAddress(192,168,10,1);
             break;
         case 108262: // Polargraph
-            _ipaddress = IPAddress(192,168,1,2);
+            _ipaddress = IPAddress(192,168,11,2);
             break;
         case 13199: // Marquee
-            _ipaddress = IPAddress(192,168,1,3);
+            _ipaddress = IPAddress(192,168,12,3);
             break;
         case 448950: // TowerOfPower
-            _ipaddress = IPAddress(192,168,1,4);
+            _ipaddress = IPAddress(192,168,13,4);
             break;
         default:
-            _ipaddress = IPAddress(192,168,1,0);
+            _ipaddress = IPAddress(192,168,14,0);
             break;
     }
     /* Set credentials. */
@@ -70,25 +70,34 @@ void DemobotNetwork::reconfigureNetworks() {
 bool DemobotNetwork::connectNetwork() {
     /* If we never found a network with credentials, don't attempt to connect. */
     if (_SSID == nullptr || _PASSWORD == nullptr) { return false; }
-    
+
+    char buffer[100] = {'\0'};
+    snprintf(buffer, 100, "[DEBUG] [connectNetwork] Connecting to %s, %s.", _SSID, _PASSWORD);
+    Serial.print(buffer);
+    WiFi.begin(_SSID, _PASSWORD);
+
+    /* Poll until we get connected or timeout. */
     int retry = 0;
-    while (true) {
-        WiFi.begin(_SSID, _PASSWORD);
-        /* Poll until we get connected or get a connection failure. */
-        while (WiFi.status() != WL_CONNECTED) {
-            /* In WL_IDLE_STATUS of WL_CONNECT_FAILED. */
-            if (WiFi.status() == WL_CONNECT_FAILED) {
-                retry++;
-                if (retry < RETRY_AMOUNT) break;
-                else return false;
-            }
-            delay(RETRY_WAIT);
-        }
-        /* If we're connected, jump out. */
-        if (WiFi.status() == WL_CONNECTED) {
-            _connected = true;
-            return true;
-        }
+    while (WiFi.status() != WL_CONNECTED) {
+        Serial.print(".");
+        ++retry;
+        if (retry < RETRY_AMOUNT) break;
+        delay(RETRY_WAIT);
+    }
+
+    Serial.println();
+    // char buffer2[100] = {'\0'};
+    // snprintf(buffer2, 100, "[DEBUG] [connectNetwork] Connection status: %s", WiFi.status());
+    // Serial.println(buffer2);
+
+    if (WiFi.status() == WL_CONNECTED) {
+        Serial.println("[DEBUG] [connectNetwork] Connected to network.");
+        _connected = true;
+        return true;
+    } else {
+        Serial.println("[DEBUG] [connectNetwork] Failed to connect to network.");
+        _connected = false;
+        return false;
     }
 }
 
@@ -102,7 +111,7 @@ int DemobotNetwork::pingServer() const {
     if (!_connected || !_ipaddress) return false;
 
     /* Send a root level GET request to see if the page exists. */
-    String queryPath = "http://" + IpAddress2String(_ipaddress) + "/";
+    String queryPath = IpAddress2String(_ipaddress) + ":80/";
     http->begin(queryPath.c_str());
     return http->GET();
 }
@@ -229,7 +238,7 @@ bool DemobotNetwork::getNetwork(char ssid[], char password[]) const {
     /* 2. assign the relevant network to the robot. */
     for (int i = 0; (i < numCredentials); i++) {
         for (int j = 0; j < networks; j++) {
-            if(WiFi.SSID(j).equals(String(credentialsLog[i].SSID))) {
+            if (WiFi.SSID(j).equals(String(credentialsLog[i].SSID))) {
                 ssid = const_cast<char*>(credentialsLog[i].SSID);
                 password = const_cast<char*>(credentialsLog[i].PASSWORD);
                 return true;

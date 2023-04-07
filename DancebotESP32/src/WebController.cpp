@@ -16,14 +16,17 @@
 bool setupNetworking(DemobotNetwork &network) {
     /* Attempt to connect to network */
     if (!network.connectNetwork()) {
-        Serial.println("[WARN] [setupNetworking] Unable to identify an available network.");
+        Serial.println("[DEBUG] [setupNetworking] Unable to identify an available network.");
         if (!setupAPNetwork(network)) return false;
     }
     /* Attempt to ping server. */
+    Serial.println("[DEBUG] [setupNetworking] Pinging server.");
     if (network.pingServer()) {
         /* And the remote server is up. */
+        Serial.println("[DEBUG] [setupNetworking] Server responded back.");
         return true;
     } else {
+        Serial.println("[DEBUG] [setupNetworking] No server response. Setting up our own.");
         /* Remote server isn't up. Start our own? */
         if (!setupServer(network)) return false;
         /* Attempt to ping again */
@@ -37,37 +40,41 @@ bool setupAPNetwork(DemobotNetwork &network) {
     char* ssid = network.getNetworkSSID();
     char* pass = network.getNetworkPassword();
     if ((ssid == nullptr) || (pass == nullptr)) {
-        Serial.println("[ERROR] [setupAPNetwork] Network was improperly configured and could not setup a network on AP mode.");
+        Serial.println("[DEBUG] [setupAPNetwork] Network was improperly configured and could not setup a network on AP mode.");
         return false;
     }
 
-    Serial.println("[setupAPNetwork] Setting up default network at: " + String(ssid));
+    Serial.println("[DEBUG] [setupAPNetwork] Setting up default network at: " + String(ssid));
     if (!WiFi.softAP(ssid, pass)) {
-        Serial.println("[ERROR] [setupAPNetwork] Unable to setup access point.");
+        Serial.println("[DEBUG] [setupAPNetwork] Unable to setup access point.");
         return false;
     }
 
     /* Give the network some time to run up. */
-    delay(500);
+    delay(1500);
     return true;
 }
 
 bool setupServer(DemobotNetwork &network) {
     IPAddress ip = network.getIPAddress();
     if (!ip) {
-        Serial.println("[ERROR] [setupServer] Server IP was improperly configured and could not setup a server on AP mode.");
+        Serial.println("[DEBUG] [setupServer] Server IP was improperly configured and could not setup a server on AP mode.");
         return false;
     }
 
-    Serial.println("[setupServer] Setting up server at: " + network.IpAddress2String(network.getIPAddress()));
-    if (!WiFi.softAPConfig(ip, gateway, subnet)) {
-        Serial.println("[ERROR] [setupServer] Unable to setup server IP.");
+    Serial.println("[DEBUG] [setupServer] Setting up server at: " + network.IpAddress2String(network.getIPAddress()));
+    if (!WiFi.config(ip, gateway, subnet)) {
+        Serial.println("[DEBUG] [setupServer] Unable to setup server IP.");
         return false;
     }
+
+    char buffer[100] = {'\0'};
+    snprintf(buffer, 100, "[DEBUG] [setupServer] IP ADDRESS: %s.", WiFi.localIP().toString().c_str());
+    Serial.println(buffer);
 
     /* Give the server some time to run up. */
     startServer();
-    delay(500);
+    delay(1500);
     return true;
 }
 
@@ -133,6 +140,36 @@ String leaveServer(DemobotNetwork &network, const Dancebot &dancebot) {
 /**
  * startServer sets up the URL hooks.
  */
+WiFiServer server(80);
 void startServer() {
     // TODO: rewrite this to comply with new communication protocol.
+    server.begin();
+    while (true) {
+        Serial.println("Looking for clients.");
+        WiFiClient client = server.available();
+        if (client) {
+            Serial.println("Client available.");
+            while (client.connected()) {
+                if (client.available()) {
+                    String header;
+                    char c = '\0';
+                    do {
+                        c = client.read();
+                        Serial.write(c);
+                        header += c;
+                    } while (c != '\n');
+                    // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
+                    // and a content-type so the client knows what's coming, then a blank line:
+                    client.println("HTTP/1.1 200 OK");
+                    client.println("Content-type:text/html");
+                    client.println("Connection: close");
+                    client.println();
+                }
+            }
+            client.stop();
+            Serial.println("Client disconnected.");
+        }
+    }
+
+
 }
