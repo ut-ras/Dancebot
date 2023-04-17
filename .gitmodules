@@ -1,0 +1,3 @@
+[submodule "DancebotESP32/src/netcode"]
+	path = DancebotESP32/src/netcode
+	url = https://github.com/ut-ras/DemobotESPNetcode.git

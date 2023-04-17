@@ -7,7 +7,7 @@
  * Organization: UT IEEE RAS
  * NOTE: This is a template file. This should be customized for each robot.
  */
-#include "DemobotAPI.h"
+#include "DemobotAPI.hpp"
 
 /** Dancebot instance. */
 DancingServos* bot;

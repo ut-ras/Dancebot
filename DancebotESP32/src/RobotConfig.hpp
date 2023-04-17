@@ -36,7 +36,7 @@ enum DancebotEyeColor {
 };
 
 typedef struct Dancebot {
-    char* robotType;
+    char* name;
     int robotID;
     double soc; // state of charge
     DancebotStates robotState;

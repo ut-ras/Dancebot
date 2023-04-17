@@ -10,7 +10,7 @@
 #define DEMOBOTAPI_H
 
 #include "DancingServos.h"
-#include "RobotConfig.h"
+#include "RobotConfig.hpp"
 
 /**
  * Sets up a new DancingServos instance and calibrates the servos.

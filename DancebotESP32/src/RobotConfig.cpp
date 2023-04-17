@@ -7,7 +7,7 @@
  * Description: A configuration file to be used by WebController.h and
  * DemobotAPI.h to define the Demobot internal representation.
  */
-#include "RobotConfig.h"
+#include "RobotConfig.hpp"
 
 const char* state2string(DancebotStates state) {
     switch(state) {
