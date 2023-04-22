@@ -3,64 +3,21 @@
  * @author Matthew Yu (matthewjkyu@gmail.com)
  * @brief Entry point and main for dancebot swarm. Dance Dance Dance! https://youtu.be/ciEHtGpSviE
  * @version 0.2.0
- * @date 2023-04-16
+ * @date 2023-04-21
  * @copyright Copyright (c) 2023
  *
  */
 #include <Arduino.h>
 #include <ArduinoLog.h>
-#include "DemobotAPI.hpp"
-#include "./netcode/src/DemobotNetwork.hpp"
-#include "./netcode/src/DemobotServer.hpp"
-#include "./netcode/src/DemobotClient.hpp"
+#include "Dancebot.hpp"
 #include "utils.hpp"
 #include "SPIFFS.h"
 
-#define SETUP_TIMEOUT 60000
-#define UPDATE_TIMEOUT 250
-/**
- * Example flow for a Demobots sketch with an ESP32:
- * setup() {
- *   setupNetworking()
- *   initializeRobot()
- * }
- *
- * loop() {
- *   do some movement
- *   look for update from server and update state
- * }
- */
-
-/** Dancebot instantiation */
-const char *dancebot_name = "Dancebot_0";
-Dancebot dancebot {
-    const_cast<char*>(dancebot_name),
-    0,
-    100.0,
-    Reset,
-    None,
-    Off
-};
-
-/** Network and WebController instantiation. */
-DemobotNetwork *network_conf;
-DemobotServer *server;
-DemobotClient *client;
-// WebController *controller;
-
-void onRoot(AsyncWebServerRequest *request) {
-    Log.trace("[SERVER] The server got a client trying to access root!");
-    request->send(200, "text/plain", "Hello, world");
-}
-
-#define NUM_ROUTES 1
-const struct DemobotServer::Route routes[NUM_ROUTES] = {
-    {"/", WebRequestMethod::HTTP_GET, onRoot},
-};
+Dancebot *dancebot;
 
 void setup_logging(void) {
     Serial.println("Hello world! Initializing the logger...");
-    Log.begin(LOG_LEVEL_NOTICE, &Serial);
+    Log.begin(LOG_LEVEL_TRACE, &Serial);
     Log.setPrefix(print_timestamp);
     Log.setSuffix(print_newline);
 }
@@ -91,54 +48,7 @@ bool setup_SPIFFS(void) {
     return true;
 }
 
-bool setup_network(enum DemobotServer::StaticIPMode *mode) {
-    Log.notice("Connecting to a network.");
-    network_conf = new DemobotNetwork(dancebot.name, DemobotNetwork::DANCEBOT);
-    bool success = network_conf->connect_network();
-    if (!success) {
-        Log.notice("No matching networks was found. Setting up our own network.");
-        success = network_conf->setup_network();
-        if (!success) {
-            Log.notice("No networks were established. Defaulting to autonomous mode.");
-            return false;
-        } else {
-            *mode = DemobotServer::MODE_AP;
-        }
-    } else {
-        *mode = DemobotServer::MODE_STA;
-    }
-    Log.notice("A network connection has been established!");
-    return true;
-}
-
-bool setup_client_server(enum DemobotServer::StaticIPMode mode) {
-    /** Setup client. */
-    Log.notice("Setting up our client.");
-    client = new DemobotClient(DemobotClient::DANCEBOT);
-
-    /** Connect to server. */
-    Log.notice("Connecting to a server.");
-    server = new DemobotServer(DemobotServer::DANCEBOT);
-    if (!client->ping_server()) {
-        Log.notice("We did not find a server online. Setting up our own server.");
-        if (!server->setup_server(routes, NUM_ROUTES, mode)) {
-            Log.notice("Unable to setup our own server. Defaulting to autonomous mode.");
-            return false;
-        } else {
-            Log.notice("Starting server.");
-            server->start_server();
-        }
-    }
-    if (!client->ping_server()) {
-        Log.notice("Unable to communicate to our own server. Defaulting to autonomous mode.");
-        return false;
-    }
-
-    Log.notice("A server connection is available!");
-    return true;
-}
-
-void setup() {
+void setup(void) {
     Serial.begin(9600);
     while (!Serial);
 
@@ -148,19 +58,15 @@ void setup() {
     setup_logging();
     setup_SPIFFS();
 
-    enum DemobotServer::StaticIPMode mode;
-    if (!setup_network(&mode)) {
-        // TODO: Setup autonomous mode.
-        return;
-    }
+    dancebot = new Dancebot(
+        "mono_no_aware",
+        Dancebot::WALK,
+        Dancebot::UT,
+        Dancebot::BLUE
+    );
 
-    if (!setup_client_server(mode)) {
-        // TODO: Setup autonomous mode.
-        return;
-    }
-
-    /** TODO: Initialize robot state and register current state with server. */
+    Log.trace("Shutting down...");
+    free(dancebot);
 }
 
-void loop() {
-}
+void loop(void) {}
