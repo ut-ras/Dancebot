@@ -44,7 +44,8 @@ void handleUnknownMove();
 String indexHTML();
 String getJavascript();
 
-
+//ESP32 WiFi
+IPAddress server(192, 168, 1, 44);
 
 //Web Server
 const char * server_ssid;
@@ -61,7 +62,8 @@ WebServer server(port);
 //DancingServos object
 DancingServos* dance_bot;
 
-
+WiFiClient master;
+unsigned long previousRequest = 0;
 
 /* Setup Functions */
 
@@ -74,28 +76,35 @@ void setupWiFi(String mode, const char * ssid, const char * pass) {
   server_ssid = ssid;
   server_pass = pass;
   
-  if (mode.equals("AP")) {
-    //Turn on Access Point
-    WiFi.softAP(ssid, pass);
-    ip = WiFi.softAPIP();
-  }
-  else {
-    //Connect to a WiFi network
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(ssid, pass);
-    while (WiFi.status() != WL_CONNECTED) {
-      delay(500);
-      yield();
-      //Serial.print(".");
-    }
-    ip = WiFi.localIP();
+  //Init ESP32 Wifi
+ 	WiFi.begin(ssid, pass);
+ 	while (WiFi.status() != WL_CONNECTED) {
+ 			delay(500);
+ 			Serial.print(F("."));
+ 	}
+  // if (mode.equals("AP")) {
+  //   //Turn on Access Point
+  //   WiFi.softAP(ssid, pass);
+  //   ip = WiFi.softAPIP();
+  // }
+  // else {
+  //   //Connect to a WiFi network
+  //   WiFi.mode(WIFI_STA);
+  //   WiFi.begin(ssid, pass);
+  //   while (WiFi.status() != WL_CONNECTED) {
+  //     delay(500);
+  //     yield();
+  //     //Serial.print(".");
+  //   }
+  //   ip = WiFi.localIP();
 
-    if (MDNS.begin("esp32")) {
-      Serial.println("MDNS responder started");
-    }
-  }
+  //   if (MDNS.begin("esp32")) {
+  //     Serial.println("MDNS responder started");
+  //   }
+  // }
 
-  Serial.println("WiFi mode=" + mode + ", ssid = " + String(ssid) + ", pass = " + String(pass));
+  // Serial.println("WiFi mode=" + mode + ", ssid = " + String(ssid) + ", pass = " + String(pass));
+
 }
 
 void setupWebServer(DancingServos* _dance_bot) {
@@ -321,5 +330,40 @@ String getJavascript() {
 
   "</script>";
   return s;
+}
+
+//requests info from master (main dancebot), used to determine what dance move to do on smaller dancebot
+
+void connect_to_server(void) {
+  if (client.connect(ip, port)) {
+    Serial.println("Connected.");
+    client.println("GET /");
+    client.println();
+  }
+}
+
+void requestMainDancebot(void){
+  //client connect to server every 1000ms
+  if((millis() - previousRequest) > 1000){
+    Serial.println("Trying to connect to server...");
+  
+
+
+    if(master.connect(ip, 80)){
+      Serial.println("Succesfully connected to server!");
+        previousRequest = millis();
+        String answer = master.readStringUntil('\r');
+        Serial.println("Message received: " + answer);
+        master.flush();
+        int id = answer.toInt();
+        if(id == 1){
+          Serial.println("Received a 1!");
+        }
+        else{
+          Serial.println("Received a 0!");
+      }
+    }
+
+  } 
 }
 

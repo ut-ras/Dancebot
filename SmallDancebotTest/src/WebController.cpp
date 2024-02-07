@@ -31,7 +31,7 @@
 #include <WiFiClient.h>
 #include <WebServer.h>
 #include <ESPmDNS.h>
-
+#include <esp_now.h>
 #include "DancingServos.h"
 
 
@@ -61,7 +61,29 @@ WebServer server(port);
 //DancingServos object
 DancingServos* dance_bot;
 
+WiFiClient master;
+unsigned long previousRequest = 0;
 
+/* Client Message */
+//message struct that contains info that will be received
+typedef struct struct_message {
+  int integer;
+  char character[100];
+} struct_message;
+
+struct_message message;
+
+//callback function that prints if the message from us was received successfully for each client
+void data_receive(const uint8_t * mac, const uint8_t *incomingData, int len) {
+  memcpy(&message, incomingData, sizeof(message));
+  Serial.print("Bytes received: ");
+  Serial.println(len);
+  Serial.print("Integer: ");
+  Serial.println(message.integer);
+  Serial.print("Character: ");
+  Serial.println(message.character);
+  Serial.println();
+}
 
 /* Setup Functions */
 
@@ -73,29 +95,37 @@ DancingServos* dance_bot;
 void setupWiFi(String mode, const char * ssid, const char * pass) {
   server_ssid = ssid;
   server_pass = pass;
+
+  WiFi.mode(WIFI_STA);
   
-  if (mode.equals("AP")) {
-    //Turn on Access Point
-    WiFi.softAP(ssid, pass);
-    ip = WiFi.softAPIP();
+  if (esp_now_init() != ESP_OK) {
+    Serial.println("Error initializing ESP-NOW");
+    return;
   }
-  else {
-    //Connect to a WiFi network
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(ssid, pass);
-    while (WiFi.status() != WL_CONNECTED) {
-      delay(500);
-      yield();
-      //Serial.print(".");
-    }
-    ip = WiFi.localIP();
+  
+  esp_now_register_recv_cb(data_receive);
+  // if (mode.equals("AP")) {
+  //   //Turn on Access Point
+  //   WiFi.softAP(ssid, pass);
+  //   ip = WiFi.softAPIP();
+  // }
+  // else {
+  //   //Connect to a WiFi network
+  //   WiFi.mode(WIFI_STA);
+  //   WiFi.begin(ssid, pass);
+  //   while (WiFi.status() != WL_CONNECTED) {
+  //     delay(500);
+  //     yield();
+  //     //Serial.print(".");
+  //   }
+  //   ip = WiFi.localIP();
 
-    if (MDNS.begin("esp32")) {
-      Serial.println("MDNS responder started");
-    }
-  }
+  //   if (MDNS.begin("esp32")) {
+  //     Serial.println("MDNS responder started");
+  //   }
+  // }
 
-  Serial.println("WiFi mode=" + mode + ", ssid = " + String(ssid) + ", pass = " + String(pass));
+  // Serial.println("WiFi mode=" + mode + ", ssid = " + String(ssid) + ", pass = " + String(pass));
 }
 
 void setupWebServer(DancingServos* _dance_bot) {
@@ -321,5 +351,40 @@ String getJavascript() {
 
   "</script>";
   return s;
+}
+
+//requests info from master (main dancebot), used to determine what dance move to do on smaller dancebot
+
+// void connect_to_server(void) {
+//   if (client.connect(ip, port)) {
+//     Serial.println("Connected.");
+//     client.println("GET /");
+//     client.println();
+//   }
+// }
+
+void requestMainDancebot(void){
+  //client connect to server every 1000ms
+  if((millis() - previousRequest) > 1000){
+    Serial.println("Trying to connect to server...");
+  
+
+
+    if(master.connect(ip, 80)){
+      Serial.println("Succesfully connected to server!");
+        previousRequest = millis();
+        String answer = master.readStringUntil('\r');
+        Serial.println("Message received: " + answer);
+        master.flush();
+        int id = answer.toInt();
+        if(id == 1){
+          Serial.println("Received a 1!");
+        }
+        else{
+          Serial.println("Received a 0!");
+      }
+    }
+
+  } 
 }
 
