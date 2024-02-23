@@ -39,6 +39,7 @@
 #include "DancingServos.h"
 #include "WebController.h"
 #include "WiFi.h"
+#include "esp_now.h"
 
 
 //WiFi Settings
@@ -58,40 +59,62 @@ long serverCheckInterval = 1000;
 
 const int LED = 2;
 
+/* Receiving Data*/
+// //message struct that contains info that will be received
+// typedef struct struct_message {
+//   int integer;
+//   char character[32];
+// } struct_message;
+
+// struct_message message; 
+
+// // callback function that will be executed when data is received
+// void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
+//   memcpy(&message, incomingData, sizeof(message));
+//   Serial.print("Bytes received: ");
+//   Serial.println(len);
+//   Serial.print("Char: ");
+//   Serial.println(message.character);
+//   Serial.print("Int: ");
+//   Serial.println(message.integer);
+// }
+
 void setup() {
   Serial.begin(115200);
   delay(500);
 
-  Serial.println("I started setting up!");
+  // Serial.println("I started setting up!");
 
   //[hipL, hipR, ankleL, ankleR]
   bot = new DancingServos(14, 13, 12, 15);
   calibrateTrims(bot);
   bot->position0();
 
-  Serial.println("Setting up WiFi...");
-  setupWiFi(WIFI_MODE, ssid, pass);       //Access Point or Station
+  setupESPNOW(bot);
+  // Serial.println("Setting up WiFi...");
+  // setupWiFi(WIFI_MODE, ssid, pass);       //Access Point or Station
   // setupWebServer(bot);                    //Set up the Web Server
-  Serial.println("Finished setting up WiFi!");
-  // delay(500);
-  // bot->position0();
-  // connect_to_server();
+  // Serial.println("Finished setting up WiFi!");
+
+  delay(500);
+  bot->position0();
 }
 
 
 
 void loop() {  
-  // //loop the motors and check for web server traffic
-  // bot->loopOscillation();
+  //loop the motors and check for web server traffic
+  bot->loopOscillation();
 
-  // //check if ready to start next move in dance
-  // bot->loopDanceRoutines();
+  //check if ready to start next move in dance
+  bot->loopDanceRoutines();
   
   // if (!bot->isOscillating() || millis() > serverDelayEnd) {
   //   serverDelayEnd = millis() + serverCheckInterval;
   //   loopWebServer();
   // }
   // requestMainDancebot();
+  handleDanceMove();
 }
 
 
@@ -99,8 +122,9 @@ void loop() {
 //manual calibration- based on how the servos are attatched to the 3d printed parts
 void calibrateTrims(DancingServos* bot) {
   //[hipL, hipR, ankleL, ankleR]
+  //CW - decrease value, CCW - increase value
   // bot->setTrims(70, 150, 25, 18);
-  bot->setTrims(70, 100, 25, 18);
+  bot->setTrims(170, 60, 25, 18);
 }
 
 

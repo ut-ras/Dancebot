@@ -33,6 +33,7 @@
 #include <ESPmDNS.h>
 #include <esp_now.h>
 #include "DancingServos.h"
+#include "WebController.h"
 
 
 void handleRoot();
@@ -46,6 +47,22 @@ String getJavascript();
 
 
 
+//Data transmission to clients
+uint8_t broadcastAddress[] = {0x30, 0x83, 0x98, 0xD9, 0x19, 0xCC}; // REPLACE WITH YOUR RECEIVER MAC Address
+struct_message message;  //message sent to clients
+
+//enums that correspond to dance moves
+enum{
+  STOP,
+  RESET,
+  WALK,
+  HOP,
+  WIGGLE,
+  ANKLES,
+  DEMO1,
+  DEMO2
+};
+
 //Web Server
 const char * server_ssid;
 const char * server_pass;
@@ -53,28 +70,15 @@ int port = 80;
 IPAddress ip;
 String webServerPath = "http://";
 
-
 //Web server at port 80
 WebServer server(port);
-
 
 //DancingServos object
 DancingServos* dance_bot;
 
-//ESP Receiver MAC addresses
- uint8_t DancebotReceiver1[] = {0xD8, 0xA0, 0x1D, 0x60, 0xF4, 0x10};
+/* setupTransmission */
+void setupTransmission(){
 
-/* Setup Functions */
-
-//callback function that prints if the message from us was sent successfully for each client
-void data_sent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-  char address[18];
-  Serial.print("Sent to: ");
-  snprintf(address, sizeof(address), "%02x:%02x:%02x:%02x:%02x:%02x",
-           mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4], mac_addr[5]);
-  Serial.print(address);
-  Serial.print(" status:\t");
-  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
 }
 
 /* setupWiFi
@@ -85,52 +89,28 @@ void data_sent(const uint8_t *mac_addr, esp_now_send_status_t status) {
 void setupWiFi(String mode, const char * ssid, const char * pass) {
   server_ssid = ssid;
   server_pass = pass;
-  
-  /*****TEST WIFI CODE******/
-  WiFi.mode(WIFI_STA);
- 
-  if (esp_now_init() != ESP_OK) {
-    Serial.println("Error initializing ESP-NOW");
-    return;
-  }
-
-   esp_now_register_send_cb(data_sent); //each time msg sent, calls data_sent()
-
-  //pairing main dancebot to other client dancebots
-  esp_now_peer_info_t peerInfo;
-  peerInfo.channel = 0;  
-  peerInfo.encrypt = false;
-
-  //add dancebot client 1 as peer to main dancebot
-  memcpy(peerInfo.peer_addr, DancebotReceiver1, 6);
-  int result = esp_now_add_peer(&peerInfo);
-  if (result != ESP_OK){
-    Serial.println("Failed to add peer");
-    Serial.println("Result = " + result);
-    return;
-  }
 
   /*****OLD WIFI CODE******/
-  // if (mode.equals("AP")) {
-  //   //Turn on Access Point
-  //   WiFi.softAP(ssid, pass);
-  //   ip = WiFi.softAPIP();
-  // }
-  // else {
-  //   //Connect to a WiFi network
-  //   WiFi.mode(WIFI_STA);
-  //   WiFi.begin(ssid, pass);
-  //   while (WiFi.status() != WL_CONNECTED) {
-  //     delay(500);
-  //     yield();
-  //     //Serial.print(".");
-  //   }
-  //   ip = WiFi.localIP();
+  if (mode.equals("AP")) {
+    //Turn on Access Point
+    WiFi.softAP(ssid, pass);
+    ip = WiFi.softAPIP();
+  }
+  else {
+    //Connect to a WiFi network
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(ssid, pass);
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(500);
+      yield();
+      //Serial.print(".");
+    }
+    ip = WiFi.localIP();
 
-  //   if (MDNS.begin("esp32")) {
-  //     Serial.println("MDNS responder started");
-  //   }
-  // }
+    if (MDNS.begin("esp32")) {
+      Serial.println("MDNS responder started");
+    }
+  }
 
   Serial.println("WiFi mode=" + mode + ", ssid = " + String(ssid) + ", pass = " + String(pass));
 }
@@ -162,7 +142,6 @@ void loopWebServer() {
 }
 
 
-
 /* Request Handlers */
 
 //main page   "/"
@@ -186,21 +165,27 @@ void handleDanceMove() {
     if (dance_move == "Stop") {
       dance_bot->stopOscillation();
       dance_bot->enableDanceRoutine(false);
+      message.integer = STOP;
     }
     else if (dance_move == "Reset") {
       dance_bot->position0();
+      message.integer = RESET;
     }
     else if (dance_move == "Walk") {
       dance_bot->walk(-1, 1500, false);
+      message.integer = WALK;
     }
     else if (dance_move == "Hop") {
       dance_bot->hop(25, -1);
+      message.integer = HOP;
     }
     else if (dance_move == "Wiggle") {
       dance_bot->wiggle(30, -1);
+      message.integer = WIGGLE;
     }
     else if (dance_move == "Ankles") {
       dance_bot->themAnkles(-1);
+      message.integer = ANKLES;
     }
     else {
       Serial.println("Dance move not recognized, ERROR too lit for this robot");
@@ -210,9 +195,20 @@ void handleDanceMove() {
   }
   else {
     dance_move = "ERROR Server did not find dance move argument in HTTP request";
+    strcpy(message.character, "Server argument not found");
   }
 
-  //handleRoot();     //now the form is handled with JS so there is no need to respond with index html
+  //transmit message to clients
+  esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &message, sizeof(message));
+  if (result == ESP_OK) {
+    Serial.println("Sent with success");
+  }
+  else {
+    Serial.println("Error sending the data");
+  }
+  //delay(1000);
+
+  handleRoot();     //now the form is handled with JS so there is no need to respond with index html
   server.send(200, "text/plain", dance_move);
 }
 
@@ -226,10 +222,14 @@ void handleDance() {
     if (dance_routine.equals("Demo 1")) {
       dance_bot->setDanceRoutine(0);
       dance_bot->enableDanceRoutine(true);
+      //strcpy(message.character, "Demo 1");
+      message.integer = DEMO1;
     }
     else if (dance_routine.equals("Demo 2")) {
       dance_bot->setDanceRoutine(1);
       dance_bot->enableDanceRoutine(true);
+      //strcpy(message.character, "Demo 2");
+      message.integer = DEMO2;
     }
     else {
       Serial.println("Dance routine not recognized, ERROR too lit for this robot");
@@ -239,8 +239,8 @@ void handleDance() {
   }
   else {
     dance_routine = "ERROR Server did not find dance routine argument in HTTP request";
+    //strcpy(message.character, "Server arguement not found");
   }
-  
   server.send(200, "text/plain", dance_routine);
 }
 
