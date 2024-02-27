@@ -311,7 +311,15 @@ String indexHTML() {
                 "</div>" + 
                 
               "</div>" +
-              
+
+              // Battery Level
+              "<div id=\"battery-indicator\" style=\"display: flex; justify-content:center; flex-direction:column; width:50%; height:fit-content; align-items: center; margin: auto; padding: 10px; border-radius: 5px; background-color:#42f5ef\">" +
+                "<div id=\"battery-meter\" style=\"position:relative; width: 70%; margin:auto; background-color:white; padding:10px; align-items:center; border-radius:50px; text-align: center; overflow: hidden\">" +
+                  "<div id=\"battery-fill\" style=\"position:absolute; top:0; left: 0; height: 100%; background-color:aquamarine; transition: width 0.5s ease;\"></div>" +
+                  "<span id=\"battery-percentage\" style=\"margin: auto;\">100%</span>" +
+                "</div>" +
+              "</div>" +
+                            
               getJavascript() +
             "</body>";
   return htmlPage;
