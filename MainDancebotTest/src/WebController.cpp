@@ -38,6 +38,7 @@
 void handleRoot();
 void handleDanceMove();
 void handleDance();
+void handleBattery();
 void handleNotFound();
 void handleUnknownMove();
 
@@ -144,6 +145,7 @@ void setupWebServer(DancingServos* _dance_bot) {
   server.on("/danceM", HTTP_GET, handleRoot);
   server.on("/dance", HTTP_POST, handleDance);
   server.on("/dance", HTTP_GET, handleRoot);
+  server.on("/battery", HTTP_GET, handleBattery); 
   server.onNotFound(handleNotFound);    //404 Not Found
 
   server.begin();
@@ -244,6 +246,11 @@ void handleDance() {
   server.send(200, "text/plain", dance_routine);
 }
 
+void handleBattery() {
+  // TO DO
+  
+}
+
 void handleNotFound() {
   String message = "File Not Found\n\n";
   message += "URI: " + server.uri() + "\n";
@@ -301,7 +308,7 @@ String indexHTML() {
 
                 "<div id=\"dance_routines\" style=\"\">" +             
                   "<div style=\"padding-left: 1.5em; font-size:medium;\">" +
-                    "<p id=\"current_routine\">Current Dance: None</p>" +
+                    "<p id=\"current_routine\">Current Dance: None</p>" + 
                   "</div>" +
                   "<div id=\"dance_routine_buttons\" style=\"padding-left: 1.5em; \">";
                   for (int i = 0; i < dance_bot->getNumDanceRoutines(); i++) {
@@ -315,8 +322,8 @@ String indexHTML() {
               // Battery Level
               "<div id=\"battery-indicator\" style=\"display: flex; justify-content:center; flex-direction:column; width:50%; height:fit-content; align-items: center; margin: auto; padding: 10px; border-radius: 5px; background-color:#42f5ef\">" +
                 "<div id=\"battery-meter\" style=\"position:relative; width: 70%; margin:auto; background-color:white; padding:10px; align-items:center; border-radius:50px; text-align: center; overflow: hidden\">" +
-                  "<div id=\"battery-fill\" style=\"position:absolute; top:0; left: 0; height: 100%; background-color:aquamarine; transition: width 0.5s ease;\"></div>" +
-                  "<span id=\"battery-percentage\" style=\"margin: auto;\">100%</span>" +
+                  "<div id=\"battery-fill\" style=\"position:absolute; top:0; left: 0; height: 100%; background-color:aquamarine; transition: width 0.5s ease; z-index: 1;\"></div>" +
+                  "<span id=\"battery-percentage\" style=\"position: relative; margin: auto; z-index: 2\">100%</span>" +
                 "</div>" +
               "</div>" +
                             
@@ -333,6 +340,11 @@ String getJavascript() {
   String s = String("<script>") +
       "function updateCurrentMove(move) {" +
         "document.getElementById('current_move').innerText = 'Current Move: ' + move; " +
+      "}" +
+
+      "function updateBatteryLevel(battery) {" +
+        "document.getElementById('battery').innerText = battery + '%';" +
+        "document.getElementById('battery_fill').width = battery + '%';" +
       "}" +
 
       "function updateCurrentRoutiune(routine) {" +
@@ -363,6 +375,20 @@ String getJavascript() {
           "updateCurrentRoutiune(xhttp.responseText)" +
         "}" +
       "}" +
+
+      "function getBatteryLevel() {" +
+        "var xhttp = new XMLHttpRequest();" +
+        "xhttp.open('GET', '/battery', true);" +
+        "xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');" +
+        "xhttp.send()" +
+        "xhttp.onload = function() {" +
+          "console.log('Battery Received: ' + xhttp.responseText);" +
+          "updateBatteryLevel(xhttp.responseText);" +
+        "}" +
+      "}" + 
+
+      "getBatteryLevel();" +
+      "setInterval(getBatteryLevel, 60000);" +
 
   "</script>";
   return s;
