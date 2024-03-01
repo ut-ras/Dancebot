@@ -1,0 +1,28 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"name": "MainDancebotTest",
+			"path": ".."
+		},
+		{
+			"name": "SmallDancebotTest",
+			"path": "../../SmallDancebotTest"
+		},
+		{
+			"name": "MainDancebotShowcase",
+			"path": "../../../../Documents/PlatformIO/Projects/MainDancebotShowcase"
+		},
+		{
+			"name": "SmallDancebotShowcase",
+			"path": "../../../../Documents/PlatformIO/Projects/SmallDancebotShowcase"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"wifisendtest": "c"
+		}
+	}
+}

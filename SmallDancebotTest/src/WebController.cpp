@@ -36,6 +36,7 @@
 
 
 void handleRoot();
+void handleReceivedDanceMove(const uint8_t * mac, const uint8_t *incomingData, int len);
 void handleDanceMove();
 void handleDance();
 void handleNotFound();
@@ -44,7 +45,27 @@ void handleUnknownMove();
 String indexHTML();
 String getJavascript();
 
+/* Receiving Data*/
+//message struct that contains info that will be received
+typedef struct struct_message {
+  int integer;
+  char character[32];
+} struct_message;
 
+struct_message message; 
+int rcvFlag;
+
+//enums correspond to each dance move
+enum{
+  STOP,
+  RESET,
+  WALK,
+  HOP,
+  WIGGLE,
+  ANKLES,
+  DEMO1,
+  DEMO2
+};
 
 //Web Server
 const char * server_ssid;
@@ -64,28 +85,27 @@ DancingServos* dance_bot;
 WiFiClient master;
 unsigned long previousRequest = 0;
 
-/* Client Message */
-//message struct that contains info that will be received
-typedef struct struct_message {
-  int integer;
-  char character[100];
-} struct_message;
-
-struct_message message;
-
-//callback function that prints if the message from us was received successfully for each client
-void data_receive(const uint8_t * mac, const uint8_t *incomingData, int len) {
-  memcpy(&message, incomingData, sizeof(message));
-  Serial.print("Bytes received: ");
-  Serial.println(len);
-  Serial.print("Integer: ");
-  Serial.println(message.integer);
-  Serial.print("Character: ");
-  Serial.println(message.character);
-  Serial.println();
-}
-
 /* Setup Functions */
+
+/* setupESPNOW
+ * Sets up receiver connection with main Dancebot and callback function
+ */
+void setupESPNOW(DancingServos* _dance_bot){
+  /* Receiving Data Setup*/
+  WiFi.mode(WIFI_STA);
+
+  // Init ESP-NOW
+  if (esp_now_init() != ESP_OK) {
+    Serial.println("Error initializing ESP-NOW");
+    return;
+  }
+  
+  //callback function: each time we receive a msg, we call handleReceivedDanceMovie()
+  esp_now_register_recv_cb(handleReceivedDanceMove);
+
+  //pointer to dance_bot in current file points to _dance_bot in main
+  dance_bot = _dance_bot; 
+}
 
 /* setupWiFi
  * NOTE: this legacy function = setupAPNetwork() in DancebotESP32
@@ -97,35 +117,29 @@ void setupWiFi(String mode, const char * ssid, const char * pass) {
   server_pass = pass;
 
   WiFi.mode(WIFI_STA);
-  
-  if (esp_now_init() != ESP_OK) {
-    Serial.println("Error initializing ESP-NOW");
-    return;
+
+  if (mode.equals("AP")) {
+    //Turn on Access Point
+    WiFi.softAP(ssid, pass);
+    ip = WiFi.softAPIP();
   }
-  
-  esp_now_register_recv_cb(data_receive);
-  // if (mode.equals("AP")) {
-  //   //Turn on Access Point
-  //   WiFi.softAP(ssid, pass);
-  //   ip = WiFi.softAPIP();
-  // }
-  // else {
-  //   //Connect to a WiFi network
-  //   WiFi.mode(WIFI_STA);
-  //   WiFi.begin(ssid, pass);
-  //   while (WiFi.status() != WL_CONNECTED) {
-  //     delay(500);
-  //     yield();
-  //     //Serial.print(".");
-  //   }
-  //   ip = WiFi.localIP();
+  else {
+    //Connect to a WiFi network
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(ssid, pass);
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(500);
+      yield();
+      //Serial.print(".");
+    }
+    ip = WiFi.localIP();
 
-  //   if (MDNS.begin("esp32")) {
-  //     Serial.println("MDNS responder started");
-  //   }
-  // }
+    if (MDNS.begin("esp32")) {
+      Serial.println("MDNS responder started");
+    }
+  }
 
-  // Serial.println("WiFi mode=" + mode + ", ssid = " + String(ssid) + ", pass = " + String(pass));
+  Serial.println("WiFi mode=" + mode + ", ssid = " + String(ssid) + ", pass = " + String(pass));
 }
 
 void setupWebServer(DancingServos* _dance_bot) {
@@ -155,7 +169,6 @@ void loopWebServer() {
 }
 
 
-
 /* Request Handlers */
 
 //main page   "/"
@@ -164,49 +177,53 @@ void handleRoot() {
   server.send(200, "text/html", indexHTML());
 }
 
+//when called, takes in received data from transmitter and sets flag (used for dance moves)
+void handleReceivedDanceMove(const uint8_t * mac, const uint8_t *incomingData, int len){
+  memcpy(&message, incomingData, sizeof(message));
+  Serial.println("Received message...");
+  Serial.println("Message is: ");
+  Serial.println(message.integer);
+  Serial.println();
+  rcvFlag = 1;
+  //server.send(200, "text/plain", dance_move);
+}
 
 //dance moves    "/danceM"
 void handleDanceMove() {
-  //hasArg() checks if the last HTTP request in the server has an argument
-  //arg() gets the value of the arg by name
-
-  //check for serial input form
-  String dance_move = "";
-  if(server.hasArg("dance_move")) {
-    dance_move = server.arg("dance_move");
-    Serial.println("Server received dance_move: " + dance_move);
-
-    if (dance_move == "Stop") {
+  //if we have received a message, do corresponding dance move
+  if(rcvFlag){
+    if (message.integer == STOP) {
       dance_bot->stopOscillation();
       dance_bot->enableDanceRoutine(false);
     }
-    else if (dance_move == "Reset") {
+    else if (message.integer == RESET) {
       dance_bot->position0();
     }
-    else if (dance_move == "Walk") {
+    else if (message.integer == WALK) {
       dance_bot->walk(-1, 1500, false);
     }
-    else if (dance_move == "Hop") {
+    else if (message.integer == HOP) {
       dance_bot->hop(25, -1);
     }
-    else if (dance_move == "Wiggle") {
+    else if (message.integer == WIGGLE) {
       dance_bot->wiggle(30, -1);
     }
-    else if (dance_move == "Ankles") {
+    else if (message.integer == ANKLES) {
       dance_bot->themAnkles(-1);
+    }
+    else if (message.integer == DEMO1) {
+      dance_bot->setDanceRoutine(0);
+      dance_bot->enableDanceRoutine(true);
+    }
+    else if (message.integer == DEMO2) {
+      dance_bot->setDanceRoutine(1);
+      dance_bot->enableDanceRoutine(true);
     }
     else {
       Serial.println("Dance move not recognized, ERROR too lit for this robot");
-      handleUnknownMove();
       return;
     }
   }
-  else {
-    dance_move = "ERROR Server did not find dance move argument in HTTP request";
-  }
-
-  //handleRoot();     //now the form is handled with JS so there is no need to respond with index html
-  server.send(200, "text/plain", dance_move);
 }
 
 //dance routines    "/dance"
