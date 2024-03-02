@@ -68,13 +68,12 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
 
 void setup() {
   Serial.begin(115200);
-  delay(500);
 
   /* Data Transmission Setup*/
   //Set device as a Wi-Fi Station AND Wi-Fi Access Point
-  WiFi.mode(WIFI_AP_STA);
+   WiFi.mode(WIFI_AP_STA);
 
-  // Init ESP-NOW
+  //Init ESP-NOW
   if (esp_now_init() != ESP_OK) {
     Serial.println("Error initializing ESP-NOW");
     return;
@@ -132,9 +131,10 @@ void calibrateTrims(DancingServos* bot) {
   //[hipL, hipR, ankleL, ankleR]
   //CW - decrease value, CCW - increase value
   //bot->setTrims(95, 90, 180, 60);
-  //bot->setTrims(95, 90, 140, 130); //big dancebot
+  bot->setTrims(95, 90, 140, 130); //big dancebot
 
-  bot->setTrims(170, 60, 25, 18); //small dancebot
+  //bot->setTrims(95, 90, 130, 120); //big dancebot
+  //bot->setTrims(170, 60, 25, 18); //small dancebot
 }
 
 
