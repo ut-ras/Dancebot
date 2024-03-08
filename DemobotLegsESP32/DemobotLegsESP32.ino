@@ -94,4 +94,3 @@ void calibrateTrims(DancingServos* bot) {
   bot->setTrims(70, 150, 25, 18);
 }
 
-
