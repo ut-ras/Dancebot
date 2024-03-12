@@ -1,88 +1,77 @@
-#include <PS4Controller.h>
+#include <PS4Controller.h> // PLEASE NOTE THAT YOU MAY HAVE TO WIPE ESP32 FLASH MEMORY IF BT DOESNT CONNECT
 #include <Adafruit_MotorShield.h>
 #include "utility/Adafruit_MS_PWMServoDriver.h"
 #include <Wire.h>
 
-
-// #include <Wifi.h> // for checking mac address stored on esp // PLEASE NOTE THAT YOU MAY HAVE TO WIPE ESP32 FLASH MEMORY IF BT DOESNT WORK
-
-// #include <esp_wifi.h>
-
-
-int LeftX, LeftY, RightX, RightY, AngleL;
-double magnitude, CircleX, CircleY;
+int LeftX, LeftY, RightX, RightY, Langle, Rangle;
+double Lmagnitude, Rmagnitude;
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
-Adafruit_DCMotor *myMotor = AFMS.getMotor(1);
+Adafruit_DCMotor *motor1 = AFMS.getMotor(1);
+Adafruit_DCMotor *motor2 = AFMS.getMotor(2);
+Adafruit_DCMotor *motor3 = AFMS.getMotor(3);
+Adafruit_DCMotor *motor4 = AFMS.getMotor(4);
 
 void setup() {
-  Serial.begin(115200);
-
-// change MAC address of ESP32 to match that of the remote
-  // uint8_t newMACAddress[] = {0x30, 0x83, 0x98, 0xD7, 0x33, 0xE0};
-  // WiFi.mode(WIFI_STA);
-  // esp_wifi_set_mac(WIFI_IF_STA, &newMACAddress[0]);
-  // Serial.print("[NEW] ESP32 Board MAC Address:  ");
-  // Serial.println(WiFi.macAddress());
-
   PS4.begin();
   AFMS.begin();
+  Serial.begin(115200);
+  Serial.println("Ready for controller connection!!"); 
 
-
-  Serial.println("Ready!!!"); 
-  // Serial.println(WiFi.macAddress());
-
-    myMotor->setSpeed(100);
-    myMotor->run(FORWARD);
-
+  motor1->run(FORWARD);
+  motor2->run(FORWARD);
+  motor3->run(FORWARD);
+  motor4->run(FORWARD);
 }
 
 void loop() {
-
-
   if (PS4.isConnected()) {
 
-    // early debugging code:
-    // Serial.println("connected!");
-    // if (PS4.Square()) {
-    //   digitalWrite(LED, HIGH);
-    //   Serial.println("ON");
-    // }
-    // if (PS4.Square() == 0) {
-    //   digitalWrite(LED, LOW);
-    //   Serial.println("OFF!!!!!!");
-    // }
-
-    // for convenience of typing in following functions, might delete later?
+    // aliases for ease of typing
     LeftX = PS4.LStickX();
     LeftY = PS4.LStickY();
     RightX = PS4.RStickX();
     RightY = PS4.RStickY();
 
-
-
     // deadzone box to mitigate drift
-    if(abs(LeftX) < 10 && abs(LeftY) < 10) {
+    if(abs(LeftX) < 20 && abs(LeftY) < 20) {
       LeftX = 0;
       LeftY = 0;
     }
+    if(abs(RightX) < 20 && abs(RightY) < 20) {
+      RightX = 0;
+      RightY = 0;
+    }
 
     // get magnitude
-    magnitude = sqrt(pow(LeftX, 2) + pow(LeftY, 2));
-    if(magnitude > 125) { // cap at 125 to avoid mapping cartesian joystick coordinates to a circle (lol!)
-      magnitude = 125;
+    Lmagnitude = sqrt(pow(LeftX, 2) + pow(LeftY, 2));
+    if(Lmagnitude > 125) { // cap at 125 to avoid mapping cartesian joystick coordinates to a circle (lol!)
+      Lmagnitude = 125;
     }
-    magnitude = magnitude/125;
+    Lmagnitude = Lmagnitude/125;
     Serial.print("  M: ");
-    Serial.print(magnitude);
-
-
+    Serial.print(Lmagnitude);
 
     // get angle from left stick
     Serial.print("  θ: ");
-    AngleL = ((int)(atan2(LeftY, LeftX) * 180/PI) + 360) % 360; 
-    Serial.print(AngleL);
+    Langle = ((int)(atan2(LeftY, LeftX) * 180/PI) + 360) % 360; 
+    Serial.print(Langle);
+    Serial.print("  ");
+
+    Rmagnitude = sqrt(pow(RightX, 2) + pow(RightY, 2));
+    if(Rmagnitude > 125) { // cap at 125 to avoid mapping cartesian joystick coordinates to a circle (lol!)
+      Rmagnitude = 125;
+    }
+    Rmagnitude = Rmagnitude/125;
+    Serial.print("  M: ");
+    Serial.print(Rmagnitude);
+
+    // get angle from right stick
+    Serial.print("  θ: ");
+    Rangle = ((int)(atan2(RightY, RightX) * 180/PI) + 360) % 360; 
+    Serial.print(Rangle);
     Serial.println("  ");
+
 
     // print X and Y of left stick
     // Serial.print("L: ");
@@ -96,16 +85,17 @@ void loop() {
     // Serial.print(",");
     // Serial.print(RightY);
     // Serial.print("  ");
+   
+    motor1->setSpeed((int) Lmagnitude*255);
+    motor2->setSpeed((int) Lmagnitude*255);
 
 
-
-
-    // myMotor->setSpeed(magnitude*255);
-    
-
-
+    motor3->setSpeed((int) Rmagnitude*255);
+    motor4->setSpeed((int) Rmagnitude*255);
 
 
     delay(200);
   }
 }
+
+
