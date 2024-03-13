@@ -3,17 +3,33 @@
 #include "utility/Adafruit_MS_PWMServoDriver.h"
 #include <Wire.h> //i2c library
 
+// TODO: FIX LEFT JOYSTICK INPUT ~340-45 degrees broken
+// TODO: LATCHING MODES WITH BUTTON
+// TODO: OMNIDIRECTIONAL DRIVE
+
 /*
 
 PLEASE NOTE THAT ESP32FLASH MEMORY MAY NEED TO BE WIPED IF BLUETOOTH DOES NOT CONNECT (see https://randomnerdtutorials.com/esp32-erase-flash-memory/)
-Original motor drivers broke, so we are using Adafruit Motor Shield V2.3 connected to ESP32 Wroom (Pico-D4 not compatible with PS4 library)
-- Wire I2C ESP32 pins to respective SDA and SCL pins on driver
-- Wire ground to ground and 5v to 5v
+- Original motor drivers broke (Region 5 Competition drivers), so we are using Adafruit Motor Shield V2.3 connected to ESP32 Wroom (Pico-D4 not compatible with PS4 library)
+- Wire I2C ESP32 pins to respective SDA and SCL pins on driver, ground to ground, and 5v to 5v
+
+ESP32      Driver
+  SCL   |    SCL (GPIO22)
+  SDA   |    SDA (GPIO21)
+  5v    |    5v
+  GND   |    GND
+
+- PS4 remote MUST be configured to search for MAC address of ESP32
+- Use "Sixaxis Pair Tool" to edit this MAC address the remote searches for
+- Specific MAC address pairs that worked for me (notice how ESP32's last octet is 2 less than controller's):
+    ESP32: c8:f0:9e:f1:da:28
+    Remote: c8:f0:9e:f1:da:2a
+- Look into WiFi libraries to print and edit ESP32 MAC address if necessary :D
 
 */
+
 int LeftX, LeftY, RightX, RightY, Langle, Rangle;
 float Lmagnitude, Rmagnitude;
-
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
 Adafruit_DCMotor *motor1 = AFMS.getMotor(1);
