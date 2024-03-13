@@ -1,10 +1,19 @@
-#include <PS4Controller.h> // PLEASE NOTE THAT YOU MAY HAVE TO WIPE ESP32 FLASH MEMORY IF BT DOESNT CONNECT
+#include <PS4Controller.h> 
 #include <Adafruit_MotorShield.h>
 #include "utility/Adafruit_MS_PWMServoDriver.h"
-#include <Wire.h>
+#include <Wire.h> //i2c library
 
+/*
+
+PLEASE NOTE THAT ESP32FLASH MEMORY MAY NEED TO BE WIPED IF BLUETOOTH DOES NOT CONNECT (see https://randomnerdtutorials.com/esp32-erase-flash-memory/)
+Original motor drivers broke, so we are using Adafruit Motor Shield V2.3 connected to ESP32 Wroom (Pico-D4 not compatible with PS4 library)
+- Wire I2C ESP32 pins to respective SDA and SCL pins on driver
+- Wire ground to ground and 5v to 5v
+
+*/
 int LeftX, LeftY, RightX, RightY, Langle, Rangle;
-double Lmagnitude, Rmagnitude;
+float Lmagnitude, Rmagnitude;
+
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
 Adafruit_DCMotor *motor1 = AFMS.getMotor(1);
@@ -18,6 +27,8 @@ void setup() {
   Serial.begin(115200);
   Serial.println("Ready for controller connection!!"); 
 
+  // init all motors in tank drive mode
+  motor1->setSpeed(0);
   motor1->run(FORWARD);
   motor2->run(FORWARD);
   motor3->run(FORWARD);
@@ -33,7 +44,7 @@ void loop() {
     RightX = PS4.RStickX();
     RightY = PS4.RStickY();
 
-    // deadzone box to mitigate drift
+    // deadzone box to mitigate drift effects
     if(abs(LeftX) < 20 && abs(LeftY) < 20) {
       LeftX = 0;
       LeftY = 0;
@@ -42,60 +53,46 @@ void loop() {
       RightX = 0;
       RightY = 0;
     }
+    
+    // get joystick data
+    Lmagnitude = getMagnitude(LeftX, LeftY);
+    Rmagnitude = getMagnitude(RightX, RightY);
+    Langle = getAngle(LeftX, RightY);
+    Rangle = getAngle(RightX, RightY);
 
-    // get magnitude
-    Lmagnitude = sqrt(pow(LeftX, 2) + pow(LeftY, 2));
-    if(Lmagnitude > 125) { // cap at 125 to avoid mapping cartesian joystick coordinates to a circle (lol!)
-      Lmagnitude = 125;
-    }
-    Lmagnitude = Lmagnitude/125;
-    Serial.print("  M: ");
+    // print joystick data
+    Serial.print("LM: " );
     Serial.print(Lmagnitude);
-
-    // get angle from left stick
-    Serial.print("  θ: ");
-    Langle = ((int)(atan2(LeftY, LeftX) * 180/PI) + 360) % 360; 
+    Serial.print("  Lθ: ");
     Serial.print(Langle);
-    Serial.print("  ");
-
-    Rmagnitude = sqrt(pow(RightX, 2) + pow(RightY, 2));
-    if(Rmagnitude > 125) { // cap at 125 to avoid mapping cartesian joystick coordinates to a circle (lol!)
-      Rmagnitude = 125;
-    }
-    Rmagnitude = Rmagnitude/125;
-    Serial.print("  M: ");
+    Serial.print(" RM: ");
     Serial.print(Rmagnitude);
-
-    // get angle from right stick
-    Serial.print("  θ: ");
-    Rangle = ((int)(atan2(RightY, RightX) * 180/PI) + 360) % 360; 
-    Serial.print(Rangle);
-    Serial.println("  ");
+    Serial.print("  Rθ: ");
+    Serial.println(Rangle);
 
 
-    // print X and Y of left stick
-    // Serial.print("L: ");
-    // Serial.print(LeftX);
-    // Serial.print(",");    
-    // Serial.println(LeftY);
-
-    // print X and Y of right stick
-    // Serial.print("  R: ");
-    // Serial.print(RightX);
-    // Serial.print(",");
-    // Serial.print(RightY);
-    // Serial.print("  ");
-   
+    // tank drive
     motor1->setSpeed((int) Lmagnitude*255);
     motor2->setSpeed((int) Lmagnitude*255);
-
-
     motor3->setSpeed((int) Rmagnitude*255);
     motor4->setSpeed((int) Rmagnitude*255);
-
 
     delay(200);
   }
 }
 
 
+// returns joystick angle with +x axis as 0. increases counterclockwise
+int getAngle(int X, int Y) {
+  return ((int)(atan2(Y, X) * 180/PI) + 360) % 360;
+}
+
+
+// returns magnitude of joystick position from 0 to 1
+float getMagnitude(int X, int Y) {
+  float result = sqrt(pow(X, 2) + pow(Y, 2));
+  if(result > 125) { // cap at 125 to avoid mapping cartesian joystick coords to circle for simplicity
+    result = 125;
+  }
+  return result/125;
+}
