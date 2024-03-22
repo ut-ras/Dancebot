@@ -11,9 +11,9 @@
 
 PLEASE NOTE THAT ESP32FLASH MEMORY MAY NEED TO BE WIPED IF BLUETOOTH DOES NOT CONNECT (see https://randomnerdtutorials.com/esp32-erase-flash-memory/)
 - Original motor drivers broke (Region 5 Competition drivers), so we are using Adafruit Motor Shield V2.3 connected to ESP32 Wroom (Pico-D4 not compatible with PS4 library)
-- Wire I2C ESP32 pins to respective SDA and SCL pins on driver, ground to ground, and 5v to 5v
+- Wire I2C ESP32 pins to respective SDA and SCL pins on driver, ground to ground, and 5v to 5v (4 connections)
 
-ESP32      Driver
+ESP32   |   Driver
   SCL   |    SCL (GPIO22)
   SDA   |    SDA (GPIO21)
   5v    |    5v
@@ -36,6 +36,9 @@ Adafruit_DCMotor *motor1 = AFMS.getMotor(1);
 Adafruit_DCMotor *motor2 = AFMS.getMotor(2);
 Adafruit_DCMotor *motor3 = AFMS.getMotor(3);
 Adafruit_DCMotor *motor4 = AFMS.getMotor(4);
+uint8_t RightSpeed = 0;
+uint8_t LeftSpeed = 0;
+bool forward = 0; // direction they spin 
 
 void setup() {
   PS4.begin();
@@ -84,14 +87,20 @@ void loop() {
     Serial.print(" RM: ");
     Serial.print(Rmagnitude);
     Serial.print("  Rθ: ");
-    Serial.println(Rangle);
-
+    Serial.print(Rangle);
+    Serial.print(" Left ");
+    Serial.print(LeftSpeed);
+    Serial.print(" speed ");
+    Serial.print(RightSpeed);
+    Serial.println();
 
     // tank drive
-    motor1->setSpeed((int) Lmagnitude*255);
-    motor2->setSpeed((int) Lmagnitude*255);
-    motor3->setSpeed((int) Rmagnitude*255);
-    motor4->setSpeed((int) Rmagnitude*255);
+    RightSpeed = (uint8_t) (Rmagnitude*255);
+    LeftSpeed = (uint8_t) (Lmagnitude*255);
+    motor1->setSpeed(RightSpeed);
+    motor2->setSpeed(RightSpeed);
+    motor3->setSpeed(LeftSpeed);
+    motor4->setSpeed(LeftSpeed);
 
     delay(200);
   }
