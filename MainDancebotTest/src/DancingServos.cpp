@@ -169,6 +169,18 @@ void DancingServos::wiggle(int angle, int cycles) {
   startOscillation(amp, off, ph0, 2000, cycles);
 }
 
+// dev notes: potential dances are probably shuffling related
+// potentially stuff like "happy feet"
+
+// new move: twist
+void DancingServos::twist(int cycles) {
+  int amp[4] = {30, 30, 0, 0};
+  int off[4] = {-30, 0, 0, 0};
+  double ph0[4] = {0, 0, 0, 0};
+  for (int i = 0; i < 4; i++) {osc[i]->setRev(true);}
+  startOscillation(amp, off, ph0, 3000, cycles);
+  for (int i = 0; i < 4; i++) {osc[i]->setRev(false);}
+}
 
 
 //DANCE ROUTINES

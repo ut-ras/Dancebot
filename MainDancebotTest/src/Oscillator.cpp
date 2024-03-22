@@ -32,7 +32,6 @@ Oscillator::Oscillator() {
 Oscillator::Oscillator( int a,  int o, double p0,  int t, bool r) {
   //init helper variables
   this->isStopped = true;
-  this->servoAttached = false;
   this->t_lastRefresh = 0;
   this->ph = 0;
 
