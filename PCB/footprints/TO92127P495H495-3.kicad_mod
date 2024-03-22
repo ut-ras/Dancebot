@@ -1,5 +1,5 @@
 
-(footprint TO92127P495H495-3 (layer F.Cu) (tedit 65D0485D)
+(footprint TO92127P495H495-3 (layer F.Cu) (tedit 65FDD934)
   (descr "")
   (fp_text reference REF** (at 0.675 -3.33 0) (layer F.SilkS)
     (effects (font (size 1.0 1.0) (thickness 0.15)))
