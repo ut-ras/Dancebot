@@ -32,12 +32,12 @@ int LeftX, LeftY, RightX, RightY, Langle, Rangle;
 float Lmagnitude, Rmagnitude;
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
-Adafruit_DCMotor *motor1 = AFMS.getMotor(1);
-Adafruit_DCMotor *motor2 = AFMS.getMotor(2);
-Adafruit_DCMotor *motor3 = AFMS.getMotor(3);
-Adafruit_DCMotor *motor4 = AFMS.getMotor(4);
-uint8_t RightSpeed = 0;
-uint8_t LeftSpeed = 0;
+Adafruit_DCMotor *BackRight = AFMS.getMotor(1);
+Adafruit_DCMotor *FrontRight = AFMS.getMotor(2);
+Adafruit_DCMotor *FrontLeft= AFMS.getMotor(3);
+Adafruit_DCMotor *BackLeft = AFMS.getMotor(4);
+int8_t FRBL = 0;
+int8_t FLBR = 0;
 bool forward = 0; // direction they spin 
 
 void setup() {
@@ -46,12 +46,11 @@ void setup() {
   Serial.begin(115200);
   Serial.println("Ready for controller connection!!"); 
 
-  // init all motors in tank drive mode
-  motor1->setSpeed(0);
-  motor1->run(FORWARD);
-  motor2->run(FORWARD);
-  motor3->run(FORWARD);
-  motor4->run(FORWARD);
+  // init all motors to drive forward
+  BackRight->run(FORWARD);
+  FrontRight->run(FORWARD);
+  FrontLeft->run(FORWARD);
+  BackLeft->run(FORWARD);
 }
 
 void loop() {
@@ -88,19 +87,44 @@ void loop() {
     Serial.print(Rmagnitude);
     Serial.print("  Rθ: ");
     Serial.print(Rangle);
-    Serial.print(" Left ");
-    Serial.print(LeftSpeed);
-    Serial.print(" speed ");
-    Serial.print(RightSpeed);
+    // Serial.print(" Left ");
+    // Serial.print(LeftSpeed);
+    // Serial.print(" speed ");
+    // Serial.print(RightSpeed);
+    Serial.print(" FRBL: ");
+    Serial.print(FRBL);
+    Serial.print(" FLBR: ");
+    Serial.print(FLBR);
     Serial.println();
 
-    // tank drive
-    RightSpeed = (uint8_t) (Rmagnitude*255);
-    LeftSpeed = (uint8_t) (Lmagnitude*255);
-    motor1->setSpeed(RightSpeed);
-    motor2->setSpeed(RightSpeed);
-    motor3->setSpeed(LeftSpeed);
-    motor4->setSpeed(LeftSpeed);
+
+    //  FRBL: sin(angle−1/4π) * magnitude
+    //  FLBR: sin(angle+1/4π) * magnitude 
+    FRBL = ((255*Rmagnitude) * sin(Rangle-(0.25*PI)));
+    FLBR = ((255*Rmagnitude) * sin(Rangle+(0.25*PI)));
+
+    if (FRBL < 0){
+      FrontRight->run(BACKWARD);
+      BackLeft->run(BACKWARD);
+    }
+    else{
+      FrontRight->run(FORWARD);
+      BackLeft->run(FORWARD);
+    }
+
+    if (FLBR < 0) {
+      FrontLeft->run(BACKWARD);
+      BackRight->run(BACKWARD);
+    }
+    else{
+      FrontLeft->run(FORWARD);
+      BackRight->run(FORWARD);
+    }
+    
+    BackRight->setSpeed(FLBR);
+    FrontRight->setSpeed(FRBL);
+    FrontLeft->setSpeed(FLBR);
+    BackLeft->setSpeed(FRBL);
 
     delay(200);
   }
