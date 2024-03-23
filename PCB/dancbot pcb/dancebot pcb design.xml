@@ -1,0 +1,1085 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>C:\Users\antho\GitHub\Dancebot\PCB\dancbot pcb\dancebot pcb design.kicad_sch</source>
+    <date>3/23/2024 1:54:45 AM</date>
+    <tool>Eeschema 7.0.10</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>dancebot pcb design.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="D1">
+      <value>1N5819</value>
+      <footprint>Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal</footprint>
+      <datasheet>http://www.vishay.com/docs/88503/1n4001.pdf</datasheet>
+      <fields>
+        <field name="Sim.Device">D</field>
+        <field name="Sim.Pins">1=K 2=A</field>
+      </fields>
+      <libsource lib="Diode" part="1N4006" description="800V 1A General Purpose Rectifier Diode, DO-41"/>
+      <property name="Sim.Device" value="D"/>
+      <property name="Sim.Pins" value="1=K 2=A"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="800V 1A General Purpose Rectifier Diode, DO-41"/>
+      <property name="ki_keywords" value="diode"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e89ca23a-7073-404e-a450-197864af49fc</tstamps>
+    </comp>
+    <comp ref="D2">
+      <value>1N5819</value>
+      <footprint>Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal</footprint>
+      <datasheet>http://www.vishay.com/docs/88503/1n4001.pdf</datasheet>
+      <fields>
+        <field name="Sim.Device">D</field>
+        <field name="Sim.Pins">1=K 2=A</field>
+      </fields>
+      <libsource lib="Diode" part="1N4006" description="800V 1A General Purpose Rectifier Diode, DO-41"/>
+      <property name="Sim.Device" value="D"/>
+      <property name="Sim.Pins" value="1=K 2=A"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="800V 1A General Purpose Rectifier Diode, DO-41"/>
+      <property name="ki_keywords" value="diode"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ff6ed10d-8248-407a-81ee-b0cf3cdf4d85</tstamps>
+    </comp>
+    <comp ref="H1">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>44080c7a-6ed5-4e1d-b07f-36dcc6e2d80b</tstamps>
+    </comp>
+    <comp ref="H2">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f15e577c-6e0a-4694-8f24-a2ad297fa543</tstamps>
+    </comp>
+    <comp ref="H3">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e34af2f5-fd33-4d8d-85f1-63896c8954b6</tstamps>
+    </comp>
+    <comp ref="H4">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>92dfbb61-959f-4f71-87a9-24fa1714ca72</tstamps>
+    </comp>
+    <comp ref="IO12">
+      <value>servo 2</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x03_Pin" description="Generic connector, single row, 01x03, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x03, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1ded4d0c-2099-444e-a741-20661405b78f</tstamps>
+    </comp>
+    <comp ref="IO13">
+      <value>servo 3</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x03_Pin" description="Generic connector, single row, 01x03, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x03, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8c92b7d7-655c-4d7c-ae61-96e0482c0883</tstamps>
+    </comp>
+    <comp ref="IO14">
+      <value>servo 1</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x03_Pin" description="Generic connector, single row, 01x03, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x03, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ccd58802-f31b-4dfb-80cf-e48cd05a099e</tstamps>
+    </comp>
+    <comp ref="IO15">
+      <value>servo 4</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x03_Pin" description="Generic connector, single row, 01x03, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x03, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f123c46d-fa37-4bb9-b415-a32ac23ceead</tstamps>
+    </comp>
+    <comp ref="IO18">
+      <value>servo 5 (hat)</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x03_Pin" description="Generic connector, single row, 01x03, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x03, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8b2b32a8-126c-4714-8265-ed0e9a2a8aa2</tstamps>
+    </comp>
+    <comp ref="J1">
+      <value>ESP32-PICO-KIT-V4.1</value>
+      <footprint>ESP32-PICO-KIT-V4.1:XCVR_ESP32-PICO-KIT-V4.1</footprint>
+      <fields>
+        <field name="Availability">In Stock</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/ESP32-PICO-KIT-V4.1/Espressif+Systems/view-part/?ref=eda</field>
+        <field name="Description">\nWiFi Development Tools (802.11)\n</field>
+        <field name="MANUFACTURER">Espressif Systems</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">10 mm</field>
+        <field name="MF">Espressif Systems</field>
+        <field name="MP">ESP32-PICO-KIT-V4.1</field>
+        <field name="PARTREV">4.1</field>
+        <field name="Package">None</field>
+        <field name="Price">None</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/ESP32-PICO-KIT-V4.1/Espressif+Systems/view-part/?ref=snap</field>
+      </fields>
+      <libsource lib="ESP32-PICO-KIT-V4.1" part="ESP32-PICO-KIT-V4.1" description=""/>
+      <property name="MF" value="Espressif Systems"/>
+      <property name="MAXIMUM_PACKAGE_HEIGHT" value="10 mm"/>
+      <property name="Package" value="None"/>
+      <property name="Price" value="None"/>
+      <property name="Check_prices" value="https://www.snapeda.com/parts/ESP32-PICO-KIT-V4.1/Espressif+Systems/view-part/?ref=eda"/>
+      <property name="STANDARD" value="Manufacturer Recommendations"/>
+      <property name="PARTREV" value="4.1"/>
+      <property name="SnapEDA_Link" value="https://www.snapeda.com/parts/ESP32-PICO-KIT-V4.1/Espressif+Systems/view-part/?ref=snap"/>
+      <property name="MP" value="ESP32-PICO-KIT-V4.1"/>
+      <property name="Description" value="\nWiFi Development Tools (802.11)\n"/>
+      <property name="Availability" value="In Stock"/>
+      <property name="MANUFACTURER" value="Espressif Systems"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>44624a77-3383-4cca-aed4-a793e58b19a6</tstamps>
+    </comp>
+    <comp ref="J2">
+      <value>Voltage Regulator</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x05_Socket" description="Generic connector, single row, 01x05, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x05, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>045c74a4-e02f-42ec-8a3e-3508f1d4696c</tstamps>
+    </comp>
+    <comp ref="J4">
+      <value>Pins</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x02_Pin" description="Generic connector, single row, 01x02, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x02, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>49c5f45f-5779-474c-b12d-3bbf444568a2</tstamps>
+    </comp>
+    <comp ref="J6">
+      <value>Conn_01x04_Socket</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x04_Socket" description="Generic connector, single row, 01x04, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x04, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>fa412e8f-9e22-4a33-81c1-ee28375e59a3</tstamps>
+    </comp>
+    <comp ref="J7">
+      <value>Conn_01x04_Socket</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x04_Socket" description="Generic connector, single row, 01x04, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x04, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>76e517be-e4d2-458e-9844-10488d7060ac</tstamps>
+    </comp>
+    <comp ref="Q1">
+      <value>PMOS</value>
+      <footprint>dancebot pcb libraries stuff:TO254P1052X465X1989-3</footprint>
+      <datasheet>https://ngspice.sourceforge.io/docs/ngspice-manual.pdf</datasheet>
+      <fields>
+        <field name="Sim.Device">PMOS</field>
+        <field name="Sim.Pins">1=D 2=G 3=S</field>
+        <field name="Sim.Type">VDMOS</field>
+      </fields>
+      <libsource lib="Simulation_SPICE" part="PMOS" description="P-MOSFET transistor, drain/source/gate"/>
+      <property name="Sim.Device" value="PMOS"/>
+      <property name="Sim.Type" value="VDMOS"/>
+      <property name="Sim.Pins" value="1=D 2=G 3=S"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="P-MOSFET transistor, drain/source/gate"/>
+      <property name="ki_keywords" value="transistor PMOS P-MOS P-MOSFET simulation"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>17e03a27-53a4-43cf-a4fb-2e0d806653c0</tstamps>
+    </comp>
+    <comp ref="Q2">
+      <value>NMOS</value>
+      <footprint>Dancebot Footprints:SOT95P237X112-3N</footprint>
+      <fields>
+        <field name="Availability">In Stock</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/IRLML2502/Infineon+Technologies/view-part/?ref=eda</field>
+        <field name="Description">
+N-Channel 20 V 4.2A (Ta) 1.25W (Ta) Surface Mount Micro3â„¢ /SOT-23
+</field>
+        <field name="MANUFACTURER">Infineon Technologies</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">1.12 mm</field>
+        <field name="MF">Infineon Technologies</field>
+        <field name="MP">IRLML2502</field>
+        <field name="PARTREV">April 24, 2014</field>
+        <field name="Package">SOT-23-3 International Rectifier</field>
+        <field name="Price">None</field>
+        <field name="Purchase-URL">https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=453707&amp;manufacturer=Infineon Technologies&amp;part_name=IRLML2502&amp;search_term=None</field>
+        <field name="SNAPEDA_PACKAGE_ID">11907</field>
+        <field name="SNAPEDA_PN">IRLML2502</field>
+        <field name="STANDARD">IPC 7351B</field>
+        <field name="Sim.Device">PMOS</field>
+        <field name="Sim.Pins">1=D 2=G 3=S</field>
+        <field name="Sim.Type">VDMOS</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/IRLML2502/Infineon+Technologies/view-part/?ref=snap</field>
+      </fields>
+      <libsource lib="IRML2502" part="IRLML2502" description=""/>
+      <property name="Sim.Device" value="PMOS"/>
+      <property name="Sim.Type" value="VDMOS"/>
+      <property name="Sim.Pins" value="1=D 2=G 3=S"/>
+      <property name="MF" value="Infineon Technologies"/>
+      <property name="MAXIMUM_PACKAGE_HEIGHT" value="1.12 mm"/>
+      <property name="Package" value="SOT-23-3 International Rectifier"/>
+      <property name="Price" value="None"/>
+      <property name="Check_prices" value="https://www.snapeda.com/parts/IRLML2502/Infineon+Technologies/view-part/?ref=eda"/>
+      <property name="STANDARD" value="IPC 7351B"/>
+      <property name="PARTREV" value="April 24, 2014"/>
+      <property name="SnapEDA_Link" value="https://www.snapeda.com/parts/IRLML2502/Infineon+Technologies/view-part/?ref=snap"/>
+      <property name="SNAPEDA_PACKAGE_ID" value="11907"/>
+      <property name="MP" value="IRLML2502"/>
+      <property name="Purchase-URL" value="https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=453707&amp;manufacturer=Infineon Technologies&amp;part_name=IRLML2502&amp;search_term=None"/>
+      <property name="Description" value="&#xA;N-Channel 20 V 4.2A (Ta) 1.25W (Ta) Surface Mount Micro3â„¢ /SOT-23&#xA;"/>
+      <property name="SNAPEDA_PN" value="IRLML2502"/>
+      <property name="Availability" value="In Stock"/>
+      <property name="MANUFACTURER" value="Infineon Technologies"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>33ed8d80-480a-4dd2-abcd-216b8da6eb2d</tstamps>
+    </comp>
+    <comp ref="Q3">
+      <value>2N3904</value>
+      <footprint>Dancebot Footprints:TO92127P495H495-3</footprint>
+      <fields>
+        <field name="Availability">In Stock</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/2N3904/Onsemi/view-part/?ref=eda</field>
+        <field name="Description">
+Bipolar (BJT) Transistor NPN 40 V 200 mA 300MHz 625 mW Through Hole TO-92 (TO-226)
+</field>
+        <field name="MANUFACTURER">STMicroelectronics</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">4.95 mm</field>
+        <field name="MF">ON Semiconductor</field>
+        <field name="MP">2N3904</field>
+        <field name="PARTREV">February 2003</field>
+        <field name="Package">E-PKG AXIAL-LEADED-2 ON Semiconductor</field>
+        <field name="Price">None</field>
+        <field name="Purchase-URL">https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=5844981&amp;manufacturer=ON Semiconductor&amp;part_name=2N3904&amp;search_term=2n3904</field>
+        <field name="STANDARD">IPC 7351B</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/2N3904/Onsemi/view-part/?ref=snap</field>
+      </fields>
+      <libsource lib="2N3904" part="2N3904" description=""/>
+      <property name="MF" value="ON Semiconductor"/>
+      <property name="MAXIMUM_PACKAGE_HEIGHT" value="4.95 mm"/>
+      <property name="Package" value="E-PKG AXIAL-LEADED-2 ON Semiconductor"/>
+      <property name="Price" value="None"/>
+      <property name="Check_prices" value="https://www.snapeda.com/parts/2N3904/Onsemi/view-part/?ref=eda"/>
+      <property name="STANDARD" value="IPC 7351B"/>
+      <property name="PARTREV" value="February 2003"/>
+      <property name="SnapEDA_Link" value="https://www.snapeda.com/parts/2N3904/Onsemi/view-part/?ref=snap"/>
+      <property name="MP" value="2N3904"/>
+      <property name="Purchase-URL" value="https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=5844981&amp;manufacturer=ON Semiconductor&amp;part_name=2N3904&amp;search_term=2n3904"/>
+      <property name="Description" value="&#xA;Bipolar (BJT) Transistor NPN 40 V 200 mA 300MHz 625 mW Through Hole TO-92 (TO-226)&#xA;"/>
+      <property name="Availability" value="In Stock"/>
+      <property name="MANUFACTURER" value="STMicroelectronics"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a2eb7582-1ffb-4b09-aed7-9836f09dcaf9</tstamps>
+    </comp>
+    <comp ref="Q5">
+      <value>PMOS</value>
+      <footprint>Dancebot Footprints:TO254P1052X465X1989-3</footprint>
+      <fields>
+        <field name="Sim.Device">PMOS</field>
+        <field name="Sim.Pins">1=D 2=G 3=S</field>
+        <field name="Sim.Type">VDMOS</field>
+      </fields>
+      <libsource lib="Simulation_SPICE" part="PMOS" description="P-MOSFET transistor, drain/source/gate"/>
+      <property name="Sim.Device" value="PMOS"/>
+      <property name="Sim.Type" value="VDMOS"/>
+      <property name="Sim.Pins" value="1=D 2=G 3=S"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="P-MOSFET transistor, drain/source/gate"/>
+      <property name="ki_keywords" value="transistor PMOS P-MOS P-MOSFET simulation"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7259b26f-5bd9-4ca0-b949-3e17fbabf72d</tstamps>
+    </comp>
+    <comp ref="R1">
+      <value>100K</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>86bec1ed-a055-40d9-81e3-cc01fb513fa2</tstamps>
+    </comp>
+    <comp ref="R2">
+      <value>100K</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8924efc7-3b66-4386-954a-11d54b46d88a</tstamps>
+    </comp>
+    <comp ref="R3">
+      <value>51k</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>806a363f-436e-4852-a37b-541b44778056</tstamps>
+    </comp>
+    <comp ref="R4">
+      <value>220K</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b63ed372-ad0c-460c-8a53-ad1b6a1d153b</tstamps>
+    </comp>
+    <comp ref="R5">
+      <value>100K</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>119e7153-eef2-45ea-a749-6e81e52b742f</tstamps>
+    </comp>
+    <comp ref="R6">
+      <value>10K</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>05adcc6b-ab2d-4929-8e15-a3f347976454</tstamps>
+    </comp>
+    <comp ref="R7">
+      <value>100K</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>73620cbf-f725-40f7-849f-3803790f612f</tstamps>
+    </comp>
+    <comp ref="R8">
+      <value>220</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7cb70527-c2d0-4e52-8d19-68d89eda4495</tstamps>
+    </comp>
+    <comp ref="SW1">
+      <value>SP switch</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Push button switch, generic, two pins"/>
+      <property name="ki_keywords" value="switch normally-open pushbutton push-button"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>995e5b8d-31b1-427f-992e-7d1ac1b9fca0</tstamps>
+    </comp>
+    <comp ref="SW2">
+      <value>SW_SPST</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <libsource lib="Switch" part="SW_SPST" description="Single Pole Single Throw (SPST) switch"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="Single Pole Single Throw (SPST) switch"/>
+      <property name="ki_keywords" value="switch lever"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a4a300ad-b160-4f89-9a24-3babfb904acf</tstamps>
+    </comp>
+    <comp ref="TP1">
+      <value>TestPoint</value>
+      <footprint>TestPoint:TestPoint_Pad_2.0x2.0mm</footprint>
+      <libsource lib="Connector" part="TestPoint" description="test point"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="test point"/>
+      <property name="ki_keywords" value="test point tp"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6e464add-c2a2-47e8-bd6a-fcdbdb07cbae</tstamps>
+    </comp>
+    <comp ref="TP2">
+      <value>TestPoint</value>
+      <footprint>TestPoint:TestPoint_Pad_2.0x2.0mm</footprint>
+      <libsource lib="Connector" part="TestPoint" description="test point"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="test point"/>
+      <property name="ki_keywords" value="test point tp"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>4f28f9de-69a7-4bb0-ba45-330e13a6c9e8</tstamps>
+    </comp>
+    <comp ref="TP3">
+      <value>TestPoint</value>
+      <footprint>TestPoint:TestPoint_Pad_2.0x2.0mm</footprint>
+      <libsource lib="Connector" part="TestPoint" description="test point"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="test point"/>
+      <property name="ki_keywords" value="test point tp"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e216f1d1-b33b-408a-b12c-89efa9e57cdb</tstamps>
+    </comp>
+    <comp ref="TP4">
+      <value>TestPoint</value>
+      <footprint>TestPoint:TestPoint_Pad_2.0x2.0mm</footprint>
+      <libsource lib="Connector" part="TestPoint" description="test point"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="test point"/>
+      <property name="ki_keywords" value="test point tp"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>98bc8c7f-a919-4632-8a50-22c80a7c56f4</tstamps>
+    </comp>
+    <comp ref="TP5">
+      <value>TestPoint</value>
+      <footprint>TestPoint:TestPoint_Pad_2.0x2.0mm</footprint>
+      <libsource lib="Connector" part="TestPoint" description="test point"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="test point"/>
+      <property name="ki_keywords" value="test point tp"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1286c2c9-20c9-42a5-a2be-90c91a4d76e8</tstamps>
+    </comp>
+    <comp ref="TP9">
+      <value>TestPoint</value>
+      <footprint>TestPoint:TestPoint_Pad_2.0x2.0mm</footprint>
+      <libsource lib="Connector" part="TestPoint" description="test point"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="dancebot pcb design.kicad_sch"/>
+      <property name="ki_description" value="test point"/>
+      <property name="ki_keywords" value="test point tp"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3ee812b6-b701-4d04-969e-181f36263277</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="2N3904" part="2N3904">
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">2N3904</field>
+        <field name="Footprint">2N3904:TO92127P495H495-3</field>
+        <field name="MF">ON Semiconductor</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">4.95 mm</field>
+        <field name="Package">E-PKG AXIAL-LEADED-2 ON Semiconductor</field>
+        <field name="Price">None</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/2N3904/Onsemi/view-part/?ref=eda</field>
+        <field name="STANDARD">IPC 7351B</field>
+        <field name="PARTREV">February 2003</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/2N3904/Onsemi/view-part/?ref=snap</field>
+        <field name="MP">2N3904</field>
+        <field name="Purchase-URL">https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=5844981&amp;manufacturer=ON Semiconductor&amp;part_name=2N3904&amp;search_term=2n3904</field>
+        <field name="Description">
+Bipolar (BJT) Transistor NPN 40 V 200 mA 300MHz 625 mW Through Hole TO-92 (TO-226)
+</field>
+        <field name="Availability">In Stock</field>
+        <field name="MANUFACTURER">STMicroelectronics</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+        <pin num="3" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x02_Pin">
+      <description>Generic connector, single row, 01x02, script generated</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x02_Pin</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x03_Pin">
+      <description>Generic connector, single row, 01x03, script generated</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x03_Pin</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x04_Socket">
+      <description>Generic connector, single row, 01x04, script generated</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x04_Socket</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x05_Socket">
+      <description>Generic connector, single row, 01x05, script generated</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x05_Socket</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="TestPoint">
+      <description>test point</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Pin*</fp>
+        <fp>Test*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">TP</field>
+        <field name="Value">TestPoint</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Diode" part="1N4006">
+      <description>800V 1A General Purpose Rectifier Diode, DO-41</description>
+      <docs>http://www.vishay.com/docs/88503/1n4001.pdf</docs>
+      <footprints>
+        <fp>D*DO?41*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">1N4006</field>
+        <field name="Footprint">Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal</field>
+        <field name="Datasheet">http://www.vishay.com/docs/88503/1n4001.pdf</field>
+        <field name="Sim.Device">D</field>
+        <field name="Sim.Pins">1=K 2=A</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="ESP32-PICO-KIT-V4.1" part="ESP32-PICO-KIT-V4.1">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">ESP32-PICO-KIT-V4.1</field>
+        <field name="Footprint">XCVR_ESP32-PICO-KIT-V4.1</field>
+        <field name="MF">Espressif Systems</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">10 mm</field>
+        <field name="Package">None</field>
+        <field name="Price">None</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/ESP32-PICO-KIT-V4.1/Espressif+Systems/view-part/?ref=eda</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="PARTREV">4.1</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/ESP32-PICO-KIT-V4.1/Espressif+Systems/view-part/?ref=snap</field>
+        <field name="MP">ESP32-PICO-KIT-V4.1</field>
+        <field name="Description">\nWiFi Development Tools (802.11)\n</field>
+        <field name="Availability">In Stock</field>
+        <field name="MANUFACTURER">Espressif Systems</field>
+      </fields>
+      <pins>
+        <pin num="J2_1" name="FLASH_SD1" type="bidirectional"/>
+        <pin num="J2_2" name="FLASH_SD3" type="bidirectional"/>
+        <pin num="J2_3" name="FLASH_CLK" type="bidirectional"/>
+        <pin num="J2_4" name="IO21" type="bidirectional"/>
+        <pin num="J2_5" name="IO22" type="bidirectional"/>
+        <pin num="J2_6" name="IO19" type="bidirectional"/>
+        <pin num="J2_7" name="IO23" type="bidirectional"/>
+        <pin num="J2_8" name="IO18" type="bidirectional"/>
+        <pin num="J2_9" name="IO5" type="bidirectional"/>
+        <pin num="J2_10" name="IO10" type="bidirectional"/>
+        <pin num="J2_11" name="IO9" type="bidirectional"/>
+        <pin num="J2_12" name="RXD0" type="bidirectional"/>
+        <pin num="J2_13" name="TXD0" type="bidirectional"/>
+        <pin num="J2_14" name="IO35" type="input"/>
+        <pin num="J2_15" name="IO34" type="input"/>
+        <pin num="J2_16" name="IO38" type="input"/>
+        <pin num="J2_17" name="IO37" type="input"/>
+        <pin num="J2_18" name="EN" type="input"/>
+        <pin num="J2_19" name="GND_1" type="power_in"/>
+        <pin num="J2_20" name="VDD33_1" type="power_in"/>
+        <pin num="J3_1" name="FLASH_CS" type="bidirectional"/>
+        <pin num="J3_2" name="FLASH_SD0" type="bidirectional"/>
+        <pin num="J3_3" name="FLASH_SD2" type="bidirectional"/>
+        <pin num="J3_4" name="SENSOR_VP" type="input"/>
+        <pin num="J3_5" name="SENSOR_VN" type="input"/>
+        <pin num="J3_6" name="IO25" type="bidirectional"/>
+        <pin num="J3_7" name="IO26" type="bidirectional"/>
+        <pin num="J3_8" name="IO32" type="bidirectional"/>
+        <pin num="J3_9" name="IO33" type="bidirectional"/>
+        <pin num="J3_10" name="IO27" type="bidirectional"/>
+        <pin num="J3_11" name="IO14" type="bidirectional"/>
+        <pin num="J3_12" name="IO12" type="bidirectional"/>
+        <pin num="J3_13" name="IO13" type="bidirectional"/>
+        <pin num="J3_14" name="IO15" type="bidirectional"/>
+        <pin num="J3_15" name="IO2" type="bidirectional"/>
+        <pin num="J3_16" name="IO4" type="bidirectional"/>
+        <pin num="J3_17" name="IO0" type="bidirectional"/>
+        <pin num="J3_18" name="VDD33_2" type="power_in"/>
+        <pin num="J3_19" name="GND_2" type="power_in"/>
+        <pin num="J3_20" name="EXT_5V" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="IRML2502" part="IRLML2502">
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">IRLML2502</field>
+        <field name="Footprint">IRLML2502:SOT95P237X112-3N</field>
+        <field name="MF">Infineon Technologies</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">1.12 mm</field>
+        <field name="Package">SOT-23-3 International Rectifier</field>
+        <field name="Price">None</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/IRLML2502/Infineon+Technologies/view-part/?ref=eda</field>
+        <field name="STANDARD">IPC 7351B</field>
+        <field name="PARTREV">April 24, 2014</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/IRLML2502/Infineon+Technologies/view-part/?ref=snap</field>
+        <field name="SNAPEDA_PACKAGE_ID">11907</field>
+        <field name="MP">IRLML2502</field>
+        <field name="Purchase-URL">https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=453707&amp;manufacturer=Infineon Technologies&amp;part_name=IRLML2502&amp;search_term=None</field>
+        <field name="Description">
+N-Channel 20 V 4.2A (Ta) 1.25W (Ta) Surface Mount Micro3â„¢ /SOT-23
+</field>
+        <field name="SNAPEDA_PN">IRLML2502</field>
+        <field name="Availability">In Stock</field>
+        <field name="MANUFACTURER">Infineon Technologies</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+        <pin num="3" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Mechanical" part="MountingHole">
+      <description>Mounting Hole without connection</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>MountingHole*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">H</field>
+        <field name="Value">MountingHole</field>
+        <field name="Datasheet">~</field>
+      </fields>
+    </libpart>
+    <libpart lib="Simulation_SPICE" part="PMOS">
+      <description>P-MOSFET transistor, drain/source/gate</description>
+      <docs>https://ngspice.sourceforge.io/docs/ngspice-manual.pdf</docs>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">PMOS</field>
+        <field name="Datasheet">https://ngspice.sourceforge.io/docs/ngspice-manual.pdf</field>
+        <field name="Sim.Device">PMOS</field>
+        <field name="Sim.Type">VDMOS</field>
+        <field name="Sim.Pins">1=D 2=G 3=S</field>
+      </fields>
+      <pins>
+        <pin num="1" name="D" type="passive"/>
+        <pin num="2" name="G" type="input"/>
+        <pin num="3" name="S" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Switch" part="SW_Push">
+      <description>Push button switch, generic, two pins</description>
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">SW</field>
+        <field name="Value">SW_Push</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Switch" part="SW_SPST">
+      <description>Single Pole Single Throw (SPST) switch</description>
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">SW</field>
+        <field name="Value">SW_SPST</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="A" type="passive"/>
+        <pin num="2" name="B" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Connector">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Connector.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Device.kicad_sym</uri>
+    </library>
+    <library logical="Diode">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Diode.kicad_sym</uri>
+    </library>
+    <library logical="IRML2502">
+      <uri>C:/Users/antho/GitHub/Dancebot/PCB/symbols/IRLML2502.kicad_sym</uri>
+    </library>
+    <library logical="Mechanical">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Mechanical.kicad_sym</uri>
+    </library>
+    <library logical="Simulation_SPICE">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Simulation_SPICE.kicad_sym</uri>
+    </library>
+    <library logical="Switch">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Switch.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+5V">
+      <node ref="J1" pin="J3_20" pinfunction="EXT_5V" pintype="power_in"/>
+      <node ref="Q1" pin="3" pinfunction="S" pintype="passive"/>
+      <node ref="TP2" pin="1" pinfunction="1" pintype="passive"/>
+    </net>
+    <net code="2" name="BATT ADC">
+      <node ref="J1" pin="J3_10" pinfunction="IO27" pintype="bidirectional"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+      <node ref="R3" pin="1" pintype="passive"/>
+      <node ref="TP9" pin="1" pinfunction="1" pintype="passive"/>
+    </net>
+    <net code="3" name="BATT EN">
+      <node ref="J1" pin="J3_16" pinfunction="IO4" pintype="bidirectional"/>
+      <node ref="Q2" pin="1" pintype="passive"/>
+    </net>
+    <net code="4" name="Batt GND">
+      <node ref="J2" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="J4" pin="1" pinfunction="Pin_1" pintype="passive"/>
+    </net>
+    <net code="5" name="Batt PWR">
+      <node ref="J2" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="J4" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="Q5" pin="1" pinfunction="D" pintype="passive"/>
+      <node ref="R1" pin="1" pintype="passive"/>
+      <node ref="TP5" pin="1" pinfunction="1" pintype="passive"/>
+    </net>
+    <net code="6" name="GND1">
+      <node ref="IO12" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="IO13" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="IO14" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="IO15" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="IO18" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="J1" pin="J2_19" pinfunction="GND_1" pintype="power_in"/>
+      <node ref="J2" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="J6" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="J7" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="Q2" pin="2" pintype="passive"/>
+      <node ref="Q3" pin="1" pintype="passive"/>
+      <node ref="R3" pin="2" pintype="passive"/>
+      <node ref="R4" pin="2" pintype="passive"/>
+      <node ref="R7" pin="2" pintype="passive"/>
+    </net>
+    <net code="7" name="Latch_Out">
+      <node ref="D2" pin="2" pinfunction="A" pintype="passive"/>
+      <node ref="J1" pin="J2_9" pinfunction="IO5" pintype="bidirectional"/>
+    </net>
+    <net code="8" name="NPLeftEye">
+      <node ref="J1" pin="J3_6" pinfunction="IO25" pintype="bidirectional"/>
+      <node ref="J7" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="TP3" pin="1" pinfunction="1" pintype="passive"/>
+    </net>
+    <net code="9" name="NPRightEye">
+      <node ref="J1" pin="J3_7" pinfunction="IO26" pintype="bidirectional"/>
+      <node ref="J6" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="TP4" pin="1" pinfunction="1" pintype="passive"/>
+    </net>
+    <net code="10" name="Net-(D1-A)">
+      <node ref="D1" pin="2" pinfunction="A" pintype="passive"/>
+      <node ref="R6" pin="2" pintype="passive"/>
+    </net>
+    <net code="11" name="Net-(D1-K)">
+      <node ref="D1" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="Q3" pin="2" pintype="passive"/>
+      <node ref="R7" pin="1" pintype="passive"/>
+      <node ref="R8" pin="1" pintype="passive"/>
+    </net>
+    <net code="12" name="Net-(D2-K)">
+      <node ref="D2" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="R8" pin="2" pintype="passive"/>
+    </net>
+    <net code="13" name="Net-(Q1-D)">
+      <node ref="Q1" pin="1" pinfunction="D" pintype="passive"/>
+      <node ref="R5" pin="1" pintype="passive"/>
+      <node ref="SW1" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="SW2" pin="2" pinfunction="B" pintype="passive"/>
+      <node ref="TP1" pin="1" pinfunction="1" pintype="passive"/>
+    </net>
+    <net code="14" name="Net-(Q1-G)">
+      <node ref="Q1" pin="2" pinfunction="G" pintype="input"/>
+      <node ref="Q3" pin="3" pintype="passive"/>
+      <node ref="R5" pin="2" pintype="passive"/>
+    </net>
+    <net code="15" name="Net-(Q5-G)">
+      <node ref="Q2" pin="3" pintype="passive"/>
+      <node ref="Q5" pin="2" pinfunction="G" pintype="input"/>
+      <node ref="R1" pin="2" pintype="passive"/>
+    </net>
+    <net code="16" name="Net-(Q5-S)">
+      <node ref="Q5" pin="3" pinfunction="S" pintype="passive"/>
+      <node ref="R2" pin="1" pintype="passive"/>
+    </net>
+    <net code="17" name="Net-(R4-Pad1)">
+      <node ref="R4" pin="1" pintype="passive"/>
+      <node ref="R6" pin="1" pintype="passive"/>
+      <node ref="SW1" pin="1" pinfunction="1" pintype="passive"/>
+    </net>
+    <net code="18" name="SM1">
+      <node ref="IO14" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="J1" pin="J3_11" pinfunction="IO14" pintype="bidirectional"/>
+    </net>
+    <net code="19" name="SM2">
+      <node ref="IO12" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="J1" pin="J3_12" pinfunction="IO12" pintype="bidirectional"/>
+    </net>
+    <net code="20" name="SM3">
+      <node ref="IO13" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="J1" pin="J3_13" pinfunction="IO13" pintype="bidirectional"/>
+    </net>
+    <net code="21" name="SM4">
+      <node ref="IO15" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="J1" pin="J3_14" pinfunction="IO15" pintype="bidirectional"/>
+    </net>
+    <net code="22" name="SM5">
+      <node ref="IO18" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="J1" pin="J3_15" pinfunction="IO2" pintype="bidirectional"/>
+    </net>
+    <net code="23" name="VOUT">
+      <node ref="IO12" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="IO13" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="IO14" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="IO15" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="IO18" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J2" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J6" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="J7" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="SW2" pin="1" pinfunction="A" pintype="passive"/>
+    </net>
+    <net code="24" name="unconnected-(J1-EN-PadJ2_18)">
+      <node ref="J1" pin="J2_18" pinfunction="EN" pintype="input+no_connect"/>
+    </net>
+    <net code="25" name="unconnected-(J1-FLASH_CLK-PadJ2_3)">
+      <node ref="J1" pin="J2_3" pinfunction="FLASH_CLK" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="26" name="unconnected-(J1-FLASH_CS-PadJ3_1)">
+      <node ref="J1" pin="J3_1" pinfunction="FLASH_CS" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="27" name="unconnected-(J1-FLASH_SD0-PadJ3_2)">
+      <node ref="J1" pin="J3_2" pinfunction="FLASH_SD0" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="28" name="unconnected-(J1-FLASH_SD1-PadJ2_1)">
+      <node ref="J1" pin="J2_1" pinfunction="FLASH_SD1" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="29" name="unconnected-(J1-FLASH_SD2-PadJ3_3)">
+      <node ref="J1" pin="J3_3" pinfunction="FLASH_SD2" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="30" name="unconnected-(J1-FLASH_SD3-PadJ2_2)">
+      <node ref="J1" pin="J2_2" pinfunction="FLASH_SD3" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="31" name="unconnected-(J1-GND_2-PadJ3_19)">
+      <node ref="J1" pin="J3_19" pinfunction="GND_2" pintype="power_in+no_connect"/>
+    </net>
+    <net code="32" name="unconnected-(J1-IO0-PadJ3_17)">
+      <node ref="J1" pin="J3_17" pinfunction="IO0" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="33" name="unconnected-(J1-IO9-PadJ2_11)">
+      <node ref="J1" pin="J2_11" pinfunction="IO9" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="34" name="unconnected-(J1-IO10-PadJ2_10)">
+      <node ref="J1" pin="J2_10" pinfunction="IO10" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="35" name="unconnected-(J1-IO18-PadJ2_8)">
+      <node ref="J1" pin="J2_8" pinfunction="IO18" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="36" name="unconnected-(J1-IO19-PadJ2_6)">
+      <node ref="J1" pin="J2_6" pinfunction="IO19" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="37" name="unconnected-(J1-IO21-PadJ2_4)">
+      <node ref="J1" pin="J2_4" pinfunction="IO21" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="38" name="unconnected-(J1-IO22-PadJ2_5)">
+      <node ref="J1" pin="J2_5" pinfunction="IO22" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="39" name="unconnected-(J1-IO23-PadJ2_7)">
+      <node ref="J1" pin="J2_7" pinfunction="IO23" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="40" name="unconnected-(J1-IO32-PadJ3_8)">
+      <node ref="J1" pin="J3_8" pinfunction="IO32" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="41" name="unconnected-(J1-IO33-PadJ3_9)">
+      <node ref="J1" pin="J3_9" pinfunction="IO33" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="42" name="unconnected-(J1-IO34-PadJ2_15)">
+      <node ref="J1" pin="J2_15" pinfunction="IO34" pintype="input+no_connect"/>
+    </net>
+    <net code="43" name="unconnected-(J1-IO35-PadJ2_14)">
+      <node ref="J1" pin="J2_14" pinfunction="IO35" pintype="input+no_connect"/>
+    </net>
+    <net code="44" name="unconnected-(J1-IO37-PadJ2_17)">
+      <node ref="J1" pin="J2_17" pinfunction="IO37" pintype="input+no_connect"/>
+    </net>
+    <net code="45" name="unconnected-(J1-IO38-PadJ2_16)">
+      <node ref="J1" pin="J2_16" pinfunction="IO38" pintype="input+no_connect"/>
+    </net>
+    <net code="46" name="unconnected-(J1-RXD0-PadJ2_12)">
+      <node ref="J1" pin="J2_12" pinfunction="RXD0" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="47" name="unconnected-(J1-SENSOR_VN-PadJ3_5)">
+      <node ref="J1" pin="J3_5" pinfunction="SENSOR_VN" pintype="input+no_connect"/>
+    </net>
+    <net code="48" name="unconnected-(J1-SENSOR_VP-PadJ3_4)">
+      <node ref="J1" pin="J3_4" pinfunction="SENSOR_VP" pintype="input+no_connect"/>
+    </net>
+    <net code="49" name="unconnected-(J1-TXD0-PadJ2_13)">
+      <node ref="J1" pin="J2_13" pinfunction="TXD0" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="50" name="unconnected-(J1-VDD33_1-PadJ2_20)">
+      <node ref="J1" pin="J2_20" pinfunction="VDD33_1" pintype="power_in+no_connect"/>
+    </net>
+    <net code="51" name="unconnected-(J1-VDD33_2-PadJ3_18)">
+      <node ref="J1" pin="J3_18" pinfunction="VDD33_2" pintype="power_in+no_connect"/>
+    </net>
+    <net code="52" name="unconnected-(J2-Pin_5-Pad5)">
+      <node ref="J2" pin="5" pinfunction="Pin_5" pintype="passive+no_connect"/>
+    </net>
+    <net code="53" name="unconnected-(J6-Pin_1-Pad1)">
+      <node ref="J6" pin="1" pinfunction="Pin_1" pintype="passive+no_connect"/>
+    </net>
+    <net code="54" name="unconnected-(J7-Pin_1-Pad1)">
+      <node ref="J7" pin="1" pinfunction="Pin_1" pintype="passive+no_connect"/>
+    </net>
+  </nets>
+</export>
