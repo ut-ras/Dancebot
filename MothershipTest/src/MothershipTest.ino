@@ -8,7 +8,7 @@
 // TODO: OMNIDIRECTIONAL DRIVE
 
 /*
-
+ESP32 -> Driver:
 PLEASE NOTE THAT ESP32FLASH MEMORY MAY NEED TO BE WIPED IF BLUETOOTH DOES NOT CONNECT (see https://randomnerdtutorials.com/esp32-erase-flash-memory/)
 - Original motor drivers broke (Region 5 Competition drivers), so we are using Adafruit Motor Shield V2.3 connected to ESP32 Wroom (Pico-D4 not compatible with PS4 library)
 - Wire I2C ESP32 pins to respective SDA and SCL pins on driver, ground to ground, and 5v to 5v (4 connections)
@@ -26,10 +26,37 @@ ESP32   |   Driver
     Remote: c8:f0:9e:f1:da:2a
 - Look into WiFi libraries to print and edit ESP32 MAC address if necessary :D
 
+
+Driver -> Motors:
+- only motor wires connected are RED and BLACK
+- when looking at motor driver with long set of header pins and protoboard holes at the top, 
+  the RED wires are always on top of the BLACK wires
+
+ !!!RED and BLACK wires for M2 and M4 are swapped!!!
+
+        FRONT
+  -------------------                
+O |  M3         M2  |O
+  |                 |
+  |                 |
+O |  M4         M1  |O
+   -------------------   
+        BACK
+
+Motor pinout:
+- we are only using RED and BLACK
+
+white - ENC BOUT
+yellow - ENC AOUT
+blue - ENC VCC
+green - ENC GND
+black - PWR B
+red - PWR A
+
 */
 
-int LeftX, LeftY, RightX, RightY, Langle, Rangle;
-float Lmagnitude, Rmagnitude;
+int LeftX, LeftY, RightX, RightY;
+float Lmagnitude, Rmagnitude, Langle, Rangle;
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
 Adafruit_DCMotor *BackRight = AFMS.getMotor(1);
@@ -79,10 +106,10 @@ void loop() {
     Rangle = getAngle(RightX, RightY);
 
     // print joystick data
-    Serial.print("LM: " );
-    Serial.print(Lmagnitude);
-    Serial.print("  Lθ: ");
-    Serial.print(Langle);
+    // Serial.print("LM: " );
+    // Serial.print(Lmagnitude);
+    // Serial.print("  Lθ: ");
+    // Serial.print(Langle);
     Serial.print(" RM: ");
     Serial.print(Rmagnitude);
     Serial.print("  Rθ: ");
@@ -100,30 +127,58 @@ void loop() {
 
     //  FRBL: sin(angle−1/4π) * magnitude
     //  FLBR: sin(angle+1/4π) * magnitude 
+  
+    Rmagnitude = 1;
+
+    // positive FRBL or FLBR goes BACKWARD!!
+
+    int mode;
+    int counter = 0;
+    counter++;
+    Serial.println(mode);
+    
+    if(counter > 10000) {
+      counter = 0;
+      mode++;
+    }
+    if(mode%4 == 0){
+      Rangle = 0.785398163397;
+    }
+    if(mode%4 == 1){
+      Rangle = 2.35619449019;
+    }
+    if(mode%4 == 2){
+      Rangle = 3.92699081699; 
+    }
+    if(mode%4 == 3){
+      Rangle = 5.49778714378;
+    }
+
     FRBL = ((255*Rmagnitude) * sin(Rangle-(0.25*PI)));
     FLBR = ((255*Rmagnitude) * sin(Rangle+(0.25*PI)));
 
     if (FRBL < 0){
-      FrontRight->run(BACKWARD);
-      BackLeft->run(BACKWARD);
-    }
-    else{
       FrontRight->run(FORWARD);
       BackLeft->run(FORWARD);
     }
+    else{
+      FrontRight->run(BACKWARD);
+      BackLeft->run(BACKWARD);
+    }
 
     if (FLBR < 0) {
-      FrontLeft->run(BACKWARD);
-      BackRight->run(BACKWARD);
-    }
-    else{
       FrontLeft->run(FORWARD);
       BackRight->run(FORWARD);
     }
+    else{
+      FrontLeft->run(BACKWARD);
+      BackRight->run(BACKWARD);
+    }
     
-    BackRight->setSpeed(FLBR);
-    FrontRight->setSpeed(FRBL);
     FrontLeft->setSpeed(FLBR);
+    BackRight->setSpeed(FLBR);
+
+    FrontRight->setSpeed(FRBL);
     BackLeft->setSpeed(FRBL);
 
     delay(200);
@@ -131,9 +186,13 @@ void loop() {
 }
 
 
-// returns joystick angle with +x axis as 0. increases counterclockwise
-int getAngle(int X, int Y) {
-  return ((int)(atan2(Y, X) * 180/PI) + 360) % 360;
+// returns joystick angle in radians with +x axis as 0. increases counterclockwise
+float getAngle(int X, int Y) {
+  float res = (atan2(Y, X));
+  if(res < 0) {
+    res += 6.28; // account for switch to negative angles after pi radians
+  }
+  return res;
 }
 
 
