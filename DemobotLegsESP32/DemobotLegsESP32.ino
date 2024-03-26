@@ -91,7 +91,8 @@ void loop() {
 //manual calibration- based on how the servos are attatched to the 3d printed parts
 void calibrateTrims(DancingServos* bot) {
   //[hipL, hipR, ankleL, ankleR]
-  bot->setTrims(70, 150, 25, 18);
+  //bot->setTrims(70, 150, 25, 18);
+  bot->setTrims(95, 90, 140, 130); //big dancebot
 }
 
 
