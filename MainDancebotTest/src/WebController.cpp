@@ -90,48 +90,48 @@ void setupWiFi(String mode, const char * ssid, const char * pass) {
   /*****TEST WIFI CODE******/
   WiFi.mode(WIFI_STA);
  
-  if (esp_now_init() != ESP_OK) {
-    Serial.println("Error initializing ESP-NOW");
-    return;
-  }
+  // if (esp_now_init() != ESP_OK) {
+  //   Serial.println("Error initializing ESP-NOW");
+  //   return;
+  // }
 
-   esp_now_register_send_cb(data_sent); //each time msg sent, calls data_sent()
+  //  esp_now_register_send_cb(data_sent); //each time msg sent, calls data_sent()
 
-  //pairing main dancebot to other client dancebots
-  esp_now_peer_info_t peerInfo;
-  peerInfo.channel = 0;  
-  peerInfo.encrypt = false;
+  // //pairing main dancebot to other client dancebots
+  // esp_now_peer_info_t peerInfo;
+  // peerInfo.channel = 0;  
+  // peerInfo.encrypt = false;
 
-  //add dancebot client 1 as peer to main dancebot
-  memcpy(peerInfo.peer_addr, DancebotReceiver1, 6);
-  int result = esp_now_add_peer(&peerInfo);
-  if (result != ESP_OK){
-    Serial.println("Failed to add peer");
-    Serial.println("Result = " + result);
-    return;
-  }
+  // //add dancebot client 1 as peer to main dancebot
+  // memcpy(peerInfo.peer_addr, DancebotReceiver1, 6);
+  // int result = esp_now_add_peer(&peerInfo);
+  // if (result != ESP_OK){
+  //   Serial.println("Failed to add peer");
+  //   Serial.println("Result = " + result);
+  //   return;
+  // }
 
   /*****OLD WIFI CODE******/
-  // if (mode.equals("AP")) {
-  //   //Turn on Access Point
-  //   WiFi.softAP(ssid, pass);
-  //   ip = WiFi.softAPIP();
-  // }
-  // else {
-  //   //Connect to a WiFi network
-  //   WiFi.mode(WIFI_STA);
-  //   WiFi.begin(ssid, pass);
-  //   while (WiFi.status() != WL_CONNECTED) {
-  //     delay(500);
-  //     yield();
-  //     //Serial.print(".");
-  //   }
-  //   ip = WiFi.localIP();
+  if (mode.equals("AP")) {
+    //Turn on Access Point
+    WiFi.softAP(ssid, pass);
+    ip = WiFi.softAPIP();
+  }
+  else {
+    //Connect to a WiFi network
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(ssid, pass);
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(500);
+      yield();
+      //Serial.print(".");
+    }
+    ip = WiFi.localIP();
 
-  //   if (MDNS.begin("esp32")) {
-  //     Serial.println("MDNS responder started");
-  //   }
-  // }
+    if (MDNS.begin("esp32")) {
+      Serial.println("MDNS responder started");
+    }
+  }
 
   Serial.println("WiFi mode=" + mode + ", ssid = " + String(ssid) + ", pass = " + String(pass));
 }
