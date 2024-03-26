@@ -208,7 +208,7 @@ void handleDanceMove() {
   }
   //delay(1000);
 
-  handleRoot();     //now the form is handled with JS so there is no need to respond with index html
+  //handleRoot();     //now the form is handled with JS so there is no need to respond with index html
   server.send(200, "text/plain", dance_move);
 }
 
