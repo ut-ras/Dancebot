@@ -124,7 +124,7 @@ void calibrateTrims(DancingServos* bot) {
   //[hipL, hipR, ankleL, ankleR]
   //CW - decrease value, CCW - increase value
   // bot->setTrims(70, 150, 25, 18);
-  bot->setTrims(170, 60, 25, 18);
+  bot->setTrims(170, 95, 25, 18);
 }
 
 
