@@ -13,13 +13,12 @@ public:
     //when ESP32 turns on, latch the power to continue being on (refer to sch)
     void powerOnSystem(void);
 
-    //sleeping functions
-    void sleepSystem(void);
-    void sleepSystem(int period);
-    void awakeSystem(void);
+    void startWiFiPowerSave(void);
+    void endWiFiPowerSave(void);
 
+    void batteryADCInit(void);
     //set and get battery % between 0 - 100
-    int getBatteryPercentage(void); 
+    int calculateBatteryPercentage(void); 
     
 
 private:
