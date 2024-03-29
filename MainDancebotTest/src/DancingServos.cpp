@@ -142,6 +142,7 @@ void DancingServos::themAnkles(int cycles) {
 }
 
 //Walk forward, adjust speed with T
+// walk backwards by calling this with reverse = true
 void DancingServos::walk(float cycles, int period, bool reverse) {
   int rev = 1;
   if (reverse) {rev = -1;}
@@ -169,7 +170,47 @@ void DancingServos::wiggle(int angle, int cycles) {
   startOscillation(amp, off, ph0, 2000, cycles);
 }
 
+// dev notes: new moves below:
+// "hip toe" dance move
+void DancingServos::heel_toe(int cycles, bool left_direction) {
+  int amp[4] = {30, -30, 0, 0};
 
+  if (left_direction) {
+    amp[2] = -10;
+    amp[3] = 10;
+  } else {
+    amp[1] = 10;
+    amp[3] = -10;
+  }
+
+  // since toes initially pointed inwards?
+  int off[4] = {-15, 15, 0, 0};
+  double ph0[4] = {0, 0, 0, 0};
+
+  startOscillation(amp, off, ph0, 2000, cycles);
+  // only reverse the ankles for second part?
+  for (int i = 2; i < 4; i++) {osc[i]->setRev(true);}
+}
+
+
+// "stank" dance move
+void DancingServos::stank(int cycles, bool left_ankle) {
+  int amp[4] = {0, 0, 0, 0};
+
+  if (left_ankle) {
+    amp[0] = -60;
+    amp[2] = 20;
+  } else {
+    amp[1] = 60;
+    amp[3] = 20;
+  }
+
+  // presumably start from resting position
+  int off[4] = {0, 0, 0, 0};
+  double ph0[4] = {0, 0, 0, 0};
+
+  startOscillation(amp, off, ph0, 3000, cycles);
+}
 
 //DANCE ROUTINES
 

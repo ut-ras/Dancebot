@@ -59,6 +59,10 @@ enum{
   HOP,
   WIGGLE,
   ANKLES,
+  // dev notes: new moves below:
+  HEELTOE,
+  STANK,
+  BWALK,
   DEMO1,
   DEMO2
 };
@@ -186,6 +190,19 @@ void handleDanceMove() {
     else if (dance_move == "Ankles") {
       dance_bot->themAnkles(-1);
       message.integer = ANKLES;
+    }
+    // dev notes: new moves below:
+    else if (dance_move == "Heel Toe") {
+      dance_bot->heel_toe(25, true);
+      message.integer = HEELTOE;
+    }
+    else if (dance_move == "Stank") {
+      dance_bot->stank(25, true);
+      message.integer = STANK;
+    }
+    else if (dance_move == "Backwards Walk") {
+      dance_bot->walk(-1, 1500, true);
+      message.integer = BWALK;
     }
     else {
       Serial.println("Dance move not recognized, ERROR too lit for this robot");

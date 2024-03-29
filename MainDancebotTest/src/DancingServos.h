@@ -61,8 +61,9 @@ private:
   bool isOsc;
   long endMoveTime = 0;
 
-  int numDanceMoves = 6;
-  String danceMoves[6] = {"Stop", "Reset", "Walk", "Hop", "Wiggle", "Ankles"};
+  // dev notes: new moves below:
+  int numDanceMoves = 9;
+  String danceMoves[9] = {"Stop", "Reset", "Walk", "Hop", "Wiggle", "Ankles", "Heel Toe", "Stank", "Backwards Walk"};
   //void  (*danceMoveFunctions[])() = {};   //TODO standardize dance move function input parameters
 
   bool doDanceRoutine = false;
