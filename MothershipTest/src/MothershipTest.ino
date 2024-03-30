@@ -55,7 +55,7 @@ red - PWR A
 
 */
 
-int LeftX, LeftY, RightX, RightY;
+int LeftX, LeftY, RightX, RightY, FRBL, FLBR;
 float Lmagnitude, Rmagnitude, Langle, Rangle;
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
@@ -63,9 +63,6 @@ Adafruit_DCMotor *BackRight = AFMS.getMotor(1);
 Adafruit_DCMotor *FrontRight = AFMS.getMotor(2);
 Adafruit_DCMotor *FrontLeft= AFMS.getMotor(3);
 Adafruit_DCMotor *BackLeft = AFMS.getMotor(4);
-int8_t FRBL = 0;
-int8_t FLBR = 0;
-bool forward = 0; // direction they spin 
 
 void setup() {
   PS4.begin();
@@ -128,34 +125,12 @@ void loop() {
     //  FRBL: sin(angle−1/4π) * magnitude
     //  FLBR: sin(angle+1/4π) * magnitude 
   
-    Rmagnitude = 1;
-
     // positive FRBL or FLBR goes BACKWARD!!
+    // FRBL = ((255*Rmagnitude) * sin(Rangle-(0.25*PI)));
+    // FLBR = -((255*Rmagnitude) * sin(Rangle+(0.25*PI)));
 
-    int mode;
-    int counter = 0;
-    counter++;
-    Serial.println(mode);
-    
-    if(counter > 10000) {
-      counter = 0;
-      mode++;
-    }
-    if(mode%4 == 0){
-      Rangle = 0.785398163397;
-    }
-    if(mode%4 == 1){
-      Rangle = 2.35619449019;
-    }
-    if(mode%4 == 2){
-      Rangle = 3.92699081699; 
-    }
-    if(mode%4 == 3){
-      Rangle = 5.49778714378;
-    }
-
-    FRBL = ((255*Rmagnitude) * sin(Rangle-(0.25*PI)));
-    FLBR = ((255*Rmagnitude) * sin(Rangle+(0.25*PI)));
+    FRBL = (255*Rmagnitude) * (sin(Rangle-(0.25*PI)));
+    FLBR = (255*Rmagnitude) * (sin(Rangle+(0.25*PI)));
 
     if (FRBL < 0){
       FrontRight->run(FORWARD);
@@ -181,7 +156,7 @@ void loop() {
     FrontRight->setSpeed(FRBL);
     BackLeft->setSpeed(FRBL);
 
-    delay(200);
+    // delay(200);
   }
 }
 
