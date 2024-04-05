@@ -5,11 +5,12 @@
  *
 */
 
-#ifndef DANCINGSERVOS
-#define DANCINGSERVOS
+#ifndef POWERCONTROLLER
+#define POWERCONTROLLER
 
 class PowerController {
 public:
+    PowerController(void);
     //when ESP32 turns on, latch the power to continue being on (refer to sch)
     void powerOnSystem(void);
 
@@ -18,12 +19,12 @@ public:
 
     void batteryADCInit(void);
     //set and get battery % between 0 - 100
-    int calculateBatteryPercentage(void); 
+    float calculateBatteryPercentage(void); 
     
 
 private:
     //0 - 100 %
-    int batteryPercentage;
+    float batteryPercentage;
 
 };
 

@@ -20,15 +20,13 @@
 //resistor divider
 #define R2 100 
 #define R3 51
-#define VOLTAGE_MAX 8500 //mV
-#define VOLTAGE_MIN 5000
+#define VOLTAGE_MAX 8.5 //mV
+#define VOLTAGE_MIN 6.5
 #define VOUT(Vin) (((Vin) * R3) / (R2 + R3))
 
-//ADC values
-#define ADC_REFERENCE 1100 //mV, from ESP32 docs
-#define VOLTAGE_TO_ADC(in) ((ADC_REFERENCE * (in)) / 4096)
-#define BATTERY_MAX_ADC VOLTAGE_TO_ADC(VOUT(VOLTAGE_MAX))
-#define BATTERY_MIN_ADC VOLTAGE_TO_ADC(VOUT(VOLTAGE_MIN))
+PowerController::PowerController(void){
+    batteryPercentage = 100;
+}
 
 void PowerController::powerOnSystem(void){
     digitalWrite(LATCH_OUT, 1);
@@ -49,15 +47,21 @@ void PowerController::batteryADCInit(void){
     digitalWrite(BAT_EN, 0); //disable battery lvl circuit
 }
 
-int PowerController::calculateBatteryPercentage(void){
+float PowerController::calculateBatteryPercentage(void){
     digitalWrite(BAT_EN, 1); //enable battery lvl checker
 
     int adcValue = analogRead(ADC_IN);
-    batteryPercentage = 100 * (adcValue - BATTERY_MIN_ADC) / (BATTERY_MAX_ADC - BATTERY_MIN_ADC);
+    Serial.print("ADC value: "); Serial.println(adcValue);
+
+    //ADC % -> Voltage [0, 3.3V] -> Battery Voltage {6.5, 8.4}
+    batteryPercentage = (adcValue / 4095) * 3.3 * 1.1 * 3;  //resistor divides by 3, 1.1 is scale factor to correct ADC reading
+    batteryPercentage = batteryPercentage / VOLTAGE_MAX;
+    //batteryPercentage = 100 * (adcValue - BATTERY_MIN_ADC) / (BATTERY_MAX_ADC - BATTERY_MIN_ADC);
 
     if(batteryPercentage < 0) batteryPercentage = 0;
     if(batteryPercentage > 100) batteryPercentage = 100;
 
-    digitalWrite(BAT_EN, 0); //disbale battery lvl checker
+    digitalWrite(BAT_EN, 0); //disable battery lvl checker
+    Serial.print("Battery level: "); Serial.println(batteryPercentage);
     return batteryPercentage;
 }
