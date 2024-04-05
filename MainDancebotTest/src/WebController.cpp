@@ -322,7 +322,7 @@ String indexHTML() {
               // Battery Level
               "<div id=\"battery-indicator\" style=\"display: flex; justify-content:center; flex-direction:column; width:50%; height:fit-content; align-items: center; margin: auto; padding: 10px; border-radius: 5px; background-color:#42f5ef\">" +
                 "<div id=\"battery-meter\" style=\"position:relative; width: 70%; margin:auto; background-color:white; padding:10px; align-items:center; border-radius:50px; text-align: center; overflow: hidden\">" +
-                  "<div id=\"battery-fill\" style=\"position:absolute; top:0; left: 0; height: 100%; background-color:aquamarine; transition: width 0.5s ease; z-index: 1;\"></div>" +
+                  "<div id=\"battery-fill\" style=\"position:absolute; top:0; left: 0; height: 100%; width: 100%; background-color:aquamarine; transition: width 0.5s ease; z-index: 1;\"></div>" +
                   "<span id=\"battery-percentage\" style=\"position: relative; margin: auto; z-index: 2\">100%</span>" +
                 "</div>" +
               "</div>" +
@@ -380,7 +380,7 @@ String getJavascript() {
         "var xhttp = new XMLHttpRequest();" +
         "xhttp.open('GET', '/battery', true);" +
         "xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');" +
-        "xhttp.send()" +
+        "xhttp.send();" +
         "xhttp.onload = function() {" +
           "console.log('Battery Received: ' + xhttp.responseText);" +
           "updateBatteryLevel(xhttp.responseText);" +
