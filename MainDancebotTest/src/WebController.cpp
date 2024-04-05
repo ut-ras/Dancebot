@@ -388,7 +388,7 @@ String getJavascript() {
       "}" + 
 
       "getBatteryLevel();" +
-      "setInterval(getBatteryLevel, 60000);" +
+      "setInterval(getBatteryLevel, 10000);" +
 
   "</script>";
   return s;
