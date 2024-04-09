@@ -63,6 +63,11 @@ enum{
   HEELTOE,
   STANK,
   BWALK,
+
+  SIMPLE_HOP,
+  WAVE,
+  ANKLE_TEST,
+
   DEMO1,
   DEMO2
 };
@@ -203,6 +208,18 @@ void handleDanceMove() {
     else if (dance_move == "Backwards Walk") {
       dance_bot->walk(-1, 1500, true);
       message.integer = BWALK;
+    }
+    else if (dance_move == "Simple Hop") {
+      dance_bot->simpler_hop(25, -1);
+      message.integer = SIMPLE_HOP;
+    }
+    else if (dance_move == "Wave") {
+      dance_bot->wave(25, -1);
+      message.integer = WAVE;
+    }
+    else if (dance_move == "Ankle Test") {
+      dance_bot->ankle_test(-1);
+      message.integer = ANKLE_TEST;
     }
     else {
       Serial.println("Dance move not recognized, ERROR too lit for this robot");

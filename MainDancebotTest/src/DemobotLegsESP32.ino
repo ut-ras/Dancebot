@@ -47,7 +47,7 @@
 #define WIFI_MODE "AP"
 //const char * ssid = "esp_hotspot";
 //const char * pass = "esp";
-const char * ssid = "Cole";
+const char * ssid = "Cole1";
 const char * pass = "cole1234";
 
 DancingServos* bot;
