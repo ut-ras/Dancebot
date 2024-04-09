@@ -46,10 +46,16 @@ String indexHTML();
 String getJavascript();
 
 
+/* Data Transmission */
+struct_message receivedMessage;
 
-//Data transmission to clients
-uint8_t broadcastAddress[] = {0x30, 0x83, 0x98, 0xD9, 0x19, 0xCC}; // REPLACE WITH YOUR RECEIVER MAC Address
-struct_message message;  //message sent to clients
+#define NUM_ADDRESS 1
+uint8_t* addressArr[] = {address0};
+uint8_t address0[] = {0x30, 0x83, 0x98, 0xDE, 0xC0, 0xAC}; // REPLACE WITH YOUR RECEIVER MAC Address
+ /* add more MAC addresses below */
+
+struct_message transmitMessage;  //message sent to clients
+struct_message receivedMessage; //message received by clients
 
 //enums that correspond to dance moves
 enum{
@@ -76,9 +82,40 @@ WebServer server(port);
 //DancingServos object
 DancingServos* dance_bot;
 
-/* setupTransmission */
-void setupTransmission(){
+void printMACAddress(){
+  Serial.println(WiFi.macAddress());
+}
 
+//callback when data is sent
+void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
+  Serial.print("\r\nLast Packet Send Status:\t");
+  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+}
+
+//callback when data is received
+void OnDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
+  memcpy(&receivedMessage, incomingData, sizeof(receivedMessage));
+  Serial.println("Received message...")
+  Serial.print("Bytes received: ");
+  Serial.println(len);
+  Serial.print("Battery Level: ");
+  Serial.println(receivedMessage.batteryLevel);
+}
+
+/* setupTransmission */
+void setupESPNOW(){
+  // Init ESP-NOW
+  if (esp_now_init() != 0) {
+    Serial.println("Error initializing ESP-NOW");
+    return;
+  }
+
+  esp_now_set_self_role(ESP_NOW_ROLE_COMBO); //both sender and receiver role
+  esp_now_register_send_cb(OnDataSent); //func called when we send data
+  for(int i = 0; i < NUM_ADDRESS; i++){ //register peers
+    esp_now_add_peer(addressArr[i], ESP_NOW_ROLE_COMBO, 1, NULL, 0);
+  }
+  esp_now_register_recv_cb(OnDataRecv); //func called when we receive data
 }
 
 /* setupWiFi
@@ -165,27 +202,27 @@ void handleDanceMove() {
     if (dance_move == "Stop") {
       dance_bot->stopOscillation();
       dance_bot->enableDanceRoutine(false);
-      message.integer = STOP;
+      message.danceMove = STOP;
     }
     else if (dance_move == "Reset") {
       dance_bot->position0();
-      message.integer = RESET;
+      message.danceMove = RESET;
     }
     else if (dance_move == "Walk") {
       dance_bot->walk(-1, 1500, false);
-      message.integer = WALK;
+      message.danceMove = WALK;
     }
     else if (dance_move == "Hop") {
       dance_bot->hop(25, -1);
-      message.integer = HOP;
+      message.danceMove = HOP;
     }
     else if (dance_move == "Wiggle") {
       dance_bot->wiggle(30, -1);
-      message.integer = WIGGLE;
+      message.danceMove = WIGGLE;
     }
     else if (dance_move == "Ankles") {
       dance_bot->themAnkles(-1);
-      message.integer = ANKLES;
+      message.danceMove = ANKLES;
     }
     else {
       Serial.println("Dance move not recognized, ERROR too lit for this robot");
@@ -223,13 +260,13 @@ void handleDance() {
       dance_bot->setDanceRoutine(0);
       dance_bot->enableDanceRoutine(true);
       //strcpy(message.character, "Demo 1");
-      message.integer = DEMO1;
+      message.danceMove = DEMO1;
     }
     else if (dance_routine.equals("Demo 2")) {
       dance_bot->setDanceRoutine(1);
       dance_bot->enableDanceRoutine(true);
       //strcpy(message.character, "Demo 2");
-      message.integer = DEMO2;
+      message.danceMove = DEMO2;
     }
     else {
       Serial.println("Dance routine not recognized, ERROR too lit for this robot");

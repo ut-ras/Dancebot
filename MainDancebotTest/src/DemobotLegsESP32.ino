@@ -47,7 +47,7 @@
 #define WIFI_MODE "AP"
 //const char * ssid = "esp_hotspot";
 //const char * pass = "esp";
-const char * ssid = "Cole";
+const char * ssid = "Cole1";
 const char * pass = "cole1234";
 
 DancingServos* bot;
@@ -69,6 +69,7 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
 void setup() {
   Serial.begin(115200);
 
+  printMACAddress();
   /* Data Transmission Setup*/
   //Set device as a Wi-Fi Station AND Wi-Fi Access Point
    WiFi.mode(WIFI_AP_STA);

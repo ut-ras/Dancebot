@@ -31,7 +31,8 @@
 #include <WiFiClient.h>
 #include <WebServer.h>
 #include <ESPmDNS.h>
-#include <esp_now.h>
+#include <espnow.h>
+#include "WebController.h"
 #include "DancingServos.h"
 
 
@@ -45,15 +46,10 @@ void handleUnknownMove();
 String indexHTML();
 String getJavascript();
 
-/* Receiving Data*/
-//message struct that contains info that will be received
-typedef struct struct_message {
-  int integer;
-  char character[32];
-} struct_message;
 
-struct_message message; 
-int rcvFlag;
+struct_message transmitMessage; //contains inof that will be transmitted
+struct_message receivedMessage; //contains info that will be received
+int rcvFlag; //high when we received a message
 
 //enums correspond to each dance move
 enum{
@@ -84,6 +80,10 @@ DancingServos* dance_bot;
 
 WiFiClient master;
 unsigned long previousRequest = 0;
+
+void printMACAddress(){
+  Serial.println(WiFi.macAddress());
+}
 
 /* Setup Functions */
 
@@ -179,10 +179,10 @@ void handleRoot() {
 
 //when called, takes in received data from transmitter and sets flag (used for dance moves)
 void handleReceivedDanceMove(const uint8_t * mac, const uint8_t *incomingData, int len){
-  memcpy(&message, incomingData, sizeof(message));
+  memcpy(&receivedMessage, incomingData, sizeof(receivedMessage));
   Serial.println("Received message...");
   Serial.println("Message is: ");
-  Serial.println(message.integer);
+  Serial.println(receivedMessage.danceMove);
   Serial.println();
   rcvFlag = 1;
   //server.send(200, "text/plain", dance_move);
@@ -192,30 +192,30 @@ void handleReceivedDanceMove(const uint8_t * mac, const uint8_t *incomingData, i
 void handleDanceMove() {
   //if we have received a message, do corresponding dance move
   if(rcvFlag){
-    if (message.integer == STOP) {
+    if (receivedMessage.danceMove == STOP) {
       dance_bot->stopOscillation();
       dance_bot->enableDanceRoutine(false);
     }
-    else if (message.integer == RESET) {
+    else if (receivedMessage.danceMove == RESET) {
       dance_bot->position0();
     }
-    else if (message.integer == WALK) {
+    else if (receivedMessage.danceMove == WALK) {
       dance_bot->walk(-1, 1500, false);
     }
-    else if (message.integer == HOP) {
+    else if (receivedMessage.danceMove == HOP) {
       dance_bot->hop(25, -1);
     }
-    else if (message.integer == WIGGLE) {
+    else if (receivedMessage.danceMove == WIGGLE) {
       dance_bot->wiggle(30, -1);
     }
-    else if (message.integer == ANKLES) {
+    else if (receivedMessage.danceMove == ANKLES) {
       dance_bot->themAnkles(-1);
     }
-    else if (message.integer == DEMO1) {
+    else if (receivedMessage.danceMove == DEMO1) {
       dance_bot->setDanceRoutine(0);
       dance_bot->enableDanceRoutine(true);
     }
-    else if (message.integer == DEMO2) {
+    else if (receivedMessage.danceMove == DEMO2) {
       dance_bot->setDanceRoutine(1);
       dance_bot->enableDanceRoutine(true);
     }
@@ -370,38 +370,4 @@ String getJavascript() {
   return s;
 }
 
-//requests info from master (main dancebot), used to determine what dance move to do on smaller dancebot
-
-// void connect_to_server(void) {
-//   if (client.connect(ip, port)) {
-//     Serial.println("Connected.");
-//     client.println("GET /");
-//     client.println();
-//   }
-// }
-
-void requestMainDancebot(void){
-  //client connect to server every 1000ms
-  if((millis() - previousRequest) > 1000){
-    Serial.println("Trying to connect to server...");
-  
-
-
-    if(master.connect(ip, 80)){
-      Serial.println("Succesfully connected to server!");
-        previousRequest = millis();
-        String answer = master.readStringUntil('\r');
-        Serial.println("Message received: " + answer);
-        master.flush();
-        int id = answer.toInt();
-        if(id == 1){
-          Serial.println("Received a 1!");
-        }
-        else{
-          Serial.println("Received a 0!");
-      }
-    }
-
-  } 
-}
 
