@@ -31,9 +31,10 @@
 #include <WiFiClient.h>
 #include <WebServer.h>
 #include <ESPmDNS.h>
-#include <espnow.h>
+#include <esp_now.h>
 #include "WebController.h"
 #include "DancingServos.h"
+#include "PowerController.h"
 
 
 void handleRoot();
@@ -46,8 +47,12 @@ void handleUnknownMove();
 String indexHTML();
 String getJavascript();
 
+int dancebotID;
 
-struct_message transmitMessage; //contains inof that will be transmitted
+/* Data Transmission*/
+esp_now_peer_info_t peerInfo;
+uint8_t address[] = {0x30, 0x83, 0x98, 0xD7, 0x33, 0xE0}; //mothership ESP32 MAC address
+struct_message transmitMessage; //contains info that will be transmitted
 struct_message receivedMessage; //contains info that will be received
 int rcvFlag; //high when we received a message
 
@@ -70,13 +75,14 @@ int port = 80;
 IPAddress ip;
 String webServerPath = "http://";
 
-
 //Web server at port 80
 WebServer server(port);
 
-
 //DancingServos object
 DancingServos* dance_bot;
+
+//PowerController object
+PowerController* power;
 
 WiFiClient master;
 unsigned long previousRequest = 0;
@@ -85,26 +91,68 @@ void printMACAddress(){
   Serial.println(WiFi.macAddress());
 }
 
+//callback when data is sent
+void onDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
+  Serial.print("\r\nLast Packet Send Status:\t");
+  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+}
+
+//when called, takes in received data from transmitter and sets flag (used for dance moves)
+void onDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len){
+  memcpy(&receivedMessage, incomingData, sizeof(receivedMessage));
+  Serial.println("Received message...");
+  Serial.print("Bytes received: ");
+  Serial.println(len);
+  Serial.print("Message is: ");
+  Serial.println(receivedMessage.character);
+  Serial.println();
+
+  //if transmitter requested battery level, send value, our ID, and acknowledgement
+  if(receivedMessage.batteryFlag){
+    transmitMessage.id = dancebotID;
+    transmitMessage.batteryLevel = power->calculateBatteryPercentage();
+    strcpy(transmitMessage.character, "GetBattLvl");
+    esp_err_t result = esp_now_send(address, (uint8_t *) &transmitMessage, sizeof(transmitMessage));
+  }
+  if(receivedMessage.character == "SetID"){
+    dancebotID = receivedMessage.id;
+  }
+  rcvFlag = 1;
+}
+
 /* Setup Functions */
 
 /* setupESPNOW
- * Sets up receiver connection with main Dancebot and callback function
+ * Sets up transmit and receive communication with Mothership
  */
-void setupESPNOW(DancingServos* _dance_bot){
-  /* Receiving Data Setup*/
+int setupESPNOW(DancingServos* _dance_bot, PowerController* _power){
   WiFi.mode(WIFI_STA);
-
   // Init ESP-NOW
   if (esp_now_init() != ESP_OK) {
     Serial.println("Error initializing ESP-NOW");
-    return;
+    return 0;
   }
   
-  //callback function: each time we receive a msg, we call handleReceivedDanceMovie()
-  esp_now_register_recv_cb(handleReceivedDanceMove);
+  esp_now_register_send_cb(onDataSent); //func called when we send data
+  esp_now_register_recv_cb(onDataRecv); //func called when we receive data
 
-  //pointer to dance_bot in current file points to _dance_bot in main
+  Serial.println("memcpy");
+  memcpy(peerInfo.peer_addr, address, sizeof(peerInfo.peer_addr));
+  peerInfo.channel = 0; 
+  peerInfo.encrypt = false;
+
+  // Add peer       
+  if (esp_now_add_peer(&peerInfo) != ESP_OK){
+    Serial.println("Failed to add peer");
+    return 0;
+  }
+
+  //dance_bot and power object in this file points to object in main file
   dance_bot = _dance_bot; 
+  power = _power;
+
+  Serial.println("Finished ESPNOW init");
+  return 1;
 }
 
 /* setupWiFi
@@ -175,17 +223,6 @@ void loopWebServer() {
 void handleRoot() {
   Serial.println("Server received new client");
   server.send(200, "text/html", indexHTML());
-}
-
-//when called, takes in received data from transmitter and sets flag (used for dance moves)
-void handleReceivedDanceMove(const uint8_t * mac, const uint8_t *incomingData, int len){
-  memcpy(&receivedMessage, incomingData, sizeof(receivedMessage));
-  Serial.println("Received message...");
-  Serial.println("Message is: ");
-  Serial.println(receivedMessage.danceMove);
-  Serial.println();
-  rcvFlag = 1;
-  //server.send(200, "text/plain", dance_move);
 }
 
 //dance moves    "/danceM"

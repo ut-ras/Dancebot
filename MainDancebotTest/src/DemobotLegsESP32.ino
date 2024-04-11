@@ -57,22 +57,21 @@ long serverCheckInterval = 1000;
 
 WiFiServer wifiServer(80);
 
-/* Data Transmission */
-esp_now_peer_info_t peerInfo;
 
-// callback when data is sent
-void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-  Serial.print("\r\nLast Packet Send Status:\t");
-  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
-}
 
 void setup() {
   Serial.begin(115200);
 
-  printMACAddress();
+  //printMACAddress();
+
   /* Data Transmission Setup*/
   //Set device as a Wi-Fi Station AND Wi-Fi Access Point
-   WiFi.mode(WIFI_AP_STA);
+  WiFi.mode(WIFI_AP_STA);
+
+  if(!setupESPNOW()){
+    Serial.println("Failed ESPNOW init...");
+    return;
+  }
 
   //Init ESP-NOW
   // if (esp_now_init() != ESP_OK) {

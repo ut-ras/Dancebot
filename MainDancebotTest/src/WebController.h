@@ -6,12 +6,13 @@ extern uint8_t broadcastAddress[];
 typedef struct struct_message {
   int id;
   int danceMove;
+  bool batteryFlag;
   float batteryLevel;
   char character[32];
 } struct_message;
 
 void printMACAddress();
-void setupESPNOW();
+int setupESPNOW();
 void setupWiFi(String mode, const char * _ssid, const char * _pass);
 void setupWebServer(DancingServos* _bot);
 void loopWebServer();
