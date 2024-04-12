@@ -55,7 +55,7 @@ uint8_t address[] = {0x30, 0x83, 0x98, 0xD7, 0x33, 0xE0}; //mothership ESP32 MAC
 struct_message transmitMessage; //contains info that will be transmitted
 struct_message receivedMessage; //contains info that will be received
 int rcvFlag; //high when we received a message
-
+int setIDOnce = 1;
 //enums correspond to each dance move
 enum{
   STOP,
@@ -114,8 +114,9 @@ void onDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len){
     strcpy(transmitMessage.character, "GetBattLvl");
     esp_err_t result = esp_now_send(address, (uint8_t *) &transmitMessage, sizeof(transmitMessage));
   }
-  if(receivedMessage.character == "SetID"){
+  if((receivedMessage.character == "SetID") && setIDOnce){ //only set ID once
     dancebotID = receivedMessage.id;
+    setIDOnce = 0;
   }
   rcvFlag = 1;
 }

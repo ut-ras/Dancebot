@@ -13,8 +13,8 @@
 #include <PowerController.h>
 
 //pin mappings
-//#define ADC_IN 27
-#define ADC_IN 33
+//#define ADC_IN 27 //ADC pin 27 doesn't work when WiFi is running....
+#define ADC_IN 33 //CHANGED FROM PCB SCH, pin 33 works w/ WiFi
 #define BAT_EN 4
 #define LATCH_OUT 5
 

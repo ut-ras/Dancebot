@@ -49,10 +49,11 @@ String getJavascript();
 
 /* Data Transmission */
 esp_now_peer_info_t peerInfo;
-#define NUM_ADDRESS 1 //# of clients / MAC addresses
+#define NUM_ADDRESS 2 //# of clients / MAC addresses
  /* add more MAC addresses below */
 uint8_t address0[] = {0x30, 0x83, 0x98, 0xDF, 0xC0, 0xAC}; // REPLACE WITH YOUR RECEIVER MAC Address
-uint8_t* addressArr[] = {address0};
+uint8_t address1[] = {0x30, 0x83, 0x98, 0xDF, 0xC1, 0x68};
+uint8_t* addressArr[] = {address0, address1};
 struct_message transmitMessage;  //message sent to clients
 struct_message receivedMessage; //message received by clients
 
@@ -90,6 +91,13 @@ void printMACAddress(){
 
 //callback when data is sent
 void onDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
+  //print MAC address
+  char macStr[18];
+  Serial.print("Transmitted to MAC: ");
+  snprintf(macStr, sizeof(macStr), "%02x:%02x:%02x:%02x:%02x:%02x",
+           mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4], mac_addr[5]);
+  Serial.println(macStr);
+
   Serial.print("\r\nLast Packet Send Status:\t");
   Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
 }
@@ -124,7 +132,6 @@ int setupESPNOW(){
   }
 
   esp_now_register_send_cb(onDataSent); //func called when we send data
-  esp_now_register_recv_cb(onDataRecv); //func called when we receive data
 
   //for all dancebots, assign IDs and add as peer
   for(int i = 0; i < NUM_ADDRESS; i++){ 
@@ -142,9 +149,14 @@ int setupESPNOW(){
     transmitMessage.id = i;
     strcpy(transmitMessage.character, "SetID");
     esp_err_t result = esp_now_send(addressArr[i], (uint8_t *) &transmitMessage, sizeof(transmitMessage));
+    Serial.println("Transmitted message");
+    strcpy(transmitMessage.character, "");
     batteryLevel[i] = 100; //initialize battery level values for receiving
   }
 
+  esp_now_register_recv_cb(onDataRecv); //func called when we receive data
+  
+  Serial.println("Finished setting up ESPNOW");
   return 1;
 }
 
@@ -233,26 +245,32 @@ void handleDanceMove() {
       dance_bot->stopOscillation();
       dance_bot->enableDanceRoutine(false);
       transmitMessage.danceMove = STOP;
+      strcpy(transmitMessage.character, "Dance: STOP");
     }
     else if (dance_move == "Reset") {
       dance_bot->position0();
       transmitMessage.danceMove = RESET;
+      strcpy(transmitMessage.character, "Dance: RESET");
     }
     else if (dance_move == "Walk") {
       dance_bot->walk(-1, 1500, false);
       transmitMessage.danceMove = WALK;
+      strcpy(transmitMessage.character, "Dance: WALK");
     }
     else if (dance_move == "Hop") {
       dance_bot->hop(25, -1);
       transmitMessage.danceMove = HOP;
+      strcpy(transmitMessage.character, "Dance: HOP");
     }
     else if (dance_move == "Wiggle") {
       dance_bot->wiggle(30, -1);
       transmitMessage.danceMove = WIGGLE;
+      strcpy(transmitMessage.character, "Dance: WIGGLE");
     }
     else if (dance_move == "Ankles") {
       dance_bot->themAnkles(-1);
       transmitMessage.danceMove = ANKLES;
+      strcpy(transmitMessage.character, "Dance: ANKLES");
     }
     else {
       Serial.println("Dance move not recognized, ERROR too lit for this robot");
