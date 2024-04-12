@@ -51,7 +51,7 @@ O |  M3         M2  |O
   |                 |
   |                 |
 O |  M4         M1  |O
-   -------------------   
+   ------------------
         BACK
 
 Motor pinout:
@@ -76,7 +76,7 @@ Adafruit_DCMotor *FrontLeft= AFMS.getMotor(3);
 Adafruit_DCMotor *BackLeft = AFMS.getMotor(4);
 
 void setup() {
-  PS4.begin(); // address here should be 2 less than the one in SixAxis Pair Tool
+  PS4.begin(); // leave blank
   delay(100);
   AFMS.begin();
   delay(100);
@@ -107,8 +107,8 @@ void loop() {
     // FLBR = -((255*Rmagnitude) * sin(Rangle+(0.25*PI)));
     //^ prob wont need the negative sign on FLBR because orientation already flipped through hardware
 
-    FRBL = (255*Rmagnitude) * (sin(Rangle-(0.25*PI)));
-    FLBR = (255*Rmagnitude) * (sin(Rangle+(0.25*PI)));
+    FRBL = (100*Rmagnitude) * (sin(Rangle-(0.25*PI)));
+    FLBR = (100*Rmagnitude) * (sin(Rangle+(0.25*PI)));
 
     if (FRBL < 0){
       FrontRight->run(FORWARD);
@@ -140,52 +140,61 @@ void loop() {
       while(1) { 
         Mode = 1;
         getData();
-        Serial.print(Mode);
+        // Serial.print(Mode);
 
-        // printData();
+        printData();
         
         // calculate speed as function as magnitude of joystick
-        FRBRFLBL = (Rmagnitude * 255);
+        FRBRFLBL = (Rmagnitude * 100);
         
         FrontRight->setSpeed(FRBRFLBL);
         BackRight->setSpeed(FRBRFLBL);
         FrontLeft->setSpeed(FRBRFLBL);
         BackLeft->setSpeed(FRBRFLBL);
         
-
-        // rotate clockwise
-        if((5.497 <= Rangle) && (Rangle <= 0.785)) {
-          FrontLeft->run(BACKWARD);
-          BackLeft->run(BACKWARD);
-          FrontRight->run(FORWARD);
-          BackRight->run(FORWARD);
-        }
-        // forward
-        if((0.785 < Rangle) && (Rangle < 2.356)) {
-          FrontLeft->run(FORWARD);
-          BackLeft->run(FORWARD);
-          FrontRight->run(FORWARD);
-          BackRight->run(FORWARD);
-        }
-        // rotate counterclockwise
-        if((2.356 <= Rangle) && (Rangle <= 3.926)) {
-          FrontLeft->run(FORWARD);
-          BackLeft->run(FORWARD);
-          FrontRight->run(BACKWARD);
-          BackRight->run(BACKWARD);
-        }
-        // backward
-        if((3.926 < Rangle) && (Rangle < 5.497)) {
-          FrontLeft->run(BACKWARD);
-          BackLeft->run(BACKWARD);
-          FrontRight->run(BACKWARD);
-          BackRight->run(BACKWARD);
-        }
-
-
         if(PS4.Triangle()) {
           break;
         }
+        // rotate clockwise
+        if((5.497 <= Rangle) && (Rangle > 0) || (Rangle <= 0.785)) {
+          FrontLeft->run(BACKWARD);
+          BackLeft->run(BACKWARD);
+          FrontRight->run(FORWARD);
+          BackRight->run(FORWARD);
+          Serial.println("COUNTERCLOCKWISE");
+          continue;
+        }
+        // forward
+        else if((0.785 < Rangle) && (Rangle < 2.356)) {
+          FrontLeft->run(FORWARD);
+          BackLeft->run(FORWARD);
+          FrontRight->run(FORWARD);
+          BackRight->run(FORWARD);
+          Serial.println("FORWARD");
+          continue;
+        }
+
+        // backward
+        else if((3.926 < Rangle) && (Rangle < 5.497)) {
+          FrontLeft->run(BACKWARD);
+          BackLeft->run(BACKWARD);
+          FrontRight->run(BACKWARD);
+          BackRight->run(BACKWARD);
+          Serial.println("BACKWARD");
+          continue;
+        }
+                // rotate counterclockwise
+        else if(((2.356 <= Rangle) && (Rangle <= 3.926))) { // 
+          FrontLeft->run(FORWARD);
+          BackLeft->run(FORWARD);
+          FrontRight->run(BACKWARD);
+          BackRight->run(BACKWARD);
+          Serial.println("CLOCKWISE");
+          continue;
+        }
+
+
+
       }
     }
   }
