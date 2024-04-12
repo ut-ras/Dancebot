@@ -13,7 +13,8 @@
 #include <PowerController.h>
 
 //pin mappings
-#define ADC_IN 27
+//#define ADC_IN 27
+#define ADC_IN 33
 #define BAT_EN 4
 #define LATCH_OUT 5
 
@@ -44,17 +45,16 @@ void PowerController::endWiFiPowerSave(void){
 void PowerController::batteryADCInit(void){
     adcAttachPin(ADC_IN);
     pinMode(BAT_EN, OUTPUT);
-    digitalWrite(BAT_EN, 0); //disable battery lvl circuit
+    digitalWrite(BAT_EN, 0); //disable battery lvl circuit  CHANGE THIS BACK TO 0
 }
 
 float PowerController::calculateBatteryPercentage(void){
     digitalWrite(BAT_EN, 1); //enable battery lvl checker
-
     int adcValue = analogRead(ADC_IN);
     Serial.print("ADC value: "); Serial.println(adcValue);
 
     //ADC % -> Voltage [0, 3.3V] -> Battery Voltage {6.5, 8.4}
-    batteryPercentage = (adcValue / 4095) * 3.3 * 1.1 * 3;  //resistor divides by 3, 1.1 is scale factor to correct ADC reading
+    batteryPercentage = ((adcValue * 3.3 * 1.1 * 3) / 4095) * 100;  //resistor divides by 3, 1.1 is scale factor to correct ADC reading
     batteryPercentage = batteryPercentage / VOLTAGE_MAX;
     //batteryPercentage = 100 * (adcValue - BATTERY_MIN_ADC) / (BATTERY_MAX_ADC - BATTERY_MIN_ADC);
 
