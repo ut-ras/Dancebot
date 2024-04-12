@@ -1,9 +1,3 @@
-#include <PS4Controller.h> 
-#include <Adafruit_MotorShield.h>
-#include "utility/Adafruit_MS_PWMServoDriver.h"
-#include <Wire.h> //i2c library
-#include <WiFi.h>
-
 /*
 
 This documentation covers how to connect the PS4 controller to the ESP32, the ESP32 to the motor driver, and the driver to the moters.
@@ -62,14 +56,25 @@ RED - PWR A
 
 */
 
+#include <PS4Controller.h> 
+#include <Adafruit_MotorShield.h>
+#include "utility/Adafruit_MS_PWMServoDriver.h"
+#include <ESP32Servo.h> 
+#include <Wire.h> //i2c library
+#include <WiFi.h>
+
+#define servoPin 36
+
 int LeftX, LeftY, RightX, RightY, FRBL, FLBR, Mode;
 float Lmagnitude, Rmagnitude, Langle, Rangle;
+Servo myServo;
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
 Adafruit_DCMotor *BackRight = AFMS.getMotor(1);
 Adafruit_DCMotor *FrontRight = AFMS.getMotor(2);
 Adafruit_DCMotor *FrontLeft= AFMS.getMotor(3);
 Adafruit_DCMotor *BackLeft = AFMS.getMotor(4);
+
 
 void setup() {
   PS4.begin(); // leave blank
@@ -81,6 +86,8 @@ void setup() {
   Serial.println(WiFi.macAddress()); // print "MAC address" of ESP32
 
   Serial.println("Ready for controller connection!!"); 
+
+  myServo.attach(servoPin);
 
   // init all motors to drive forward
   BackRight->run(FORWARD);
@@ -107,6 +114,13 @@ void loop() {
         FrontLeft->setSpeed(FRBRFLBL);
         BackLeft->setSpeed(FRBRFLBL);
         
+        // spin belt
+        if(PS4.Cross() > 0) {
+          myServo.write(1750);
+        }
+        else {
+          myServo.write(1500);
+        }
         // rotate clockwise
         if((Rangle >= 5.497) && (Rangle < 6.28) || (Rangle <= 0.785) && (Rangle > 0)) {
           FrontLeft->run(FORWARD);
@@ -145,6 +159,7 @@ void loop() {
           continue;
         }
 
+
         // latch to omni drive
         if(PS4.Square()) {
           while(1) {
@@ -166,6 +181,7 @@ void loop() {
                 if (FRBL < 0){
                   FrontRight->run(FORWARD);
                   BackLeft->run(FORWARD);
+                  FRBL = FRBL * (-1);
                 }
                 else{
                   FrontRight->run(BACKWARD);
@@ -175,6 +191,7 @@ void loop() {
                 if (FLBR < 0) {
                   FrontLeft->run(FORWARD);
                   BackRight->run(FORWARD);
+                  FLBR = FLBR * (-1);
                 }
                 else{
                   FrontLeft->run(BACKWARD);
@@ -255,10 +272,10 @@ void printData(void) {
     Serial.print(Rmagnitude);
     Serial.print("  Rθ: ");
     Serial.print(Rangle);
-    // Serial.print(" FRBL: ");
-    // Serial.print(FRBL);
-    // Serial.print(" FLBR: ");
-    // Serial.print(FLBR);
+    Serial.print(" FRBL: ");
+    Serial.print(FRBL);
+    Serial.print(" FLBR: ");
+    Serial.print(FLBR);
     Serial.println();
     return;
 }
