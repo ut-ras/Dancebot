@@ -2,9 +2,7 @@
 #include <Adafruit_MotorShield.h>
 #include "utility/Adafruit_MS_PWMServoDriver.h"
 #include <Wire.h> //i2c library
-
 #include <WiFi.h>
-
 
 /*
 
@@ -25,8 +23,6 @@ Controller Bluetooth (BT) -> ESP32:
 PLEASE NOTE THAT ESP32FLASH MEMORY MAY NEED TO BE WIPED IF BLUETOOTH DOES NOT CONNECT (see https://randomnerdtutorials.com/esp32-erase-flash-memory/)
 - It seems you need to wipe the ESP32 flash if you connect the remote to another device (i.e. laptop) because something something BT client keys gone (it just works)
 - PS4 remote MUST be configured to search for MAC address of ESP32 through external application "Sixaxis Pair Tool"
-- Put ESP32 address in PS4.begin() 
-  - i.e. 
 - Specific MAC address pairs that worked for me (notice how ESP32's last octet is 2 less than the remote's):
   - ESP32 address the one printed through WiFi library
   - Remote address is one in SixAxis Pair Tool
@@ -95,52 +91,11 @@ void setup() {
 
 void loop() {
   if (PS4.isConnected()) {
-    Mode = 0;
-    getData();
-    printData();
-
-    //  FRBL: sin(angle−1/4π) * magnitude
-    //  FLBR: sin(angle+1/4π) * magnitude 
-  
-    // positive FRBL or FLBR goes BACKWARD!!
-    // FRBL = ((255*Rmagnitude) * sin(Rangle-(0.25*PI)));
-    // FLBR = -((255*Rmagnitude) * sin(Rangle+(0.25*PI)));
-    //^ prob wont need the negative sign on FLBR because orientation already flipped through hardware
-
-    FRBL = (100*Rmagnitude) * (sin(Rangle-(0.25*PI)));
-    FLBR = (100*Rmagnitude) * (sin(Rangle+(0.25*PI)));
-
-    if (FRBL < 0){
-      FrontRight->run(FORWARD);
-      BackLeft->run(FORWARD);
-    }
-    else{
-      FrontRight->run(BACKWARD);
-      BackLeft->run(BACKWARD);
-    }
-
-    if (FLBR < 0) {
-      FrontLeft->run(FORWARD);
-      BackRight->run(FORWARD);
-    }
-    else{
-      FrontLeft->run(BACKWARD);
-      BackRight->run(BACKWARD);
-    }
-    
-    FrontLeft->setSpeed(FLBR);
-    BackRight->setSpeed(FLBR);
-
-    FrontRight->setSpeed(FRBL);
-    BackLeft->setSpeed(FRBL);
-
-  // latch to normal drive on right joystick (partition joystick into 4 regions: rotate clockwise, forward, rotate counterclockwose, backward)
-    if(PS4.Square()) {
-      int FRBRFLBL;
-      while(1) { 
-        Mode = 1;
+    int FRBRFLBL;
+    while(1) {
+           
+        Mode = 0;
         getData();
-        // Serial.print(Mode);
 
         printData();
         
@@ -152,16 +107,13 @@ void loop() {
         FrontLeft->setSpeed(FRBRFLBL);
         BackLeft->setSpeed(FRBRFLBL);
         
-        if(PS4.Triangle()) {
-          break;
-        }
         // rotate clockwise
-        if((5.497 <= Rangle) && (Rangle > 0) || (Rangle <= 0.785)) {
-          FrontLeft->run(BACKWARD);
-          BackLeft->run(BACKWARD);
-          FrontRight->run(FORWARD);
-          BackRight->run(FORWARD);
-          Serial.println("COUNTERCLOCKWISE");
+        if((Rangle >= 5.497) && (Rangle < 6.28) || (Rangle <= 0.785) && (Rangle > 0)) {
+          FrontLeft->run(FORWARD);
+          BackLeft->run(FORWARD);
+          FrontRight->run(BACKWARD);
+          BackRight->run(BACKWARD);
+          Serial.println("CLOCKWISE");
           continue;
         }
         // forward
@@ -183,18 +135,63 @@ void loop() {
           Serial.println("BACKWARD");
           continue;
         }
-                // rotate counterclockwise
+        // rotate counterclockwise
         else if(((2.356 <= Rangle) && (Rangle <= 3.926))) { // 
-          FrontLeft->run(FORWARD);
-          BackLeft->run(FORWARD);
-          FrontRight->run(BACKWARD);
-          BackRight->run(BACKWARD);
-          Serial.println("CLOCKWISE");
+          FrontLeft->run(BACKWARD);
+          BackLeft->run(BACKWARD);
+          FrontRight->run(FORWARD);
+          BackRight->run(FORWARD);
+          Serial.println("COUNTERCLOCKWISE");
           continue;
         }
 
+        // latch to omni drive
+        if(PS4.Square()) {
+          while(1) {
+                Mode = 1;
+                getData();
+                printData();
 
+                //  FRBL: sin(angle−1/4π) * magnitude
+                //  FLBR: sin(angle+1/4π) * magnitude 
+              
+                // positive FRBL or FLBR goes BACKWARD!!
+                // FRBL = ((255*Rmagnitude) * sin(Rangle-(0.25*PI)));
+                // FLBR = -((255*Rmagnitude) * sin(Rangle+(0.25*PI)));
+                //^ prob wont need the negative sign on FLBR because orientation already flipped through hardware
 
+                FRBL = (100*Rmagnitude) * (sin(Rangle-(0.25*3.14)));
+                FLBR = (100*Rmagnitude) * (sin(Rangle+(0.25*3.14)));
+
+                if (FRBL < 0){
+                  FrontRight->run(FORWARD);
+                  BackLeft->run(FORWARD);
+                }
+                else{
+                  FrontRight->run(BACKWARD);
+                  BackLeft->run(BACKWARD);
+                }
+
+                if (FLBR < 0) {
+                  FrontLeft->run(FORWARD);
+                  BackRight->run(FORWARD);
+                }
+                else{
+                  FrontLeft->run(BACKWARD);
+                  BackRight->run(BACKWARD);
+                }
+                
+                FrontLeft->setSpeed(FLBR);
+                BackRight->setSpeed(FLBR);
+
+                FrontRight->setSpeed(FRBL);
+                BackLeft->setSpeed(FRBL);
+
+                
+                if(PS4.Triangle()) {
+                  break;
+                }
+        }
       }
     }
   }
@@ -220,6 +217,30 @@ float getMagnitude(int X, int Y) {
   return result/125;
 }
 
+void getData(void) {
+    // aliases for ease of typing
+    // LeftX = PS4.LStickX();
+    // LeftY = PS4.LStickY();
+    RightX = PS4.RStickX();
+    RightY = PS4.RStickY();
+
+    // deadzone box to mitigate drift effects
+    // if(abs(LeftX) < 20 && abs(LeftY) < 20) {
+    //   LeftX = 0;
+    //   LeftY = 0;
+    // }
+    if(abs(RightX) < 20 && abs(RightY) < 20) {
+      RightX = 0;
+      RightY = 0;
+    }
+    
+    // get joystick data
+    // Lmagnitude = getMagnitude(LeftX, LeftY);
+    Rmagnitude = getMagnitude(RightX, RightY);
+    // Langle = getAngle(LeftX, RightY);
+    Rangle = getAngle(RightX, RightY);
+}
+
 void printData(void) {
     // print controller data
     Serial.print("Mode: ");
@@ -242,26 +263,3 @@ void printData(void) {
     return;
 }
 
-void getData(void) {
-    // aliases for ease of typing
-    LeftX = PS4.LStickX();
-    LeftY = PS4.LStickY();
-    RightX = PS4.RStickX();
-    RightY = PS4.RStickY();
-
-    // deadzone box to mitigate drift effects
-    if(abs(LeftX) < 20 && abs(LeftY) < 20) {
-      LeftX = 0;
-      LeftY = 0;
-    }
-    if(abs(RightX) < 20 && abs(RightY) < 20) {
-      RightX = 0;
-      RightY = 0;
-    }
-    
-    // get joystick data
-    Lmagnitude = getMagnitude(LeftX, LeftY);
-    Rmagnitude = getMagnitude(RightX, RightY);
-    Langle = getAngle(LeftX, RightY);
-    Rangle = getAngle(RightX, RightY);
-}
