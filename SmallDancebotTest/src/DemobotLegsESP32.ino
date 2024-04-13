@@ -38,6 +38,7 @@
 #include <Arduino.h>
 #include "DancingServos.h"
 #include "WebController.h"
+#include "PowerController.h"
 #include "WiFi.h"
 #include "esp_now.h"
 
@@ -53,6 +54,7 @@ const char * pass = "cole1234";
 
 
 DancingServos* bot;
+PowerController* powerControl;
 
 long serverDelayEnd = 0;
 long serverCheckInterval = 1000;
@@ -83,14 +85,13 @@ void setup() {
   Serial.begin(115200);
   delay(500);
 
-  // Serial.println("I started setting up!");
+  printMACAddress();
+  Serial.println("I started setting up!");
 
   //[hipL, hipR, ankleL, ankleR]
   bot = new DancingServos(14, 13, 12, 15);
   calibrateTrims(bot);
   bot->position0();
-
-  setupESPNOW(bot);
   // Serial.println("Setting up WiFi...");
   // setupWiFi(WIFI_MODE, ssid, pass);       //Access Point or Station
   // setupWebServer(bot);                    //Set up the Web Server
@@ -98,6 +99,15 @@ void setup() {
 
   delay(500);
   bot->position0();
+
+  Serial.println("Starting Power");
+  powerControl = new PowerController();
+  powerControl->batteryADCInit();
+
+  Serial.println("Starting ESPNOW");
+  if(!setupESPNOW(bot, powerControl)){
+    Serial.println("Failed ESPNOW init...");
+  }
 }
 
 
@@ -124,7 +134,7 @@ void calibrateTrims(DancingServos* bot) {
   //[hipL, hipR, ankleL, ankleR]
   //CW - decrease value, CCW - increase value
   // bot->setTrims(70, 150, 25, 18);
-  bot->setTrims(170, 60, 25, 18);
+  bot->setTrims(170, 95, 25, 18);
 }
 
 

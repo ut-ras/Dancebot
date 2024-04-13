@@ -31,6 +31,7 @@
 #include <WiFiClient.h>
 #include <WebServer.h>
 #include <ESPmDNS.h>
+//#include <esp_now.h>
 #include <esp_now.h>
 #include "DancingServos.h"
 
@@ -46,6 +47,36 @@ String indexHTML();
 String getJavascript();
 
 
+/* Data Transmission */
+esp_now_peer_info_t peerInfo;
+#define NUM_ADDRESS 2 //# of clients / MAC addresses
+ /* add more MAC addresses below */
+uint8_t address0[] = {0x30, 0x83, 0x98, 0xDF, 0xC0, 0xAC}; // REPLACE WITH YOUR RECEIVER MAC Address
+uint8_t address1[] = {0x30, 0x83, 0x98, 0xDF, 0xC1, 0x68};
+uint8_t* addressArr[] = {address0, address1};
+struct_message transmitMessage;  //message sent to clients
+struct_message receivedMessage; //message received by clients
+
+//enums that correspond to dance moves
+enum{
+  STOP,
+  RESET,
+  WALK,
+  HOP,
+  WIGGLE,
+  ANKLES,
+  DEMO1,
+  DEMO2
+};
+// enum for return info
+enum{
+  None,
+  SetID,
+  BattLevel,
+}; 
+
+//battery levels for each dancebot
+float batteryLevel[NUM_ADDRESS];
 
 //Web Server
 const char * server_ssid;
@@ -62,20 +93,76 @@ WebServer server(port);
 //DancingServos object
 DancingServos* dance_bot;
 
-//ESP Receiver MAC addresses
- uint8_t DancebotReceiver1[] = {0xD8, 0xA0, 0x1D, 0x60, 0xF4, 0x10};
+void printMACAddress(){
+  Serial.println(WiFi.macAddress());
+}
+
+//callback when data is sent
+void onDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
+  //print MAC address
+  char macStr[18];
+  Serial.print("Transmitted to MAC: ");
+  snprintf(macStr, sizeof(macStr), "%02x:%02x:%02x:%02x:%02x:%02x",
+           mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4], mac_addr[5]);
+  Serial.println(macStr);
+
+  Serial.print("\r\nLast Packet Send Status:\t");
+  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+}
+
+//callback when data is received
+void onDataRecv(const uint8_t* mac, const uint8_t* incomingData, int len) {
+  memcpy(&receivedMessage, incomingData, sizeof(receivedMessage));
+  Serial.println("Received message...");
+  Serial.print("Bytes received: ");
+  Serial.println(len);
+
+  if(receivedMessage.status == BattLevel){
+    transmitMessage.batteryFlag = 0; //don't ask for battery level anymore (could be redundant if you always set flag = 0 each time you ask for battlvl)
+    Serial.print("Received battery level from Dancebot"); Serial.println(receivedMessage.id);
+    Serial.print("Battery Level is: "). Serial.println(receivedMessage.batteryLevel);
+    batteryLevel[receivedMessage.id] = receivedMessage.batteryLevel; //retrieve battery level from dancebot X
+  }
+}
 
 /* Setup Functions */
 
-//callback function that prints if the message from us was sent successfully for each client
-void data_sent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-  char address[18];
-  Serial.print("Sent to: ");
-  snprintf(address, sizeof(address), "%02x:%02x:%02x:%02x:%02x:%02x",
-           mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4], mac_addr[5]);
-  Serial.print(address);
-  Serial.print(" status:\t");
-  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+/* setupESPNOW 
+ * Sets up transmit and receive communication with Mothership
+*/
+int setupESPNOW(){
+  // Init ESP-NOW
+  if (esp_now_init() != 0) {
+    Serial.println("Error initializing ESP-NOW");
+    return 0;
+  }
+
+  esp_now_register_send_cb(onDataSent); //func called when we send data
+
+  //for all dancebots, assign IDs and add as peer
+  for(int i = 0; i < NUM_ADDRESS; i++){ 
+    memcpy(peerInfo.peer_addr, addressArr[i], sizeof(peerInfo.peer_addr));
+    peerInfo.channel = 0; 
+    peerInfo.encrypt = false;
+
+    // Add peer        
+    if (esp_now_add_peer(&peerInfo) != ESP_OK){
+      Serial.println("Failed to add peer");
+      return 0;
+    }
+    //assign ID of newly added peer
+    Serial.print("Assigning ID to Dancebot "); Serial.println(i);
+    transmitMessage.id = i;
+    transmitMessage.status = SetID;
+    esp_err_t result = esp_now_send(addressArr[i], (uint8_t *) &transmitMessage, sizeof(transmitMessage));
+    Serial.println("Transmitted message");
+    transmitMessage.status = None;
+    batteryLevel[i] = 100; //initialize battery level values for receiving
+  }
+
+  esp_now_register_recv_cb(onDataRecv); //func called when we receive data
+  Serial.println("Finished setting up ESPNOW");
+  return 1;
 }
 
 /* setupWiFi
@@ -188,21 +275,34 @@ void handleDanceMove() {
     if (dance_move == "Stop") {
       dance_bot->stopOscillation();
       dance_bot->enableDanceRoutine(false);
+      transmitMessage.danceMove = STOP;
+      strcpy(transmitMessage.character, "Dance: STOP");
+      transmitMessage.batteryFlag = 1; // ************REMOVE AFTER TESTING **************
     }
     else if (dance_move == "Reset") {
       dance_bot->position0();
+      transmitMessage.danceMove = RESET;
+      strcpy(transmitMessage.character, "Dance: RESET");
     }
     else if (dance_move == "Walk") {
       dance_bot->walk(-1, 1500, false);
+      transmitMessage.danceMove = WALK;
+      strcpy(transmitMessage.character, "Dance: WALK");
     }
     else if (dance_move == "Hop") {
       dance_bot->hop(25, -1);
+      transmitMessage.danceMove = HOP;
+      strcpy(transmitMessage.character, "Dance: HOP");
     }
     else if (dance_move == "Wiggle") {
       dance_bot->wiggle(30, -1);
+      transmitMessage.danceMove = WIGGLE;
+      strcpy(transmitMessage.character, "Dance: WIGGLE");
     }
     else if (dance_move == "Ankles") {
       dance_bot->themAnkles(-1);
+      transmitMessage.danceMove = ANKLES;
+      strcpy(transmitMessage.character, "Dance: ANKLES");
     }
     else {
       Serial.println("Dance move not recognized, ERROR too lit for this robot");
@@ -212,7 +312,25 @@ void handleDanceMove() {
   }
   else {
     dance_move = "ERROR Server did not find dance move argument in HTTP request";
+    strcpy(transmitMessage.character, "Server argument not found");
   }
+
+  //transmit message to all clients
+  for(int i = 0; i < NUM_ADDRESS; i++){
+    esp_err_t result = esp_now_send(addressArr[i], (uint8_t *) &transmitMessage, sizeof(transmitMessage));
+    if (result == ESP_OK) {
+      Serial.print("Sent Dancebot ");
+      Serial.print(i);
+      Serial.print(" msg with success");
+    }
+    else {
+      Serial.print("Error sending Dancebot ");
+      Serial.print(i);
+      Serial.println(" data");
+    }
+  }
+
+  //delay(1000);
 
   //handleRoot();     //now the form is handled with JS so there is no need to respond with index html
   server.send(200, "text/plain", dance_move);
@@ -228,10 +346,14 @@ void handleDance() {
     if (dance_routine.equals("Demo 1")) {
       dance_bot->setDanceRoutine(0);
       dance_bot->enableDanceRoutine(true);
+      //strcpy(message.character, "Demo 1");
+      transmitMessage.danceMove = DEMO1;
     }
     else if (dance_routine.equals("Demo 2")) {
       dance_bot->setDanceRoutine(1);
       dance_bot->enableDanceRoutine(true);
+      //strcpy(message.character, "Demo 2");
+      transmitMessage.danceMove = DEMO2;
     }
     else {
       Serial.println("Dance routine not recognized, ERROR too lit for this robot");
