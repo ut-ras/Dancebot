@@ -63,7 +63,7 @@ RED - PWR A
 #include <Wire.h> //i2c library
 #include <WiFi.h>
 
-#define servoPin 36
+#define servoPin 12
 
 int LeftX, LeftY, RightX, RightY, FRBL, FLBR, Mode;
 float Lmagnitude, Rmagnitude, Langle, Rangle;
@@ -117,9 +117,11 @@ void loop() {
         // spin belt
         if(PS4.Cross() > 0) {
           myServo.write(1750);
+          Serial.println("BELT SPINNING");
         }
         else {
           myServo.write(1500);
+          Serial.println("BELT STOPPED");
         }
         // rotate clockwise
         if((Rangle >= 5.497) && (Rangle < 6.28) || (Rangle <= 0.785) && (Rangle > 0)) {
