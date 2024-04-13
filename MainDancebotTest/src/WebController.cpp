@@ -34,6 +34,7 @@
 //#include <esp_now.h>
 #include <esp_now.h>
 #include "DancingServos.h"
+#include "WebController.h"
 
 
 void handleRoot();
@@ -77,6 +78,8 @@ enum{
 
 //battery levels for each dancebot
 float batteryLevel[NUM_ADDRESS];
+// status of each battery level request
+bool batteryLevelRecieved[NUM_ADDRESS]; 
 
 //Web Server
 const char * server_ssid;
@@ -120,8 +123,10 @@ void onDataRecv(const uint8_t* mac, const uint8_t* incomingData, int len) {
   if(receivedMessage.status == BattLevel){
     transmitMessage.batteryFlag = 0; //don't ask for battery level anymore (could be redundant if you always set flag = 0 each time you ask for battlvl)
     Serial.print("Received battery level from Dancebot"); Serial.println(receivedMessage.id);
-    Serial.print("Battery Level is: "). Serial.println(receivedMessage.batteryLevel);
+    Serial.print("Battery Level is: ");
+    Serial.print(receivedMessage.batteryLevel);
     batteryLevel[receivedMessage.id] = receivedMessage.batteryLevel; //retrieve battery level from dancebot X
+    batteryLevelRecieved[receivedMessage.id] = true; 
   }
 }
 
@@ -339,6 +344,7 @@ void handleDanceMove() {
 //dance routines    "/dance"
 void handleDance() {
   String dance_routine = "";
+
   if(server.hasArg("dance_routine")) {
     dance_routine = server.arg("dance_routine");
     Serial.println("Server received dance_routine: " + dance_routine);
@@ -369,8 +375,45 @@ void handleDance() {
 }
 
 void handleBattery() {
-  // TO DO
-  
+
+  // clear all the fields in batteryLevelReceived
+  for(int i = 0; i < NUM_ADDRESS; i++) {
+    batteryLevelRecieved[i] = false; 
+  }
+
+  // send request for battery levels to small robots, wait for response 
+  transmitMessage.batteryFlag = 1;
+  strcpy(transmitMessage.character, "Checking Battery Level");
+  for(int i = 0; i < NUM_ADDRESS; i++){
+    esp_err_t result = esp_now_send(addressArr[i], (uint8_t *) &transmitMessage, sizeof(transmitMessage));
+    if (result == ESP_OK) {
+      Serial.print("Sent Dancebot ");
+      Serial.print(i);
+      Serial.print(" msg with success");
+    }
+    else {
+      Serial.print("Error sending Dancebot ");
+      Serial.print(i);
+      Serial.println(" data");
+    }
+  }
+
+  // wait until battery levels are done being collected
+  bool battery_recieved = false; 
+  while(!battery_recieved) {
+    battery_recieved = batteryLevelRecieved[0]; 
+    for(int i = 1; i < NUM_ADDRESS; i++) {
+      battery_recieved = battery_recieved && batteryLevelRecieved[i]; 
+    }
+  }
+
+  // have all of the battery levels, send response
+  String message = ""; 
+  for(int i = 0; i < NUM_ADDRESS; i++) {
+    message += batteryLevel[i];
+    message += " "; 
+  }
+  server.send(200, "text/plain", message); 
 }
 
 void handleNotFound() {
@@ -439,17 +482,20 @@ String indexHTML() {
   htmlPage += String("</div>") +
                 "</div>" + 
                 
-              "</div>" +
+              "</div>";
 
-              // Battery Level
-              "<div id=\"battery-indicator\" style=\"display: flex; justify-content:center; flex-direction:column; width:50%; height:fit-content; align-items: center; margin: auto; padding: 10px; border-radius: 5px; background-color:#42f5ef\">" +
-                "<div id=\"battery-meter\" style=\"position:relative; width: 70%; margin:auto; background-color:white; padding:10px; align-items:center; border-radius:50px; text-align: center; overflow: hidden\">" +
-                  "<div id=\"battery-fill\" style=\"position:absolute; top:0; left: 0; height: 100%; width: 100%; background-color:aquamarine; transition: width 0.5s ease; z-index: 1;\"></div>" +
-                  "<span id=\"battery-percentage\" style=\"position: relative; margin: auto; z-index: 2\">100%</span>" +
-                "</div>" +
-              "</div>" +
+              // battery level (variable number of meters)
+              for(int i = 0; i < NUM_ADDRESS; i++) {
+                htmlPage += 
+                String("<div id=\"battery-indicator") + i + "\" style=\"display: flex; justify-content:center; flex-direction:column; width:50%; height:fit-content; align-items: center; margin: auto; padding: 10px; border-radius: 5px; background-color:#42f5ef\">" +
+                  "<div id=\"battery-meter" + i + "\" style=\"position:relative; width: 70%; margin:auto; background-color:white; padding:10px; align-items:center; border-radius:50px; text-align: center; overflow: hidden\">" +
+                    "<div id=\"battery-fill" + i + "\" style=\"position:absolute; top:0; left: 0; height: 100%; width: 100%; background-color:aquamarine; transition: width 0.5s ease; z-index: 1;\"></div>" +
+                    "<span id=\"battery-percentage" + i + "\" style=\"position: relative; margin: auto; z-index: 2\">100%</span>" +
+                  "</div>" +
+                "</div>";
+              }
                             
-              getJavascript() +
+            htmlPage += String("") + getJavascript() +
             "</body>";
   return htmlPage;
 }
@@ -464,9 +510,10 @@ String getJavascript() {
         "document.getElementById('current_move').innerText = 'Current Move: ' + move; " +
       "}" +
 
-      "function updateBatteryLevel(battery) {" +
-        "document.getElementById('battery').innerText = battery + '%';" +
-        "document.getElementById('battery_fill').width = battery + '%';" +
+      "function updateBatteryLevel(battery, id) {" +
+        "var batteryName = \"battery\" + id;" +
+        "document.getElementById(\"battery-percentage\" + batteryName).innerText = battery + '%';" +
+        "document.getElementById(\"battery-fill\" + batteryName).width = battery + '%';" +
       "}" +
 
       "function updateCurrentRoutiune(routine) {" +
@@ -505,7 +552,10 @@ String getJavascript() {
         "xhttp.send();" +
         "xhttp.onload = function() {" +
           "console.log('Battery Received: ' + xhttp.responseText);" +
-          "updateBatteryLevel(xhttp.responseText);" +
+          "var splitBatt = xhttp.response.split(\" \");" +
+          "for(let i = 0; i < splitBatt.length; i++) { " +
+            "updateBatteryLevel(splitBatt[i], i);" + 
+          "}" +
         "}" +
       "}" + 
 
