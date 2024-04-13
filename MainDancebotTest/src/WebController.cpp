@@ -68,6 +68,12 @@ enum{
   DEMO1,
   DEMO2
 };
+// enum for return info
+enum{
+  None,
+  SetID,
+  BattLevel,
+}; 
 
 //battery levels for each dancebot
 float batteryLevel[NUM_ADDRESS];
@@ -108,15 +114,13 @@ void onDataRecv(const uint8_t* mac, const uint8_t* incomingData, int len) {
   Serial.println("Received message...");
   Serial.print("Bytes received: ");
   Serial.println(len);
-  Serial.print("Battery Level: ");
-  Serial.println(receivedMessage.batteryLevel);
 
-  if(receivedMessage.character == "GetBattLvl"){
+  if(receivedMessage.status == BattLevel){
     transmitMessage.batteryFlag = 0; //don't ask for battery level anymore (could be redundant if you always set flag = 0 each time you ask for battlvl)
     Serial.print("Received battery level from Dancebot"); Serial.println(receivedMessage.id);
+    Serial.print("Battery Level is: "). Serial.println(receivedMessage.batteryLevel);
     batteryLevel[receivedMessage.id] = receivedMessage.batteryLevel; //retrieve battery level from dancebot X
   }
-  
 }
 
 /* Setup Functions */
@@ -147,15 +151,14 @@ int setupESPNOW(){
     //assign ID of newly added peer
     Serial.print("Assigning ID to Dancebot "); Serial.println(i);
     transmitMessage.id = i;
-    strcpy(transmitMessage.character, "SetID");
+    transmitMessage.status = SetID;
     esp_err_t result = esp_now_send(addressArr[i], (uint8_t *) &transmitMessage, sizeof(transmitMessage));
     Serial.println("Transmitted message");
-    strcpy(transmitMessage.character, "");
+    transmitMessage.status = None;
     batteryLevel[i] = 100; //initialize battery level values for receiving
   }
 
   esp_now_register_recv_cb(onDataRecv); //func called when we receive data
-  
   Serial.println("Finished setting up ESPNOW");
   return 1;
 }
@@ -246,6 +249,7 @@ void handleDanceMove() {
       dance_bot->enableDanceRoutine(false);
       transmitMessage.danceMove = STOP;
       strcpy(transmitMessage.character, "Dance: STOP");
+      transmitMessage.batteryFlag = 1; // ************REMOVE AFTER TESTING **************
     }
     else if (dance_move == "Reset") {
       dance_bot->position0();

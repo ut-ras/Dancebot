@@ -67,6 +67,12 @@ enum{
   DEMO1,
   DEMO2
 };
+// enum for return info
+enum{
+  None,
+  SetID,
+  BattLevel,
+}; 
 
 //Web Server
 const char * server_ssid;
@@ -103,18 +109,22 @@ void onDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len){
   Serial.println("Received message...");
   Serial.print("Bytes received: ");
   Serial.println(len);
-  Serial.print("Message is: ");
+  Serial.print("Status is: ");
+  Serial.println(receivedMessage.status);
+  Serial.println("Message is: ");
   Serial.println(receivedMessage.character);
   Serial.println();
 
   //if transmitter requested battery level, send value, our ID, and acknowledgement
   if(receivedMessage.batteryFlag){
+    Serial.println("Sending battery level...");
     transmitMessage.id = dancebotID;
     transmitMessage.batteryLevel = power->calculateBatteryPercentage();
-    strcpy(transmitMessage.character, "GetBattLvl");
+    transmitMessage.status = BattLevel;
     esp_err_t result = esp_now_send(address, (uint8_t *) &transmitMessage, sizeof(transmitMessage));
   }
-  if((receivedMessage.character == "SetID") && setIDOnce){ //only set ID once
+  if(receivedMessage.status == SetID){ //only set ID once
+    Serial.print("I set my own ID: "); Serial.println(receivedMessage.id);
     dancebotID = receivedMessage.id;
     setIDOnce = 0;
   }

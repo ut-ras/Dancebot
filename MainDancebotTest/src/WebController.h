@@ -8,7 +8,8 @@ typedef struct struct_message {
   int danceMove;
   bool batteryFlag;
   float batteryLevel;
-  char character[32];
+  int status; 
+  char character[32]; 
 } struct_message;
 
 void printMACAddress();
