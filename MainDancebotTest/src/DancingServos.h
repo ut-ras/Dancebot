@@ -14,12 +14,21 @@
 #define DANCINGSERVOS
 
 #include "Oscillator.h"
-
+#include <Adafruit_NeoPixel.h>
 
 class DancingServos {
 public:
   DancingServos(int hL, int hR, int aL, int aR);
   void setTrims(int tHL, int tHR, int tAL, int tAR);
+
+  //Neppixel LED functions
+  void setupNeopixel(Adafruit_NeoPixel pixels_);
+  uint32_t wheel(int8_t WheelPos);
+  void rainbow(uint8_t wait);
+  void rainbowCycle(uint8_t wait);
+  void rainbowCycleslow(uint8_t wait);
+  void rainbowHold(uint8_t wait);
+
 
   //dance moves - movements to choose from, calling one of these functions will start a dance, loopOscillation will run it each loop
   void position0();

@@ -8,6 +8,19 @@
 
 #include <Arduino.h>
 #include "DancingServos.h"
+#include <Adafruit_NeoPixel.h>
+
+// Which pin on the Arduino is connected to the NeoPixels?
+#define LED_PIN1     25
+#define LED_PIN2     26
+
+// How many NeoPixels are attached to the Arduino?
+#define LED_COUNT  1
+
+// NeoPixel brightness, 0 (min) to 255 (max)
+#define BRIGHTNESS 50 // Set BRIGHTNESS to about 1/5 (max = 255)
+
+Adafruit_NeoPixel pixels;
 
 //SETUP FUNCTIONS
 DancingServos::DancingServos(int hL, int hR, int aL, int aR) {
@@ -29,6 +42,73 @@ void DancingServos::setTrims(int tHL, int tHR, int tAL, int tAR) {
   osc[1]->setTrim(tHR);
   osc[2]->setTrim(tAL);
   osc[3]->setTrim(tAR);
+}
+
+//NEOPIXEL LED FUNCTIONS
+void DancingServos::setupNeopixel(Adafruit_NeoPixel pixels_){
+  pixels = pixels_;
+  pixels.begin();
+  pixels.setBrightness(40); // 1/3 brightness
+}
+
+// Input a value 0 to 255 to get a color value.
+// The colours are a transition r - g - b - back to r.
+uint32_t DancingServos::wheel(int8_t WheelPos) {
+  if(WheelPos < 85) {
+   return pixels.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
+  } else if(WheelPos < 170) {
+   WheelPos -= 85;
+   return pixels.Color(255 - WheelPos * 3, 0, WheelPos * 3);
+  } else {
+   WheelPos -= 170;
+   return pixels.Color(0, WheelPos * 3, 255 - WheelPos * 3);
+  }
+}
+
+void DancingServos::rainbow(uint8_t wait) {
+  uint16_t i, j;
+
+  for(j=0; j<256; j++) {
+    for(i=0; i<pixels.numPixels(); i++) {
+      pixels.setPixelColor(i, wheel((i+j) & 255));
+    }
+    pixels.show();
+    //delay(wait);
+  }
+}
+
+void DancingServos::rainbowCycle(uint8_t wait) {
+  uint16_t r, j;
+
+  for(j=0; j<256*6; j++) { // 6 cycles of all colors on wheel
+    for(r=0; r< pixels.numPixels(); r++) {
+      pixels.setPixelColor(r, wheel(((r * 256 / pixels.numPixels()) + j) & 255));
+    }
+    pixels.show();
+    //delay(wait);
+  }
+}
+void DancingServos::rainbowCycleslow(uint8_t wait) {
+  uint16_t r, j;
+
+  for(j=0; j<256*3; j++) { // 3 cycles of all colors on wheel
+    for(r=0; r< pixels.numPixels(); r++) {
+      pixels.setPixelColor(r, wheel(((r * 256 / pixels.numPixels()) + j) & 255));
+    }
+    pixels.show();
+    //delay(wait);
+  }
+}
+void DancingServos::rainbowHold(uint8_t wait) {
+  uint16_t r, j;
+
+  for(j=0; j<256*1; j++) { // 3 cycles of all colors on wheel
+    for(r=0; r< pixels.numPixels(); r++) {
+      pixels.setPixelColor(r, wheel(((r * 256 / pixels.numPixels()) + j) & 255));
+    }
+    pixels.show();
+    //delay(wait);
+  }
 }
 
 

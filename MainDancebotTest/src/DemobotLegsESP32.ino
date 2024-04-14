@@ -36,15 +36,11 @@
 
  
 #include <Arduino.h>
+#include "Adafruit_NeoPixel.h"
 #include "DancingServos.h"
 #include "WebController.h"
 #include "WiFi.h"
 #include <esp_now.h>
-
-//*********ERASE THIS ***********
-#include <ESP32Servo.h>
-Servo myservo;
-
 
 //WiFi Settings
 //STA = connect to a WiFi network with name ssid
@@ -62,7 +58,10 @@ long serverCheckInterval = 1000;
 
 WiFiServer wifiServer(80);
 
-
+Adafruit_NeoPixel pixels_(7, 26, NEO_GRB + NEO_KHZ800);
+uint32_t prevTime;
+uint8_t mode;
+int32_t color;
 
 void setup() {
   Serial.begin(115200);
@@ -90,6 +89,9 @@ void setup() {
 
   delay(500);
   bot->position0();
+
+  //setup Neopixel LEDs
+  bot->setupNeopixel(pixels_);
 }
 
 int pos = 0;
@@ -104,6 +106,38 @@ void loop() {
   if (!bot->isOscillating() || millis() > serverDelayEnd) {
     serverDelayEnd = millis() + serverCheckInterval;
     loopWebServer();
+  }
+
+  uint8_t  i;
+  uint32_t t;
+
+  switch(mode) {
+   case 0: //rainbow hold
+    bot->rainbowHold(20);
+    //delay(500); make loop for delay
+    break;
+
+   case 1: //rainbow cycle slow
+    bot->rainbowCycleslow(20);
+    //delay(50);
+    break; 
+
+   case 2: //rainbow cycle fast 
+    bot->rainbowCycle(5);
+    //delay(50);
+    break;
+  }
+
+  //t = millis(); figure out milisecond counter
+  if((t - prevTime) > 8000) {      // Every 8 seconds...
+    mode++;                        // Next mode
+    if(mode > 3) {                 // End of modes?
+      mode = 0;                    // Start modes over
+      color >>= 8;                 // Next color R->G->B
+      if(!color) color = 0xB300A4; // Reset color
+    }
+     for(i=0; i<32; i++) pixels_.setPixelColor(i, 0);
+    prevTime = t;
   }
 }
 
