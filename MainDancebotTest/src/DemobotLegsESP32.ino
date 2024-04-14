@@ -66,59 +66,45 @@ WiFiServer wifiServer(80);
 
 void setup() {
   Serial.begin(115200);
-  myservo.setPeriodHertz(50);    // standard 50 hz servo
-	myservo.attach(12, 1000, 2000); // 8************ERASE THIS **************
 
-  //printMACAddress();
+  printMACAddress();
 
   /* Data Transmission Setup*/
   //Set device as a Wi-Fi Station AND Wi-Fi Access Point
-  // WiFi.mode(WIFI_AP_STA);
+  WiFi.mode(WIFI_AP_STA);
 
-  // if(!setupESPNOW()){
-  //   Serial.println("Failed ESPNOW init...");
-  //   return;
-  // }
+  if(!setupESPNOW()){
+    Serial.println("Failed ESPNOW init...");
+    return;
+  }
 
-  // //[hipL, hipR, ankleL, ankleR]
-  // bot = new DancingServos(14, 13, 12, 15);
-  // calibrateTrims(bot);
-  // bot->position0();
+  //[hipL, hipR, ankleL, ankleR]
+  bot = new DancingServos(14, 13, 12, 15);
+  calibrateTrims(bot);
+  bot->position0();
 
-  // Serial.println("Setting up WiFi...");
-  // setupWiFi(WIFI_MODE, ssid, pass);       //Access Point or Station
-  // setupWebServer(bot);                    //Set up the Web Server
-  // Serial.println("Finished setting up WiFi!");
+  Serial.println("Setting up WiFi...");
+  setupWiFi(WIFI_MODE, ssid, pass);       //Access Point or Station
+  setupWebServer(bot);                    //Set up the Web Server
+  Serial.println("Finished setting up WiFi!");
 
-  // // pinMode(LED, OUTPUT);
-  // // digitalWrite(LED, LOW);
-
-  // delay(500);
-  // bot->position0();
+  delay(500);
+  bot->position0();
 }
 
 int pos = 0;
 
 void loop() {  
-for (pos = 0; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
-		// in steps of 1 degree
-		myservo.write(pos);    // tell servo to go to position in variable 'pos'
-		delay(15);             // waits 15ms for the servo to reach the position
-	}
-	for (pos = 180; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
-		myservo.write(pos);    // tell servo to go to position in variable 'pos'
-		delay(15);             // waits 15ms for the servo to reach the position
-	}
   //loop the motors and check for web server traffic
-  // bot->loopOscillation();
+  bot->loopOscillation();
 
-  // //check if ready to start next move in dance
-  // bot->loopDanceRoutines();
+  //check if ready to start next move in dance
+  bot->loopDanceRoutines();
   
-  // if (!bot->isOscillating() || millis() > serverDelayEnd) {
-  //   serverDelayEnd = millis() + serverCheckInterval;
-  //   loopWebServer();
-  // }
+  if (!bot->isOscillating() || millis() > serverDelayEnd) {
+    serverDelayEnd = millis() + serverCheckInterval;
+    loopWebServer();
+  }
 }
 
 
