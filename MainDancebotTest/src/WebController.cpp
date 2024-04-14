@@ -65,8 +65,28 @@ enum{
   HOP,
   WIGGLE,
   ANKLES,
+  // dev notes: new moves below:
+  LEFT_HEELTOE,
+  RIGHT_HEELTOE,
+  LEFT_STANK,
+  RIGHT_STANK,
+  BWALK,
+  WAVE,
+
+  // dev notes: TEST MOVES below:
+  // ANKLES_TEST,
+  // ANKLES_PHASE,
+  // ANKLES_OFFSET,
+  // LEGS,
+  // LEGS_PHASE,
+  // LEGS_OFFSET,
+
   DEMO1,
-  DEMO2
+  DEMO2,
+
+  // dev notes: new dance routines below:
+  DEMO3,
+  DEMO4
 };
 // enum for return info
 enum{
@@ -257,12 +277,17 @@ void handleDanceMove() {
       strcpy(transmitMessage.character, "Dance: RESET");
     }
     else if (dance_move == "Walk") {
-      dance_bot->walk(-1, 1500, false);
+      // dev notes: jank ass changes
+      // dance_bot->walk(-1, 1500, false);
+      dance_bot->walk(-1, 1500, true);
+      // message.integer = WALK;
       transmitMessage.danceMove = WALK;
       strcpy(transmitMessage.character, "Dance: WALK");
     }
     else if (dance_move == "Hop") {
-      dance_bot->hop(25, -1);
+      // dance_bot->hop(25, -1);
+      dance_bot->hop(40, -1);
+      // message.integer = HOP;
       transmitMessage.danceMove = HOP;
       strcpy(transmitMessage.character, "Dance: HOP");
     }
@@ -276,6 +301,58 @@ void handleDanceMove() {
       transmitMessage.danceMove = ANKLES;
       strcpy(transmitMessage.character, "Dance: ANKLES");
     }
+    // dev notes: new moves below:
+    else if (dance_move == "Left Heel Toe") {
+      dance_bot->heel_toe(-1, true);
+      message.integer = LEFT_HEELTOE;
+    }
+    else if (dance_move == "Right Heel Toe") {
+      dance_bot->heel_toe(-1, false);
+      message.integer = RIGHT_HEELTOE;
+    }
+    else if (dance_move == "Left Stank") {
+      dance_bot->stank(-1, true);
+      message.integer = LEFT_STANK;
+    }
+    else if (dance_move == "Right Stank") {
+      dance_bot->stank(-1, false);
+      message.integer = RIGHT_STANK;
+    }
+    else if (dance_move == "Backwards Walk") {
+      // dev notes: more jank changes
+      // dance_bot->walk(-1, 1500, true);
+      dance_bot->walk(-1, 1500, false);
+      message.integer = BWALK;
+    }
+    else if (dance_move == "Wave") {
+      dance_bot->wave(40, -1);
+      message.integer = WAVE;
+    }
+    // dev notes: TEST MOVES below:
+    // else if (dance_move == "ankles") {
+    //   dance_bot->ankles(-1);
+    //   message.integer = ANKLES_TEST;
+    // }
+    // else if (dance_move == "ankles_phase") {
+    //   dance_bot->ankles_phase(-1);
+    //   message.integer = ANKLES_PHASE;
+    // }
+    // else if (dance_move == "ankles_offset") {
+    //   dance_bot->ankles_offset(-1);
+    //   message.integer = ANKLES_OFFSET;
+    // }
+    // else if (dance_move == "legs") {
+    //   dance_bot->legs(-1);
+    //   message.integer = LEGS;
+    // }
+    // else if (dance_move == "legs_phase") {
+    //   dance_bot->legs_phase(-1);
+    //   message.integer = LEGS_PHASE;
+    // }
+    // else if (dance_move == "legs_offset") {
+    //   dance_bot->legs_offset(-1);
+    //   message.integer = LEGS_OFFSET;
+    // }
     else {
       Serial.println("Dance move not recognized, ERROR too lit for this robot");
       handleUnknownMove();
@@ -327,6 +404,19 @@ void handleDance() {
       //strcpy(message.character, "Demo 2");
       transmitMessage.danceMove = DEMO2;
     }
+
+    // dev notes: new dance rountines
+    else if (dance_routine.equals("Demo 3")) {
+      dance_bot->setDanceRoutine(2);
+      dance_bot->enableDanceRoutine(true);
+      message.integer = DEMO3;
+    }
+    else if (dance_routine.equals("Demo 4")) {
+      dance_bot->setDanceRoutine(3);
+      dance_bot->enableDanceRoutine(true);
+      message.integer = DEMO4;
+    }
+
     else {
       Serial.println("Dance routine not recognized, ERROR too lit for this robot");
       handleUnknownMove();

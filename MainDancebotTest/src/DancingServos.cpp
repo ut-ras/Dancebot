@@ -185,6 +185,12 @@ void DancingServos::loopDanceRoutines() {
         demo1(); break;
       case 1:
         demo2(); break;
+
+      // dev notes: UPDATE FOR NEW DANCE ROUTINES
+      case 2:
+        demo3(); break;
+      case 3: 
+        demo4(); break;
     }
   }
 }
@@ -218,10 +224,13 @@ void DancingServos::themAnkles(int cycles) {
   int amp[4] = {0, 0, 20, 20};
   int off[4] = {0, 0, 0, 0};
   double ph0[4] = {0, 0, 0, 0};
-  startOscillation(amp, off, ph0, 3000, cycles);
+  // startOscillation(amp, off, ph0, 3000, cycles);
+  startOscillation(amp, off, ph0, 1500, cycles);
+
 }
 
 //Walk forward, adjust speed with T
+// walk backwards by calling this with reverse = true
 void DancingServos::walk(float cycles, int period, bool reverse) {
   int rev = 1;
   if (reverse) {rev = -1;}
@@ -233,12 +242,19 @@ void DancingServos::walk(float cycles, int period, bool reverse) {
 
 //simultaneous ankles
 void DancingServos::hop(int height, int cycles) {
-  int amp[4] = {0, 0, height, height};
-  int off[4] = {0, 0, -height, height};
-  double ph0[4] = {0, 0, degToRad(-90), degToRad(90)};
-  for (int i = 0; i < 4; i++) {osc[i]->setRev(true);}
-  startOscillation(amp, off, ph0, 2000, cycles);
-  for (int i = 0; i < 4; i++) {osc[i]->setRev(false);}
+
+  // dev notes: preferably angle set to 30
+  int amp[4] = {0, 0, height, -height};
+  int off[4] = {0, 0, height, -height};
+  double ph0[4] = {0, 0, 0, 0};
+  startOscillation(amp, off, ph0, 1500, cycles);
+
+  // int amp[4] = {0, 0, height, height};
+  // int off[4] = {0, 0, -height, height};
+  // double ph0[4] = {0, 0, degToRad(-90), degToRad(90)};
+  // for (int i = 0; i < 4; i++) {osc[i]->setRev(true);}
+  // startOscillation(amp, off, ph0, 2000, cycles);
+  // for (int i = 0; i < 4; i++) {osc[i]->setRev(false);}
 }
 
 //simultaneous hips
@@ -249,7 +265,118 @@ void DancingServos::wiggle(int angle, int cycles) {
   startOscillation(amp, off, ph0, 2000, cycles);
 }
 
+// dev notes: goals for the future
+// 1. add new dance moves and refine
+// 2. overhaul dance servo system(?)
+// 3. coordinate multiple bots together
+//    (modifications in wifi and beacons)
 
+// "hip toe" dance move
+void DancingServos::heel_toe(int cycles, bool left_direction) {
+  int amp[4] = {20, -20, 0, 0};
+
+  if (left_direction) {
+    amp[2] = -40;
+    amp[3] = -40;
+  } else {
+    amp[2] = 40;
+    amp[3] = 40;
+  }
+
+  // since toes initially pointed inwards?
+  int off[4] = {0, 0, 0, 0};
+  double ph0[4] = {0, 0, 0, 0};
+
+  startOscillation(amp, off, ph0, 2000, cycles);
+  // only reverse the ankles for second part?
+  // for (int i = 2; i < 4; i++) {osc[i]->setRev(true);}
+}
+
+
+// "stank" dance move
+void DancingServos::stank(int cycles, bool left_ankle) {
+  int amp[4] = {0, 0, 0, 0};
+  double ph0[4] = {0, 0, degToRad(90), 0};
+
+  if (left_ankle) {
+    amp[0] = -40;
+    amp[2] = 30;
+
+    ph0[2] = degToRad(90);
+  } else {
+    amp[1] = 40;
+    amp[3] = 30;
+
+    ph0[3] = degToRad(90);
+  }
+
+  // presumably start from resting position
+  int off[4] = {0, 0, 0, 0};
+  // double ph0[4] = {0, 0, degToRad(90), 0};
+
+  startOscillation(amp, off, ph0, 2000, cycles);
+}
+
+
+// "wave" dance move
+void DancingServos::wave(int angle, int cycles) {
+
+  // dev notes: slightly dumb way of specifying degree of motion
+  // but for wave, the angle ~ 45 deg
+
+  int amp[4] = {0, 0, angle, angle};
+  // int off[4] = {0, 0, -angle, angle};
+  int off[4] = {0, 0, angle, -angle};
+  double ph0[4] = {0, 0, 0, degToRad(90)};
+  startOscillation(amp, off, ph0, 2000, cycles);
+}
+
+// void DancingServos::shimmy(int angle, int cycles)
+// void DancingServos::ketou(int cycles) 
+
+// dev notes: TEST MOVES
+void DancingServos::ankles(int cycles) {
+  int amp[4] = {0, 0, 45, -45};
+  int off[4] = {0, 0, 0, 0};
+  double ph0[4] = {0, 0, 0, 0};
+  startOscillation(amp, off, ph0, 2000, cycles);
+}
+
+void DancingServos::ankles_phase(int cycles) {
+  int amp[4] = {0, 0, 40, -40};
+  int off[4] = {0, 0, 0, 0};
+  double ph0[4] = {0, 0, 0, degToRad(90)};
+  startOscillation(amp, off, ph0, 2000, cycles);
+}
+
+void DancingServos::ankles_offset(int angle, int cycles) {
+  // dev notes: preferably angle set to 40
+  int amp[4] = {0, 0, angle, -angle};
+  int off[4] = {0, 0, angle, -angle};
+  double ph0[4] = {0, 0, 0, 0};
+  startOscillation(amp, off, ph0, 2000, cycles);
+}
+
+void DancingServos::legs(int cycles) {
+  int amp[4] = {40, -40, 0, 0};
+  int off[4] = {0, 0, 0, 0};
+  double ph0[4] = {0, 0, 0, 0};
+  startOscillation(amp, off, ph0, 2000, cycles);
+}
+
+void DancingServos::legs_phase(int cycles) {
+  int amp[4] = {40, -40, 0, 0};
+  int off[4] = {0, 0, 0, 0};
+  double ph0[4] = {0, degToRad(90), 0, 0};
+  startOscillation(amp, off, ph0, 2000, cycles);
+}
+
+void DancingServos::legs_offset(int cycles) {
+  int amp[4] = {20, 20, 0, 0};
+  int off[4] = {20, 0, 0, 0};
+  double ph0[4] = {0, 0, 0, 0};
+  startOscillation(amp, off, ph0, 2000, cycles);
+}
 
 //DANCE ROUTINES
 
@@ -280,8 +407,38 @@ void DancingServos::demo2() {
   }
 }
 
+// dev notes: new demos for showcase?
+void DancingServos::demo3() {
+  static int i = 0;
+  static int numMoves = 9;
+  if (!isOscillating()) {
+    // dev notes: walk is now reverse?
+    if (i == 0)         walk(2, 1500, false);
+    else if (i == 1)    heel_toe(1, true);
+    else if (i == 2)    heel_toe(1, false);
+    else if (i == 3)    walk(2, 1500, true);
+    else if (i == 4)    stank(1, true);
+    else if (i == 5)    stank(1, false);
+    else if (i == 6)    wave(40, 1);
+    else if (i == 7)    hop(40, 2);
+    else if (i == 8)    wiggle(30, 2);
+    i = (i + 1) % numMoves;
+  }
+}
 
-
+void DancingServos::demo4() {
+  static int i = 0;
+  static int numMoves = 6;
+  if (!isOscillating()) {
+    if (i == 0)         walk(1, 1500, false);
+    else if (i == 1)    walk(1, 1500, true);
+    else if (i == 2)    wiggle(30, 2);
+    else if (i == 3)    wave(40, 2);
+    else if (i == 4)    hop(40, 2);
+    else if (i == 5) {  themAnkles(1);    }
+    i = (i + 1) % numMoves;
+  }
+}
 
 
 //INFO
