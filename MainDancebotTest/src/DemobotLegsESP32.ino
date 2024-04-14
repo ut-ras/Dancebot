@@ -135,12 +135,16 @@ void calibrateTrims(DancingServos* bot) {
 
   // dev notes: new trims because the screw is stripped
 
+  // dev notes: front-end trim adjustment and save to flash memory
 
   // dev notes: bot 1
-  // bot->setTrims(165, 100, 160, 20);
+  bot->setTrims(165, 100, 160, 20);
 
   // dev notes: bot 2
-  bot->setTrims(125, 75, 130, 130); 
+  // bot->setTrims(125, 75, 130, 130); 
+
+  // dev notes: bot 3
+  // bot->setTrims(165, 100, 25, 10);
 
   //bot->setTrims(95, 90, 130, 120); //big dancebot
   //bot->setTrims(170, 60, 25, 18); //small dancebot

@@ -76,7 +76,11 @@ enum{
   // LEGS_OFFSET,
 
   DEMO1,
-  DEMO2
+  DEMO2,
+
+  // dev notes: new dance routines below:
+  DEMO3,
+  DEMO4
 };
 
 //Web Server
@@ -188,11 +192,14 @@ void handleDanceMove() {
       message.integer = RESET;
     }
     else if (dance_move == "Walk") {
-      dance_bot->walk(-1, 1500, false);
+      // dev notes: jank ass changes
+      // dance_bot->walk(-1, 1500, false);
+      dance_bot->walk(-1, 1500, true);
       message.integer = WALK;
     }
     else if (dance_move == "Hop") {
-      dance_bot->hop(25, -1);
+      // dance_bot->hop(25, -1);
+      dance_bot->hop(40, -1);
       message.integer = HOP;
     }
     else if (dance_move == "Wiggle") {
@@ -221,7 +228,9 @@ void handleDanceMove() {
       message.integer = RIGHT_STANK;
     }
     else if (dance_move == "Backwards Walk") {
-      dance_bot->walk(-1, 1500, true);
+      // dev notes: more jank changes
+      // dance_bot->walk(-1, 1500, true);
+      dance_bot->walk(-1, 1500, false);
       message.integer = BWALK;
     }
     else if (dance_move == "Wave") {
@@ -297,6 +306,19 @@ void handleDance() {
       //strcpy(message.character, "Demo 2");
       message.integer = DEMO2;
     }
+
+    // dev notes: new dance rountines
+    else if (dance_routine.equals("Demo 3")) {
+      dance_bot->setDanceRoutine(2);
+      dance_bot->enableDanceRoutine(true);
+      message.integer = DEMO3;
+    }
+    else if (dance_routine.equals("Demo 4")) {
+      dance_bot->setDanceRoutine(3);
+      dance_bot->enableDanceRoutine(true);
+      message.integer = DEMO4;
+    }
+
     else {
       Serial.println("Dance routine not recognized, ERROR too lit for this robot");
       handleUnknownMove();

@@ -28,15 +28,15 @@ public:
   void hop(int height, int times);
   void wiggle(int angle, int times);
 
+  // dev notes: new dance moves
   void heel_toe(int cycles, bool left_direction);
   void stank(int cycles, bool left_ankle);
-  void simpler_hop(int angle, int cycles);
   void wave(int angle, int cycles);
 
   // TEST MOVES
   void ankles(int cycles);
   void ankles_phase(int cycles);
-  void ankles_offset(int cycles);
+  void ankles_offset(int angle, int cycles);
   void legs(int cycles);
   void legs_phase(int cycles);
   void legs_offset(int cycles);
@@ -44,6 +44,10 @@ public:
   //dance routines - run once per loop, also call loopOscillation as normal
   void demo1();
   void demo2();
+
+  // dev notes: new dance routines
+  void demo3();
+  void demo4();
 
   //functions to interact with the four Oscillators
   void startOscillation(int amp[4], int off[4], double ph0[4], int period, float cycles);
@@ -83,9 +87,10 @@ private:
 
   bool doDanceRoutine = false;
   int currentDanceRoutine = 0;
-  int numDanceRoutines = 2;
-  String danceRoutines[2] = {"Demo 1", "Demo 2"};
-  void (DancingServos::* danceRoutineFunctions[2])() = {&DancingServos::demo1, &DancingServos::demo2};    //TODO use in loopDanceRoutines
+  // dev notes: new demos below:
+  int numDanceRoutines = 4;
+  String danceRoutines[4] = {"Demo 1", "Demo 2", "Demo 3", "Demo 4"};
+  void (DancingServos::* danceRoutineFunctions[4])() = {&DancingServos::demo1, &DancingServos::demo2, &DancingServos::demo3, &DancingServos::demo4};    //TODO use in loopDanceRoutines
   
 };
 
