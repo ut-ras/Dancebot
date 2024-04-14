@@ -41,13 +41,18 @@
 #include "WiFi.h"
 #include <esp_now.h>
 
+//*********ERASE THIS ***********
+#include <ESP32Servo.h>
+Servo myservo;
+
+
 //WiFi Settings
 //STA = connect to a WiFi network with name ssid
 //AP = create a WiFi access point with  name ssid
 #define WIFI_MODE "AP"
 //const char * ssid = "esp_hotspot";
 //const char * pass = "esp";
-const char * ssid = "Cole";
+const char * ssid = "Cole1";
 const char * pass = "cole1234";
 
 DancingServos* bot;
@@ -57,72 +62,63 @@ long serverCheckInterval = 1000;
 
 WiFiServer wifiServer(80);
 
-/* Data Transmission */
-esp_now_peer_info_t peerInfo;
 
-// callback when data is sent
-void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-  Serial.print("\r\nLast Packet Send Status:\t");
-  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
-}
 
 void setup() {
   Serial.begin(115200);
+  myservo.setPeriodHertz(50);    // standard 50 hz servo
+	myservo.attach(12, 1000, 2000); // 8************ERASE THIS **************
+
+  //printMACAddress();
 
   /* Data Transmission Setup*/
   //Set device as a Wi-Fi Station AND Wi-Fi Access Point
-   WiFi.mode(WIFI_AP_STA);
+  // WiFi.mode(WIFI_AP_STA);
 
-  //Init ESP-NOW
-  // if (esp_now_init() != ESP_OK) {
-  //   Serial.println("Error initializing ESP-NOW");
+  // if(!setupESPNOW()){
+  //   Serial.println("Failed ESPNOW init...");
   //   return;
   // }
 
-  // esp_now_register_send_cb(OnDataSent);
+  // //[hipL, hipR, ankleL, ankleR]
+  // bot = new DancingServos(14, 13, 12, 15);
+  // calibrateTrims(bot);
+  // bot->position0();
 
-  // // Register peer
-  // memcpy(peerInfo.peer_addr, broadcastAddress, 6);
-  // peerInfo.channel = 0;  
-  // peerInfo.encrypt = false;
-  
-  // Add peer        
-  // if (esp_now_add_peer(&peerInfo) != ESP_OK){
-  //   Serial.println("Failed to add peer");
-  //   return;
-  // }
+  // Serial.println("Setting up WiFi...");
+  // setupWiFi(WIFI_MODE, ssid, pass);       //Access Point or Station
+  // setupWebServer(bot);                    //Set up the Web Server
+  // Serial.println("Finished setting up WiFi!");
 
+  // // pinMode(LED, OUTPUT);
+  // // digitalWrite(LED, LOW);
 
-  //[hipL, hipR, ankleL, ankleR]
-  bot = new DancingServos(14, 13, 12, 15);
-  calibrateTrims(bot);
-  bot->position0();
-
-  Serial.println("Setting up WiFi...");
-  setupWiFi(WIFI_MODE, ssid, pass);       //Access Point or Station
-  setupWebServer(bot);                    //Set up the Web Server
-  Serial.println("Finished setting up WiFi!");
-
-  // pinMode(LED, OUTPUT);
-  // digitalWrite(LED, LOW);
-
-  delay(500);
-  bot->position0();
+  // delay(500);
+  // bot->position0();
 }
 
-
+int pos = 0;
 
 void loop() {  
+for (pos = 0; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
+		// in steps of 1 degree
+		myservo.write(pos);    // tell servo to go to position in variable 'pos'
+		delay(15);             // waits 15ms for the servo to reach the position
+	}
+	for (pos = 180; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
+		myservo.write(pos);    // tell servo to go to position in variable 'pos'
+		delay(15);             // waits 15ms for the servo to reach the position
+	}
   //loop the motors and check for web server traffic
-  bot->loopOscillation();
+  // bot->loopOscillation();
 
-  //check if ready to start next move in dance
-  bot->loopDanceRoutines();
+  // //check if ready to start next move in dance
+  // bot->loopDanceRoutines();
   
-  if (!bot->isOscillating() || millis() > serverDelayEnd) {
-    serverDelayEnd = millis() + serverCheckInterval;
-    loopWebServer();
-  }
+  // if (!bot->isOscillating() || millis() > serverDelayEnd) {
+  //   serverDelayEnd = millis() + serverCheckInterval;
+  //   loopWebServer();
+  // }
 }
 
 

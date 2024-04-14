@@ -32,7 +32,9 @@
 #include <WebServer.h>
 #include <ESPmDNS.h>
 #include <esp_now.h>
+#include "WebController.h"
 #include "DancingServos.h"
+#include "PowerController.h"
 
 
 void handleRoot();
@@ -45,16 +47,15 @@ void handleUnknownMove();
 String indexHTML();
 String getJavascript();
 
-/* Receiving Data*/
-//message struct that contains info that will be received
-typedef struct struct_message {
-  int integer;
-  char character[32];
-} struct_message;
+int dancebotID;
 
-struct_message message; 
-int rcvFlag;
-
+/* Data Transmission*/
+esp_now_peer_info_t peerInfo;
+uint8_t address[] = {0x30, 0x83, 0x98, 0xD7, 0x33, 0xE0}; //mothership ESP32 MAC address
+struct_message transmitMessage; //contains info that will be transmitted
+struct_message receivedMessage; //contains info that will be received
+int rcvFlag; //high when we received a message
+int setIDOnce = 1;
 //enums correspond to each dance move
 enum{
   STOP,
@@ -66,6 +67,12 @@ enum{
   DEMO1,
   DEMO2
 };
+// enum for return info
+enum{
+  None,
+  SetID,
+  BattLevel,
+}; 
 
 //Web Server
 const char * server_ssid;
@@ -74,37 +81,89 @@ int port = 80;
 IPAddress ip;
 String webServerPath = "http://";
 
-
 //Web server at port 80
 WebServer server(port);
-
 
 //DancingServos object
 DancingServos* dance_bot;
 
+//PowerController object
+PowerController* power;
+
 WiFiClient master;
 unsigned long previousRequest = 0;
+
+void printMACAddress(){
+  Serial.println(WiFi.macAddress());
+}
+
+//callback when data is sent
+void onDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
+  Serial.print("\r\nLast Packet Send Status:\t");
+  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+}
+
+//when called, takes in received data from transmitter and sets flag (used for dance moves)
+void onDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len){
+  memcpy(&receivedMessage, incomingData, sizeof(receivedMessage));
+  Serial.println("Received message...");
+  Serial.print("Bytes received: ");
+  Serial.println(len);
+  Serial.print("Status is: ");
+  Serial.println(receivedMessage.status);
+  Serial.println("Message is: ");
+  Serial.println(receivedMessage.character);
+  Serial.println();
+
+  //if transmitter requested battery level, send value, our ID, and acknowledgement
+  if(receivedMessage.batteryFlag){
+    Serial.println("Sending battery level...");
+    transmitMessage.id = dancebotID;
+    transmitMessage.batteryLevel = power->calculateBatteryPercentage();
+    transmitMessage.status = BattLevel;
+    esp_err_t result = esp_now_send(address, (uint8_t *) &transmitMessage, sizeof(transmitMessage));
+  }
+  if(receivedMessage.status == SetID){ //only set ID once
+    Serial.print("I set my own ID: "); Serial.println(receivedMessage.id);
+    dancebotID = receivedMessage.id;
+    setIDOnce = 0;
+  }
+  rcvFlag = 1;
+}
 
 /* Setup Functions */
 
 /* setupESPNOW
- * Sets up receiver connection with main Dancebot and callback function
+ * Sets up transmit and receive communication with Mothership
  */
-void setupESPNOW(DancingServos* _dance_bot){
-  /* Receiving Data Setup*/
+int setupESPNOW(DancingServos* _dance_bot, PowerController* _power){
   WiFi.mode(WIFI_STA);
-
   // Init ESP-NOW
   if (esp_now_init() != ESP_OK) {
     Serial.println("Error initializing ESP-NOW");
-    return;
+    return 0;
   }
   
-  //callback function: each time we receive a msg, we call handleReceivedDanceMovie()
-  esp_now_register_recv_cb(handleReceivedDanceMove);
+  esp_now_register_send_cb(onDataSent); //func called when we send data
+  esp_now_register_recv_cb(onDataRecv); //func called when we receive data
 
-  //pointer to dance_bot in current file points to _dance_bot in main
+  Serial.println("memcpy");
+  memcpy(peerInfo.peer_addr, address, sizeof(peerInfo.peer_addr));
+  peerInfo.channel = 0; 
+  peerInfo.encrypt = false;
+
+  // Add peer       
+  if (esp_now_add_peer(&peerInfo) != ESP_OK){
+    Serial.println("Failed to add peer");
+    return 0;
+  }
+
+  //dance_bot and power object in this file points to object in main file
   dance_bot = _dance_bot; 
+  power = _power;
+
+  Serial.println("Finished ESPNOW init");
+  return 1;
 }
 
 /* setupWiFi
@@ -177,45 +236,34 @@ void handleRoot() {
   server.send(200, "text/html", indexHTML());
 }
 
-//when called, takes in received data from transmitter and sets flag (used for dance moves)
-void handleReceivedDanceMove(const uint8_t * mac, const uint8_t *incomingData, int len){
-  memcpy(&message, incomingData, sizeof(message));
-  Serial.println("Received message...");
-  Serial.println("Message is: ");
-  Serial.println(message.integer);
-  Serial.println();
-  rcvFlag = 1;
-  //server.send(200, "text/plain", dance_move);
-}
-
 //dance moves    "/danceM"
 void handleDanceMove() {
   //if we have received a message, do corresponding dance move
   if(rcvFlag){
-    if (message.integer == STOP) {
+    if (receivedMessage.danceMove == STOP) {
       dance_bot->stopOscillation();
       dance_bot->enableDanceRoutine(false);
     }
-    else if (message.integer == RESET) {
+    else if (receivedMessage.danceMove == RESET) {
       dance_bot->position0();
     }
-    else if (message.integer == WALK) {
+    else if (receivedMessage.danceMove == WALK) {
       dance_bot->walk(-1, 1500, false);
     }
-    else if (message.integer == HOP) {
+    else if (receivedMessage.danceMove == HOP) {
       dance_bot->hop(25, -1);
     }
-    else if (message.integer == WIGGLE) {
+    else if (receivedMessage.danceMove == WIGGLE) {
       dance_bot->wiggle(30, -1);
     }
-    else if (message.integer == ANKLES) {
+    else if (receivedMessage.danceMove == ANKLES) {
       dance_bot->themAnkles(-1);
     }
-    else if (message.integer == DEMO1) {
+    else if (receivedMessage.danceMove == DEMO1) {
       dance_bot->setDanceRoutine(0);
       dance_bot->enableDanceRoutine(true);
     }
-    else if (message.integer == DEMO2) {
+    else if (receivedMessage.danceMove == DEMO2) {
       dance_bot->setDanceRoutine(1);
       dance_bot->enableDanceRoutine(true);
     }
@@ -370,38 +418,4 @@ String getJavascript() {
   return s;
 }
 
-//requests info from master (main dancebot), used to determine what dance move to do on smaller dancebot
-
-// void connect_to_server(void) {
-//   if (client.connect(ip, port)) {
-//     Serial.println("Connected.");
-//     client.println("GET /");
-//     client.println();
-//   }
-// }
-
-void requestMainDancebot(void){
-  //client connect to server every 1000ms
-  if((millis() - previousRequest) > 1000){
-    Serial.println("Trying to connect to server...");
-  
-
-
-    if(master.connect(ip, 80)){
-      Serial.println("Succesfully connected to server!");
-        previousRequest = millis();
-        String answer = master.readStringUntil('\r');
-        Serial.println("Message received: " + answer);
-        master.flush();
-        int id = answer.toInt();
-        if(id == 1){
-          Serial.println("Received a 1!");
-        }
-        else{
-          Serial.println("Received a 0!");
-      }
-    }
-
-  } 
-}
 

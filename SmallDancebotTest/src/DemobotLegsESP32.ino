@@ -54,56 +54,36 @@ const char * pass = "cole1234";
 
 
 DancingServos* bot;
-PowerController* power;
+PowerController* powerControl;
 
 long serverDelayEnd = 0;
 long serverCheckInterval = 1000;
 
 const int LED = 2;
 
-/* Receiving Data*/
-// //message struct that contains info that will be received
-// typedef struct struct_message {
-//   int integer;
-//   char character[32];
-// } struct_message;
-
-// struct_message message; 
-
-// // callback function that will be executed when data is received
-// void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
-//   memcpy(&message, incomingData, sizeof(message));
-//   Serial.print("Bytes received: ");
-//   Serial.println(len);
-//   Serial.print("Char: ");
-//   Serial.println(message.character);
-//   Serial.print("Int: ");
-//   Serial.println(message.integer);
-// }
-
 void setup() {
   Serial.begin(115200);
   delay(500);
 
-   Serial.println("I started setting up!");
+  printMACAddress();
+  Serial.println("I started setting up!");
 
   //[hipL, hipR, ankleL, ankleR]
   bot = new DancingServos(14, 13, 12, 15);
   calibrateTrims(bot);
   bot->position0();
 
-  //setupESPNOW(bot);
-  // Serial.println("Setting up WiFi...");
-  // setupWiFi(WIFI_MODE, ssid, pass);       //Access Point or Station
-  // setupWebServer(bot);                    //Set up the Web Server
-  // Serial.println("Finished setting up WiFi!");
-
   delay(500);
   bot->position0();
 
-  power = new PowerController();
-  power->batteryADCInit();
+  Serial.println("Starting Power");
+  powerControl = new PowerController();
+  powerControl->batteryADCInit();
 
+  Serial.println("Starting ESPNOW");
+  if(!setupESPNOW(bot, powerControl)){
+    Serial.println("Failed ESPNOW init...");
+  }
 }
 
 
@@ -114,12 +94,7 @@ void loop() {
 
   //check if ready to start next move in dance
   bot->loopDanceRoutines();
-  
-  // if (!bot->isOscillating() || millis() > serverDelayEnd) {
-  //   serverDelayEnd = millis() + serverCheckInterval;
-  //   loopWebServer();
-  // }
-  // requestMainDancebot();
+
   handleDanceMove();
 }
 
