@@ -33,8 +33,13 @@ public:
   void simpler_hop(int angle, int cycles);
   void wave(int angle, int cycles);
 
-  // "debugging" moves
-  void ankle_test(int cycles);
+  // TEST MOVES
+  void ankles(int cycles);
+  void ankles_phase(int cycles);
+  void ankles_offset(int cycles);
+  void legs(int cycles);
+  void legs_phase(int cycles);
+  void legs_offset(int cycles);
 
   //dance routines - run once per loop, also call loopOscillation as normal
   void demo1();
@@ -71,8 +76,10 @@ private:
 
   // dev notes: new moves below:
   int numDanceMoves = 12;
-  String danceMoves[12] = {"Stop", "Reset", "Walk", "Hop", "Wiggle", "Ankles", "Heel Toe", "Stank", "Backwards Walk", "Simple Hop", "Wave", "Ankle Test"};
-  //void  (*danceMoveFunctions[])() = {};   //TODO standardize dance move function input parameters
+  String danceMoves[12] = {"Stop", "Reset", "Walk", "Hop", "Wiggle", "Ankles", "Left Heel Toe", "Right Heel Toe", "Left Stank", "Right Stank", "Backwards Walk", "Wave"};
+  // String danceMoves[18] = {"Stop", "Reset", "Walk", "Hop", "Wiggle", "Ankles", "Left Heel Toe", "Right Heel Toe", "Left Stank", "Right Stank", "Backwards Walk", "Wave", 
+  //     "ankles", "ankles_phase", "ankles_offset", "legs", "legs_phase", "legs_offset"};
+  // void  (*danceMoveFunctions[])() = {};   //TODO standardize dance move function input parameters
 
   bool doDanceRoutine = false;
   int currentDanceRoutine = 0;

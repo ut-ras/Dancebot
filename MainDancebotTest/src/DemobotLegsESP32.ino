@@ -47,7 +47,7 @@
 #define WIFI_MODE "AP"
 //const char * ssid = "esp_hotspot";
 //const char * pass = "esp";
-const char * ssid = "Cole1";
+const char * ssid = "Cole3";
 const char * pass = "cole1234";
 
 DancingServos* bot;
@@ -131,7 +131,16 @@ void calibrateTrims(DancingServos* bot) {
   //[hipL, hipR, ankleL, ankleR]
   //CW - decrease value, CCW - increase value
   //bot->setTrims(95, 90, 180, 60);
-  bot->setTrims(95, 90, 140, 130); //big dancebot
+  // bot->setTrims(95, 90, 140, 130); //big dancebot
+
+  // dev notes: new trims because the screw is stripped
+
+
+  // dev notes: bot 1
+  // bot->setTrims(165, 100, 160, 20);
+
+  // dev notes: bot 2
+  bot->setTrims(125, 75, 130, 130); 
 
   //bot->setTrims(95, 90, 130, 120); //big dancebot
   //bot->setTrims(170, 60, 25, 18); //small dancebot

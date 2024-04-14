@@ -138,7 +138,9 @@ void DancingServos::themAnkles(int cycles) {
   int amp[4] = {0, 0, 20, 20};
   int off[4] = {0, 0, 0, 0};
   double ph0[4] = {0, 0, 0, 0};
-  startOscillation(amp, off, ph0, 3000, cycles);
+  // startOscillation(amp, off, ph0, 3000, cycles);
+  startOscillation(amp, off, ph0, 1500, cycles);
+
 }
 
 //Walk forward, adjust speed with T
@@ -181,15 +183,15 @@ void DancingServos::heel_toe(int cycles, bool left_direction) {
   int amp[4] = {20, -20, 0, 0};
 
   if (left_direction) {
-    amp[2] = -10;
-    amp[3] = 10;
+    amp[2] = -40;
+    amp[3] = -40;
   } else {
-    amp[2] = 10;
-    amp[3] = -10;
+    amp[2] = 40;
+    amp[3] = 40;
   }
 
   // since toes initially pointed inwards?
-  int off[4] = {-10, 10, 0, 0};
+  int off[4] = {0, 0, 0, 0};
   double ph0[4] = {0, 0, 0, 0};
 
   startOscillation(amp, off, ph0, 2000, cycles);
@@ -201,39 +203,83 @@ void DancingServos::heel_toe(int cycles, bool left_direction) {
 // "stank" dance move
 void DancingServos::stank(int cycles, bool left_ankle) {
   int amp[4] = {0, 0, 0, 0};
+  double ph0[4] = {0, 0, degToRad(90), 0};
 
   if (left_ankle) {
     amp[0] = -40;
-    amp[2] = 25;
+    amp[2] = 30;
+
+    ph0[2] = degToRad(90);
   } else {
     amp[1] = 40;
-    amp[3] = 25;
+    amp[3] = 30;
+
+    ph0[3] = degToRad(90);
   }
 
   // presumably start from resting position
   int off[4] = {0, 0, 0, 0};
-  double ph0[4] = {0, 0, 0, 0};
+  // double ph0[4] = {0, 0, degToRad(90), 0};
 
   startOscillation(amp, off, ph0, 3000, cycles);
 }
 
-void DancingServos::simpler_hop(int angle, int cycles) {
-  int amp[4] = {0, 0, angle, angle};
-  int off[4] = {0, 0, 0, 0};
-  double ph0[4] = {0, 0, 0, 0};
-  startOscillation(amp, off, ph0, 2000, cycles);
-}
 
+// "wave" dance move
 void DancingServos::wave(int angle, int cycles) {
+
+  // dev notes: slightly dumb way of specifying degree of motion
+  // but for wave, the angle ~ 45 deg
+
   int amp[4] = {0, 0, angle, angle};
-  int off[4] = {0, 0, 0, angle};
+  // int off[4] = {0, 0, -angle, angle};
+  int off[4] = {0, 0, angle, -angle};
+  double ph0[4] = {0, 0, 0, degToRad(90)};
+  startOscillation(amp, off, ph0, 2000, cycles);
+}
+
+// void DancingServos::shimmy(int angle, int cycles)
+// void DancingServos::ketou(int cycles) 
+
+// dev notes: TEST MOVES
+void DancingServos::ankles(int cycles) {
+  int amp[4] = {0, 0, 45, -45};
+  int off[4] = {0, 0, 0, 0};
   double ph0[4] = {0, 0, 0, 0};
   startOscillation(amp, off, ph0, 2000, cycles);
 }
 
-void DancingServos::ankle_test(int cycles) {
-  int amp[4] = {0, 0, 20, 20};
+void DancingServos::ankles_phase(int cycles) {
+  int amp[4] = {0, 0, 40, -40};
   int off[4] = {0, 0, 0, 0};
+  double ph0[4] = {0, 0, 0, degToRad(90)};
+  startOscillation(amp, off, ph0, 2000, cycles);
+}
+
+void DancingServos::ankles_offset(int cycles) {
+  int amp[4] = {0, 0, 40, -40};
+  int off[4] = {0, 0, 40, -40};
+  double ph0[4] = {0, 0, 0, 0};
+  startOscillation(amp, off, ph0, 2000, cycles);
+}
+
+void DancingServos::legs(int cycles) {
+  int amp[4] = {40, -40, 0, 0};
+  int off[4] = {0, 0, 0, 0};
+  double ph0[4] = {0, 0, 0, 0};
+  startOscillation(amp, off, ph0, 2000, cycles);
+}
+
+void DancingServos::legs_phase(int cycles) {
+  int amp[4] = {40, -40, 0, 0};
+  int off[4] = {0, 0, 0, 0};
+  double ph0[4] = {0, degToRad(90), 0, 0};
+  startOscillation(amp, off, ph0, 2000, cycles);
+}
+
+void DancingServos::legs_offset(int cycles) {
+  int amp[4] = {20, 20, 0, 0};
+  int off[4] = {20, 0, 0, 0};
   double ph0[4] = {0, 0, 0, 0};
   startOscillation(amp, off, ph0, 2000, cycles);
 }
