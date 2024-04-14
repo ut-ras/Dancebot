@@ -118,7 +118,7 @@ void onDataRecv(const uint8_t* mac, const uint8_t* incomingData, int len) {
   if(receivedMessage.status == BattLevel){
     transmitMessage.batteryFlag = 0; //don't ask for battery level anymore (could be redundant if you always set flag = 0 each time you ask for battlvl)
     Serial.print("Received battery level from Dancebot"); Serial.println(receivedMessage.id);
-    Serial.print("Battery Level is: "). Serial.println(receivedMessage.batteryLevel);
+    Serial.print("Battery Level is: "); Serial.println(receivedMessage.batteryLevel);
     batteryLevel[receivedMessage.id] = receivedMessage.batteryLevel; //retrieve battery level from dancebot X
   }
 }
