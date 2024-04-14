@@ -36,6 +36,7 @@
 
  
 #include <Arduino.h>
+#include "Adafruit_NeoPixel.h"
 #include "DancingServos.h"
 #include "WebController.h"
 #include "WiFi.h"
@@ -47,7 +48,8 @@
 #define WIFI_MODE "AP"
 //const char * ssid = "esp_hotspot";
 //const char * pass = "esp";
-const char * ssid = "Cole3";
+
+const char * ssid = "Cole1";
 const char * pass = "cole1234";
 
 DancingServos* bot;
@@ -57,41 +59,24 @@ long serverCheckInterval = 1000;
 
 WiFiServer wifiServer(80);
 
-/* Data Transmission */
-esp_now_peer_info_t peerInfo;
-
-// callback when data is sent
-void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-  Serial.print("\r\nLast Packet Send Status:\t");
-  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
-}
+Adafruit_NeoPixel pixels_(7, 26, NEO_GRB + NEO_KHZ800);
+uint32_t prevTime;
+uint8_t mode;
+int32_t color;
 
 void setup() {
   Serial.begin(115200);
 
+  printMACAddress();
+
   /* Data Transmission Setup*/
   //Set device as a Wi-Fi Station AND Wi-Fi Access Point
-   WiFi.mode(WIFI_AP_STA);
+  WiFi.mode(WIFI_AP_STA);
 
-  //Init ESP-NOW
-  // if (esp_now_init() != ESP_OK) {
-  //   Serial.println("Error initializing ESP-NOW");
-  //   return;
-  // }
-
-  // esp_now_register_send_cb(OnDataSent);
-
-  // // Register peer
-  // memcpy(peerInfo.peer_addr, broadcastAddress, 6);
-  // peerInfo.channel = 0;  
-  // peerInfo.encrypt = false;
-  
-  // Add peer        
-  // if (esp_now_add_peer(&peerInfo) != ESP_OK){
-  //   Serial.println("Failed to add peer");
-  //   return;
-  // }
-
+  if(!setupESPNOW()){
+    Serial.println("Failed ESPNOW init...");
+    return;
+  }
 
   //[hipL, hipR, ankleL, ankleR]
   bot = new DancingServos(14, 13, 12, 15);
@@ -103,14 +88,14 @@ void setup() {
   setupWebServer(bot);                    //Set up the Web Server
   Serial.println("Finished setting up WiFi!");
 
-  // pinMode(LED, OUTPUT);
-  // digitalWrite(LED, LOW);
-
   delay(500);
   bot->position0();
+
+  //setup Neopixel LEDs
+  bot->setupNeopixel(pixels_);
 }
 
-
+int pos = 0;
 
 void loop() {  
   //loop the motors and check for web server traffic
@@ -122,6 +107,38 @@ void loop() {
   if (!bot->isOscillating() || millis() > serverDelayEnd) {
     serverDelayEnd = millis() + serverCheckInterval;
     loopWebServer();
+  }
+
+  uint8_t  i;
+  uint32_t t;
+
+  switch(mode) {
+   case 0: //rainbow hold
+    bot->rainbowHold(20);
+    //delay(500); make loop for delay
+    break;
+
+   case 1: //rainbow cycle slow
+    bot->rainbowCycleslow(20);
+    //delay(50);
+    break; 
+
+   case 2: //rainbow cycle fast 
+    bot->rainbowCycle(5);
+    //delay(50);
+    break;
+  }
+
+  //t = millis(); figure out milisecond counter
+  if((t - prevTime) > 8000) {      // Every 8 seconds...
+    mode++;                        // Next mode
+    if(mode > 3) {                 // End of modes?
+      mode = 0;                    // Start modes over
+      color >>= 8;                 // Next color R->G->B
+      if(!color) color = 0xB300A4; // Reset color
+    }
+     for(i=0; i<32; i++) pixels_.setPixelColor(i, 0);
+    prevTime = t;
   }
 }
 
