@@ -249,6 +249,7 @@ void DancingServos::hop(int height, int cycles) {
   double ph0[4] = {0, 0, 0, 0};
   startOscillation(amp, off, ph0, 1500, cycles);
 
+  // dev notes: below is code for the big dance bot
   // int amp[4] = {0, 0, height, height};
   // int off[4] = {0, 0, -height, height};
   // double ph0[4] = {0, 0, degToRad(-90), degToRad(90)};
@@ -325,8 +326,8 @@ void DancingServos::wave(int angle, int cycles) {
   // but for wave, the angle ~ 45 deg
 
   int amp[4] = {0, 0, angle, angle};
-  // int off[4] = {0, 0, -angle, angle};
-  int off[4] = {0, 0, angle, -angle};
+  int off[4] = {0, 0, -angle, angle};
+  // int off[4] = {0, 0, angle, -angle}; for the big dance bot
   double ph0[4] = {0, 0, 0, degToRad(90)};
   startOscillation(amp, off, ph0, 2000, cycles);
 }

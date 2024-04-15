@@ -49,11 +49,14 @@ String getJavascript();
 
 /* Data Transmission */
 esp_now_peer_info_t peerInfo;
-#define NUM_ADDRESS 2 //# of clients / MAC addresses
+#define NUM_ADDRESS 4 //# of clients / MAC addresses  //CHANGE THIS ***********************************
  /* add more MAC addresses below */
-uint8_t address0[] = {0x30, 0x83, 0x98, 0xDF, 0xC0, 0xAC}; // REPLACE WITH YOUR RECEIVER MAC Address
-uint8_t address1[] = {0x30, 0x83, 0x98, 0xDF, 0xC1, 0x68};
-uint8_t* addressArr[] = {address0, address1};
+uint8_t address1[] = {0x30, 0x83, 0x98, 0xDF, 0xC1, 0x68}; // REPLACE WITH YOUR RECEIVER MAC Address
+uint8_t address2[] = {0x30, 0x83, 0x98, 0xDF, 0xC0, 0xAC};
+uint8_t address3[] = {0x30, 0x83, 0x98, 0xD9, 0x19, 0xCC};
+uint8_t address4[] = {0x30, 0x83, 0x98, 0xD9, 0x1D, 0xA0};
+
+uint8_t* addressArr[] = {address1, address2, address3, address4};
 struct_message transmitMessage;  //message sent to clients
 struct_message receivedMessage; //message received by clients
 
@@ -260,7 +263,12 @@ void handleDanceMove() {
 
   //check for serial input form
   String dance_move = "";
+  // int BPM = 45; // default value
   if(server.hasArg("dance_move")) {
+    // if(server.hasArg("BPM")){
+    //   BPM = std::stoi(server.arg((("BPM")));
+    // }
+    //else, we have a default BPM of 45
     dance_move = server.arg("dance_move");
     Serial.println("Server received dance_move: " + dance_move);
 
@@ -269,7 +277,6 @@ void handleDanceMove() {
       dance_bot->enableDanceRoutine(false);
       transmitMessage.danceMove = STOP;
       strcpy(transmitMessage.character, "Dance: STOP");
-      transmitMessage.batteryFlag = 1; // ************REMOVE AFTER TESTING **************
     }
     else if (dance_move == "Reset") {
       dance_bot->position0();
@@ -277,17 +284,14 @@ void handleDanceMove() {
       strcpy(transmitMessage.character, "Dance: RESET");
     }
     else if (dance_move == "Walk") {
-      // dev notes: jank ass changes
-      // dance_bot->walk(-1, 1500, false);
+      // dance_bot->walk(-1, 1500, false); //ORIGINAL
       dance_bot->walk(-1, 1500, true);
-      // message.integer = WALK;
       transmitMessage.danceMove = WALK;
       strcpy(transmitMessage.character, "Dance: WALK");
     }
     else if (dance_move == "Hop") {
-      // dance_bot->hop(25, -1);
+      // dance_bot->hop(25, -1); // ORIGINAL
       dance_bot->hop(40, -1);
-      // message.integer = HOP;
       transmitMessage.danceMove = HOP;
       strcpy(transmitMessage.character, "Dance: HOP");
     }
@@ -304,54 +308,60 @@ void handleDanceMove() {
     // dev notes: new moves below:
     else if (dance_move == "Left Heel Toe") {
       dance_bot->heel_toe(-1, true);
-      message.integer = LEFT_HEELTOE;
+      transmitMessage.danceMove = LEFT_HEELTOE;
+      strcpy(transmitMessage.character, "Dance: LEFT_HEELTOE");
     }
     else if (dance_move == "Right Heel Toe") {
       dance_bot->heel_toe(-1, false);
-      message.integer = RIGHT_HEELTOE;
+      transmitMessage.danceMove = RIGHT_HEELTOE;
+      strcpy(transmitMessage.character, "Dance: RIGHT_HEELTOE");
     }
     else if (dance_move == "Left Stank") {
       dance_bot->stank(-1, true);
-      message.integer = LEFT_STANK;
+      transmitMessage.danceMove = LEFT_STANK;
+      strcpy(transmitMessage.character, "Dance: LEFT_STANK");
     }
     else if (dance_move == "Right Stank") {
       dance_bot->stank(-1, false);
-      message.integer = RIGHT_STANK;
+      transmitMessage.danceMove = RIGHT_STANK;
+      strcpy(transmitMessage.character, "Dance: RIGHT_STANK");
     }
     else if (dance_move == "Backwards Walk") {
       // dev notes: more jank changes
-      // dance_bot->walk(-1, 1500, true);
+      // dance_bot->walk(-1, 1500, true); //ORIGNAL
       dance_bot->walk(-1, 1500, false);
-      message.integer = BWALK;
+      transmitMessage.danceMove = BWALK;
+      strcpy(transmitMessage.character, "Dance: BWALK");
     }
     else if (dance_move == "Wave") {
       dance_bot->wave(40, -1);
-      message.integer = WAVE;
+      transmitMessage.danceMove = WAVE;
+      strcpy(transmitMessage.character, "Dance: WAVE");
     }
     // dev notes: TEST MOVES below:
     // else if (dance_move == "ankles") {
     //   dance_bot->ankles(-1);
-    //   message.integer = ANKLES_TEST;
+    //   transmitMessage.danceMove = ANKLES_TEST;
     // }
     // else if (dance_move == "ankles_phase") {
     //   dance_bot->ankles_phase(-1);
-    //   message.integer = ANKLES_PHASE;
+    //   transmitMessage.danceMove = ANKLES_PHASE;
     // }
     // else if (dance_move == "ankles_offset") {
     //   dance_bot->ankles_offset(-1);
-    //   message.integer = ANKLES_OFFSET;
+    //   transmitMessage.danceMove = ANKLES_OFFSET;
     // }
     // else if (dance_move == "legs") {
     //   dance_bot->legs(-1);
-    //   message.integer = LEGS;
+    //   transmitMessage.danceMove = LEGS;
     // }
     // else if (dance_move == "legs_phase") {
     //   dance_bot->legs_phase(-1);
-    //   message.integer = LEGS_PHASE;
+    //   transmitMessage.danceMove = LEGS_PHASE;
     // }
     // else if (dance_move == "legs_offset") {
     //   dance_bot->legs_offset(-1);
-    //   message.integer = LEGS_OFFSET;
+    //   transmitMessage.danceMove = LEGS_OFFSET;
     // }
     else {
       Serial.println("Dance move not recognized, ERROR too lit for this robot");
@@ -409,12 +419,12 @@ void handleDance() {
     else if (dance_routine.equals("Demo 3")) {
       dance_bot->setDanceRoutine(2);
       dance_bot->enableDanceRoutine(true);
-      message.integer = DEMO3;
+      transmitMessage.danceMove = DEMO3;
     }
     else if (dance_routine.equals("Demo 4")) {
       dance_bot->setDanceRoutine(3);
       dance_bot->enableDanceRoutine(true);
-      message.integer = DEMO4;
+      transmitMessage.danceMove = DEMO4;
     }
 
     else {
