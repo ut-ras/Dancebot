@@ -59,7 +59,9 @@ PowerController* powerControl;
 long serverDelayEnd = 0;
 long serverCheckInterval = 1000;
 
-const int LED = 2;
+//hat servo (only for main dancebot rn)
+Servo hat;
+int pos = 0;
 
 void setup() {
   Serial.begin(115200);
@@ -84,6 +86,10 @@ void setup() {
   if(!setupESPNOW(bot, powerControl)){
     Serial.println("Failed ESPNOW init...");
   }
+
+  //only hat code
+  hat.attach(26);
+  hat.write(0);
 }
 
 
@@ -96,17 +102,40 @@ void loop() {
   bot->loopDanceRoutines();
 
   handleDanceMove();
+
+  // for (pos = 0; pos <= 180; pos += 1) {
+  //   hat.write(pos);
+  //   delay(10);
+  // }
+  // for (pos = 180; pos >= 0; pos -= 1) {
+  //   hat.write(pos);
+  //   delay(10);
+  // }
 }
 
 
 
 //manual calibration- based on how the servos are attatched to the 3d printed parts
 void calibrateTrims(DancingServos* bot) {
-  //[hipL, hipR, ankleL, ankleR]
   //CW - decrease value, CCW - increase value
-  // bot->setTrims(70, 150, 25, 18);
-  bot->setTrims(170, 95, 25, 18);
-}
+  //bot->setTrims(95, 90, 180, 60);
+   bot->setTrims(95, 90, 140, 130); //big dancebot
 
+  // dev notes: new trims because the screw is stripped
+
+  // dev notes: front-end trim adjustment and save to flash memory
+
+  // dev notes: bot 1
+  // bot->setTrims(165, 100, 160, 20);
+
+  // dev notes: bot 2
+  //bot->setTrims(107, 75, 135, 132); 
+
+  // dev notes: bot 3
+  // bot->setTrims(165, 100, 25, 40);
+
+  //bot->setTrims(95, 90, 130, 120); //big dancebot
+  //bot->setTrims(170, 60, 25, 18); //small dancebot
+}
 
 

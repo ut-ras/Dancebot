@@ -64,8 +64,29 @@ enum{
   HOP,
   WIGGLE,
   ANKLES,
+
+   // dev notes: new moves below:
+  LEFT_HEELTOE,
+  RIGHT_HEELTOE,
+  LEFT_STANK,
+  RIGHT_STANK,
+  BWALK,
+  WAVE,
+
+  // dev notes: TEST MOVES below:
+  // ANKLES_TEST,
+  // ANKLES_PHASE,
+  // ANKLES_OFFSET,
+  // LEGS,
+  // LEGS_PHASE,
+  // LEGS_OFFSET,
+
   DEMO1,
-  DEMO2
+  DEMO2,
+
+  // dev notes: new dance routines below:
+  DEMO3,
+  DEMO4
 };
 // enum for return info
 enum{
@@ -240,38 +261,87 @@ void handleRoot() {
 void handleDanceMove() {
   //if we have received a message, do corresponding dance move
   if(rcvFlag){
-    if (receivedMessage.danceMove == STOP) {
-      dance_bot->stopOscillation();
-      dance_bot->enableDanceRoutine(false);
-    }
-    else if (receivedMessage.danceMove == RESET) {
-      dance_bot->position0();
-    }
-    else if (receivedMessage.danceMove == WALK) {
-      dance_bot->walk(-1, 1500, false);
-    }
-    else if (receivedMessage.danceMove == HOP) {
-      dance_bot->hop(25, -1);
-    }
-    else if (receivedMessage.danceMove == WIGGLE) {
-      dance_bot->wiggle(30, -1);
-    }
-    else if (receivedMessage.danceMove == ANKLES) {
-      dance_bot->themAnkles(-1);
-    }
-    else if (receivedMessage.danceMove == DEMO1) {
-      dance_bot->setDanceRoutine(0);
-      dance_bot->enableDanceRoutine(true);
-    }
-    else if (receivedMessage.danceMove == DEMO2) {
-      dance_bot->setDanceRoutine(1);
-      dance_bot->enableDanceRoutine(true);
-    }
-    else {
-      Serial.println("Dance move not recognized, ERROR too lit for this robot");
-      return;
+    switch(receivedMessage.danceMove) {
+      case STOP:
+        dance_bot->stopOscillation();
+        dance_bot->enableDanceRoutine(false);
+        break;
+
+      case RESET: 
+        dance_bot->position0();
+        break;
+    
+      case WALK: 
+        dance_bot->walk(-1, 1500, false);
+        break;
+    
+      case HOP: 
+        dance_bot->hop(25, -1);
+        break;
+    
+      case WIGGLE: 
+        dance_bot->wiggle(30, -1);
+        break;
+    
+      case ANKLES: 
+        dance_bot->themAnkles(-1);
+        break;
+
+    
+    // dev notes: new moves below:
+      case LEFT_HEELTOE: 
+        dance_bot->heel_toe(-1, true);
+        break;
+
+      case RIGHT_HEELTOE: 
+        dance_bot->heel_toe(-1, false);
+        break;
+
+      case LEFT_STANK: 
+        dance_bot->stank(-1, true);
+        break;
+
+      case RIGHT_STANK: 
+        dance_bot->stank(-1, false);
+        break;
+
+      case BWALK: 
+        dance_bot->walk(-1, 1500, false);
+        break;
+
+      case WAVE: 
+        dance_bot->wave(40, -1);
+        break;
+
+      case DEMO1: 
+        dance_bot->setDanceRoutine(0);
+        dance_bot->enableDanceRoutine(true);
+        break;
+      
+      case DEMO2: 
+        dance_bot->setDanceRoutine(1);
+        dance_bot->enableDanceRoutine(true);
+        break;
+      
+      case DEMO3: 
+        dance_bot->setDanceRoutine(2);
+        dance_bot->enableDanceRoutine(true);
+        break;
+      
+      case DEMO4: 
+        dance_bot->setDanceRoutine(3);
+        dance_bot->enableDanceRoutine(true);
+        break;
+
+      default:
+        Serial.println("Dance move not recognized, ERROR too lit for this robot");
+        return;
     }
   }
+//   else {
+//     Serial.println("Dance move not recognized, ERROR too lit for this robot");
+//     return;
+//   }
 }
 
 //dance routines    "/dance"
@@ -340,12 +410,12 @@ String indexHTML() {
               "<div id=\"page_dances\" style=\"margin: 0 5% 2em 5%;\">" +
                 "<h3 style=\"color:#81a2be;\">Dance Moves</h3>" +
                 
-                "<div id=\"dance_moves\" style=\"\">" +             
+                "<div id=\"receivedMessage.danceMoves\" style=\"\">" +             
                   "<div style=\"padding-left: 1.5em; font-size:medium;\">" +
                     "<p id=\"current_move\">Current Move: " + danceMoves[0] + "</p>" +
                   "</div>" +
   
-                  "<div id=\"dance_move_buttons\" style=\"padding-left: 1.5em; \">";
+                  "<div id=\"receivedMessage.danceMove_buttons\" style=\"padding-left: 1.5em; \">";
                     for (int i = 0; i < dance_bot->getNumDanceMoves(); i++) {
                       htmlPage += "<button onclick=\"postDancemove('" + danceMoves[i] + "')\" style=\"" + button_css + "\">" + danceMoves[i] + "</button>";
                     }
@@ -394,7 +464,7 @@ String getJavascript() {
         "var xhttp = new XMLHttpRequest(); " +
         "xhttp.open('POST', '/danceM', true);" +
         "xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');" +
-        "xhttp.send('dance_move=' + move);" +
+        "xhttp.send('receivedMessage.danceMove=' + move);" +
 
         "xhttp.onload = function() { " +
           "console.log('Move Received: ' + xhttp.responseText); " +
