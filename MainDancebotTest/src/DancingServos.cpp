@@ -212,11 +212,20 @@ void DancingServos::setDanceRoutine(int dance) {
 //wrappers for startOscillation()
 //[hipL, hipR, ankleL, ankleR]
 
+// dev notes: temporary solution for BPM
+int bpm = 40;
+int bpm_to_period(int bpm) {
+  return 60000 / bpm;
+}
+
 //Move to resting poition
 void DancingServos::position0() {
   int zeroi[4] = {0, 0, 0, 0};
   double zerod[4] = {0.0, 0.0, 0.0, 0.0};
-  startOscillation(zeroi, zeroi, zerod, 2000, 1.0f);
+
+  // dev notes: temporary adjustment to get uniform bpm
+  // startOscillation(zeroi, zeroi, zerod, 2000, 1.0f);
+  startOscillation(zeroi, zeroi, zerod, bpm_to_period(bpm), 1.0f);
 }
 
 //Move to resting poition
@@ -224,8 +233,10 @@ void DancingServos::themAnkles(int cycles) {
   int amp[4] = {0, 0, 20, 20};
   int off[4] = {0, 0, 0, 0};
   double ph0[4] = {0, 0, 0, 0};
-  // startOscillation(amp, off, ph0, 3000, cycles);
-  startOscillation(amp, off, ph0, 1500, cycles);
+
+  // dev notes: temporary adjustment to get uniform bpm
+  // startOscillation(amp, off, ph0, 1500, cycles);
+  startOscillation(amp, off, ph0, bpm_to_period(bpm), cycles);
 
 }
 
@@ -237,19 +248,24 @@ void DancingServos::walk(float cycles, int period, bool reverse) {
   int amp[4] = {18, 18, 15, 15};
   int off[4] = {0, 0, -4, -4};
   double ph0[4] = {0, 0, degToRad(rev * 90), degToRad(rev * 90)};
-  startOscillation(amp, off, ph0, period, cycles);
+
+  // dev notes: temporary adjustment to get uniform bpm
+  // startOscillation(amp, off, ph0, period, cycles);
+  startOscillation(amp, off, ph0, bpm_to_period(bpm), cycles);
 }
 
 //simultaneous ankles
 void DancingServos::hop(int height, int cycles) {
 
-  // dev notes: preferably angle set to 30
   int amp[4] = {0, 0, height, -height};
   int off[4] = {0, 0, height, -height};
   double ph0[4] = {0, 0, 0, 0};
-  startOscillation(amp, off, ph0, 1500, cycles);
 
-  // dev notes: below is code for the big dance bot
+  // dev notes: temporary adjustment to get uniform bpm
+  // startOscillation(amp, off, ph0, 1500, cycles);
+  startOscillation(amp, off, ph0, bpm_to_period(bpm), cycles);
+
+  // BIG DANCE BOT CODE
   // int amp[4] = {0, 0, height, height};
   // int off[4] = {0, 0, -height, height};
   // double ph0[4] = {0, 0, degToRad(-90), degToRad(90)};
@@ -263,7 +279,10 @@ void DancingServos::wiggle(int angle, int cycles) {
   int amp[4] = {angle, angle, 0, 0};
   int off[4] = {0, 0, 0, 0};
   double ph0[4] = {0, 0, 0, 0};
-  startOscillation(amp, off, ph0, 2000, cycles);
+
+  // dev notes: temporary adjustment to get uniform bpm
+  // startOscillation(amp, off, ph0, 2000, cycles);
+  startOscillation(amp, off, ph0, bpm_to_period(bpm), cycles);
 }
 
 // dev notes: goals for the future
@@ -284,13 +303,12 @@ void DancingServos::heel_toe(int cycles, bool left_direction) {
     amp[3] = 40;
   }
 
-  // since toes initially pointed inwards?
   int off[4] = {0, 0, 0, 0};
   double ph0[4] = {0, 0, 0, 0};
 
-  startOscillation(amp, off, ph0, 2000, cycles);
-  // only reverse the ankles for second part?
-  // for (int i = 2; i < 4; i++) {osc[i]->setRev(true);}
+  // dev notes: temporary adjustment to get uniform bpm
+  // startOscillation(amp, off, ph0, 2000, cycles);
+  startOscillation(amp, off, ph0, bpm_to_period(bpm), cycles);
 }
 
 
@@ -311,11 +329,12 @@ void DancingServos::stank(int cycles, bool left_ankle) {
     ph0[3] = degToRad(90);
   }
 
-  // presumably start from resting position
-  int off[4] = {0, 0, 0, 0};
-  // double ph0[4] = {0, 0, degToRad(90), 0};
 
-  startOscillation(amp, off, ph0, 2000, cycles);
+  int off[4] = {0, 0, 0, 0};
+
+  // dev notes: temporary adjustment to get uniform bpm
+  // startOscillation(amp, off, ph0, 2000, cycles);
+  startOscillation(amp, off, ph0, bpm_to_period(bpm), cycles);
 }
 
 
@@ -327,9 +346,15 @@ void DancingServos::wave(int angle, int cycles) {
 
   int amp[4] = {0, 0, angle, angle};
   int off[4] = {0, 0, -angle, angle};
+
+  // BIG DANCE BOT CODE
   // int off[4] = {0, 0, angle, -angle}; for the big dance bot
+
   double ph0[4] = {0, 0, 0, degToRad(90)};
-  startOscillation(amp, off, ph0, 2000, cycles);
+
+  // dev notes: temporary adjustment to get uniform bpm
+  // startOscillation(amp, off, ph0, 2000, cycles);
+  startOscillation(amp, off, ph0, bpm_to_period(bpm), cycles);
 }
 
 // void DancingServos::shimmy(int angle, int cycles)
