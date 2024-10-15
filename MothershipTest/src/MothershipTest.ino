@@ -1,6 +1,6 @@
 /*
 
-This documentation covers how to connect the PS4 controller to the ESP32, the ESP32 to the motor driver, and the driver to the moters.
+This documentation covers how to connect a **PS4** controller to the ESP32, the ESP32 to the motor driver, and the driver to the moters.
 // PLEASE NOTE THAT HARDWARE ON LEFT JOYSTICK FOR REMOTE WAS BROKEN
 
 ESP32 -> Driver:
@@ -14,7 +14,7 @@ ESP32   |   Driver
   GND   |    GND
 
 Controller Bluetooth (BT) -> ESP32:
-PLEASE NOTE THAT ESP32FLASH MEMORY MAY NEED TO BE WIPED IF BLUETOOTH DOES NOT CONNECT (see https://randomnerdtutorials.com/esp32-erase-flash-memory/)
+PLEASE NOTE THAT ESP32FLASH MEMORY MAY NEED TO BE WIPED IF BLUETOOTH DOES NOT CONNECT (see https://razndomnerdtutorials.com/esp32-erase-flash-memory/)
 - It seems you need to wipe the ESP32 flash if you connect the remote to another device (i.e. laptop) because something something BT client keys gone (it just works)
 - PS4 remote MUST be configured to search for MAC address of ESP32 through external application "Sixaxis Pair Tool"
 - Specific MAC address pairs that worked for me (notice how ESP32's last octet is 2 less than the remote's):
@@ -107,7 +107,7 @@ void loop() {
         printData();
         
         // calculate speed as function as magnitude of joystick
-        FRBRFLBL = (Rmagnitude * 100);
+        FRBRFLBL = (Rmagnitude * 200);
         
         FrontRight->setSpeed(FRBRFLBL);
         BackRight->setSpeed(FRBRFLBL);
@@ -134,20 +134,20 @@ void loop() {
         }
         // forward
         else if((0.785 < Rangle) && (Rangle < 2.356)) {
-          FrontLeft->run(FORWARD);
-          BackLeft->run(FORWARD);
-          FrontRight->run(FORWARD);
-          BackRight->run(FORWARD);
+          FrontLeft->run(BACKWARD);
+          BackLeft->run(BACKWARD);
+          FrontRight->run(BACKWARD);
+          BackRight->run(BACKWARD);
           Serial.println("FORWARD");
           continue;
         }
 
         // backward
         else if((3.926 < Rangle) && (Rangle < 5.497)) {
-          FrontLeft->run(BACKWARD);
-          BackLeft->run(BACKWARD);
-          FrontRight->run(BACKWARD);
-          BackRight->run(BACKWARD);
+          FrontLeft->run(FORWARD);
+          BackLeft->run(FORWARD);
+          FrontRight->run(FORWARD);
+          BackRight->run(FORWARD);
           Serial.println("BACKWARD");
           continue;
         }
