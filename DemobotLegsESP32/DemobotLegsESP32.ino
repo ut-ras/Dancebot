@@ -43,17 +43,17 @@
 //WiFi Settings
 //STA = connect to a WiFi network with name ssid
 //AP = create a WiFi access point with  name ssid
-#define WIFI_MODE "STA"
+// #define WIFI_MODE "STA"
 //const char * ssid = "esp_hotspot";
 //const char * pass = "esp";
-const char * ssid = "Cole";
-const char * pass = "cole1234";
+// const char * ssid = "Cole";
+// const char * pass = "cole1234";
 
 
 DancingServos* bot;
 
-long serverDelayEnd = 0;
-long serverCheckInterval = 1000;
+// long serverDelayEnd = 0;
+// long serverCheckInterval = 1000;
 
 
 void setup() {
@@ -64,11 +64,11 @@ void setup() {
   bot = new DancingServos(14, 13, 12, 15);
   calibrateTrims(bot);
 
-  setupWiFi(WIFI_MODE, ssid, pass);       //Access Point or Station
-  setupWebServer(bot);                    //Set up the Web Server
+  // setupWiFi(WIFI_MODE, ssid, pass);       //Access Point or Station
+  // setupWebServer(bot);                    //Set up the Web Server
 
   delay(500);
-  bot->position0();
+  bot->hop();
 }
 
 
@@ -80,10 +80,10 @@ void loop() {
   //check if ready to start next move in dance
   bot->loopDanceRoutines();
   
-  if (!bot->isOscillating() || millis() > serverDelayEnd) {
-    serverDelayEnd = millis() + serverCheckInterval;
-    loopWebServer();
-  }
+  // if (!bot->isOscillating() || millis() > serverDelayEnd) {
+  //   serverDelayEnd = millis() + serverCheckInterval;
+  //   loopWebServer();
+  // }
 }
 
 
@@ -91,8 +91,8 @@ void loop() {
 //manual calibration- based on how the servos are attatched to the 3d printed parts
 void calibrateTrims(DancingServos* bot) {
   //[hipL, hipR, ankleL, ankleR]
-  //bot->setTrims(70, 150, 25, 18);
-  bot->setTrims(95, 90, 140, 130); //big dancebot
+  bot->setTrims(70, 150, 25, 18);
+  // bot->setTrims(95, 90, 140, 130); //big dancebot
 }
 
 

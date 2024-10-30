@@ -5,7 +5,7 @@
  *
  * WIFI_MODE variable
  * AP Mode: Launches the web server at http://192.168.4.1:80/       AP untested
- * STA Mode: Connects to an existing WiFi network
+ * STA Mode: Connects to an existing WiFi neztwork
  *
  * Set WiFi credentials with "ssid" and "pass" strings
 
