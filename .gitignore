@@ -1,4 +1,5 @@
 *.json
 *.d
 *.o
+build/
 output/
