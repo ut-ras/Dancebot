@@ -1,4 +1,4 @@
-# DemobotLegs
+# THIS CODE HAS BEEN DEPRECATED AS WE HAVE MOVED TO ESP32 FOR DEVELOPMENT
 
 ![Dancing Bot](img/dancebot.gif)
 
