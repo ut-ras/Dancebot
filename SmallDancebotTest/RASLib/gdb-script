@@ -1,2 +1,0 @@
-target remote | openocd -c "source [find board/ek-lm4f120xl.cfg]" -c "gdb_port pipe; log_output openocd.log"
-
