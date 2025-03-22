@@ -1,0 +1,142 @@
+
+(kicad_symbol_lib (version 20211014) (generator kicad_symbol_editor)
+  (symbol "IRLML2502TRPBF" (pin_names (offset 1.016)) (in_bom yes) (on_board yes)
+    (property "Reference" "U" (id 0) (at -11.4527 2.54506 0)
+      (effects (font (size 1.27 1.27)) (justify bottom left))
+    )
+    (property "Value" "IRLML2502TRPBF" (id 1) (at -11.461 0.0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom left))
+    )
+    (property "Footprint" "IRLML2502TRPBF:SOT23" (id 2) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "MF" "Infineon" (id 4) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Description" "\n                        \n                            RoHS Compliant | Industry-leading quality | Fast Switching | Low Profile (less than 1.1mm) | SOT-23 Footprint\n                        \n" (id 5) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Package" "SOT-23-3 International Rectifier" (id 6) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Price" "None" (id 7) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "SnapEDA_Link" "https://www.snapeda.com/parts/IRLML2502TRPBF/Infineon/view-part/?ref=snap" (id 8) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "MP" "IRLML2502TRPBF" (id 9) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Availability" "In Stock" (id 10) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Check_prices" "https://www.snapeda.com/parts/IRLML2502TRPBF/Infineon/view-part/?ref=eda" (id 11) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (symbol "IRLML2502TRPBF_0_0"
+      (polyline
+        (pts (xy 0.762 0.762) (xy 0.762 0.0)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy 0.762 0.0) (xy 0.762 -0.762)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy 0.762 3.175) (xy 0.762 2.54)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy 0.762 2.54) (xy 0.762 1.905)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy 0.762 0.0) (xy 2.54 0.0)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy 2.54 0.0) (xy 2.54 -2.54)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy 0.762 -1.905) (xy 0.762 -2.54)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy 0.762 -2.54) (xy 0.762 -3.175)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy 0.0 2.54) (xy 0.0 -2.54)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy 2.54 -2.54) (xy 0.762 -2.54)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy 3.81 2.54) (xy 3.81 0.508)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy 3.81 0.508) (xy 3.81 -2.54)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy 2.54 -2.54) (xy 3.81 -2.54)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy 0.762 2.54) (xy 3.81 2.54)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy 4.572 0.762) (xy 4.318 0.508)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy 4.318 0.508) (xy 3.81 0.508)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy 3.81 0.508) (xy 3.302 0.508)) (stroke (width 0.1524))
+      )
+      (polyline
+        (pts (xy 3.302 0.508) (xy 3.048 0.254)) (stroke (width 0.1524))
+      )
+      (circle (center 2.54 -2.54) (radius 0.3592)
+        (stroke (width 0.0)) (fill (type none))
+      )
+      (circle (center 2.54 2.54) (radius 0.3592)
+        (stroke (width 0.0)) (fill (type none))
+      )
+      (polyline
+        (pts
+          (xy 3.81 0.508)
+          (xy 3.302 -0.254)
+          (xy 4.318 -0.254)
+          (xy 3.81 0.508)
+        )
+        (stroke (width 0.1524)) (fill (type outline))
+      )
+      (polyline
+        (pts
+          (xy 1.016 0.0)
+          (xy 2.032 0.762)
+          (xy 2.032 -0.762)
+          (xy 1.016 0.0)
+        )
+        (stroke (width 0.1524)) (fill (type outline))
+      )
+      (pin passive line (at 2.54 -5.08 90.0) (length 2.54)
+        (name "~"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "2"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at -2.54 -2.54 0) (length 2.54)
+        (name "~"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "1"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at 2.54 5.08 270.0) (length 2.54)
+        (name "~"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "3"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+    )
+  )
+)
