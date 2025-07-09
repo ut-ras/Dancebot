@@ -1,0 +1,153 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP NE555DR
+D Single Precision Timer
+K
+F http://www.ti.com/lit/ds/symlink/ne555.pdf
+$ENDCMP
+#
+$CMP CP2102N-A02-GQFN28R
+D USB Interface IC USB to UART bridge - QFN28
+K
+F https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf
+$ENDCMP
+#
+$CMP ESP32-WROOM-32E-N4
+D RX TXRX MOD WIFI TRACE ANT SMD
+K
+F https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf
+$ENDCMP
+#
+$CMP APT2012PGW
+D Green 555nm LED Indication - Discrete 2.25V 0805 (2012 Metric)
+K
+F 
+$ENDCMP
+#
+$CMP SS8050-HF
+D Bipolar Transistors - BJT TRANS NPN 1.5A 40V SOT-23 R
+K
+F 
+$ENDCMP
+#
+$CMP LM66100DCKR
+D +/-6-V, Low IQ ideal diode with input polarity protection
+K
+F http://www.ti.com/lit/gpn/LM66100
+$ENDCMP
+#
+$CMP TPS63000IDRCRQ1
+D Switching Voltage Regulators Auto Cat 96% Buck- Boost Converter
+K
+F https://www.ti.com/lit/gpn/tps63000-q1?HQS=ti-null-null-sf-df-pf-sep-wwe&DCM=yes
+$ENDCMP
+#
+$CMP 1769
+D Adafruit Accessories JST-PH 2-pin SMT Right Angle Connect
+K
+F https://cdn-shop.adafruit.com/datasheets/17311.pdf
+$ENDCMP
+#
+$CMP SMF5.0A_R1_00001
+D ESD Suppressors / TVS Diodes 200W,Transient Voltage Suppressors,SOD-123FL,5V,UNI
+K
+F https://www.mouser.in/datasheet/2/1057/SMF5.0A_SERIES-1868418.pdf
+$ENDCMP
+#
+$CMP IRLML6402TRPBF
+D MOSFET MOSFT P-Ch -3.7A 65mOhm 8nC Log Lvl
+K
+F http://www.infineon.com/dgdl/irlml6402pbf.pdf?fileId=5546d462533600a401535668d5c2263c
+$ENDCMP
+#
+$CMP IRLML2502TRPBF
+D IRLML2502TRPBF N-Channel MOSFET, 4.2 A, 20 V IRLML2502, 3-Pin SOT-23 Infineon
+K
+F 
+$ENDCMP
+#
+$CMP RCG0805100RJNEA
+D Thick Film Resistors - SMD .125watt 100ohms 5% 0805 200ppm
+K
+F https://ad.componentsearchengine.com/Datasheets/1/RCG0805100RJNEA.pdf
+$ENDCMP
+#
+$CMP CRCW0805100KFKEA
+D Vishay CRCW Series Thick Film Surface Mount Resistor 805 Case 100k?? ??1% 0.125W ??100ppm/??C
+K
+F http://www.vishay.com/docs/20035/dcrcwe3.pdf
+$ENDCMP
+#
+$CMP ERA-6AEB513V
+D Metal Thin Film Chip Resistor, 0805, 0.125W
+K
+F https://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf
+$ENDCMP
+#
+$CMP SG73S2ATTD1001F
+D Thick Film Resistors - SMD 0.25W 1Kohm 1% 200ppm Anti-Surge
+K
+F https://componentsearchengine.com/Datasheets/1/SG73S2ATTD1001F.pdf
+$ENDCMP
+#
+$CMP LMK212ABJ475KG8T
+D Multilayer Ceramic Capacitors MLCC - SMD/SMT 0805 10VDC 4.7uF 10% X5R
+K
+F https://4donline.ihs.com/images/VipMasterIC/IC/TAIY/TAIY-S-A0015542627/TAIY-S-A0015542182-1.pdf?hkey=52A5661711E402568146F3353EA87419
+$ENDCMP
+#
+$CMP KAF21BR71H104JM
+D Multilayer Ceramic Capacitors MLCC - SMD/SMT 50V .1pF X7R 0805 5% AEC-Q200 FLEXITERM
+K
+F https://www.mouser.de/datasheet/2/40/AutoMLCCKAF-3218225.pdf
+$ENDCMP
+#
+$CMP CRCW080522K0FKEC
+D Thick Film Resistors - SMD D12/CRCW0805 100 22K 1% ET6 e3
+K
+F http://www.vishay.com/docs/20035/dcrcwe3.pdf
+$ENDCMP
+#
+$CMP CR0805-FX-4752ELF
+D Thick Film Resistors - SMD 47.5K 1%
+K
+F https://www.bourns.com/pdfs/chpreztr.pdf
+$ENDCMP
+#
+$CMP JMK212BBJ226MG8T
+D Multilayer Ceramic Capacitors MLCC - SMD/SMT 0805 6.3VDC 22uF 20% X5R
+K
+F https://www.mouser.ch/datasheet/2/396/mlcc06_hq_AUTO_e-1901145.pdf
+$ENDCMP
+#
+$CMP MCAST21GSB7105MTNB25
+D Multilayer Ceramic Capacitors MLCC - SMD/SMT CAP ,MLCC ,0805,25V ,X7R,1.0UF20% ,T&R
+K
+F https://media.digikey.com/pdf/Data%20Sheets/Taiyo%20Yuden%20PDFs%20URL%20links/MC_mlcc_DS.pdf
+$ENDCMP
+#
+$CMP MAJCU168BB7104KTEA01
+D MULTILAYER CERAMIC CAPACITORS[Multilayer Ceramic Capacitors (High dielectric type) for Automotive Powertrain and Safety (Cu external electrode products)]
+K
+F https://ds.yuden.co.jp/TYCOMPAS/or/detail?pn=MAJCU168BB7104KTEA01
+$ENDCMP
+#
+$CMP NRS3015T2R2MNGHV
+D NRS3015T2R2MNGHV
+K
+F https://componentsearchengine.com/Datasheets/1/NRS3015T2R2MNGHV.pdf
+$ENDCMP
+#
+$CMP ASC0805-10KFT5
+D WELWYN - ASC0805-10KFT5 - RESISTOR, ANTI SULPHUR, 10K, 0.125W, 1%
+K
+F https://componentsearchengine.com/Datasheets/2/ASC0805-10KFT5.pdf
+$ENDCMP
+#
+$CMP CR0805-FX-1004ELF
+D BOURNS - CR0805-FX-1004ELF - RES, THICK FILM, 1M, 1%, 0.125W, 0805
+K
+F https://www.bourns.com/pdfs/chpreztr.pdf
+$ENDCMP
+#
+#End Doc Library

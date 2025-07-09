@@ -1,6 +1,65 @@
-*.json
-*.d
-*.o
-output/
-.vscode
+# KiCad backup files
+*.bak
+*.kicad_pcb-bak
+*.sch-bak
+*~
+_autosave-*
+\#auto_saved_files\#
+*.tmp
+*-save.pro
+*-save.kicad_pcb
+*.lck
+*-backups/
 
+# KiCad generated files
+*.net
+fp-info-cache
+*-cache.lib
+*-rescue.lib
+*-rescue.dcm
+sym-lib-table
+*-cache
+*-rescue
+
+# KiCad build/output files
+out/
+*.zip
+*.dxf
+gerber/
+plots/
+*-bom.csv
+*-bom.xml
+*-fabrication*
+*.gbr
+*.drl
+*.pos
+*-top.pos
+*-bottom.pos
+*-top.csv
+*-bottom.csv
+
+# 3D models temporary files
+*.FCStd1
+
+# Local settings
+*-local.kicad*
+*.kicad_prl
+
+# VS Code
+.vscode/
+
+# Common temp files
+*.swp
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+.venv
+env/
+venv/
+ENV/
