@@ -250,7 +250,12 @@
     "equivalence_files": []
   },
   "erc": {
-    "erc_exclusions": [],
+    "erc_exclusions": [
+      [
+        "multiple_net_names|2616200|1371600|d0f0ebb8-fb67-4b64-bae1-16239a6d0f65|bafd7ca8-6cc8-4f71-859c-5d965d1005c6|/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/9bb1d94d-135a-4bfe-a8c4-60fef77f5043|/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/9bb1d94d-135a-4bfe-a8c4-60fef77f5043|/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/9bb1d94d-135a-4bfe-a8c4-60fef77f5043",
+        "This is intentional - GNDPWR is to be connected together before being tied to GND near common GND pin of buck boost IC"
+      ]
+    ],
     "meta": {
       "version": 0
     },
@@ -660,7 +665,7 @@
           "group_by": false,
           "label": "Mouser Price/Stock",
           "name": "Mouser Price/Stock",
-          "show": false
+          "show": true
         },
         {
           "group_by": false,
@@ -696,6 +701,12 @@
           "group_by": false,
           "label": "Description",
           "name": "Description",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Height_1",
+          "name": "Height_1",
           "show": false
         }
       ],

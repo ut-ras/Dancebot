@@ -27,7 +27,7 @@
   (fp_arc (start -2.25 -0) (end -2.200 -0) (angle -180) (layer F.SilkS) (width 0.1))
   (pad 1 smd rect (at -1.175 -0 90) (size 1.100 1.250) (layers F.Cu F.Paste F.Mask))
   (pad 2 smd rect (at 1.175 -0 90) (size 1.100 1.250) (layers F.Cu F.Paste F.Mask))
-  (model "C:\\Users\\tobya\\Desktop\\Dancebot\\dancebot_pcb_rev4\\custom_components\\SamacSys_Parts.3dshapes\\APT2012PGW.stp"
+  (model "${KIPRJMOD}/custom_components/SamacSys_Parts.3dshapes/APT2012PGW.stp"
     (at (xyz 0 0 0))
     (scale (xyz 1 1 1))
     (rotate (xyz 0 0 0))

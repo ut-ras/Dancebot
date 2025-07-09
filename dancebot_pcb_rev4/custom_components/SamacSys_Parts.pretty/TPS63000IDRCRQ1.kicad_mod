@@ -46,7 +46,7 @@
   (pad 13 smd rect (at 0.250 1.45 0) (size 0.250 0.500) (layers F.Cu F.Paste F.Mask))
   (pad 14 smd rect (at -0.250 -1.45 0) (size 0.250 0.500) (layers F.Cu F.Paste F.Mask))
   (pad 15 smd rect (at 0.250 -1.45 0) (size 0.250 0.500) (layers F.Cu F.Paste F.Mask))
-  (model "C:\\Users\\tobya\\Desktop\\Dancebot\\dancebot_pcb_rev4\\custom_components\\SamacSys_Parts.3dshapes\\TPS63000IDRCRQ1.stp"
+  (model "${KIPRJMOD}/custom_components/SamacSys_Parts.3dshapes/TPS63000IDRCRQ1.stp"
     (at (xyz 0 0 0))
     (scale (xyz 1 1 1))
     (rotate (xyz 0 0 0))

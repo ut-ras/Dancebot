@@ -5,27 +5,23 @@
 	(uuid "21324b60-e5e7-4de6-a38d-f4cdf81a1b2c")
 	(paper "A4")
 	(lib_symbols
-		(symbol "Mechanical:MountingHole_Pad"
-			(pin_numbers
-				(hide yes)
-			)
+		(symbol "Mechanical:MountingHole"
 			(pin_names
 				(offset 1.016)
-				(hide yes)
 			)
 			(exclude_from_sim no)
 			(in_bom no)
 			(on_board yes)
 			(property "Reference" "H"
-				(at 0 6.35 0)
+				(at 0 5.08 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" "MountingHole_Pad"
-				(at 0 4.445 0)
+			(property "Value" "MountingHole"
+				(at 0 3.175 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -50,7 +46,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Mounting Hole with connection"
+			(property "Description" "Mounting Hole without connection"
 				(at 0 0 0)
 				(effects
 					(font
@@ -68,7 +64,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "MountingHole*Pad*"
+			(property "ki_fp_filters" "MountingHole*"
 				(at 0 0 0)
 				(effects
 					(font
@@ -77,9 +73,9 @@
 					(hide yes)
 				)
 			)
-			(symbol "MountingHole_Pad_0_1"
+			(symbol "MountingHole_0_1"
 				(circle
-					(center 0 1.27)
+					(center 0 0)
 					(radius 1.27)
 					(stroke
 						(width 1.27)
@@ -90,133 +86,12 @@
 					)
 				)
 			)
-			(symbol "MountingHole_Pad_1_1"
-				(pin input line
-					(at 0 -2.54 90)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "power:GND"
-			(power)
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "#PWR"
-				(at 0 -6.35 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Value" "GND"
-				(at 0 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "global power"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "GND_0_1"
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 -1.27) (xy 1.27 -1.27) (xy 0 -2.54) (xy -1.27 -1.27) (xy 0 -1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "GND_1_1"
-				(pin power_in line
-					(at 0 0 270)
-					(length 0)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
 			(embedded_fonts no)
 		)
 	)
 	(rectangle
-		(start 247.396 101.854)
-		(end 278.13 158.75)
+		(start 249.936 120.904)
+		(end 280.67 161.29)
 		(stroke
 			(width 0)
 			(type default)
@@ -228,7 +103,7 @@
 	)
 	(text "Mounting Holes"
 		(exclude_from_sim no)
-		(at 247.65 100.33 0)
+		(at 250.698 123.444 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -578,74 +453,8 @@
 		(uuid "fa3c6be7-94c5-4467-8396-a91019c63e64")
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 254 151.13 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "3add2ccf-f9bc-4110-9b6f-9e493aeafebe")
-		(property "Reference" "#PWR021"
-			(at 254 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 254 156.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 254 151.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 254 151.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 254 151.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "722905aa-a27b-4b6b-af4a-7d9d373067c2")
-		)
-		(instances
-			(project "Dancebot_PCB"
-				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c"
-					(reference "#PWR021")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Mechanical:MountingHole_Pad")
-		(at 254 134.62 0)
+		(lib_id "Mechanical:MountingHole")
+		(at 256.54 147.32 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -654,7 +463,7 @@
 		(fields_autoplaced yes)
 		(uuid "4db45ac5-bbc5-4c9b-b53a-26a4bf598f56")
 		(property "Reference" "H2"
-			(at 256.54 132.0799 0)
+			(at 259.08 146.0499 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -663,7 +472,7 @@
 			)
 		)
 		(property "Value" "MountingHole_Pad"
-			(at 256.54 134.6199 0)
+			(at 259.08 148.5899 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -671,8 +480,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
-			(at 254 134.62 0)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
+			(at 256.54 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -681,7 +490,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 254 134.62 0)
+			(at 256.54 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -689,8 +498,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Mounting Hole with connection"
-			(at 254 134.62 0)
+		(property "Description" "Mounting Hole without connection"
+			(at 256.54 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -698,8 +507,14 @@
 				(hide yes)
 			)
 		)
-		(pin "1"
-			(uuid "0a43b7bd-ee10-4ec0-aa29-ec55cf41db5a")
+		(property "MAXIMUM_PACKAGE_HEIGHT" ""
+			(at 256.54 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
 		(instances
 			(project "Dancebot_PCB"
@@ -711,74 +526,8 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 254 109.22 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5900defc-f43d-4c2e-9649-11ab1155746a")
-		(property "Reference" "#PWR041"
-			(at 254 115.57 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 254 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 254 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 254 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 254 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "3988d56f-ae41-4a9a-9aac-a7ceb6569ada")
-		)
-		(instances
-			(project ""
-				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c"
-					(reference "#PWR041")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Mechanical:MountingHole_Pad")
-		(at 254 120.65 0)
+		(lib_id "Mechanical:MountingHole")
+		(at 256.54 139.7 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -787,7 +536,7 @@
 		(fields_autoplaced yes)
 		(uuid "77a6a85e-440f-4ab2-9e54-3dea132ad21e")
 		(property "Reference" "H1"
-			(at 256.54 118.1099 0)
+			(at 259.08 138.4299 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -796,7 +545,7 @@
 			)
 		)
 		(property "Value" "MountingHole_Pad"
-			(at 256.54 120.6499 0)
+			(at 259.08 140.9699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -804,8 +553,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
-			(at 254 120.65 0)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
+			(at 256.54 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -814,7 +563,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 254 120.65 0)
+			(at 256.54 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -822,8 +571,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Mounting Hole with connection"
-			(at 254 120.65 0)
+		(property "Description" "Mounting Hole without connection"
+			(at 256.54 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -831,8 +580,14 @@
 				(hide yes)
 			)
 		)
-		(pin "1"
-			(uuid "7e20e157-e22b-49a5-bc34-d7c21c28b793")
+		(property "MAXIMUM_PACKAGE_HEIGHT" ""
+			(at 256.54 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
 		(instances
 			(project "Dancebot_PCB"
@@ -844,8 +599,8 @@
 		)
 	)
 	(symbol
-		(lib_id "Mechanical:MountingHole_Pad")
-		(at 254 106.68 0)
+		(lib_id "Mechanical:MountingHole")
+		(at 256.54 132.08 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -854,7 +609,7 @@
 		(fields_autoplaced yes)
 		(uuid "c5816de4-36bf-4c6d-9dc7-7a1381d7eaf7")
 		(property "Reference" "H5"
-			(at 256.54 104.1399 0)
+			(at 259.08 130.8099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -863,7 +618,7 @@
 			)
 		)
 		(property "Value" "MountingHole_Pad"
-			(at 256.54 106.6799 0)
+			(at 259.08 133.3499 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -871,8 +626,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
-			(at 254 106.68 0)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
+			(at 256.54 132.08 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -881,7 +636,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 254 106.68 0)
+			(at 256.54 132.08 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -889,8 +644,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Mounting Hole with connection"
-			(at 254 106.68 0)
+		(property "Description" "Mounting Hole without connection"
+			(at 256.54 132.08 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -898,8 +653,14 @@
 				(hide yes)
 			)
 		)
-		(pin "1"
-			(uuid "a7090a1b-5ba2-4e86-b367-ec307b84cbc9")
+		(property "MAXIMUM_PACKAGE_HEIGHT" ""
+			(at 256.54 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
 		(instances
 			(project ""
@@ -911,8 +672,8 @@
 		)
 	)
 	(symbol
-		(lib_id "Mechanical:MountingHole_Pad")
-		(at 254 148.59 0)
+		(lib_id "Mechanical:MountingHole")
+		(at 256.54 154.94 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -921,7 +682,7 @@
 		(fields_autoplaced yes)
 		(uuid "d7a6a38d-cdae-481a-86eb-dfc28d5be2a3")
 		(property "Reference" "H3"
-			(at 256.54 146.0499 0)
+			(at 259.08 153.6699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -930,7 +691,7 @@
 			)
 		)
 		(property "Value" "MountingHole_Pad"
-			(at 256.54 148.5899 0)
+			(at 259.08 156.2099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -938,8 +699,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
-			(at 254 148.59 0)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
+			(at 256.54 154.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -948,7 +709,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 254 148.59 0)
+			(at 256.54 154.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -956,8 +717,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Mounting Hole with connection"
-			(at 254 148.59 0)
+		(property "Description" "Mounting Hole without connection"
+			(at 256.54 154.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -965,145 +726,19 @@
 				(hide yes)
 			)
 		)
-		(pin "1"
-			(uuid "f10f1bcf-0797-4740-9913-3ba3ee075bb7")
+		(property "MAXIMUM_PACKAGE_HEIGHT" ""
+			(at 256.54 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c"
 					(reference "H3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 254 137.16 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "e1236396-c7a3-4ac4-a569-9437ff7f604a")
-		(property "Reference" "#PWR020"
-			(at 254 143.51 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 254 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 254 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 254 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 254 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "5c7ff440-88b0-4403-bc6e-952f7727a747")
-		)
-		(instances
-			(project "Dancebot_PCB"
-				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c"
-					(reference "#PWR020")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 254 123.19 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "fa227298-7edf-4cd1-9c94-c05028344ee9")
-		(property "Reference" "#PWR019"
-			(at 254 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 254 128.27 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 254 123.19 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 254 123.19 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 254 123.19 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "1d05ecf4-a079-46a9-8aa3-50d70000838d")
-		)
-		(instances
-			(project "Dancebot_PCB"
-				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c"
-					(reference "#PWR019")
 					(unit 1)
 				)
 			)

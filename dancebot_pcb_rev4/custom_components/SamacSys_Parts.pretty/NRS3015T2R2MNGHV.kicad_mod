@@ -23,7 +23,7 @@
   (fp_line (start -0.5 1.5) (end 0.5 1.5) (layer F.SilkS) (width 0.1))
   (pad 1 smd rect (at -1.100 -0 0) (size 0.800 2.700) (layers F.Cu F.Paste F.Mask))
   (pad 2 smd rect (at 1.100 -0 0) (size 0.800 2.700) (layers F.Cu F.Paste F.Mask))
-  (model "C:\\Users\\tobya\\Desktop\\Dancebot\\dancebot_pcb_rev4\\custom_components\\SamacSys_Parts.3dshapes\\NRS3015T2R2MNGHV.stp"
+  (model "${KIPRJMOD}/custom_components/SamacSys_Parts.3dshapes/NRS3015T2R2MNGHV.stp"
     (at (xyz 0 0 0))
     (scale (xyz 1 1 1))
     (rotate (xyz 0 0 0))

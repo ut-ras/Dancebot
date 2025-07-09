@@ -32,7 +32,7 @@
   (pad 2 smd rect (at 1.000 -0 0) (size 1.000 3.500) (layers F.Cu F.Paste F.Mask))
   (pad 3 smd rect (at -3.350 5.55 0) (size 1.500 3.400) (layers F.Cu F.Paste F.Mask))
   (pad 4 smd rect (at 3.350 5.55 0) (size 1.500 3.400) (layers F.Cu F.Paste F.Mask))
-  (model "C:\\Users\\tobya\\Desktop\\Dancebot\\dancebot_pcb_rev4\\custom_components\\SamacSys_Parts.3dshapes\\1769.stp"
+  (model "${KIPRJMOD}/custom_components/SamacSys_Parts.3dshapes/1769.stp"
     (at (xyz 0 -0.27834646345124 0))
     (scale (xyz 1 1 1))
     (rotate (xyz -90 0 0))
