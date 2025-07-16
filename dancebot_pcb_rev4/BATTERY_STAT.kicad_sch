@@ -1579,27 +1579,15 @@
 		)
 		(uuid "b29b7ad7-b0d5-4b2e-ae3f-51f8a0ea9a13")
 	)
-	(global_label "BATT PWR"
-		(shape input)
-		(at 85.09 17.78 180)
-		(fields_autoplaced yes)
+	(label "BAT_VBUS"
+		(at 85.09 17.78 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right)
+			(justify left bottom)
 		)
-		(uuid "a2c9e2d1-b65e-4e25-80d7-949b4109fcd1")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 72.852 17.78 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
+		(uuid "e7b828c2-0d0d-4754-acfc-0fefe47e973b")
 	)
 	(hierarchical_label "BATT_ADC"
 		(shape output)

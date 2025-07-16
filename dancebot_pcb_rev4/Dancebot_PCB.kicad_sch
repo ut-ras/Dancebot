@@ -142,16 +142,6 @@
 		)
 		(uuid "115ba55e-ccf2-4908-a979-d51218444bae")
 	)
-	(bus
-		(pts
-			(xy 105.41 101.6) (xy 105.41 83.82)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2134b9bd-18e7-47e0-98e7-8f5f36324905")
-	)
 	(wire
 		(pts
 			(xy 77.47 105.41) (xy 67.31 105.41)
@@ -291,26 +281,6 @@
 			(type default)
 		)
 		(uuid "8bcad60a-3408-405f-b1f1-595d2734af4f")
-	)
-	(bus
-		(pts
-			(xy 115.57 101.6) (xy 105.41 101.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9bbbc205-c228-4294-859e-30ba8b66aaf2")
-	)
-	(bus
-		(pts
-			(xy 105.41 83.82) (xy 102.87 83.82)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a24aca30-29e4-4b3b-bd60-6b1bbdc9b1cd")
 	)
 	(wire
 		(pts
@@ -798,16 +768,6 @@
 				(justify right)
 			)
 		)
-		(pin "UART{UART}" bidirectional
-			(at 102.87 83.82 0)
-			(uuid "99f25e9a-716d-4e3c-ba22-03da669067ad")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
 		(pin "NP1_DIN" input
 			(at 77.47 73.66 180)
 			(uuid "0a24f25c-06d2-450a-b39f-bb0eb1df962d")
@@ -985,16 +945,6 @@
 		(pin "D-" bidirectional
 			(at 115.57 99.06 180)
 			(uuid "1f1b2c37-60f4-40f5-a020-4b01fd5523f0")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "UART{UART}" bidirectional
-			(at 115.57 101.6 180)
-			(uuid "35993dc6-c1ba-410f-91fd-27afa4342d15")
 			(effects
 				(font
 					(size 1.27 1.27)

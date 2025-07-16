@@ -150,4 +150,22 @@ K
 F https://www.bourns.com/pdfs/chpreztr.pdf
 $ENDCMP
 #
+$CMP ESP32-S3-WROOM-1-N4
+D WiFi Modules - 802.11 [Engineering Samples] SMD Module, ESP32-S3, 4 MB SPI Flash, PCB Antenna
+K
+F https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf
+$ENDCMP
+#
+$CMP TPS62163DSGR
+D 3V-17V 1A Step-Down Converters with DCS-Control
+K
+F http://www.ti.com/lit/gpn/tps62163
+$ENDCMP
+#
+$CMP GXT21BR61C226ME13L
+D Multilayer Ceramic Capacitors MLCC - SMD/SMT 0805 16VDC 22uF 20% X5R AEC-Q200
+K
+F https://www.murata.com/en-global/products/productdetail?partno=GXT21BR61C226ME13%23
+$ENDCMP
+#
 #End Doc Library
