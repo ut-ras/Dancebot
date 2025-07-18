@@ -1222,7 +1222,7 @@
 	)
 	(rectangle
 		(start 14.732 14.224)
-		(end 40.64 27.432)
+		(end 40.64 28.575)
 		(stroke
 			(width 0)
 			(type default)
@@ -1308,6 +1308,16 @@
 			(type default)
 		)
 		(uuid "0aa939b2-af70-47db-a1bf-8613dee67248")
+	)
+	(wire
+		(pts
+			(xy 26.67 26.67) (xy 29.21 26.67)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "136e2e30-a0a6-43d3-960c-5c939c61ef0a")
 	)
 	(wire
 		(pts
@@ -1559,6 +1569,16 @@
 		)
 		(uuid "788f9833-661f-4689-9cf2-587493a69cca")
 	)
+	(label "BAT_VBUS"
+		(at 29.21 26.67 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a34b510a-d470-4f2a-a383-5fe88ac8e69a")
+	)
 	(label "BATT_ADC"
 		(at 29.21 24.13 0)
 		(effects
@@ -1599,6 +1619,17 @@
 			(justify right)
 		)
 		(uuid "0b3ee0b6-838d-442b-b23c-c0575bf4cda3")
+	)
+	(hierarchical_label "BAT_VBUS"
+		(shape input)
+		(at 26.67 26.67 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4d237682-622c-4e26-9dd4-a3f8b793aec5")
 	)
 	(hierarchical_label "BATT_EN"
 		(shape input)

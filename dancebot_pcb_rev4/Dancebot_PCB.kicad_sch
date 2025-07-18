@@ -144,6 +144,16 @@
 	)
 	(wire
 		(pts
+			(xy 147.32 102.87) (xy 153.67 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1918229c-b5cd-4b2f-8d56-1bbd238eafee")
+	)
+	(wire
+		(pts
 			(xy 77.47 105.41) (xy 67.31 105.41)
 		)
 		(stroke
@@ -281,6 +291,26 @@
 			(type default)
 		)
 		(uuid "8bcad60a-3408-405f-b1f1-595d2734af4f")
+	)
+	(wire
+		(pts
+			(xy 153.67 78.74) (xy 147.32 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "996b6dbf-492a-4431-87d1-53a1ed2f5a43")
+	)
+	(wire
+		(pts
+			(xy 147.32 78.74) (xy 147.32 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9da55bb7-7ca9-4ca1-a0db-6181831008a1")
 	)
 	(wire
 		(pts
@@ -1014,6 +1044,16 @@
 				(justify left)
 			)
 		)
+		(pin "BAT_VBUS" output
+			(at 153.67 102.87 180)
+			(uuid "1178ba5a-59b7-4be7-b2f4-267d0b01f8a2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c"
@@ -1069,6 +1109,16 @@
 		(pin "BATT_EN" input
 			(at 153.67 76.2 180)
 			(uuid "71b7a95f-dfc5-487d-9709-c7469145640d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "BAT_VBUS" input
+			(at 153.67 78.74 180)
+			(uuid "50fe7ba5-26df-4265-8dfb-dadda7f8eac0")
 			(effects
 				(font
 					(size 1.27 1.27)

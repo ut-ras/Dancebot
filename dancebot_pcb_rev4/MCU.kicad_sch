@@ -1679,16 +1679,6 @@
 		)
 		(uuid dd28b480-eebf-4cc3-a8d1-a5811b37a2a3)
 	)
-	(text "unused atm"
-		(exclude_from_sim no)
-		(at 45.212 26.416 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "5450392e-2d5c-4c96-967d-d278e0bedb49")
-	)
 	(text "ESP32 Module"
 		(exclude_from_sim no)
 		(at 68.834 20.066 0)
@@ -1747,12 +1737,6 @@
 		(uuid "23cba05b-d34a-468f-bc49-ea7d613a111f")
 	)
 	(junction
-		(at 76.2 44.45)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "3b5c78cb-1517-4791-adbb-9f0f5e51e394")
-	)
-	(junction
 		(at 186.69 35.56)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1789,6 +1773,12 @@
 		(uuid "6b2e3dbd-ba4c-444b-afb5-6f89a97fc5cf")
 	)
 	(junction
+		(at 74.93 44.45)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "83adfd7e-94c0-4c2c-8ba1-995aaaea7705")
+	)
+	(junction
 		(at 125.73 82.55)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1813,12 +1803,6 @@
 		(uuid "a5672d48-20e8-4a59-8cad-40f8de262313")
 	)
 	(junction
-		(at 76.2 36.83)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "b8ebb1f3-70e5-4774-b7ac-590ebd72a875")
-	)
-	(junction
 		(at 125.73 74.93)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1829,6 +1813,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c32a4c46-fd72-4331-b2f0-3156105b2a63")
+	)
+	(junction
+		(at 74.93 36.83)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ed9fe436-f423-42ec-86b3-9af059088a14")
 	)
 	(junction
 		(at 125.73 80.01)
@@ -2047,13 +2037,23 @@
 	)
 	(wire
 		(pts
-			(xy 71.12 36.83) (xy 76.2 36.83)
+			(xy 69.85 36.83) (xy 74.93 36.83)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "2962877f-f12c-4bcc-b670-286336a3b4f3")
+	)
+	(wire
+		(pts
+			(xy 74.93 36.83) (xy 80.01 36.83)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "29e88888-6527-4d99-940f-20bff928e877")
 	)
 	(wire
 		(pts
@@ -2064,16 +2064,6 @@
 			(type default)
 		)
 		(uuid "308c7526-f62a-408d-835a-eaf0b98bb125")
-	)
-	(wire
-		(pts
-			(xy 76.2 36.83) (xy 80.01 36.83)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3d96a6b6-d248-4647-8be5-078b1b10e375")
 	)
 	(wire
 		(pts
@@ -2134,16 +2124,6 @@
 			(type default)
 		)
 		(uuid "5c386cff-0b70-4897-aaa0-cca13acbd178")
-	)
-	(wire
-		(pts
-			(xy 76.2 44.45) (xy 80.01 44.45)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "61480f0e-a6f2-46fd-9424-c781abd87eae")
 	)
 	(wire
 		(pts
@@ -2267,7 +2247,7 @@
 	)
 	(wire
 		(pts
-			(xy 71.12 44.45) (xy 76.2 44.45)
+			(xy 69.85 44.45) (xy 74.93 44.45)
 		)
 		(stroke
 			(width 0)
@@ -2414,6 +2394,16 @@
 			(type default)
 		)
 		(uuid "f260e6ed-b8a9-4dc7-acd8-395f76e15ee5")
+	)
+	(wire
+		(pts
+			(xy 74.93 44.45) (xy 80.01 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f491c7db-46e4-439e-b640-0e5b43a9b88b")
 	)
 	(wire
 		(pts
@@ -3450,7 +3440,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 71.12 40.64 0)
+		(at 69.85 40.64 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3459,7 +3449,7 @@
 		(fields_autoplaced yes)
 		(uuid "b00d26ba-b230-40cd-ac8b-23b1d7938469")
 		(property "Reference" "C2"
-			(at 74.93 39.3699 0)
+			(at 73.66 39.3699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3468,7 +3458,7 @@
 			)
 		)
 		(property "Value" "22u"
-			(at 74.93 41.9099 0)
+			(at 73.66 41.9099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3477,7 +3467,7 @@
 			)
 		)
 		(property "Footprint" "SamacSys_Parts:CAPC2012X145N"
-			(at 72.0852 44.45 0)
+			(at 70.8152 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3486,7 +3476,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 71.12 40.64 0)
+			(at 69.85 40.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3495,7 +3485,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 71.12 40.64 0)
+			(at 69.85 40.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3651,7 +3641,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 76.2 36.83 0)
+		(at 74.93 36.83 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3660,7 +3650,7 @@
 		(fields_autoplaced yes)
 		(uuid "bed85cf5-cf4d-4a3b-a9d0-a5da7c97a4dd")
 		(property "Reference" "#PWR021"
-			(at 76.2 40.64 0)
+			(at 74.93 40.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3669,7 +3659,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 76.2 31.75 0)
+			(at 74.93 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3677,7 +3667,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 76.2 36.83 0)
+			(at 74.93 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3686,7 +3676,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 76.2 36.83 0)
+			(at 74.93 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3695,7 +3685,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 76.2 36.83 0)
+			(at 74.93 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4109,7 +4099,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 76.2 44.45 0)
+		(at 74.93 44.45 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4118,7 +4108,7 @@
 		(fields_autoplaced yes)
 		(uuid "f4760a31-0a31-4634-ad10-6aded564aeeb")
 		(property "Reference" "#PWR020"
-			(at 76.2 50.8 0)
+			(at 74.93 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4127,7 +4117,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 76.2 49.53 0)
+			(at 74.93 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4135,7 +4125,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 76.2 44.45 0)
+			(at 74.93 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4144,7 +4134,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 76.2 44.45 0)
+			(at 74.93 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4153,7 +4143,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 76.2 44.45 0)
+			(at 74.93 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
