@@ -2870,12 +2870,6 @@
 		(uuid "d29691f4-9ca4-4ac9-86b2-98f641bbdd27")
 	)
 	(junction
-		(at 154.94 106.68)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "e21df658-56c5-414e-8249-ee32a49d10fb")
-	)
-	(junction
 		(at 219.71 142.24)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3251,16 +3245,6 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 106.68) (xy 154.94 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "66e7ed2c-9a2d-45f6-b2d0-aa26347de6bf")
-	)
-	(wire
-		(pts
 			(xy 55.88 132.08) (xy 58.42 132.08)
 		)
 		(stroke
@@ -3351,7 +3335,7 @@
 	)
 	(wire
 		(pts
-			(xy 154.94 106.68) (xy 161.29 106.68)
+			(xy 149.86 106.68) (xy 161.29 106.68)
 		)
 		(stroke
 			(width 0)
@@ -5747,7 +5731,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TestPoint:TestPoint_Pad_1.0x1.0mm"
 			(at 198.12 71.12 0)
 			(effects
 				(font
@@ -8070,82 +8054,6 @@
 			(project ""
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/9bb1d94d-135a-4bfe-a8c4-60fef77f5043"
 					(reference "PS1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 154.94 106.68 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "e4e99f8e-c35d-45d3-83c0-4f18725cc4a9")
-		(property "Reference" "TP203"
-			(at 157.48 102.1079 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "BUCK_VIN"
-			(at 157.48 104.6479 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_1.0x1.0mm"
-			(at 160.02 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 160.02 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 154.94 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MAXIMUM_PACKAGE_HEIGHT" ""
-			(at 154.94 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "88a8b407-a2ab-4bbf-b428-44b6cac86844")
-		)
-		(instances
-			(project "Dancebot_PCB"
-				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/9bb1d94d-135a-4bfe-a8c4-60fef77f5043"
-					(reference "TP203")
 					(unit 1)
 				)
 			)
