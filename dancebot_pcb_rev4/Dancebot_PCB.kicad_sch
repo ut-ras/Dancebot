@@ -194,6 +194,16 @@
 	)
 	(wire
 		(pts
+			(xy 64.77 107.95) (xy 77.47 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "49e7aba5-3a26-4401-b242-3247633b6d09")
+	)
+	(wire
+		(pts
 			(xy 110.49 60.96) (xy 110.49 71.12)
 		)
 		(stroke
@@ -241,6 +251,16 @@
 			(type default)
 		)
 		(uuid "7deade43-2752-4596-b651-1c7a792aaa67")
+	)
+	(wire
+		(pts
+			(xy 64.77 71.12) (xy 64.77 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7ff5fa5d-9605-4cb8-ae8e-2057db6903ac")
 	)
 	(wire
 		(pts
@@ -401,6 +421,16 @@
 			(type default)
 		)
 		(uuid "d7edddbd-0df2-40e7-b613-0b88a1527741")
+	)
+	(wire
+		(pts
+			(xy 77.47 71.12) (xy 64.77 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dbbd3ddb-b258-4e85-b4fc-f695a8c61f23")
 	)
 	(wire
 		(pts
@@ -868,6 +898,16 @@
 				(justify right)
 			)
 		)
+		(pin "IO45" output
+			(at 77.47 71.12 180)
+			(uuid "f028c33d-a3c2-471e-8126-93e759ba97d9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c"
@@ -1201,6 +1241,16 @@
 		(pin "NP2_DOUT" output
 			(at 77.47 97.79 180)
 			(uuid "3390945c-cfd6-41a5-a2cb-37cc0a07958b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "IO45" input
+			(at 77.47 107.95 180)
+			(uuid "bd8cabef-6c12-4635-ae5e-981a8d648a78")
 			(effects
 				(font
 					(size 1.27 1.27)

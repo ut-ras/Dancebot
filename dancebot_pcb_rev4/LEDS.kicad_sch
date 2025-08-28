@@ -903,7 +903,7 @@
 	)
 	(rectangle
 		(start 13.716 15.113)
-		(end 39.751 32.258)
+		(end 39.751 35.56)
 		(stroke
 			(width 0)
 			(type default)
@@ -912,6 +912,18 @@
 			(type none)
 		)
 		(uuid 75ada289-5fab-4ed8-8a98-80b1b6008f9f)
+	)
+	(rectangle
+		(start 142.24 15.24)
+		(end 170.815 50.165)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid 945175eb-76d9-4270-87b5-ffab440c9dc1)
 	)
 	(rectangle
 		(start 41.91 15.24)
@@ -934,6 +946,17 @@
 			)
 		)
 		(uuid "2d0afb63-24e4-43ad-b239-bb51c18a727a")
+	)
+	(text "Heartbeat LED"
+		(exclude_from_sim no)
+		(at 156.21 19.05 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "46667ab6-b48a-4329-bc6d-5f4c4193013b")
 	)
 	(text "LED Eyes\n"
 		(exclude_from_sim no)
@@ -989,6 +1012,16 @@
 	)
 	(wire
 		(pts
+			(xy 147.32 30.48) (xy 147.32 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6f9e104e-74f7-4062-be23-fbd2b0717817")
+	)
+	(wire
+		(pts
 			(xy 27.94 26.67) (xy 26.67 26.67)
 		)
 		(stroke
@@ -1029,6 +1062,16 @@
 	)
 	(wire
 		(pts
+			(xy 26.67 31.75) (xy 27.94 31.75)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d79ad752-d9a0-48bf-9cee-0e951aa0940a")
+	)
+	(wire
+		(pts
 			(xy 27.94 21.59) (xy 26.67 21.59)
 		)
 		(stroke
@@ -1046,6 +1089,16 @@
 			(type default)
 		)
 		(uuid "f443c367-8893-4bd2-9774-a3f24f2fb61b")
+	)
+	(wire
+		(pts
+			(xy 147.32 40.64) (xy 147.32 43.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f4be3869-033f-4e76-ba83-7c59d11c7778")
 	)
 	(label "NP1_DOUT"
 		(at 27.94 21.59 0)
@@ -1097,6 +1150,16 @@
 		)
 		(uuid "691e57ed-8778-4a4f-89ff-a8add5849b9b")
 	)
+	(label "IO45"
+		(at 147.32 22.86 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a34e0a1a-300c-43de-ad09-181aedd0c52b")
+	)
 	(label "NP1_DIN"
 		(at 27.94 24.13 0)
 		(effects
@@ -1116,6 +1179,16 @@
 			(justify left bottom)
 		)
 		(uuid "c85a6ae0-d009-45f4-8a1d-2c89e9860f24")
+	)
+	(label "IO45"
+		(at 27.94 31.75 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d032d09c-afea-4112-8b9d-75274b594363")
 	)
 	(label "NP1_DIN"
 		(at 54.61 39.37 0)
@@ -1137,6 +1210,17 @@
 			(justify right bottom)
 		)
 		(uuid "006fd281-2f2d-4903-8e9b-1a9c23cf7b8f")
+	)
+	(hierarchical_label "IO45"
+		(shape input)
+		(at 26.67 31.75 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "07bd0ef6-514f-40c0-b4ed-2a2660be8ed5")
 	)
 	(hierarchical_label "NP1_DIN"
 		(shape input)
@@ -1170,6 +1254,137 @@
 			(justify right bottom)
 		)
 		(uuid "bd6ba53a-c7e7-46c0-88e6-161d42a7bc41")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 147.32 36.83 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0987c3a5-b3a6-46bc-ada1-cdedb8806d87")
+		(property "Reference" "R8"
+			(at 149.86 35.5599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1k"
+			(at 149.86 38.0999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "SamacSys_Parts:RESC2012X60N"
+			(at 161.29 133.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://componentsearchengine.com/Datasheets/1/SG73S2ATTD1001F.pdf"
+			(at 161.29 233.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "Thick Film Resistors - SMD 0.25W 1Kohm 1% 200ppm Anti-Surge"
+			(at 147.32 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Height" "0.6"
+			(at 161.29 433.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "660-SG73S2ATTD1001F"
+			(at 161.29 533.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Mouser Price/Stock" "http://www.mouser.com/Search/ProductDetail.aspx?qs=0U9fANxrh6m6MeHUVRJTUw%3d%3d"
+			(at 161.29 633.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "KOA Speer"
+			(at 161.29 733.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "SG73S2ATTD1001F"
+			(at 161.29 833.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "MAXIMUM_PACKAGE_HEIGHT" ""
+			(at 147.32 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "be5c4f0f-1243-4822-8618-dd02f00dff63")
+		)
+		(pin "1"
+			(uuid "4e23a612-fd60-4bed-a366-d494f02545ad")
+		)
+		(instances
+			(project "Dancebot_PCB"
+				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
+					(reference "R8")
+					(unit 1)
+				)
+			)
+		)
 	)
 	(symbol
 		(lib_id "power:+3V3")
@@ -1315,6 +1530,138 @@
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
 					(reference "J4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_name "LED_1")
+		(lib_id "Device:LED")
+		(at 147.32 26.67 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "442024c3-0126-4ecb-8929-fe47df7b561f")
+		(property "Reference" "LED2"
+			(at 151.13 26.9874 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "APT2012PGW"
+			(at 151.13 29.5274 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "SamacSys_Parts:APT2012PGW"
+			(at 240.97 13.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 340.97 13.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Description" "Green 555nm LED Indication - Discrete 2.25V 0805 (2012 Metric)"
+			(at 147.32 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Height" "0.85"
+			(at 540.97 13.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "604-APT2012PGW"
+			(at 640.97 13.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Kingbright/APT2012PGW?qs=SxaZfIVsCL2edu2fuRiRPw%3D%3D"
+			(at 740.97 13.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Kingbright"
+			(at 840.97 13.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Part_Number" "APT2012PGW"
+			(at 940.97 13.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAXIMUM_PACKAGE_HEIGHT" ""
+			(at 147.32 26.67 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "81776967-9e16-4a96-98ab-9b389f3386f2")
+		)
+		(pin "2"
+			(uuid "257a7678-134a-43e8-8a65-2c1de4acd90d")
+		)
+		(instances
+			(project "Dancebot_PCB"
+				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
+					(reference "LED2")
 					(unit 1)
 				)
 			)
@@ -1794,6 +2141,72 @@
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
 					(reference "#PWR038")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 147.32 43.18 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "8213223c-afd8-4e95-9e0f-a2f00c1d1b2c")
+		(property "Reference" "#PWR030"
+			(at 147.32 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 147.32 48.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 147.32 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 147.32 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 147.32 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2d3625d2-1e19-4ea3-b30d-5f7e502170e6")
+		)
+		(instances
+			(project "Dancebot_PCB"
+				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
+					(reference "#PWR030")
 					(unit 1)
 				)
 			)

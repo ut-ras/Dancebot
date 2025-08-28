@@ -1869,10 +1869,6 @@
 		(uuid "5b19a22b-adff-46d8-9c46-416dd717e2a1")
 	)
 	(no_connect
-		(at 125.73 34.29)
-		(uuid "6caf2687-3cbb-4d45-b65f-8e0c29085003")
-	)
-	(no_connect
 		(at 125.73 39.37)
 		(uuid "7a116d5e-d84f-485f-b3f3-5a489581d23b")
 	)
@@ -2337,6 +2333,16 @@
 	)
 	(wire
 		(pts
+			(xy 33.02 40.64) (xy 34.29 40.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dc0b3385-ebbf-4077-acad-f1108b70eab8")
+	)
+	(wire
+		(pts
 			(xy 33.02 25.4) (xy 35.56 25.4)
 		)
 		(stroke
@@ -2474,6 +2480,16 @@
 			(justify left bottom)
 		)
 		(uuid "1f960a85-135a-42d2-bd4d-a1e0269b04ff")
+	)
+	(label "IO45"
+		(at 34.29 40.64 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "27e273bc-5de3-4ef3-b46a-3336e80a05ef")
 	)
 	(label "SM5"
 		(at 36.83 76.2 0)
@@ -2715,6 +2731,16 @@
 		)
 		(uuid "e37a8e70-28d0-4d3e-b341-9a476f669d7c")
 	)
+	(label "IO45"
+		(at 125.73 34.29 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e560c593-bbe0-446a-91b8-e90cfd600274")
+	)
 	(hierarchical_label "D-"
 		(shape bidirectional)
 		(at 33.02 27.94 180)
@@ -2802,6 +2828,17 @@
 			(justify right bottom)
 		)
 		(uuid "d147e2f8-d74f-4c0f-8076-63495184009f")
+	)
+	(hierarchical_label "IO45"
+		(shape output)
+		(at 33.02 40.64 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "d8e622c1-12bb-44d6-8482-143fc3a31bcd")
 	)
 	(hierarchical_label "BATT_ADC"
 		(shape input)
