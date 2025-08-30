@@ -1,35 +1,174 @@
-(module "APT2012PGW" (layer F.Cu)
-  (descr "0805 (2012 Metric)_2025")
-  (tags "LED")
-  (attr smd)
-  (fp_text reference LED** (at 0.000 -0) (layer F.SilkS)
-    (effects (font (size 1.27 1.27) (thickness 0.254)))
-  )
-  (fp_text user %R (at 0.000 -0) (layer F.Fab)
-    (effects (font (size 1.27 1.27) (thickness 0.254)))
-  )
-  (fp_text value "APT2012PGW" (at 0.000 -0) (layer F.SilkS) hide
-    (effects (font (size 1.27 1.27) (thickness 0.254)))
-  )
-  (fp_line (start -1 -0.625) (end 1 -0.625) (layer F.Fab) (width 0.1))
-  (fp_line (start 1 -0.625) (end 1 0.625) (layer F.Fab) (width 0.1))
-  (fp_line (start 1 0.625) (end -1 0.625) (layer F.Fab) (width 0.1))
-  (fp_line (start -1 0.625) (end -1 -0.625) (layer F.Fab) (width 0.1))
-  (fp_line (start -2.8 -1.625) (end 2.8 -1.625) (layer F.CrtYd) (width 0.1))
-  (fp_line (start 2.8 -1.625) (end 2.8 1.625) (layer F.CrtYd) (width 0.1))
-  (fp_line (start 2.8 1.625) (end -2.8 1.625) (layer F.CrtYd) (width 0.1))
-  (fp_line (start -2.8 1.625) (end -2.8 -1.625) (layer F.CrtYd) (width 0.1))
-  (fp_line (start -2.3 -0) (end -2.3 -0) (layer F.SilkS) (width 0.1))
-  (fp_line (start -2.2 -0) (end -2.2 -0) (layer F.SilkS) (width 0.1))
-  (fp_line (start -0.2 -0.625) (end 0.2 -0.625) (layer F.SilkS) (width 0.2))
-  (fp_line (start -0.2 0.625) (end 0.2 0.625) (layer F.SilkS) (width 0.2))
-  (fp_arc (start -2.25 -0) (end -2.300 -0) (angle -180) (layer F.SilkS) (width 0.1))
-  (fp_arc (start -2.25 -0) (end -2.200 -0) (angle -180) (layer F.SilkS) (width 0.1))
-  (pad 1 smd rect (at -1.175 -0 90) (size 1.100 1.250) (layers F.Cu F.Paste F.Mask))
-  (pad 2 smd rect (at 1.175 -0 90) (size 1.100 1.250) (layers F.Cu F.Paste F.Mask))
-  (model "${KIPRJMOD}/custom_components/SamacSys_Parts.3dshapes/APT2012PGW.stp"
-    (at (xyz 0 0 0))
-    (scale (xyz 1 1 1))
-    (rotate (xyz 0 0 0))
-  )
+(footprint "APT2012PGW"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "0805 (2012 Metric)_2025")
+	(tags "LED")
+	(property "Reference" "LED**"
+		(at 0 -2.4 0)
+		(layer "F.SilkS")
+		(uuid "d36dc825-e4bd-41a8-97f2-d4787ceebec8")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(property "Value" "APT2012PGW"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "c1597782-445a-4c93-ab9a-7700ab345ee3")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "1cd36ca7-b3b9-4330-91e0-d06b97571b88")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "0a19ece3-4b8b-40fe-b084-7ba657669216")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_line
+		(start -2.2 -0.9)
+		(end -2.2 0.85)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "e739cd4f-df25-4e3c-83c7-eb074a6c754a")
+	)
+	(fp_line
+		(start -2.2 0.85)
+		(end 1.7 0.85)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "c0cbcbd0-e61b-4a7f-9482-72b83990487d")
+	)
+	(fp_line
+		(start 1.7 -0.9)
+		(end -2.2 -0.9)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "a585f1f0-d0ad-4a82-ae3e-430d15f42f2d")
+	)
+	(fp_rect
+		(start -2.5 -1)
+		(end 2 1)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "dbfd3ef3-ce3c-47a7-a3a4-90b9ba26f9de")
+	)
+	(fp_line
+		(start -1 -0.625)
+		(end 1 -0.625)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "810582d4-0937-4a3d-ad3c-943fd56d9292")
+	)
+	(fp_line
+		(start -1 0.625)
+		(end -1 -0.625)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "0c456760-4c60-40ab-af98-35244b8ae8bf")
+	)
+	(fp_line
+		(start 1 -0.625)
+		(end 1 0.625)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "ba7f9798-2d88-4ef1-86b7-2ca7694da52c")
+	)
+	(fp_line
+		(start 1 0.625)
+		(end -1 0.625)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "36474af4-cb36-4b60-b4a9-585b0b73a236")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "7f35b835-af42-4e80-aa36-517224d40f8a")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(pad "1" smd roundrect
+		(at -1.175 0 90)
+		(size 1.1 1.25)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.2272727273)
+		(uuid "c7a79552-dd91-4ee0-8a00-b4f38fa3c12f")
+	)
+	(pad "2" smd roundrect
+		(at 1.175 0 90)
+		(size 1.1 1.25)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.2272727273)
+		(uuid "8cad9b28-3b36-4da6-bddd-9c37b193f704")
+	)
+	(embedded_fonts no)
+	(model "${KIPRJMOD}/custom_components/SamacSys_Parts.3dshapes/APT2012PGW.stp"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 )

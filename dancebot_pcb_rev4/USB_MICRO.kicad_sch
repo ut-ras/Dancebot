@@ -361,34 +361,49 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Device:D_Zener"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 1.016)
-				(hide yes)
-			)
+		(symbol "SamacSys_Parts:USBLC6-4SC6Y"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
 			(property "Reference" "D"
-				(at 0 2.54 0)
+				(at 24.13 12.7 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
+					(justify left top)
 				)
 			)
-			(property "Value" "D_Zener"
-				(at 0 -2.54 0)
+			(property "Value" "USBLC6-4SC6Y"
+				(at 24.13 10.16 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
+					(justify left top)
 				)
 			)
-			(property "Footprint" ""
+			(property "Footprint" "SOT95P280X145-6N"
+				(at 24.13 -94.996 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://www.st.com/resource/en/datasheet/usblc6-4sc6y.pdf"
+				(at 24.13 -194.818 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "Description" "STMICROELECTRONICS - USBLC6-4SC6Y - ESD Protection Device, 17 V, SOT-23, 6 Pins"
 				(at 0 0 0)
 				(effects
 					(font
@@ -397,85 +412,108 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
+			(property "Height" "1.45"
+				(at 24.13 -394.97 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
+					(justify left top)
 					(hide yes)
 				)
 			)
-			(property "Description" "Zener diode"
-				(at 0 0 0)
+			(property "Mouser Part Number" "511-USBLC6-4SC6Y"
+				(at 24.13 -495.046 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
+					(justify left top)
 					(hide yes)
 				)
 			)
-			(property "ki_keywords" "diode"
-				(at 0 0 0)
+			(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/STMicroelectronics/USBLC6-4SC6Y?qs=gNDSiZmRJS%252B5K%252Bxjl%252Bw9xw%3D%3D"
+				(at 24.13 -594.868 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
+					(justify left top)
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
-				(at 0 0 0)
+			(property "Manufacturer_Name" "STMicroelectronics"
+				(at 24.13 -694.944 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
+					(justify left top)
 					(hide yes)
 				)
 			)
-			(symbol "D_Zener_0_1"
-				(polyline
-					(pts
-						(xy -1.27 -1.27) (xy -1.27 1.27) (xy -0.762 1.27)
+			(property "Manufacturer_Part_Number" "USBLC6-4SC6Y"
+				(at 24.13 -795.02 0)
+				(effects
+					(font
+						(size 1.27 1.27)
 					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(symbol "USBLC6-4SC6Y_1_1"
+				(rectangle
+					(start 5.08 10.16)
+					(end 22.86 -7.62)
 					(stroke
 						(width 0.254)
 						(type default)
 					)
 					(fill
-						(type none)
+						(type background)
 					)
 				)
-				(polyline
-					(pts
-						(xy 1.27 0) (xy -1.27 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 -1.27) (xy 1.27 1.27) (xy -1.27 0) (xy 1.27 -1.27)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "D_Zener_1_1"
 				(pin passive line
-					(at -3.81 0 0)
-					(length 2.54)
-					(name "K"
+					(at 0 7.62 0)
+					(length 5.08)
+					(name "VBUS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 2.54 0)
+					(length 5.08)
+					(name "I/O2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 0 0)
+					(length 5.08)
+					(name "I/O1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -491,9 +529,9 @@
 					)
 				)
 				(pin passive line
-					(at 3.81 0 180)
-					(length 2.54)
-					(name "A"
+					(at 13.97 -12.7 90)
+					(length 5.08)
+					(name "GND"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -501,6 +539,42 @@
 						)
 					)
 					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 27.94 2.54 180)
+					(length 5.08)
+					(name "I/O3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 27.94 0 180)
+					(length 5.08)
+					(name "I/O4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -617,8 +691,8 @@
 		(members "TXD" "RTS" "DTR" "RXD")
 	)
 	(rectangle
-		(start 54.61 13.97)
-		(end 140.97 52.07)
+		(start 54.61 15.24)
+		(end 140.97 55.88)
 		(stroke
 			(width 0)
 			(type default)
@@ -629,8 +703,8 @@
 		(uuid 4c73fb60-bc4f-4b78-836c-45b4656e62cb)
 	)
 	(rectangle
-		(start 13.97 13.97)
-		(end 50.165 50.8)
+		(start 13.97 15.24)
+		(end 50.165 52.07)
 		(stroke
 			(width 0)
 			(type default)
@@ -642,7 +716,7 @@
 	)
 	(text "Hierarchical Labels"
 		(exclude_from_sim no)
-		(at 24.13 16.256 0)
+		(at 23.114 14.478 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -652,7 +726,7 @@
 	)
 	(text "MicroUSB Port"
 		(exclude_from_sim no)
-		(at 55.372 16.764 0)
+		(at 54.61 15.24 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -662,56 +736,28 @@
 		(uuid "ac6427da-f011-4eb2-b690-bf5cabccfdc3")
 	)
 	(junction
-		(at 119.38 26.67)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "3574ea0f-4c32-44af-b151-a75b6f33cd59")
-	)
-	(junction
-		(at 59.69 41.91)
+		(at 59.69 43.18)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "3e5845ab-a329-441e-b0ef-70f0e2c418d8")
 	)
-	(junction
-		(at 95.25 31.75)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "a91254a3-1ce6-426c-8f69-99f0af91d67b")
-	)
-	(junction
-		(at 72.39 34.29)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "be938206-d8cb-469f-88a5-9b514530e1cc")
-	)
 	(no_connect
-		(at 68.58 36.83)
+		(at 68.58 38.1)
 		(uuid "f8f0cd65-34b2-44a4-a1c1-157728b37a8b")
 	)
 	(wire
 		(pts
-			(xy 119.38 26.67) (xy 119.38 35.56)
+			(xy 68.58 27.94) (xy 88.9 27.94)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "047dbfb9-109c-41d7-8dea-d0232ba6f958")
+		(uuid "0239c12a-00a6-46f4-a42b-cfa337f5db61")
 	)
 	(wire
 		(pts
-			(xy 68.58 34.29) (xy 72.39 34.29)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0ef86f29-ea89-40a3-bf18-d2baca59c6ef")
-	)
-	(wire
-		(pts
-			(xy 59.69 41.91) (xy 59.69 43.18)
+			(xy 59.69 43.18) (xy 59.69 48.26)
 		)
 		(stroke
 			(width 0)
@@ -721,17 +767,7 @@
 	)
 	(wire
 		(pts
-			(xy 95.25 31.75) (xy 104.14 31.75)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "364ad3c6-8397-40b6-86c6-e9e093dcec19")
-	)
-	(wire
-		(pts
-			(xy 29.21 27.94) (xy 31.75 27.94)
+			(xy 29.21 29.21) (xy 31.75 29.21)
 		)
 		(stroke
 			(width 0)
@@ -741,7 +777,7 @@
 	)
 	(wire
 		(pts
-			(xy 68.58 31.75) (xy 95.25 31.75)
+			(xy 68.58 33.02) (xy 88.9 33.02)
 		)
 		(stroke
 			(width 0)
@@ -751,7 +787,7 @@
 	)
 	(wire
 		(pts
-			(xy 29.21 30.48) (xy 31.75 30.48)
+			(xy 29.21 31.75) (xy 31.75 31.75)
 		)
 		(stroke
 			(width 0)
@@ -761,17 +797,7 @@
 	)
 	(wire
 		(pts
-			(xy 123.19 26.67) (xy 119.38 26.67)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "63a43b44-04cc-4d57-b1be-ea452f08e34c")
-	)
-	(wire
-		(pts
-			(xy 59.69 41.91) (xy 60.96 41.91)
+			(xy 59.69 43.18) (xy 60.96 43.18)
 		)
 		(stroke
 			(width 0)
@@ -781,7 +807,7 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 34.29) (xy 104.14 34.29)
+			(xy 68.58 35.56) (xy 88.9 35.56)
 		)
 		(stroke
 			(width 0)
@@ -791,27 +817,17 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 34.29) (xy 72.39 35.56)
+			(xy 119.38 33.02) (xy 116.84 33.02)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "9a59031e-b012-42b7-b029-eff08163fdc5")
+		(uuid "746bb6d2-619a-46a2-9334-9e711f052bc5")
 	)
 	(wire
 		(pts
-			(xy 119.38 26.67) (xy 68.58 26.67)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a23eb868-da93-486c-9fb0-f7979e4a44eb")
-	)
-	(wire
-		(pts
-			(xy 29.21 22.86) (xy 31.75 22.86)
+			(xy 29.21 24.13) (xy 31.75 24.13)
 		)
 		(stroke
 			(width 0)
@@ -821,17 +837,7 @@
 	)
 	(wire
 		(pts
-			(xy 95.25 31.75) (xy 95.25 35.56)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e1786ac9-b543-4c1a-8904-5a738ec0a3b6")
-	)
-	(wire
-		(pts
-			(xy 58.42 41.91) (xy 59.69 41.91)
+			(xy 58.42 43.18) (xy 59.69 43.18)
 		)
 		(stroke
 			(width 0)
@@ -839,8 +845,18 @@
 		)
 		(uuid "fa9a8686-26c4-455e-9bf0-63396419fc2e")
 	)
+	(wire
+		(pts
+			(xy 119.38 35.56) (xy 116.84 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ff224250-ba1e-4a95-b806-d96f6c76b671")
+	)
 	(label "D+"
-		(at 31.75 27.94 0)
+		(at 31.75 29.21 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -849,8 +865,18 @@
 		)
 		(uuid "0593b2ee-af3a-4483-93e4-aedec7150938")
 	)
+	(label "USBD-"
+		(at 88.9 35.56 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "62df4df6-d18a-40f8-ac0f-bad9862747ce")
+	)
 	(label "USB_VBUS"
-		(at 31.75 22.86 0)
+		(at 31.75 24.13 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -860,7 +886,7 @@
 		(uuid "75e84dd6-194b-42fd-a7c6-f593abffa392")
 	)
 	(label "D+"
-		(at 104.14 31.75 0)
+		(at 119.38 33.02 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -870,17 +896,17 @@
 		(uuid "943473b6-32c9-4133-a93d-ab2b31ff161d")
 	)
 	(label "USB_VBUS"
-		(at 123.19 26.67 0)
+		(at 87.63 27.94 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "9e4dc98e-b502-49a4-b405-03063d499869")
 	)
 	(label "D-"
-		(at 104.14 34.29 0)
+		(at 119.38 35.56 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -890,7 +916,7 @@
 		(uuid "ea134ea6-c036-4a64-8cb2-7506a28b387b")
 	)
 	(label "D-"
-		(at 31.75 30.48 0)
+		(at 31.75 31.75 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -899,9 +925,19 @@
 		)
 		(uuid "f638cc24-0591-4c7c-a56a-e864f8803573")
 	)
+	(label "USBD+"
+		(at 88.9 33.02 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "ff018f85-3578-4832-92a2-82491f1486b2")
+	)
 	(hierarchical_label "D-"
 		(shape bidirectional)
-		(at 29.21 30.48 180)
+		(at 29.21 31.75 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -912,7 +948,7 @@
 	)
 	(hierarchical_label "USB_VBUS"
 		(shape output)
-		(at 29.21 22.86 180)
+		(at 29.21 24.13 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -923,7 +959,7 @@
 	)
 	(hierarchical_label "D+"
 		(shape bidirectional)
-		(at 29.21 27.94 180)
+		(at 29.21 29.21 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -934,7 +970,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 119.38 43.18 0)
+		(at 102.87 48.26 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -942,8 +978,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1b24f116-be84-4a5e-9832-b6ce69a4cae7")
-		(property "Reference" "#PWR040"
-			(at 119.38 49.53 0)
+		(property "Reference" "#PWR035"
+			(at 102.87 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -952,7 +988,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 119.38 48.26 0)
+			(at 102.87 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -960,7 +996,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 119.38 43.18 0)
+			(at 102.87 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -969,7 +1005,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 119.38 43.18 0)
+			(at 102.87 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -978,7 +1014,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 119.38 43.18 0)
+			(at 102.87 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -992,139 +1028,7 @@
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/87fd3cb3-abc2-491f-83d7-3dc4b9649bc2"
-					(reference "#PWR040")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 95.25 43.18 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "32061910-cf5e-4f46-8247-055722aff3ff")
-		(property "Reference" "#PWR039"
-			(at 95.25 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 95.25 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 95.25 43.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 95.25 43.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 95.25 43.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "05ed1146-ff78-4348-b71e-b3e8942d394d")
-		)
-		(instances
-			(project "Dancebot_PCB"
-				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/87fd3cb3-abc2-491f-83d7-3dc4b9649bc2"
-					(reference "#PWR039")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 72.39 43.18 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "51c73e5d-ca5b-4f39-9927-b0a71e6052a2")
-		(property "Reference" "#PWR01"
-			(at 72.39 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 72.39 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 72.39 43.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 72.39 43.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 72.39 43.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "c0c2a2ab-851f-4128-a85d-827d727415d5")
-		)
-		(instances
-			(project "Dancebot_PCB"
-				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/87fd3cb3-abc2-491f-83d7-3dc4b9649bc2"
-					(reference "#PWR01")
+					(reference "#PWR035")
 					(unit 1)
 				)
 			)
@@ -1132,7 +1036,7 @@
 	)
 	(symbol
 		(lib_id "Connector:USB_B_Micro")
-		(at 60.96 31.75 0)
+		(at 60.96 33.02 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1140,8 +1044,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "80df7307-d9a3-49d2-a78a-d1d55d45e411")
-		(property "Reference" "J12"
-			(at 60.96 19.05 0)
+		(property "Reference" "J3"
+			(at 60.96 20.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1149,7 +1053,7 @@
 			)
 		)
 		(property "Value" "USB_B_Micro"
-			(at 60.96 21.59 0)
+			(at 60.96 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1157,7 +1061,7 @@
 			)
 		)
 		(property "Footprint" "Connector_USB:USB_Micro-B_Amphenol_10118193-0002LF_Horizontal"
-			(at 64.77 33.02 0)
+			(at 64.77 34.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1166,7 +1070,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.mouser.com/datasheet/2/837/USB3080-1948937.pdf"
-			(at 64.77 33.02 0)
+			(at 64.77 34.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1175,7 +1079,7 @@
 			)
 		)
 		(property "Description" "USB Micro Type B connector"
-			(at 60.96 31.75 0)
+			(at 60.96 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1184,7 +1088,7 @@
 			)
 		)
 		(property "Mouser Part Number" "640-USB3080-30-00-A "
-			(at 60.96 31.75 0)
+			(at 60.96 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1194,7 +1098,7 @@
 			)
 		)
 		(property "Mouser Price/Stock" "https://www.mouser.com/ProductDetail/GCT/USB3080-30-00-A?qs=KUoIvG%2F9IlZDMJJTQkXE0A%3D%3D&srsltid=AfmBOor-l2HoaKWUnbZws99tXECVOHtQfe7MCX8BBts-zmVsXavSIziA"
-			(at 60.96 31.75 0)
+			(at 60.96 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1204,7 +1108,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "GCT"
-			(at 60.96 31.75 0)
+			(at 60.96 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1214,7 +1118,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "USB3080-30-00-A "
-			(at 60.96 31.75 0)
+			(at 60.96 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1224,7 +1128,16 @@
 			)
 		)
 		(property "MAXIMUM_PACKAGE_HEIGHT" ""
-			(at 60.96 31.75 0)
+			(at 60.96 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Height_1" ""
+			(at 60.96 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1253,269 +1166,7 @@
 		(instances
 			(project ""
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/87fd3cb3-abc2-491f-83d7-3dc4b9649bc2"
-					(reference "J12")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:D_Zener")
-		(at 95.25 39.37 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "a3dce3c7-86a8-4b57-affa-efd9c39dcc98")
-		(property "Reference" "D1"
-			(at 97.79 38.0999 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "SMF5.0A_R1_00001"
-			(at 97.79 40.6399 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "SamacSys_Parts:SMF50A_R1_00001"
-			(at 1.6 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.mouser.in/datasheet/2/1057/SMF5.0A_SERIES-1868418.pdf"
-			(at -98.4 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-				(hide yes)
-			)
-		)
-		(property "Description" "ESD Suppressors / TVS Diodes 200W,Transient Voltage Suppressors,SOD-123FL,5V,UNI"
-			(at 95.25 39.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Height" "1.1"
-			(at -298.4 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" "241-SMF5.0A_R1_00001"
-			(at -398.4 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-				(hide yes)
-			)
-		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Panjit/SMF5.0A_R1_00001?qs=sPbYRqrBIVlx%2FHVv%252BUyL%252BQ%3D%3D"
-			(at -498.4 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" "PANJIT"
-			(at -598.4 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Part_Number" "SMF5.0A_R1_00001"
-			(at -698.4 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-				(hide yes)
-			)
-		)
-		(property "MAXIMUM_PACKAGE_HEIGHT" ""
-			(at 95.25 39.37 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "45b79bc8-caf7-4f89-b040-40846ff3f180")
-		)
-		(pin "1"
-			(uuid "2812de81-9e33-40e8-bd9c-c07f2b3032ad")
-		)
-		(instances
-			(project "Dancebot_PCB"
-				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/87fd3cb3-abc2-491f-83d7-3dc4b9649bc2"
-					(reference "D1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:D_Zener")
-		(at 72.39 39.37 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ab4f60de-d348-458f-a8d1-b51e1fab1b46")
-		(property "Reference" "D303"
-			(at 74.93 38.0999 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "SMF5.0A_R1_00001"
-			(at 74.93 40.6399 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "SamacSys_Parts:SMF50A_R1_00001"
-			(at -21.26 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.mouser.in/datasheet/2/1057/SMF5.0A_SERIES-1868418.pdf"
-			(at -121.26 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-				(hide yes)
-			)
-		)
-		(property "Description" "ESD Suppressors / TVS Diodes 200W,Transient Voltage Suppressors,SOD-123FL,5V,UNI"
-			(at 72.39 39.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Height" "1.1"
-			(at -321.26 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" "241-SMF5.0A_R1_00001"
-			(at -421.26 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-				(hide yes)
-			)
-		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Panjit/SMF5.0A_R1_00001?qs=sPbYRqrBIVlx%2FHVv%252BUyL%252BQ%3D%3D"
-			(at -521.26 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" "PANJIT"
-			(at -621.26 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Part_Number" "SMF5.0A_R1_00001"
-			(at -721.26 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-				(hide yes)
-			)
-		)
-		(property "MAXIMUM_PACKAGE_HEIGHT" ""
-			(at 72.39 39.37 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "7956dc18-84ec-4434-9846-28dc904232ce")
-		)
-		(pin "1"
-			(uuid "c1a3d650-edb7-4f52-ab1d-c7b573c09853")
-		)
-		(instances
-			(project "Dancebot_PCB"
-				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/87fd3cb3-abc2-491f-83d7-3dc4b9649bc2"
-					(reference "D303")
+					(reference "J3")
 					(unit 1)
 				)
 			)
@@ -1523,7 +1174,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 59.69 43.18 0)
+		(at 59.69 48.26 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1531,8 +1182,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ac78e26e-ae81-4178-a1ae-34d47e7e530e")
-		(property "Reference" "#PWR09"
-			(at 59.69 49.53 0)
+		(property "Reference" "#PWR034"
+			(at 59.69 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1541,7 +1192,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 59.69 48.26 0)
+			(at 59.69 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1549,7 +1200,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 59.69 43.18 0)
+			(at 59.69 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1558,7 +1209,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 59.69 43.18 0)
+			(at 59.69 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1567,7 +1218,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 59.69 43.18 0)
+			(at 59.69 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1581,62 +1232,59 @@
 		(instances
 			(project ""
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/87fd3cb3-abc2-491f-83d7-3dc4b9649bc2"
-					(reference "#PWR09")
+					(reference "#PWR034")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "Device:D_Zener")
-		(at 119.38 39.37 270)
+		(lib_id "SamacSys_Parts:USBLC6-4SC6Y")
+		(at 88.9 35.56 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b6f6b591-6c78-4e1e-ae02-e25257dc3536")
-		(property "Reference" "D3"
-			(at 121.92 38.0999 90)
+		(uuid "bc125fbb-b73d-403d-a88e-652bc157f736")
+		(property "Reference" "D4"
+			(at 102.362 18.542 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Value" "SMF5.0A_R1_00001"
-			(at 121.92 40.6399 90)
+		(property "Value" "USBLC6-4SC6Y"
+			(at 102.362 21.082 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Footprint" "SamacSys_Parts:SMF50A_R1_00001"
-			(at 25.73 49.53 0)
+		(property "Footprint" "SamacSys_Parts:SOT95P280X145-6N"
+			(at 113.03 130.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left bottom)
+				(justify left top)
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.in/datasheet/2/1057/SMF5.0A_SERIES-1868418.pdf"
-			(at -74.27 49.53 0)
+		(property "Datasheet" "https://www.st.com/resource/en/datasheet/usblc6-4sc6y.pdf"
+			(at 113.03 230.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left bottom)
+				(justify left top)
 				(hide yes)
 			)
 		)
-		(property "Description" "ESD Suppressors / TVS Diodes 200W,Transient Voltage Suppressors,SOD-123FL,5V,UNI"
-			(at 119.38 39.37 0)
+		(property "Description" "STMICROELECTRONICS - USBLC6-4SC6Y - ESD Protection Device, 17 V, SOT-23, 6 Pins"
+			(at 88.9 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1644,75 +1292,78 @@
 				(hide yes)
 			)
 		)
-		(property "Height" "1.1"
-			(at -274.27 49.53 0)
+		(property "Height" "1.45"
+			(at 113.03 430.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left bottom)
+				(justify left top)
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" "241-SMF5.0A_R1_00001"
-			(at -374.27 49.53 0)
+		(property "Mouser Part Number" "511-USBLC6-4SC6Y"
+			(at 113.03 530.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left bottom)
+				(justify left top)
 				(hide yes)
 			)
 		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Panjit/SMF5.0A_R1_00001?qs=sPbYRqrBIVlx%2FHVv%252BUyL%252BQ%3D%3D"
-			(at -474.27 49.53 0)
+		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/STMicroelectronics/USBLC6-4SC6Y?qs=gNDSiZmRJS%252B5K%252Bxjl%252Bw9xw%3D%3D"
+			(at 113.03 630.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left bottom)
+				(justify left top)
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Name" "PANJIT"
-			(at -574.27 49.53 0)
+		(property "Manufacturer_Name" "STMicroelectronics"
+			(at 113.03 730.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left bottom)
+				(justify left top)
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "SMF5.0A_R1_00001"
-			(at -674.27 49.53 0)
+		(property "Manufacturer_Part_Number" "USBLC6-4SC6Y"
+			(at 113.03 830.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left bottom)
-				(hide yes)
-			)
-		)
-		(property "MAXIMUM_PACKAGE_HEIGHT" ""
-			(at 119.38 39.37 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
+				(justify left top)
 				(hide yes)
 			)
 		)
 		(pin "2"
-			(uuid "c46a8526-4685-4617-b8dc-b62ad683c578")
+			(uuid "85c19950-9e63-4588-9d1f-54690e01d5d9")
 		)
 		(pin "1"
-			(uuid "ea7e6094-9d94-48a5-b243-059254419f6d")
+			(uuid "722ad936-bf8c-4c08-941d-82db4a12ee56")
+		)
+		(pin "3"
+			(uuid "c5d39f8b-319c-443e-b2c5-25fd24bd1cbb")
+		)
+		(pin "5"
+			(uuid "16935a60-ae2d-40b1-9198-f4e3370ad661")
+		)
+		(pin "6"
+			(uuid "be247694-9329-4f21-a78f-3786374108a0")
+		)
+		(pin "4"
+			(uuid "8c2262ae-33a4-481c-b881-8e3d81feabdd")
 		)
 		(instances
-			(project "Dancebot_PCB"
+			(project ""
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/87fd3cb3-abc2-491f-83d7-3dc4b9649bc2"
-					(reference "D3")
+					(reference "D4")
 					(unit 1)
 				)
 			)

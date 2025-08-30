@@ -1,34 +1,181 @@
-(module "MAJx16" (layer F.Cu)
-  (descr "MAJx16")
-  (tags "Capacitor")
-  (attr smd)
-  (fp_text reference C** (at 0.000 -0) (layer F.SilkS)
-    (effects (font (size 1.27 1.27) (thickness 0.254)))
-  )
-  (fp_text user %R (at 0.000 -0) (layer F.Fab)
-    (effects (font (size 1.27 1.27) (thickness 0.254)))
-  )
-  (fp_text value "MAJx16" (at 0.000 -0) (layer F.SilkS) hide
-    (effects (font (size 1.27 1.27) (thickness 0.254)))
-  )
-  (fp_line (start -0.8 -0.4) (end 0.8 -0.4) (layer F.Fab) (width 0.1))
-  (fp_line (start 0.8 -0.4) (end 0.8 0.4) (layer F.Fab) (width 0.1))
-  (fp_line (start 0.8 0.4) (end -0.8 0.4) (layer F.Fab) (width 0.1))
-  (fp_line (start -0.8 0.4) (end -0.8 -0.4) (layer F.Fab) (width 0.1))
-  (fp_line (start -2.05 -1.4) (end 2.05 -1.4) (layer F.CrtYd) (width 0.1))
-  (fp_line (start 2.05 -1.4) (end 2.05 1.4) (layer F.CrtYd) (width 0.1))
-  (fp_line (start 2.05 1.4) (end -2.05 1.4) (layer F.CrtYd) (width 0.1))
-  (fp_line (start -2.05 1.4) (end -2.05 -1.4) (layer F.CrtYd) (width 0.1))
-  (fp_line (start -1.5 -0.1) (end -1.5 -0.1) (layer F.SilkS) (width 0.2))
-  (fp_line (start -1.5 0.1) (end -1.5 0.1) (layer F.SilkS) (width 0.2))
-  (fp_line (start 0 -0.4) (end 0 0.4) (layer F.SilkS) (width 0.2))
-  (fp_arc (start -1.5 -0) (end -1.500 -0.1) (angle -180) (layer F.SilkS) (width 0.2))
-  (fp_arc (start -1.5 -0) (end -1.500 0.1) (angle -180) (layer F.SilkS) (width 0.2))
-  (pad 1 smd rect (at -0.700 -0 0) (size 0.700 0.700) (layers F.Cu F.Paste F.Mask))
-  (pad 2 smd rect (at 0.700 -0 0) (size 0.700 0.700) (layers F.Cu F.Paste F.Mask))
-  (model "${KIPRJMOD}/custom_components/SamacSys_Parts.3dshapes/MAJCU168BB7104KTEA01.stp"
-    (at (xyz 0 0 0))
-    (scale (xyz 1 1 1))
-    (rotate (xyz 0 0 0))
-  )
+(footprint "MAJx16"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "MAJx16")
+	(tags "Capacitor")
+	(property "Reference" "C**"
+		(at 0 -1.7 0)
+		(layer "F.SilkS")
+		(uuid "33fef8b3-50ea-4629-b028-e2902749f0b2")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(property "Value" "MAJx16"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "271a20e2-1313-4c3f-8ade-b8c502db3f57")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "0ae2625d-cec9-40cb-afd4-32289a0cfe1a")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "711cd244-2102-4254-8d90-c513c5824861")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_line
+		(start 0 -0.4)
+		(end 0 0.4)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "ecb99b6e-9157-43f5-9472-5ea06f9402f7")
+	)
+	(fp_line
+		(start -2.05 -1.4)
+		(end 2.05 -1.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "6e8a3ce8-62d1-4662-9981-a3e51e267092")
+	)
+	(fp_line
+		(start -2.05 1.4)
+		(end -2.05 -1.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "515d815d-881b-41e5-8648-8138af8342cc")
+	)
+	(fp_line
+		(start 2.05 -1.4)
+		(end 2.05 1.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "41cc7569-ddc2-4209-92f1-2f754f4b4a12")
+	)
+	(fp_line
+		(start 2.05 1.4)
+		(end -2.05 1.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "1b2d2adb-e44e-40ce-b93e-018a2b23e255")
+	)
+	(fp_line
+		(start -0.8 -0.4)
+		(end 0.8 -0.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "37f602d0-cc60-4a5f-bef4-ff499485c07e")
+	)
+	(fp_line
+		(start -0.8 0.4)
+		(end -0.8 -0.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "ef8002fc-fe9b-4a74-bf04-cfac7ca1d7c0")
+	)
+	(fp_line
+		(start 0.8 -0.4)
+		(end 0.8 0.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "8f1e04f1-ce12-4573-a0dd-4ca77439696d")
+	)
+	(fp_line
+		(start 0.8 0.4)
+		(end -0.8 0.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "d1631ea8-e56b-48df-bb58-dafe654f00fb")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "e707638b-e75e-4121-b986-c6deb88a5665")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at -0.7 0)
+		(size 0.7 0.7)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "478575f4-8ebd-4892-951d-209c12691478")
+	)
+	(pad "2" smd rect
+		(at 0.7 0)
+		(size 0.7 0.7)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "fc8a4c8f-044b-44c6-ae8d-0a9c4f969bcd")
+	)
+	(embedded_fonts no)
+	(model "${KIPRJMOD}/custom_components/SamacSys_Parts.3dshapes/MAJCU168BB7104KTEA01.stp"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 )

@@ -168,4 +168,28 @@ K
 F https://www.murata.com/en-global/products/productdetail?partno=GXT21BR61C226ME13%23
 $ENDCMP
 #
+$CMP 0201ZD104KAT2A
+D Multilayer Ceramic Capacitors MLCC - SMD/SMT 10volts 0.1uF 10% X5R 0201 SIZE
+K
+F 
+$ENDCMP
+#
+$CMP KAF21KR72A104KL
+D Multilayer Ceramic Capacitors MLCC - SMD/SMT 100V .1pF X7R 0805 1 0% AEC-Q200 FLEXITER
+K
+F https://datasheets.kyocera-avx.com/AutoMLCCKAF.pdf
+$ENDCMP
+#
+$CMP SG73P2ATTD2003F
+D Thick Film Resistors - SMD 0.5W 200Kohm 1% AEC-Q200
+K
+F https://www.mouser.ch/datasheet/2/219/SG73P-1829847.pdf
+$ENDCMP
+#
+$CMP USBLC6-4SC6Y
+D STMICROELECTRONICS - USBLC6-4SC6Y - ESD Protection Device, 17 V, SOT-23, 6 Pins
+K
+F https://www.st.com/resource/en/datasheet/usblc6-4sc6y.pdf
+$ENDCMP
+#
 #End Doc Library

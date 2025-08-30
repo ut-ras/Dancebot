@@ -5,23 +5,27 @@
 	(uuid "21324b60-e5e7-4de6-a38d-f4cdf81a1b2c")
 	(paper "A4")
 	(lib_symbols
-		(symbol "Mechanical:MountingHole"
+		(symbol "SamacSys_Parts:MountingHole_Pad_MP"
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
 				(offset 1.016)
+				(hide yes)
 			)
 			(exclude_from_sim no)
 			(in_bom no)
 			(on_board yes)
 			(property "Reference" "H"
-				(at 0 5.08 0)
+				(at 0 6.35 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" "MountingHole"
-				(at 0 3.175 0)
+			(property "Value" "MountingHole_Pad_MP"
+				(at 0 4.445 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -46,7 +50,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Mounting Hole without connection"
+			(property "Description" "Mounting Hole with connection as pad named MP"
 				(at 0 0 0)
 				(effects
 					(font
@@ -64,7 +68,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "MountingHole*"
+			(property "ki_fp_filters" "MountingHole*Pad*"
 				(at 0 0 0)
 				(effects
 					(font
@@ -73,9 +77,9 @@
 					(hide yes)
 				)
 			)
-			(symbol "MountingHole_0_1"
+			(symbol "MountingHole_Pad_MP_0_1"
 				(circle
-					(center 0 0)
+					(center 0 1.27)
 					(radius 1.27)
 					(stroke
 						(width 1.27)
@@ -86,12 +90,133 @@
 					)
 				)
 			)
+			(symbol "MountingHole_Pad_MP_1_1"
+				(pin input line
+					(at 0 -2.54 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "power:GND"
+			(power)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 -6.35 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "GND"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "GND_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -1.27) (xy 1.27 -1.27) (xy 0 -2.54) (xy -1.27 -1.27) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "GND_1_1"
+				(pin power_in line
+					(at 0 0 270)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
 			(embedded_fonts no)
 		)
 	)
 	(rectangle
 		(start 249.936 120.904)
-		(end 280.67 161.29)
+		(end 280.67 163.83)
 		(stroke
 			(width 0)
 			(type default)
@@ -112,19 +237,9 @@
 		)
 		(uuid "3f43de73-b7d7-47fb-a7e2-6897eea0450a")
 	)
-	(text "note: USB data lines routed to MCU because it *is* possible\nto directly use USB to flash the MCU on some ESP32 modules\n\nincluding the USB-UART bridge in case we cant find one for now"
-		(exclude_from_sim no)
-		(at 126.238 124.968 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "d2c0cf19-d15e-44d4-9f46-70ac6ddf8c26")
-	)
 	(wire
 		(pts
-			(xy 140.97 100.33) (xy 153.67 100.33)
+			(xy 140.97 101.6) (xy 153.67 101.6)
 		)
 		(stroke
 			(width 0)
@@ -134,7 +249,7 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 100.33) (xy 72.39 78.74)
+			(xy 72.39 100.33) (xy 72.39 80.01)
 		)
 		(stroke
 			(width 0)
@@ -144,7 +259,17 @@
 	)
 	(wire
 		(pts
-			(xy 147.32 102.87) (xy 153.67 102.87)
+			(xy 147.32 106.68) (xy 147.32 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "15b5e521-4251-4d91-a5c3-0be5837c63e6")
+	)
+	(wire
+		(pts
+			(xy 147.32 99.06) (xy 153.67 99.06)
 		)
 		(stroke
 			(width 0)
@@ -161,6 +286,36 @@
 			(type default)
 		)
 		(uuid "2a21770f-d9db-4588-8050-ac42464fd210")
+	)
+	(wire
+		(pts
+			(xy 107.95 119.38) (xy 149.86 119.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2c51dd6d-68cb-4b93-bef1-50cc8dbb926f")
+	)
+	(wire
+		(pts
+			(xy 149.86 109.22) (xy 153.67 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3225409f-a56d-454e-b534-2ee23618756c")
+	)
+	(wire
+		(pts
+			(xy 110.49 106.68) (xy 102.87 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "35a2a9cd-abbd-4bd2-8f99-737e2b02e677")
 	)
 	(bus
 		(pts
@@ -234,6 +389,26 @@
 	)
 	(wire
 		(pts
+			(xy 147.32 116.84) (xy 110.49 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6dab9393-d63b-4766-9af3-db66376f355b")
+	)
+	(wire
+		(pts
+			(xy 102.87 109.22) (xy 107.95 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7312e6c4-c29f-4455-bbbb-2684aa437799")
+	)
+	(wire
+		(pts
 			(xy 107.95 99.06) (xy 115.57 99.06)
 		)
 		(stroke
@@ -254,7 +429,7 @@
 	)
 	(wire
 		(pts
-			(xy 64.77 71.12) (xy 64.77 107.95)
+			(xy 64.77 72.39) (xy 64.77 107.95)
 		)
 		(stroke
 			(width 0)
@@ -284,7 +459,7 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 78.74) (xy 77.47 78.74)
+			(xy 72.39 80.01) (xy 77.47 80.01)
 		)
 		(stroke
 			(width 0)
@@ -294,7 +469,7 @@
 	)
 	(wire
 		(pts
-			(xy 77.47 76.2) (xy 69.85 76.2)
+			(xy 77.47 77.47) (xy 69.85 77.47)
 		)
 		(stroke
 			(width 0)
@@ -324,7 +499,7 @@
 	)
 	(wire
 		(pts
-			(xy 147.32 78.74) (xy 147.32 102.87)
+			(xy 147.32 78.74) (xy 147.32 99.06)
 		)
 		(stroke
 			(width 0)
@@ -334,7 +509,7 @@
 	)
 	(wire
 		(pts
-			(xy 77.47 81.28) (xy 74.93 81.28)
+			(xy 77.47 82.55) (xy 74.93 82.55)
 		)
 		(stroke
 			(width 0)
@@ -344,13 +519,23 @@
 	)
 	(wire
 		(pts
-			(xy 67.31 73.66) (xy 77.47 73.66)
+			(xy 67.31 74.93) (xy 77.47 74.93)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "a384bb5a-0190-451d-8f72-d15db4ef6660")
+	)
+	(wire
+		(pts
+			(xy 149.86 119.38) (xy 149.86 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a669b42c-b507-409e-851c-951452ce72dd")
 	)
 	(wire
 		(pts
@@ -404,7 +589,17 @@
 	)
 	(wire
 		(pts
-			(xy 69.85 76.2) (xy 69.85 102.87)
+			(xy 110.49 116.84) (xy 110.49 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d2733764-063e-4047-9ef4-5046327a54bb")
+	)
+	(wire
+		(pts
+			(xy 69.85 77.47) (xy 69.85 102.87)
 		)
 		(stroke
 			(width 0)
@@ -414,7 +609,7 @@
 	)
 	(wire
 		(pts
-			(xy 74.93 81.28) (xy 74.93 97.79)
+			(xy 74.93 82.55) (xy 74.93 97.79)
 		)
 		(stroke
 			(width 0)
@@ -424,7 +619,7 @@
 	)
 	(wire
 		(pts
-			(xy 77.47 71.12) (xy 64.77 71.12)
+			(xy 77.47 72.39) (xy 64.77 72.39)
 		)
 		(stroke
 			(width 0)
@@ -444,13 +639,23 @@
 	)
 	(wire
 		(pts
-			(xy 67.31 105.41) (xy 67.31 73.66)
+			(xy 67.31 105.41) (xy 67.31 74.93)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "e746a045-b608-4067-98fd-76bcd447c462")
+	)
+	(wire
+		(pts
+			(xy 107.95 109.22) (xy 107.95 119.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e75215c4-b23d-4396-9d0a-ca07f3dd28a3")
 	)
 	(wire
 		(pts
@@ -474,6 +679,16 @@
 	)
 	(wire
 		(pts
+			(xy 153.67 106.68) (xy 147.32 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f45e2ae7-259c-4c1b-9689-1bc2f0a1926b")
+	)
+	(wire
+		(pts
 			(xy 107.95 99.06) (xy 107.95 81.28)
 		)
 		(stroke
@@ -483,17 +698,146 @@
 		(uuid "fa3c6be7-94c5-4467-8396-a91019c63e64")
 	)
 	(symbol
-		(lib_id "Mechanical:MountingHole")
-		(at 256.54 147.32 0)
+		(lib_id "power:GND")
+		(at 256.54 160.02 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "36eefd87-7d4e-4390-8d6b-8c56a1278880")
+		(property "Reference" "#PWR061"
+			(at 256.54 166.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 260.858 161.544 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 256.54 160.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 256.54 160.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 256.54 160.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "816d1e89-4dfa-4908-b352-704c5226db5e")
+		)
+		(instances
+			(project "Dancebot_PCB"
+				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c"
+					(reference "#PWR061")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 256.54 151.13 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "45706297-b302-4d1c-9d0a-17f351a8ccc6")
+		(property "Reference" "#PWR060"
+			(at 256.54 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 260.858 152.654 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 256.54 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 256.54 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 256.54 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "82e4ec15-ae15-4ed3-9e52-459a153deeed")
+		)
+		(instances
+			(project "Dancebot_PCB"
+				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c"
+					(reference "#PWR060")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "SamacSys_Parts:MountingHole_Pad_MP")
+		(at 256.54 148.59 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "4db45ac5-bbc5-4c9b-b53a-26a4bf598f56")
-		(property "Reference" "H2"
-			(at 259.08 146.0499 0)
+		(property "Reference" "H3"
+			(at 259.08 146.05 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -510,8 +854,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
-			(at 256.54 147.32 0)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_ISO7380_Pad"
+			(at 256.54 148.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -520,7 +864,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 256.54 147.32 0)
+			(at 256.54 148.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -528,8 +872,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Mounting Hole without connection"
-			(at 256.54 147.32 0)
+		(property "Description" "Mounting Hole with connection as pad named MP"
+			(at 256.54 148.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -538,13 +882,175 @@
 			)
 		)
 		(property "MAXIMUM_PACKAGE_HEIGHT" ""
-			(at 256.54 147.32 0)
+			(at 256.54 148.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(property "Height_1" ""
+			(at 256.54 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9fb5835c-87e4-472d-b215-1ba9defe2df5")
+		)
+		(instances
+			(project "Dancebot_PCB"
+				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c"
+					(reference "H3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 256.54 130.81 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5eddc0d0-7d42-4521-b5d9-1973ff78dfd7")
+		(property "Reference" "#PWR058"
+			(at 256.54 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 260.858 132.334 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 256.54 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 256.54 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 256.54 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a9cdada5-75a5-4653-9874-f7adb0f65af3")
+		)
+		(instances
+			(project ""
+				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c"
+					(reference "#PWR058")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "SamacSys_Parts:MountingHole_Pad_MP")
+		(at 256.54 138.43 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "77a6a85e-440f-4ab2-9e54-3dea132ad21e")
+		(property "Reference" "H2"
+			(at 259.08 135.8899 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole_Pad"
+			(at 259.08 138.4299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_ISO7380_Pad"
+			(at 256.54 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 256.54 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole with connection as pad named MP"
+			(at 256.54 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MAXIMUM_PACKAGE_HEIGHT" ""
+			(at 256.54 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Height_1" ""
+			(at 256.54 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "eacbd6ab-d4d5-4a05-b82c-6bec0d8cd7d9")
 		)
 		(instances
 			(project "Dancebot_PCB"
@@ -556,17 +1062,82 @@
 		)
 	)
 	(symbol
-		(lib_id "Mechanical:MountingHole")
-		(at 256.54 139.7 0)
+		(lib_id "power:GND")
+		(at 256.54 140.97 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b9330b2d-550a-4151-96cc-0f10a4294109")
+		(property "Reference" "#PWR059"
+			(at 256.54 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 260.858 142.494 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 256.54 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 256.54 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 256.54 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "fbbdf31b-9d26-48b6-83fe-003cb7ec6400")
+		)
+		(instances
+			(project "Dancebot_PCB"
+				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c"
+					(reference "#PWR059")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "SamacSys_Parts:MountingHole_Pad_MP")
+		(at 256.54 128.27 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "77a6a85e-440f-4ab2-9e54-3dea132ad21e")
+		(uuid "c5816de4-36bf-4c6d-9dc7-7a1381d7eaf7")
 		(property "Reference" "H1"
-			(at 259.08 138.4299 0)
+			(at 259.08 125.7299 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -575,7 +1146,7 @@
 			)
 		)
 		(property "Value" "MountingHole_Pad"
-			(at 259.08 140.9699 0)
+			(at 259.08 128.2699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -583,8 +1154,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
-			(at 256.54 139.7 0)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_ISO7380_Pad"
+			(at 256.54 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -593,7 +1164,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 256.54 139.7 0)
+			(at 256.54 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -601,8 +1172,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Mounting Hole without connection"
-			(at 256.54 139.7 0)
+		(property "Description" "Mounting Hole with connection as pad named MP"
+			(at 256.54 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -611,7 +1182,7 @@
 			)
 		)
 		(property "MAXIMUM_PACKAGE_HEIGHT" ""
-			(at 256.54 139.7 0)
+			(at 256.54 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -619,8 +1190,20 @@
 				(hide yes)
 			)
 		)
+		(property "Height_1" ""
+			(at 256.54 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "8ff9b209-8736-4bf7-acdb-9799e69c7a05")
+		)
 		(instances
-			(project "Dancebot_PCB"
+			(project ""
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c"
 					(reference "H1")
 					(unit 1)
@@ -629,81 +1212,8 @@
 		)
 	)
 	(symbol
-		(lib_id "Mechanical:MountingHole")
-		(at 256.54 132.08 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "c5816de4-36bf-4c6d-9dc7-7a1381d7eaf7")
-		(property "Reference" "H5"
-			(at 259.08 130.8099 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "MountingHole_Pad"
-			(at 259.08 133.3499 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
-			(at 256.54 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 256.54 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Mounting Hole without connection"
-			(at 256.54 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MAXIMUM_PACKAGE_HEIGHT" ""
-			(at 256.54 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(instances
-			(project ""
-				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c"
-					(reference "H5")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Mechanical:MountingHole")
-		(at 256.54 154.94 0)
+		(lib_id "SamacSys_Parts:MountingHole_Pad_MP")
+		(at 256.54 157.48 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -711,8 +1221,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d7a6a38d-cdae-481a-86eb-dfc28d5be2a3")
-		(property "Reference" "H3"
-			(at 259.08 153.6699 0)
+		(property "Reference" "H4"
+			(at 259.08 154.9399 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -721,7 +1231,7 @@
 			)
 		)
 		(property "Value" "MountingHole_Pad"
-			(at 259.08 156.2099 0)
+			(at 259.08 157.4799 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -729,8 +1239,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
-			(at 256.54 154.94 0)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_ISO7380_Pad"
+			(at 256.54 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -739,7 +1249,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 256.54 154.94 0)
+			(at 256.54 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -747,8 +1257,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Mounting Hole without connection"
-			(at 256.54 154.94 0)
+		(property "Description" "Mounting Hole with connection as pad named MP"
+			(at 256.54 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -757,7 +1267,7 @@
 			)
 		)
 		(property "MAXIMUM_PACKAGE_HEIGHT" ""
-			(at 256.54 154.94 0)
+			(at 256.54 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -765,10 +1275,22 @@
 				(hide yes)
 			)
 		)
+		(property "Height_1" ""
+			(at 256.54 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "483c65c9-0428-4ea6-a5e8-0a791df9f80f")
+		)
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c"
-					(reference "H3")
+					(reference "H4")
 					(unit 1)
 				)
 			)
@@ -829,7 +1351,7 @@
 			)
 		)
 		(pin "NP1_DIN" input
-			(at 77.47 73.66 180)
+			(at 77.47 74.93 180)
 			(uuid "0a24f25c-06d2-450a-b39f-bb0eb1df962d")
 			(effects
 				(font
@@ -839,7 +1361,7 @@
 			)
 		)
 		(pin "NP1_DOUT" output
-			(at 77.47 76.2 180)
+			(at 77.47 77.47 180)
 			(uuid "57d9c27b-d4aa-491e-a060-9b2ff293fd56")
 			(effects
 				(font
@@ -849,7 +1371,7 @@
 			)
 		)
 		(pin "NP2_DIN" input
-			(at 77.47 78.74 180)
+			(at 77.47 80.01 180)
 			(uuid "bca57626-3326-40fb-ad1a-017ccdd2abc4")
 			(effects
 				(font
@@ -859,7 +1381,7 @@
 			)
 		)
 		(pin "NP2_DOUT" output
-			(at 77.47 81.28 180)
+			(at 77.47 82.55 180)
 			(uuid "386473b6-7c14-4fc9-ab36-7cef6e8d2767")
 			(effects
 				(font
@@ -868,7 +1390,7 @@
 				(justify left)
 			)
 		)
-		(pin "SM[1..5]" output
+		(pin "SM{SERVO}" output
 			(at 102.87 76.2 0)
 			(uuid "c556ae08-b8ca-4533-b36a-7c1ed48627ea")
 			(effects
@@ -888,7 +1410,7 @@
 				(justify right)
 			)
 		)
-		(pin "BATT_EN" output
+		(pin "BATT_ADC_EN" output
 			(at 102.87 73.66 0)
 			(uuid "1fdf0810-ff6b-41cc-8f4d-bd6eb1df778d")
 			(effects
@@ -898,8 +1420,8 @@
 				(justify right)
 			)
 		)
-		(pin "IO45" output
-			(at 77.47 71.12 180)
+		(pin "LED_GPIO" output
+			(at 77.47 72.39 180)
 			(uuid "f028c33d-a3c2-471e-8126-93e759ba97d9")
 			(effects
 				(font
@@ -950,7 +1472,7 @@
 				(justify left top)
 			)
 		)
-		(pin "SM[1..5]" input
+		(pin "SM{SERVO}" input
 			(at 115.57 76.2 180)
 			(uuid "c32bfe73-900e-4f46-9dff-9980fd64f09e")
 			(effects
@@ -1023,7 +1545,7 @@
 			)
 		)
 		(pin "USB_VBUS" output
-			(at 140.97 100.33 0)
+			(at 140.97 101.6 0)
 			(uuid "8a67f69b-f78c-49b5-89be-8a1bb59b74ab")
 			(effects
 				(font
@@ -1075,7 +1597,7 @@
 			)
 		)
 		(pin "USB_VBUS" input
-			(at 153.67 100.33 180)
+			(at 153.67 101.6 180)
 			(uuid "5618e828-dd5c-420d-95cb-3acd93814c32")
 			(effects
 				(font
@@ -1084,9 +1606,29 @@
 				(justify left)
 			)
 		)
-		(pin "BAT_VBUS" output
-			(at 153.67 102.87 180)
+		(pin "BAT_VBUS2" output
+			(at 153.67 99.06 180)
 			(uuid "1178ba5a-59b7-4be7-b2f4-267d0b01f8a2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "BAT_ST" output
+			(at 153.67 106.68 180)
+			(uuid "743ecf67-1e0b-41e1-aa5a-7e915bf35dfd")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "USBC_ST" output
+			(at 153.67 109.22 180)
+			(uuid "8b11dbc1-82db-49a1-8aa9-f40ea5c023de")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1146,7 +1688,7 @@
 				(justify left)
 			)
 		)
-		(pin "BATT_EN" input
+		(pin "BATT_ADC_EN" input
 			(at 153.67 76.2 180)
 			(uuid "71b7a95f-dfc5-487d-9709-c7469145640d")
 			(effects
@@ -1156,7 +1698,7 @@
 				(justify left)
 			)
 		)
-		(pin "BAT_VBUS" input
+		(pin "BAT_VBUS2" input
 			(at 153.67 78.74 180)
 			(uuid "50fe7ba5-26df-4265-8dfb-dadda7f8eac0")
 			(effects
@@ -1248,7 +1790,7 @@
 				(justify left)
 			)
 		)
-		(pin "IO45" input
+		(pin "LED_GPIO" input
 			(at 77.47 107.95 180)
 			(uuid "bd8cabef-6c12-4635-ae5e-981a8d648a78")
 			(effects
@@ -1256,6 +1798,26 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+			)
+		)
+		(pin "BAT_ST" input
+			(at 102.87 106.68 0)
+			(uuid "39749c32-c7c2-4362-9ca1-29687e1b4a58")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "USBC_ST" input
+			(at 102.87 109.22 0)
+			(uuid "c37d6a3d-5ce4-453f-97f1-d99f8341aeb4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 			)
 		)
 		(instances

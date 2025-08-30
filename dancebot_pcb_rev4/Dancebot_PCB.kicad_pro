@@ -48,7 +48,7 @@
         "silk_text_thickness": 0.15,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.5
+          "min_clearance": 0.0
         }
       },
       "diff_pair_dimensions": [
@@ -226,10 +226,6 @@
         {
           "diameter": 0.0,
           "drill": 0.0
-        },
-        {
-          "diameter": 3.5,
-          "drill": 3.2
         }
       ],
       "zones_allow_external_fillets": false
@@ -499,17 +495,25 @@
         "wire_width": 6
       },
       {
+        "diff_pair_gap": 0.2032,
+        "diff_pair_width": 0.4384,
+        "name": "DP",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 0,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.4834
+      },
+      {
         "bus_width": 12,
         "clearance": 0.2,
         "diff_pair_gap": 0.25,
-        "diff_pair_via_gap": 0.25,
         "diff_pair_width": 0.2,
         "line_style": 0,
         "microvia_diameter": 0.3,
         "microvia_drill": 0.1,
         "name": "Power",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 0,
+        "priority": 1,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 1.5,
         "via_diameter": 0.8,
@@ -522,7 +526,24 @@
     },
     "net_colors": null,
     "netclass_assignments": null,
-    "netclass_patterns": []
+    "netclass_patterns": [
+      {
+        "netclass": "DP",
+        "pattern": "/USB_MICRO/USBD+"
+      },
+      {
+        "netclass": "DP",
+        "pattern": "/MCU/D+"
+      },
+      {
+        "netclass": "DP",
+        "pattern": "/MCU/D-"
+      },
+      {
+        "netclass": "DP",
+        "pattern": "/USB_MICRO/USBD-"
+      }
+    ]
   },
   "pcbnew": {
     "last_paths": {
@@ -562,7 +583,7 @@
           "show": true
         },
         {
-          "group_by": true,
+          "group_by": false,
           "label": "Value",
           "name": "Value",
           "show": true
@@ -574,7 +595,7 @@
           "show": true
         },
         {
-          "group_by": false,
+          "group_by": true,
           "label": "Footprint",
           "name": "Footprint",
           "show": true
@@ -658,7 +679,7 @@
           "show": false
         },
         {
-          "group_by": false,
+          "group_by": true,
           "label": "Mouser Price/Stock",
           "name": "Mouser Price/Stock",
           "show": true
@@ -708,7 +729,7 @@
       ],
       "filter_string": "",
       "group_symbols": true,
-      "include_excluded_from_bom": false,
+      "include_excluded_from_bom": true,
       "name": "",
       "sort_asc": true,
       "sort_field": "Reference"

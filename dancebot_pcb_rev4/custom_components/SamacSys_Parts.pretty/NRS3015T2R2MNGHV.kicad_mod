@@ -1,31 +1,153 @@
-(module "NRS3015T2R2MNGHV" (layer F.Cu)
-  (descr "NRS3015T2R2MNGHV-2")
-  (tags "Inductor")
-  (attr smd)
-  (fp_text reference L** (at 0.000 -0) (layer F.SilkS)
-    (effects (font (size 1.27 1.27) (thickness 0.254)))
-  )
-  (fp_text user %R (at 0.000 -0) (layer F.Fab)
-    (effects (font (size 1.27 1.27) (thickness 0.254)))
-  )
-  (fp_text value "NRS3015T2R2MNGHV" (at 0.000 -0) (layer F.SilkS) hide
-    (effects (font (size 1.27 1.27) (thickness 0.254)))
-  )
-  (fp_line (start -1.5 -1.5) (end 1.5 -1.5) (layer F.Fab) (width 0.2))
-  (fp_line (start 1.5 -1.5) (end 1.5 1.5) (layer F.Fab) (width 0.2))
-  (fp_line (start 1.5 1.5) (end -1.5 1.5) (layer F.Fab) (width 0.2))
-  (fp_line (start -1.5 1.5) (end -1.5 -1.5) (layer F.Fab) (width 0.2))
-  (fp_line (start -2.5 -2.5) (end 2.5 -2.5) (layer F.CrtYd) (width 0.1))
-  (fp_line (start 2.5 -2.5) (end 2.5 2.5) (layer F.CrtYd) (width 0.1))
-  (fp_line (start 2.5 2.5) (end -2.5 2.5) (layer F.CrtYd) (width 0.1))
-  (fp_line (start -2.5 2.5) (end -2.5 -2.5) (layer F.CrtYd) (width 0.1))
-  (fp_line (start -0.5 -1.5) (end 0.5 -1.5) (layer F.SilkS) (width 0.1))
-  (fp_line (start -0.5 1.5) (end 0.5 1.5) (layer F.SilkS) (width 0.1))
-  (pad 1 smd rect (at -1.100 -0 0) (size 0.800 2.700) (layers F.Cu F.Paste F.Mask))
-  (pad 2 smd rect (at 1.100 -0 0) (size 0.800 2.700) (layers F.Cu F.Paste F.Mask))
-  (model "${KIPRJMOD}/custom_components/SamacSys_Parts.3dshapes/NRS3015T2R2MNGHV.stp"
-    (at (xyz 0 0 0))
-    (scale (xyz 1 1 1))
-    (rotate (xyz 0 0 0))
-  )
+(footprint "NRS3015T2R2MNGHV"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "NRS3015T2R2MNGHV-2")
+	(tags "Inductor")
+	(property "Reference" "L**"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(uuid "bd78a9ec-3e77-495f-ad88-120d11c2c47d")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(property "Value" "NRS3015T2R2MNGHV"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "8f16c11f-65a9-4492-ab27-6aa3ce9a6c96")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "08d9d9a5-b2c0-4e2d-8b4f-f63e9eb47156")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "56c9b8b4-fc76-413c-97be-fbc37a5a31cc")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_rect
+		(start -1.7 -1.55)
+		(end 1.7 1.5)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "62ff036e-3417-44c8-8910-a73d768ec191")
+	)
+	(fp_rect
+		(start -2 -1.85)
+		(end 2 1.8)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "d481a360-0c2c-4cf5-be46-1b91824f7f8b")
+	)
+	(fp_line
+		(start -1.5 -1.5)
+		(end 1.5 -1.5)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "4386308e-a393-43ee-8894-234ec29ea88c")
+	)
+	(fp_line
+		(start -1.5 1.5)
+		(end -1.5 -1.5)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "96d39ca5-51c4-4fb6-babb-c6232f321b0b")
+	)
+	(fp_line
+		(start 1.5 -1.5)
+		(end 1.5 1.5)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "22df6fd3-b76d-490b-9295-4187d0b22e4c")
+	)
+	(fp_line
+		(start 1.5 1.5)
+		(end -1.5 1.5)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "5618cc16-5a22-4583-ac78-7f9d9d1ce6d4")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "e2dffef7-5801-44f2-89d0-e6e86f13e3d4")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at -1.1 0)
+		(size 0.8 2.7)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "595c1abe-761a-44af-aced-75aa11d8a9c9")
+	)
+	(pad "2" smd rect
+		(at 1.1 0)
+		(size 0.8 2.7)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "eb1c6cb1-2dd4-4e2a-82a0-9ffe3335ee9b")
+	)
+	(embedded_fonts no)
+	(model "${KIPRJMOD}/custom_components/SamacSys_Parts.3dshapes/NRS3015T2R2MNGHV.stp"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 )
