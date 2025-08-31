@@ -1330,16 +1330,6 @@
 	)
 	(wire
 		(pts
-			(xy 86.36 36.83) (xy 96.52 36.83)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2c23470c-5a2a-4d04-a4b5-839e6ba7d2ee")
-	)
-	(wire
-		(pts
 			(xy 120.65 33.02) (xy 120.65 34.29)
 		)
 		(stroke
@@ -1410,6 +1400,16 @@
 	)
 	(wire
 		(pts
+			(xy 86.36 41.91) (xy 96.52 41.91)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8a8fb64f-eaa8-42d0-9f3e-4e316bcb11c5")
+	)
+	(wire
+		(pts
 			(xy 27.94 29.21) (xy 26.67 29.21)
 		)
 		(stroke
@@ -1427,16 +1427,6 @@
 			(type default)
 		)
 		(uuid "9cd1c137-d484-4e8b-b0a3-7d17a1efc2a7")
-	)
-	(wire
-		(pts
-			(xy 55.88 36.83) (xy 66.04 36.83)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "afa1bcf3-09c4-4ce3-9be4-003b73e08b7c")
 	)
 	(wire
 		(pts
@@ -1497,6 +1487,16 @@
 			(type default)
 		)
 		(uuid "c0a4ac55-17dd-404f-97fd-e159900c15cb")
+	)
+	(wire
+		(pts
+			(xy 67.31 41.91) (xy 55.88 41.91)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c0e3f9d8-f209-4dd6-9fc4-0c57a690218a")
 	)
 	(wire
 		(pts
@@ -1609,7 +1609,7 @@
 		(uuid "2e39109a-c439-4ebc-bf10-ddbab3669cf3")
 	)
 	(label "NP2_DIN"
-		(at 86.36 41.91 0)
+		(at 86.36 36.83 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1689,7 +1689,7 @@
 		(uuid "d032d09c-afea-4112-8b9d-75274b594363")
 	)
 	(label "NP1_DIN"
-		(at 55.88 41.91 0)
+		(at 55.88 36.83 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1793,8 +1793,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "NeoPixel Left Eye"
-			(at 85.09 29.21 0)
+		(property "Value" "NeoPixel Right Eye"
+			(at 87.884 32.258 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1877,7 +1877,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "494113a4-e9b1-4e13-9dda-ccc0cc414952")
-		(property "Reference" "Q3"
+		(property "Reference" "Q4"
 			(at 100.33 81.28 0)
 			(effects
 				(font
@@ -1984,7 +1984,7 @@
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
-					(reference "Q3")
+					(reference "Q4")
 					(unit 1)
 				)
 			)
@@ -2009,7 +2009,7 @@
 			)
 		)
 		(property "Value" "NeoPixel Left Eye"
-			(at 54.61 29.21 0)
+			(at 57.15 32.766 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2093,7 +2093,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "54a2fda8-a4bd-472c-b046-14c34b7d963d")
-		(property "Reference" "#PWR050"
+		(property "Reference" "#PWR054"
 			(at 55.88 50.8 0)
 			(effects
 				(font
@@ -2143,7 +2143,7 @@
 		(instances
 			(project ""
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
-					(reference "#PWR050")
+					(reference "#PWR054")
 					(unit 1)
 				)
 			)
@@ -2159,7 +2159,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6d3df285-2380-4987-bfe6-eb9c66fb2764")
-		(property "Reference" "#PWR057"
+		(property "Reference" "#PWR061"
 			(at 120.65 50.8 0)
 			(effects
 				(font
@@ -2209,7 +2209,7 @@
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
-					(reference "#PWR057")
+					(reference "#PWR061")
 					(unit 1)
 				)
 			)
@@ -2347,16 +2347,15 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 66.04 36.83 0)
+		(at 67.31 41.91 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "767c30e1-1747-4cd2-b59e-f5954daec342")
-		(property "Reference" "#PWR051"
-			(at 66.04 40.64 0)
+		(property "Reference" "#PWR055"
+			(at 67.31 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2365,7 +2364,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 66.04 31.75 0)
+			(at 69.342 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2373,7 +2372,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 66.04 36.83 0)
+			(at 67.31 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2382,7 +2381,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 66.04 36.83 0)
+			(at 67.31 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2391,7 +2390,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 66.04 36.83 0)
+			(at 67.31 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2405,7 +2404,7 @@
 		(instances
 			(project ""
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
-					(reference "#PWR051")
+					(reference "#PWR055")
 					(unit 1)
 				)
 			)
@@ -2421,7 +2420,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7e96e20d-b4a1-4ed2-a2ab-dbfcee5e4b94")
-		(property "Reference" "Q2"
+		(property "Reference" "Q3"
 			(at 52.07 81.28 0)
 			(effects
 				(font
@@ -2528,7 +2527,7 @@
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
-					(reference "Q2")
+					(reference "Q3")
 					(unit 1)
 				)
 			)
@@ -2536,16 +2535,15 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 96.52 36.83 0)
+		(at 96.52 41.91 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "81ad52e4-3ae5-4ee1-a58b-811824c47879")
-		(property "Reference" "#PWR056"
-			(at 96.52 40.64 0)
+		(property "Reference" "#PWR060"
+			(at 96.52 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2554,7 +2552,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 96.52 31.75 0)
+			(at 100.33 39.37 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2562,7 +2560,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 96.52 36.83 0)
+			(at 96.52 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2571,7 +2569,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 96.52 36.83 0)
+			(at 96.52 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2580,7 +2578,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 96.52 36.83 0)
+			(at 96.52 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2594,7 +2592,7 @@
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
-					(reference "#PWR056")
+					(reference "#PWR060")
 					(unit 1)
 				)
 			)
@@ -2890,7 +2888,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b00ef6f0-1eda-44f7-9318-e12e19ff66cf")
-		(property "Reference" "#PWR049"
+		(property "Reference" "#PWR053"
 			(at 41.91 110.49 0)
 			(effects
 				(font
@@ -2940,7 +2938,7 @@
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
-					(reference "#PWR049")
+					(reference "#PWR053")
 					(unit 1)
 				)
 			)
@@ -2956,7 +2954,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b0ef2e23-ae3d-472d-92e5-4b5b965fcad3")
-		(property "Reference" "#PWR047"
+		(property "Reference" "#PWR051"
 			(at 27.94 71.12 0)
 			(effects
 				(font
@@ -3006,7 +3004,7 @@
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
-					(reference "#PWR047")
+					(reference "#PWR051")
 					(unit 1)
 				)
 			)
@@ -3302,7 +3300,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c68736b3-f7f2-4d70-ac1b-527638ff2b99")
-		(property "Reference" "#PWR055"
+		(property "Reference" "#PWR059"
 			(at 90.17 110.49 0)
 			(effects
 				(font
@@ -3352,7 +3350,7 @@
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
-					(reference "#PWR055")
+					(reference "#PWR059")
 					(unit 1)
 				)
 			)
@@ -3509,7 +3507,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d24d192a-930a-4408-86f0-f352b14ef4ad")
-		(property "Reference" "#PWR048"
+		(property "Reference" "#PWR052"
 			(at 41.91 71.12 0)
 			(effects
 				(font
@@ -3559,7 +3557,7 @@
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
-					(reference "#PWR048")
+					(reference "#PWR052")
 					(unit 1)
 				)
 			)
@@ -3575,7 +3573,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "df158a85-4f26-43e4-87e4-fdee4df54755")
-		(property "Reference" "#PWR054"
+		(property "Reference" "#PWR058"
 			(at 90.17 71.12 0)
 			(effects
 				(font
@@ -3625,7 +3623,7 @@
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
-					(reference "#PWR054")
+					(reference "#PWR058")
 					(unit 1)
 				)
 			)
@@ -3641,7 +3639,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f16cc4c0-53d5-400a-86cc-bc967af364c7")
-		(property "Reference" "#PWR052"
+		(property "Reference" "#PWR056"
 			(at 76.2 71.12 0)
 			(effects
 				(font
@@ -3691,7 +3689,7 @@
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
-					(reference "#PWR052")
+					(reference "#PWR056")
 					(unit 1)
 				)
 			)
@@ -3847,7 +3845,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f255b058-536b-4d9e-b648-5901ab5e9cf0")
-		(property "Reference" "#PWR053"
+		(property "Reference" "#PWR057"
 			(at 86.36 50.8 0)
 			(effects
 				(font
@@ -3897,7 +3895,7 @@
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/d46550a5-946a-497c-941e-91cb76bf7d90"
-					(reference "#PWR053")
+					(reference "#PWR057")
 					(unit 1)
 				)
 			)

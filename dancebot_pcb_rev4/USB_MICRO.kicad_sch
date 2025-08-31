@@ -978,7 +978,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1b24f116-be84-4a5e-9832-b6ce69a4cae7")
-		(property "Reference" "#PWR035"
+		(property "Reference" "#PWR039"
 			(at 102.87 54.61 0)
 			(effects
 				(font
@@ -1028,7 +1028,7 @@
 		(instances
 			(project "Dancebot_PCB"
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/87fd3cb3-abc2-491f-83d7-3dc4b9649bc2"
-					(reference "#PWR035")
+					(reference "#PWR039")
 					(unit 1)
 				)
 			)
@@ -1182,7 +1182,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ac78e26e-ae81-4178-a1ae-34d47e7e530e")
-		(property "Reference" "#PWR034"
+		(property "Reference" "#PWR038"
 			(at 59.69 54.61 0)
 			(effects
 				(font
@@ -1232,7 +1232,7 @@
 		(instances
 			(project ""
 				(path "/21324b60-e5e7-4de6-a38d-f4cdf81a1b2c/87fd3cb3-abc2-491f-83d7-3dc4b9649bc2"
-					(reference "#PWR034")
+					(reference "#PWR038")
 					(unit 1)
 				)
 			)

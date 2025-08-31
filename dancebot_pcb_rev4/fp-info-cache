@@ -1,4 +1,4 @@
-25733709191031729
+25737222396192784
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -94181,6 +94181,20 @@ SamacSys_Parts
 NRS3015T2R2MNGHV
 NRS3015T2R2MNGHV-2
 Inductor
+0
+2
+2
+SamacSys_Parts
+NetTie-2_SMD_Pad0.3mm
+Net tie, 2 pin, 0.5mm square SMD pads
+net tie
+0
+2
+2
+SamacSys_Parts
+NetTie-2_SMD_Pad0.5mm
+Net tie, 2 pin, 0.5mm square SMD pads
+net tie
 0
 2
 2
