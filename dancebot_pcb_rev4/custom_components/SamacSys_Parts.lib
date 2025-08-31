@@ -38,7 +38,7 @@ F3 "https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf" 1
 F4 "USB Interface IC USB to UART bridge - QFN28" 1750 300 50 H I L CNN "Description"
 F5 "0.8" 1750 200 50 H I L CNN "Height"
 F6 "634-CP2102NA02QFN28R" 1750 100 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Silicon-Labs/CP2102N-A02-GQFN28R?qs=u16ybLDytRag4qKvSH3fTw%3D%3D" 1750 0 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Silicon-Labs/CP2102N-A02-GQFN28R?qs=u16ybLDytRag4qKvSH3fTw%3D%3D" 1750 0 50 H I L CNN "Mouser Price/Stock"
 F8 "Silicon Labs" 1750 -100 50 H I L CNN "Manufacturer_Name"
 F9 "CP2102N-A02-GQFN28R" 1750 -200 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -85,7 +85,7 @@ F3 "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_
 F4 "RX TXRX MOD WIFI TRACE ANT SMD" 1350 -100 50 H I L CNN "Description"
 F5 "3.25" 1350 -200 50 H I L CNN "Height"
 F6 "356-ESP32WRM32E132PH" 1350 -300 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Espressif-Systems/ESP32-WROOM-32E-N4?qs=Li%252BoUPsLEnsPzTWsi%252BRMgQ%3D%3D" 1350 -400 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Espressif-Systems/ESP32-WROOM-32E-N4?qs=Li%252BoUPsLEnsPzTWsi%252BRMgQ%3D%3D" 1350 -400 50 H I L CNN "Mouser Price/Stock"
 F8 "Espressif Systems" 1350 -500 50 H I L CNN "Manufacturer_Name"
 F9 "ESP32-WROOM-32E-N4" 1350 -600 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -150,7 +150,7 @@ F3 "" 500 50 50 H I L BNN
 F4 "Green 555nm LED Indication - Discrete 2.25V 0805 (2012 Metric)" 500 -50 50 H I L BNN "Description"
 F5 "0.85" 500 -150 50 H I L BNN "Height"
 F6 "604-APT2012PGW" 500 -250 50 H I L BNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Kingbright/APT2012PGW?qs=SxaZfIVsCL2edu2fuRiRPw%3D%3D" 500 -350 50 H I L BNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Kingbright/APT2012PGW?qs=SxaZfIVsCL2edu2fuRiRPw%3D%3D" 500 -350 50 H I L BNN "Mouser Price/Stock"
 F8 "Kingbright" 500 -450 50 H I L BNN "Manufacturer_Name"
 F9 "APT2012PGW" 500 -550 50 H I L BNN "Manufacturer_Part_Number"
 DRAW
@@ -177,7 +177,7 @@ F3 "" 650 0 50 H I L CNN
 F4 "Bipolar Transistors - BJT TRANS NPN 1.5A 40V SOT-23 R" 650 -100 50 H I L CNN "Description"
 F5 "1.15" 650 -200 50 H I L CNN "Height"
 F6 "750-SS8050-HF" 650 -300 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Comchip-Technology/SS8050-HF?qs=T%252BzbugeAwjjubHjgf%252BCy6w%3D%3D" 650 -400 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Comchip-Technology/SS8050-HF?qs=T%252BzbugeAwjjubHjgf%252BCy6w%3D%3D" 650 -400 50 H I L CNN "Mouser Price/Stock"
 F8 "Comchip Technology" 650 -500 50 H I L CNN "Manufacturer_Name"
 F9 "SS8050-HF" 650 -600 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -198,7 +198,7 @@ F3 "http://www.ti.com/lit/gpn/LM66100" 950 0 50 H I L CNN
 F4 "+/-6-V, Low IQ ideal diode with input polarity protection" 950 -100 50 H I L CNN "Description"
 F5 "1.1" 950 -200 50 H I L CNN "Height"
 F6 "595-LM66100DCKR" 950 -300 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Texas-Instruments/LM66100DCKR?qs=vLWxofP3U2y2yPPrXoBBoA%3D%3D" 950 -400 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Texas-Instruments/LM66100DCKR?qs=vLWxofP3U2y2yPPrXoBBoA%3D%3D" 950 -400 50 H I L CNN "Mouser Price/Stock"
 F8 "Texas Instruments" 950 -500 50 H I L CNN "Manufacturer_Name"
 F9 "LM66100DCKR" 950 -600 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -222,7 +222,7 @@ F3 "https://www.ti.com/lit/gpn/tps63000-q1?HQS=ti-null-null-sf-df-pf-sep-wwe&DCM
 F4 "Switching Voltage Regulators Auto Cat 96% Buck- Boost Converter" 1250 300 50 H I L CNN "Description"
 F5 "1" 1250 200 50 H I L CNN "Height"
 F6 "595-TPS63000IDRCRQ1" 1250 100 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Texas-Instruments/TPS63000IDRCRQ1?qs=i6VRxKQL%2FYw6zzUuY%2FiBvw%3D%3D" 1250 0 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Texas-Instruments/TPS63000IDRCRQ1?qs=i6VRxKQL%2FYw6zzUuY%2FiBvw%3D%3D" 1250 0 50 H I L CNN "Mouser Price/Stock"
 F8 "Texas Instruments" 1250 -100 50 H I L CNN "Manufacturer_Name"
 F9 "TPS63000IDRCRQ1" 1250 -200 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -255,7 +255,7 @@ F3 "https://cdn-shop.adafruit.com/datasheets/17311.pdf" 650 0 50 H I L CNN
 F4 "Adafruit Accessories JST-PH 2-pin SMT Right Angle Connect" 650 -100 50 H I L CNN "Description"
 F5 "5.5" 650 -200 50 H I L CNN "Height"
 F6 "485-1769" 650 -300 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Adafruit/1769?qs=GURawfaeGuBbgoGtf2XstA%3D%3D" 650 -400 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Adafruit/1769?qs=GURawfaeGuBbgoGtf2XstA%3D%3D" 650 -400 50 H I L CNN "Mouser Price/Stock"
 F8 "Adafruit" 650 -500 50 H I L CNN "Manufacturer_Name"
 F9 "1769" 650 -600 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -277,7 +277,7 @@ F3 "https://www.mouser.in/datasheet/2/1057/SMF5.0A_SERIES-1868418.pdf" 400 50 50
 F4 "ESD Suppressors / TVS Diodes 200W,Transient Voltage Suppressors,SOD-123FL,5V,UNI" 400 -50 50 H I L BNN "Description"
 F5 "1.1" 400 -150 50 H I L BNN "Height"
 F6 "241-SMF5.0A_R1_00001" 400 -250 50 H I L BNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Panjit/SMF5.0A_R1_00001?qs=sPbYRqrBIVlx%2FHVv%252BUyL%252BQ%3D%3D" 400 -350 50 H I L BNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Panjit/SMF5.0A_R1_00001?qs=sPbYRqrBIVlx%2FHVv%252BUyL%252BQ%3D%3D" 400 -350 50 H I L BNN "Mouser Price/Stock"
 F8 "PANJIT" 400 -450 50 H I L BNN "Manufacturer_Name"
 F9 "SMF5.0A_R1_00001" 400 -550 50 H I L BNN "Manufacturer_Part_Number"
 DRAW
@@ -300,7 +300,7 @@ F3 "http://www.infineon.com/dgdl/irlml6402pbf.pdf?fileId=5546d462533600a40153566
 F4 "MOSFET MOSFT P-Ch -3.7A 65mOhm 8nC Log Lvl" 650 -100 50 H I L CNN "Description"
 F5 "1.12" 650 -200 50 H I L CNN "Height"
 F6 "942-IRLML6402TRPBF" 650 -300 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Infineon-Technologies/IRLML6402TRPBF?qs=9%252BKlkBgLFf0HuZuONx2Ewg%3D%3D" 650 -400 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Infineon-Technologies/IRLML6402TRPBF?qs=9%252BKlkBgLFf0HuZuONx2Ewg%3D%3D" 650 -400 50 H I L CNN "Mouser Price/Stock"
 F8 "Infineon" 650 -500 50 H I L CNN "Manufacturer_Name"
 F9 "IRLML6402TRPBF" 650 -600 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -321,7 +321,7 @@ F3 "" 450 -150 50 H I L CNN
 F4 "IRLML2502TRPBF N-Channel MOSFET, 4.2 A, 20 V IRLML2502, 3-Pin SOT-23 Infineon" 450 -250 50 H I L CNN "Description"
 F5 "1.12" 450 -350 50 H I L CNN "Height"
 F6 "942-IRLML2502TRPBF" 450 -450 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Infineon-Technologies/IRLML2502TRPBF?qs=9%252BKlkBgLFf37zQw9UlZd%2FQ%3D%3D" 450 -550 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Infineon-Technologies/IRLML2502TRPBF?qs=9%252BKlkBgLFf37zQw9UlZd%2FQ%3D%3D" 450 -550 50 H I L CNN "Mouser Price/Stock"
 F8 "Infineon" 450 -650 50 H I L CNN "Manufacturer_Name"
 F9 "IRLML2502TRPBF" 450 -750 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -352,7 +352,7 @@ F3 "https://ad.componentsearchengine.com/Datasheets/1/RCG0805100RJNEA.pdf" 550 -
 F4 "Thick Film Resistors - SMD .125watt 100ohms 5% 0805 200ppm" 550 -150 50 H I L CNN "Description"
 F5 "0.5" 550 -250 50 H I L CNN "Height"
 F6 "71-RCG0805100RJNEA" 550 -350 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Vishay-Draloric/RCG0805100RJNEA?qs=vOeJqewp7jAa9buYzH8MLQ%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Vishay-Draloric/RCG0805100RJNEA?qs=vOeJqewp7jAa9buYzH8MLQ%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
 F8 "Vishay" 550 -550 50 H I L CNN "Manufacturer_Name"
 F9 "RCG0805100RJNEA" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -372,7 +372,7 @@ F3 "http://www.vishay.com/docs/20035/dcrcwe3.pdf" 550 -50 50 H I L CNN
 F4 "Vishay CRCW Series Thick Film Surface Mount Resistor 805 Case 100k?? ??1% 0.125W ??100ppm/??C" 550 -150 50 H I L CNN "Description"
 F5 "0.5" 550 -250 50 H I L CNN "Height"
 F6 "71-CRCW0805-100K-E3" 550 -350 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Vishay-Dale/CRCW0805100KFKEA?qs=LOX6nxTstibsf9am%252BHZOtQ%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Vishay-Dale/CRCW0805100KFKEA?qs=LOX6nxTstibsf9am%252BHZOtQ%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
 F8 "Vishay" 550 -550 50 H I L CNN "Manufacturer_Name"
 F9 "CRCW0805100KFKEA" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -392,7 +392,7 @@ F3 "https://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf" 
 F4 "Metal Thin Film Chip Resistor, 0805, 0.125W" 550 -150 50 H I L CNN "Description"
 F5 "0.6" 550 -250 50 H I L CNN "Height"
 F6 "667-ERA-6AEB513V" 550 -350 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Panasonic/ERA-6AEB513V?qs=m8myXnDJXpWBkYp0QEwmmg%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Panasonic/ERA-6AEB513V?qs=m8myXnDJXpWBkYp0QEwmmg%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
 F8 "Panasonic" 550 -550 50 H I L CNN "Manufacturer_Name"
 F9 "ERA-6AEB513V" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -432,7 +432,7 @@ F3 "https://4donline.ihs.com/images/VipMasterIC/IC/TAIY/TAIY-S-A0015542627/TAIY-
 F4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT 0805 10VDC 4.7uF 10% X5R" 350 -150 50 H I L CNN "Description"
 F5 "1.4" 350 -250 50 H I L CNN "Height"
 F6 "963-LMK212ABJ475KG8T" 350 -350 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Taiyo-Yuden/LMK212ABJ475KG8T?qs=hWgE7mdIu5TB%2FWZGYah8cA%3D%3D" 350 -450 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Taiyo-Yuden/LMK212ABJ475KG8T?qs=hWgE7mdIu5TB%2FWZGYah8cA%3D%3D" 350 -450 50 H I L CNN "Mouser Price/Stock"
 F8 "TAIYO YUDEN" 350 -550 50 H I L CNN "Manufacturer_Name"
 F9 "LMK212ABJ475KG8T" 350 -650 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -455,7 +455,7 @@ F3 "https://www.mouser.de/datasheet/2/40/AutoMLCCKAF-3218225.pdf" 350 -50 50 H I
 F4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT 50V .1pF X7R 0805 5% AEC-Q200 FLEXITERM" 350 -150 50 H I L CNN "Description"
 F5 "0.94" 350 -250 50 H I L CNN "Height"
 F6 "581-KAF21BR71H104JM" 350 -350 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/KYOCERA-AVX/KAF21BR71H104JM?qs=Jm2GQyTW%2FbjLJnSOuM%2FLDw%3D%3D" 350 -450 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/KYOCERA-AVX/KAF21BR71H104JM?qs=Jm2GQyTW%2FbjLJnSOuM%2FLDw%3D%3D" 350 -450 50 H I L CNN "Mouser Price/Stock"
 F8 "Kyocera AVX" 350 -550 50 H I L CNN "Manufacturer_Name"
 F9 "KAF21BR71H104JM" 350 -650 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -478,7 +478,7 @@ F3 "http://www.vishay.com/docs/20035/dcrcwe3.pdf" 550 -50 50 H I L CNN
 F4 "Thick Film Resistors - SMD D12/CRCW0805 100 22K 1% ET6 e3" 550 -150 50 H I L CNN "Description"
 F5 "0.5" 550 -250 50 H I L CNN "Height"
 F6 "71-CRCW080522K0FKEC" 550 -350 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Vishay-Dale/CRCW080522K0FKEC?qs=0FPZjISTLUkuGuIZLV490g%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Vishay-Dale/CRCW080522K0FKEC?qs=0FPZjISTLUkuGuIZLV490g%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
 F8 "Vishay" 550 -550 50 H I L CNN "Manufacturer_Name"
 F9 "CRCW080522K0FKEC" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -498,7 +498,7 @@ F3 "https://www.bourns.com/pdfs/chpreztr.pdf" 550 -50 50 H I L CNN
 F4 "Thick Film Resistors - SMD 47.5K 1%" 550 -150 50 H I L CNN "Description"
 F5 "0.6" 550 -250 50 H I L CNN "Height"
 F6 "652-CR0805FX-4752ELF" 550 -350 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Bourns/CR0805-FX-4752ELF?qs=LA9FZBosJlAFmeB3yFj%252BEQ%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Bourns/CR0805-FX-4752ELF?qs=LA9FZBosJlAFmeB3yFj%252BEQ%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
 F8 "Bourns" 550 -550 50 H I L CNN "Manufacturer_Name"
 F9 "CR0805-FX-4752ELF" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -518,7 +518,7 @@ F3 "https://www.mouser.ch/datasheet/2/396/mlcc06_hq_AUTO_e-1901145.pdf" 350 -50 
 F4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT 0805 6.3VDC 22uF 20% X5R" 350 -150 50 H I L CNN "Description"
 F5 "1.45" 350 -250 50 H I L CNN "Height"
 F6 "963-JMK212BBJ226MG8T" 350 -350 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/TAIYO-YUDEN/JMK212BBJ226MG8T?qs=hWgE7mdIu5QbK2Kg3NX%2FvQ%3D%3D" 350 -450 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/TAIYO-YUDEN/JMK212BBJ226MG8T?qs=hWgE7mdIu5QbK2Kg3NX%2FvQ%3D%3D" 350 -450 50 H I L CNN "Mouser Price/Stock"
 F8 "TAIYO YUDEN" 350 -550 50 H I L CNN "Manufacturer_Name"
 F9 "JMK212BBJ226MG8T" 350 -650 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -541,7 +541,7 @@ F3 "https://media.digikey.com/pdf/Data%20Sheets/Taiyo%20Yuden%20PDFs%20URL%20lin
 F4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT CAP ,MLCC ,0805,25V ,X7R,1.0UF20% ,T&R" 350 -150 50 H I L CNN "Description"
 F5 "1.35" 350 -250 50 H I L CNN "Height"
 F6 "963-MCAST21GSB7105MT" 350 -350 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/TAIYO-YUDEN/MCAST21GSB7105MTNB25?qs=tlsG%2FOw5FFgklVSELtG1Zg%3D%3D" 350 -450 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/TAIYO-YUDEN/MCAST21GSB7105MTNB25?qs=tlsG%2FOw5FFgklVSELtG1Zg%3D%3D" 350 -450 50 H I L CNN "Mouser Price/Stock"
 F8 "TAIYO YUDEN" 350 -550 50 H I L CNN "Manufacturer_Name"
 F9 "MCAST21GSB7105MTNB25" 350 -650 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -587,7 +587,7 @@ F3 "https://componentsearchengine.com/Datasheets/1/NRS3015T2R2MNGHV.pdf" 650 -50
 F4 "NRS3015T2R2MNGHV" 650 -150 50 H I L CNN "Description"
 F5 "1.5" 650 -250 50 H I L CNN "Height"
 F6 "963-NRS3015T2R2MNGHV" 650 -350 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/TAIYO-YUDEN/NRS3015T2R2MNGHV?qs=DpxmIIQLg%252BP8UFyXVw61Xw%3D%3D" 650 -450 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/TAIYO-YUDEN/NRS3015T2R2MNGHV?qs=DpxmIIQLg%252BP8UFyXVw61Xw%3D%3D" 650 -450 50 H I L CNN "Mouser Price/Stock"
 F8 "TAIYO YUDEN" 650 -550 50 H I L CNN "Manufacturer_Name"
 F9 "NRS3015T2R2MNGHV" 650 -650 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -610,7 +610,7 @@ F3 "https://componentsearchengine.com/Datasheets/2/ASC0805-10KFT5.pdf" 550 -50 5
 F4 "WELWYN - ASC0805-10KFT5 - RESISTOR, ANTI SULPHUR, 10K, 0.125W, 1%" 550 -150 50 H I L CNN "Description"
 F5 "0.6" 550 -250 50 H I L CNN "Height"
 F6 "756-ASC0805-10KFT5" 550 -350 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Welwyn-Components-TT-Electronics/ASC0805-10KFT5?qs=69TQa8YF5Y7dvxAm%2FqWqSQ%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Welwyn-Components-TT-Electronics/ASC0805-10KFT5?qs=69TQa8YF5Y7dvxAm%2FqWqSQ%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
 F8 "TT Electronics" 550 -550 50 H I L CNN "Manufacturer_Name"
 F9 "ASC0805-10KFT5" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -630,7 +630,7 @@ F3 "https://www.bourns.com/pdfs/chpreztr.pdf" 550 -50 50 H I L CNN
 F4 "BOURNS - CR0805-FX-1004ELF - RES, THICK FILM, 1M, 1%, 0.125W, 0805" 550 -150 50 H I L CNN "Description"
 F5 "0.6" 550 -250 50 H I L CNN "Height"
 F6 "652-CR0805FX-1004ELF" 550 -350 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Bourns/CR0805-FX-1004ELF?qs=tknLyCMIRbOGJekSMom0SQ%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Bourns/CR0805-FX-1004ELF?qs=tknLyCMIRbOGJekSMom0SQ%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
 F8 "Bourns" 550 -550 50 H I L CNN "Manufacturer_Name"
 F9 "CR0805-FX-1004ELF" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -650,7 +650,7 @@ F3 "https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1
 F4 "WiFi Modules - 802.11 [Engineering Samples] SMD Module, ESP32-S3, 4 MB SPI Flash, PCB Antenna" 1150 -100 50 H I L CNN "Description"
 F5 "3.25" 1150 -200 50 H I L CNN "Height"
 F6 "356-ESP32-S3WROOM1N4" 1150 -300 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Espressif-Systems/ESP32-S3-WROOM-1-N4?qs=Li%252BoUPsLEnsO%2FkiJOUK0FQ%3D%3D" 1150 -400 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Espressif-Systems/ESP32-S3-WROOM-1-N4?qs=Li%252BoUPsLEnsO%2FkiJOUK0FQ%3D%3D" 1150 -400 50 H I L CNN "Mouser Price/Stock"
 F8 "Espressif Systems" 1150 -500 50 H I L CNN "Manufacturer_Name"
 F9 "ESP32-S3-WROOM-1-N4" 1150 -600 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -717,7 +717,7 @@ F3 "http://www.ti.com/lit/gpn/tps62163" 1050 0 50 H I L CNN
 F4 "3V-17V 1A Step-Down Converters with DCS-Control" 1050 -100 50 H I L CNN "Description"
 F5 "0.8" 1050 -200 50 H I L CNN "Height"
 F6 "595-TPS62163DSGR" 1050 -300 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/Texas-Instruments/TPS62163DSGR?qs=gXEV9p%2FxLgeWmbvztTvegw%3D%3D" 1050 -400 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/Texas-Instruments/TPS62163DSGR?qs=gXEV9p%2FxLgeWmbvztTvegw%3D%3D" 1050 -400 50 H I L CNN "Mouser Price/Stock"
 F8 "Texas Instruments" 1050 -500 50 H I L CNN "Manufacturer_Name"
 F9 "TPS62163DSGR" 1050 -600 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -767,7 +767,7 @@ F3 "" 350 -50 50 H I L CNN
 F4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT 10volts 0.1uF 10% X5R 0201 SIZE" 350 -150 50 H I L CNN "Description"
 F5 "0.33" 350 -250 50 H I L CNN "Height"
 F6 "581-0201ZD104KAT2A" 350 -350 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/KYOCERA-AVX/0201ZD104KAT2A?qs=ZBeOGGPQgEH3h7x%2FZC%252Boig%3D%3D" 350 -450 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/KYOCERA-AVX/0201ZD104KAT2A?qs=ZBeOGGPQgEH3h7x%2FZC%252Boig%3D%3D" 350 -450 50 H I L CNN "Mouser Price/Stock"
 F8 "Kyocera AVX" 350 -550 50 H I L CNN "Manufacturer_Name"
 F9 "0201ZD104KAT2A" 350 -650 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -790,7 +790,7 @@ F3 "https://datasheets.kyocera-avx.com/AutoMLCCKAF.pdf" 350 -50 50 H I L CNN
 F4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT 100V .1pF X7R 0805 1 0% AEC-Q200 FLEXITER" 350 -150 50 H I L CNN "Description"
 F5 "1.4" 350 -250 50 H I L CNN "Height"
 F6 "581-KAF21KR72A104KL" 350 -350 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/KYOCERA-AVX/KAF21KR72A104KL?qs=Jm2GQyTW%2FbiUCISqVwD%2FLA%3D%3D" 350 -450 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/KYOCERA-AVX/KAF21KR72A104KL?qs=Jm2GQyTW%2FbiUCISqVwD%2FLA%3D%3D" 350 -450 50 H I L CNN "Mouser Price/Stock"
 F8 "Kyocera AVX" 350 -550 50 H I L CNN "Manufacturer_Name"
 F9 "KAF21KR72A104KL" 350 -650 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -813,7 +813,7 @@ F3 "https://www.mouser.ch/datasheet/2/219/SG73P-1829847.pdf" 550 -50 50 H I L CN
 F4 "Thick Film Resistors - SMD 0.5W 200Kohm 1% AEC-Q200" 550 -150 50 H I L CNN "Description"
 F5 "0.6" 550 -250 50 H I L CNN "Height"
 F6 "660-SG73P2ATTD2003F" 550 -350 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/KOA-Speer/SG73P2ATTD2003F?qs=0U9fANxrh6nXGXRg%2FonPow%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/KOA-Speer/SG73P2ATTD2003F?qs=0U9fANxrh6nXGXRg%2FonPow%3D%3D" 550 -450 50 H I L CNN "Mouser Price/Stock"
 F8 "KOA Speer" 550 -550 50 H I L CNN "Manufacturer_Name"
 F9 "SG73P2ATTD2003F" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
@@ -833,7 +833,7 @@ F3 "https://www.st.com/resource/en/datasheet/usblc6-4sc6y.pdf" 950 0 50 H I L CN
 F4 "STMICROELECTRONICS - USBLC6-4SC6Y - ESD Protection Device, 17 V, SOT-23, 6 Pins" 950 -100 50 H I L CNN "Description"
 F5 "1.45" 950 -200 50 H I L CNN "Height"
 F6 "511-USBLC6-4SC6Y" 950 -300 50 H I L CNN "Mouser Part Number"
-F7 "https://www.mouser.co.uk/ProductDetail/STMicroelectronics/USBLC6-4SC6Y?qs=gNDSiZmRJS%252B5K%252Bxjl%252Bw9xw%3D%3D" 950 -400 50 H I L CNN "Mouser Price/Stock"
+F7 "https://www.mouser.com/ProductDetail/STMicroelectronics/USBLC6-4SC6Y?qs=gNDSiZmRJS%252B5K%252Bxjl%252Bw9xw%3D%3D" 950 -400 50 H I L CNN "Mouser Price/Stock"
 F8 "STMicroelectronics" 950 -500 50 H I L CNN "Manufacturer_Name"
 F9 "USBLC6-4SC6Y" 950 -600 50 H I L CNN "Manufacturer_Part_Number"
 DRAW
